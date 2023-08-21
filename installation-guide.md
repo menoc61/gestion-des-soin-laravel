@@ -48,16 +48,21 @@ php artisan key:generate
 ```
 ## Step 3: Update the static data in the database
 
--In the terminal or command prompt, navigate to the Laravel app directory if you're not already there.
--Run the following command to update the seeder data in the database:
-
+- In the terminal or command prompt, navigate to the Laravel app directory if you're not already there.
+- Migrate the tables up to the connected database bu running: 
 ```
-php artisan db:seed --class=RoleSeeder
+php artisan migrate
 ```
+- Run the following command to update the seeder data in the database:
+```
+php artisan db:seed 
+```
+> add the flag "--class=ExampleSeeder" to update a specific seeder class data
 ## Step 4: Run the Laravel app
 - In the terminal or command prompt, navigate to the Laravel app directory if you're not already there.
 - Run the following command to start the Laravel development server:
 ```
 php artisan serve
 ```
-The Laravel app should now be running. You can access it in your web browser at the following URL: http://localhost/ or 127.0.0.1
+- The Laravel app should now be running. You can access it in your web browser at the following URL: http://localhost/ or 127.0.0.1
+- you can login on the admin pre-build account on "admin@admin" and password: "admin"
