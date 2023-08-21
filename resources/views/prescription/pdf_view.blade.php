@@ -5,20 +5,20 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="description" content="">
-      <meta name="author" content="Digit94Team">
+      <meta name="author" content="Gilles Momeni">
       <!-- CSRF Token -->
       <meta name="csrf-token" content="zXbiSv6MysbCo84DXZ4JSrdGP6dkFJbqvwo0wgSS">
-      <title>Doctorino - {{ __('sentence.View Prescription') }} 
+      <title>Doctorino - {{ __('sentence.View Prescription') }}
       </title>
       <!-- Custom styles for this template-->
       <link href="{{ asset('css/app.css') }}" rel="stylesheet">
       <style type="text/css">
-         
+
       </style>
    </head>
    <body>
 
-                     
+
                                  <!-- ROW : Doctor informations -->
                                  <div class="row">
                                     <div class="col-9">
@@ -33,7 +33,7 @@
                                  <!-- ROW : Patient informations -->
                                  <div class="row">
                                     <div class="col">
-                                     
+
                                        <p>
                                           <b>{{ __('sentence.Patient Name') }} :</b> {{ $prescription->User->name }}
                                           @isset($prescription->User->Patient->birthday)
@@ -77,10 +77,10 @@
                                        </div>
                                     </div>
                                     <!-- END ROW : Footer informations -->
-                             
-                  
-                
-   
- 
+
+
+
+
+
    </body>
 </html>

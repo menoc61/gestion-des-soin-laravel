@@ -5,7 +5,7 @@
 
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="author" content="Digit94Team">
+      <meta name="author" content="Gilles Momeni">
       <!-- CSRF Token -->
       <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
       <link rel="icon" type="image/png" href="<?php echo e(asset('img/favicon.png')); ?>">
@@ -24,7 +24,7 @@
 
          <script>
              "use strict";
-               const SITE_URL = "<?php echo e(url('/')); ?>";             
+               const SITE_URL = "<?php echo e(url('/')); ?>";
          </script>
 
 
@@ -101,7 +101,7 @@
                         <?php endif; ?>
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view all appointments')): ?>
                         <a class="collapse-item" href="<?php echo e(route('appointment.pending')); ?>"><?php echo e(__('sentence.Upcoming Appointments')); ?></a>
-                        
+
                         <a class="collapse-item" href="<?php echo e(route('appointment.all')); ?>"><?php echo e(__('sentence.All Appointments')); ?></a>
                         <?php endif; ?>
                      </div>
@@ -305,7 +305,7 @@
                         <?php endif; ?>
                        </div>
                      </div>
-                     
+
                      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view all patients')): ?>
                      <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="<?php echo e(route('patient.search')); ?>" method="post">
                         <div class="input-group">
@@ -330,7 +330,7 @@
                            </a>
                            <!-- Dropdown - User Information -->
                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                              
+
                                <a class="dropdown-item" href="<?php echo e(route('patient.view', ['id' => Auth::user()->id])); ?>">
                               <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                               <?php echo e(__('sentence.View Profile')); ?>
@@ -392,8 +392,8 @@
                <footer class="sticky-footer bg-white">
                   <div class="container my-auto">
                      <div class="copyright my-auto">
-                        <span>Copyright &copy; Created by <a href="https://getdoctorino.com" target="_blank"> Digit94Team</a> <?php echo e(date('Y')); ?></span>
-                        <span style="float: right;">Version 4.0</span>
+                        <span>Copyright &copy; Created by <a href="https://digit-tech-innov.com/" target="_blank">  DIGIT-TECH-INNOV SARL</a> <?php echo e(date('Y')); ?></span>
+                        <span style="float: right;">Version 1.0</span>
                      </div>
                   </div>
                </footer>
@@ -420,7 +420,7 @@
                <div class="modal-body"><?php echo e(__('sentence.Ready to Leave Msg')); ?></div>
                <div class="modal-footer">
                   <button class="btn btn-secondary" type="button" data-dismiss="modal"><?php echo e(__('sentence.Cancel')); ?></button>
-                  <a class="btn btn-primary" href="<?php echo e(route('logout')); ?>" 
+                  <a class="btn btn-primary" href="<?php echo e(route('logout')); ?>"
                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><?php echo e(__('sentence.Logout')); ?></a>
                   <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
                      <?php echo csrf_field(); ?>
@@ -449,7 +449,7 @@
             </div>
          </div>
       </div>
-      
+
    <script src="<?php echo e(asset('dashboard/js/vue.js')); ?>"></script>
    <script src="<?php echo e(asset('dashboard/vendor/jquery/jquery.min.js')); ?>"></script>
 
@@ -471,7 +471,7 @@
                                     message: "<?php echo session('success'); ?>"
                                 },{
                                     type: "success",
-                                    delay:5000,                                    
+                                    delay:5000,
                                 });
                 </script>
             <?php endif; ?>
@@ -482,18 +482,18 @@
                                     message: "<?php echo session('danger'); ?>"
                                 },{
                                     type: "danger",
-                                    delay:5000,                                    
+                                    delay:5000,
                                 });
                 </script>
             <?php endif; ?>
-            
+
             <?php if(session('warning')): ?>
                   <script type="text/javascript">
                     $.notify({
                                     message: "<?php echo session('warning'); ?>"
                                 },{
                                     type: "warning",
-                                    delay:5000,                                    
+                                    delay:5000,
                                 });
                 </script>
             <?php endif; ?>

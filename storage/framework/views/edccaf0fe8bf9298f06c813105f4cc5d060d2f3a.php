@@ -5,20 +5,20 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="description" content="">
-      <meta name="author" content="Digit94Team">
+      <meta name="author" content="Gilles Momeni">
       <!-- CSRF Token -->
       <meta name="csrf-token" content="zXbiSv6MysbCo84DXZ4JSrdGP6dkFJbqvwo0wgSS">
-      <title>Doctorino - <?php echo e(__('sentence.View Prescription')); ?> 
+      <title>Doctorino - <?php echo e(__('sentence.View Prescription')); ?>
       </title>
       <!-- Custom styles for this template-->
       <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
       <style type="text/css">
-         
+
       </style>
    </head>
    <body>
 
-                     
+
                                  <!-- ROW : Doctor informations -->
                                  <div class="row">
                                     <div class="col-9">
@@ -35,7 +35,7 @@
                                  <!-- ROW : Patient informations -->
                                  <div class="row">
                                     <div class="col">
-                                     
+
                                        <p>
                                           <b><?php echo e(__('sentence.Patient Name')); ?> :</b> <?php echo e($prescription->User->name); ?>
 
@@ -82,10 +82,10 @@
                                        </div>
                                     </div>
                                     <!-- END ROW : Footer informations -->
-                             
-                  
-                
-   
- 
+
+
+
+
+
    </body>
 </html><?php /**PATH C:\xampp\htdocs\doctorino\v3.4\resources\views/prescription/pdf_view.blade.php ENDPATH**/ ?>

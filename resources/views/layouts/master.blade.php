@@ -5,11 +5,11 @@
 
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="author" content="Digit94Team">
+      <meta name="author" content="gillemomeni">
       <!-- CSRF Token -->
       <meta name="csrf-token" content="{{ csrf_token() }}">
       <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
-      <title>Doctorino - @yield('title') </title>
+      <title>Gestion soin - @yield('title') </title>
       <!-- Custom styles for this template-->
     <!-- Custom fonts for this template-->
     <link href="{{ asset('dashboard/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css" media="all">
@@ -24,7 +24,7 @@
 
          <script>
              "use strict";
-               const SITE_URL = "{{ url('/') }}";             
+               const SITE_URL = "{{ url('/') }}";
          </script>
 
 
@@ -99,7 +99,7 @@
                         @endcan
                         @can('view all appointments')
                         <a class="collapse-item" href="{{ route('appointment.pending') }}">{{ __('sentence.Upcoming Appointments') }}</a>
-                        
+
                         <a class="collapse-item" href="{{ route('appointment.all') }}">{{ __('sentence.All Appointments') }}</a>
                         @endcan
                      </div>
@@ -299,7 +299,7 @@
                         @endif
                        </div>
                      </div>
-                     
+
                      @can('view all patients')
                      <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="{{ route('patient.search') }}" method="post">
                         <div class="input-group">
@@ -324,7 +324,7 @@
                            </a>
                            <!-- Dropdown - User Information -->
                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                              
+
                                <a class="dropdown-item" href="{{ route('patient.view', ['id' => Auth::user()->id]) }}">
                               <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                               {{ __('sentence.View Profile') }}
@@ -382,8 +382,8 @@
                <footer class="sticky-footer bg-white">
                   <div class="container my-auto">
                      <div class="copyright my-auto">
-                        <span>Copyright &copy; Created by <a href="https://getdoctorino.com" target="_blank"> Digit94Team</a> {{ date('Y') }}</span>
-                        <span style="float: right;">Version 4.0</span>
+                        <span>Copyright &copy; Created by <a href="https://digit-tech-innov.com/" target="_blank">  DIGIT-TECH-INNOV SARL</a> {{ date('Y') }}</span>
+                        <span style="float: right;">Version 1.0</span>
                      </div>
                   </div>
                </footer>
@@ -410,7 +410,7 @@
                <div class="modal-body">{{ __('sentence.Ready to Leave Msg') }}</div>
                <div class="modal-footer">
                   <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ __('sentence.Cancel') }}</button>
-                  <a class="btn btn-primary" href="{{ route('logout') }}" 
+                  <a class="btn btn-primary" href="{{ route('logout') }}"
                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('sentence.Logout') }}</a>
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                      @csrf
@@ -439,7 +439,7 @@
             </div>
          </div>
       </div>
-      
+
    <script src="{{ asset('dashboard/js/vue.js') }}"></script>
    <script src="{{ asset('dashboard/vendor/jquery/jquery.min.js') }}"></script>
 
@@ -461,7 +461,7 @@
                                     message: "<?php echo session('success'); ?>"
                                 },{
                                     type: "success",
-                                    delay:5000,                                    
+                                    delay:5000,
                                 });
                 </script>
             @endif
@@ -472,18 +472,18 @@
                                     message: "<?php echo session('danger'); ?>"
                                 },{
                                     type: "danger",
-                                    delay:5000,                                    
+                                    delay:5000,
                                 });
                 </script>
             @endif
-            
+
             @if (session('warning'))
                   <script type="text/javascript">
                     $.notify({
                                     message: "<?php echo session('warning'); ?>"
                                 },{
                                     type: "warning",
-                                    delay:5000,                                    
+                                    delay:5000,
                                 });
                 </script>
             @endif
