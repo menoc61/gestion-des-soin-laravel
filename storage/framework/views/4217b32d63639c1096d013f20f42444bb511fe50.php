@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
       <div class="col">
         <div class="card shadow mb-4">
-                
+
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-4 col-sm-6">
@@ -20,14 +20,14 @@
                        <h4 class="text-center mt-3"><b><?php echo e($patient->name); ?></b> <label class="badge badge-primary-soft"> <a href="<?php echo e(url('patient/edit/'.$patient->id)); ?>" ><i class="fa fa-pen"></i></a></label></h4>
                             <hr>
 
-                           
+
 
                             <?php if(isset($patient->Patient->birthday)): ?>
                             <p><b><?php echo e(__('sentence.Birthday')); ?> :</b> <?php echo e($patient->Patient->birthday); ?> (<?php echo e(\Carbon\Carbon::parse($patient->Patient->birthday)->age); ?> Years)</p>
                             <?php endif; ?>
 
                             <?php if(isset($patient->Patient->gender)): ?>
-                            <p><b><?php echo e(__('sentence.Gender')); ?> :</b> <?php echo e(__('sentence.'.$patient->Patient->gender)); ?></p> 
+                            <p><b><?php echo e(__('sentence.Gender')); ?> :</b> <?php echo e(__('sentence.'.$patient->Patient->gender)); ?></p>
                             <?php endif; ?>
 
                             <?php if(isset($patient->Patient->phone)): ?>
@@ -63,7 +63,7 @@
                         <li class="nav-item" role="presentation">
                           <a class="nav-link" id="prescriptions-tab" data-toggle="tab" href="#prescriptions" role="tab" aria-controls="prescriptions" aria-selected="false"><?php echo e(__('sentence.Prescriptions')); ?></a>
                         </li>
-                        
+
                         <li class="nav-item" role="presentation">
                           <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab" aria-controls="Billing" aria-selected="false"><?php echo e(__('sentence.Payment History')); ?></a>
                         </li>
@@ -94,11 +94,11 @@
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                           <center><img src="<?php echo e(asset('img/not-found.svg')); ?>" width="200" /> <br><br> <b class="text-muted">No health history was found</b></center>
                           <?php endif; ?>
-                           
 
-                            
 
-                          
+
+
+
                         </div>
                         <div class="tab-pane fade" id="appointements" role="tabpanel" aria-labelledby="appointements-tab">
                           <div class="row">
@@ -174,13 +174,13 @@
                             <?php $__empty_1 = true; $__currentLoopData = $prescriptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prescription): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
                               <td align="center"><?php echo e($prescription->reference); ?> </td>
-                              <td class="text-center"> 
+                              <td class="text-center">
                                  <label class="badge badge-primary-soft">
-                                    <?php echo e(count($prescription->Drug)); ?> Drugs
+                                    <?php echo e(count($prescription->Drug)); ?> Produits
                                  </label>
                                  <label class="badge badge-primary-soft">
-                                    <?php echo e(count($prescription->Test)); ?> Tests
-                                 </label> 
+                                    <?php echo e(count($prescription->Test)); ?> Soin
+                                 </label>
                               </td>
                               <td align="center"><label class="badge badge-primary-soft"><?php echo e($prescription->created_at); ?></label></td>
                               <td align="center">
@@ -341,7 +341,7 @@
                           </table>
                         </div>
                       </div>
-                    
+
                     </div>
                   </div>
                 </div>
@@ -463,4 +463,5 @@
 <?php $__env->startSection('footer'); ?>
 <script type="text/javascript" src="<?php echo e(asset('dashboard/js/lightbox.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\codecanyon-28707541-doctorino-doctor-chamber-management-system\v4.0\resources\views/patient/view.blade.php ENDPATH**/ ?>

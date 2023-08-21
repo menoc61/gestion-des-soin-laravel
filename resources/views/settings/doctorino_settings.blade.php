@@ -72,9 +72,9 @@
                      <select class="form-control" name="language" id="Language" required>
                         <option value="{{ App\Setting::get_option('language') }}">{{ $language[App\Setting::get_option('language')] }}</option>
                         <option value="en">English</option>
-                        <option value="es">Spanish</option>
+                        <!-- <option value="es">Spanish</option> -->
                         <option value="fr">French</option>
-                        <option value="de">Dutch</option>
+                        <!-- <option value="de">Dutch</option>
                         <option value="it">Italian</option>
                         <option value="pt">Portuguese</option>
                         <option value="in">Hindi</option>
@@ -82,7 +82,7 @@
                         <option value="id">Indonesian</option>
                         <option value="tr">Turkish</option>
                         <option value="ru">Russian</option>
-                        <option value="ar">Arabic</option>
+                        <option value="ar">Arabic</option> -->
                      </select>
                   </div>
                </div>

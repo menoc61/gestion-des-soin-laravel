@@ -34,13 +34,13 @@
                   <td><?php echo e($prescription->id); ?></td>
                   <td><a href="<?php echo e(url('patient/view/'.$prescription->user_id)); ?>"> <?php echo e($prescription->User->name); ?> </a></td>
                   <td class="text-center"><?php echo e($prescription->created_at->format('d M Y H:i')); ?></td>
-                  <td class="text-center"> 
+                  <td class="text-center">
                      <label class="badge badge-primary-soft">
-                        <?php echo e(count($prescription->Drug)); ?> Drugs
+                        <?php echo e(count($prescription->Drug)); ?> Produits
                      </label>
                      <label class="badge badge-primary-soft">
-                        <?php echo e(count($prescription->Test)); ?> Tests
-                     </label> 
+                        <?php echo e(count($prescription->Test)); ?> Soins
+                     </label>
                   </td>
                   <td class="text-center">
                      <a href="<?php echo e(url('prescription/view/'.$prescription->id)); ?>" class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a>
@@ -62,4 +62,5 @@
    </div>
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\codecanyon-28707541-doctorino-doctor-chamber-management-system\v4.0\resources\views/prescription/view_for_user.blade.php ENDPATH**/ ?>

@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
       <div class="col">
         <div class="card shadow mb-4">
-                
+
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-4 col-sm-6">
@@ -21,14 +21,14 @@
                        <h4 class="text-center mt-3"><b>{{ $patient->name }}</b> <label class="badge badge-primary-soft"> <a href="{{ url('patient/edit/'.$patient->id) }}" ><i class="fa fa-pen"></i></a></label></h4>
                             <hr>
 
-                           
+
 
                             @isset($patient->Patient->birthday)
                             <p><b>{{ __('sentence.Birthday') }} :</b> {{ $patient->Patient->birthday }} ({{ \Carbon\Carbon::parse($patient->Patient->birthday)->age }} Years)</p>
                             @endisset
 
                             @isset($patient->Patient->gender)
-                            <p><b>{{ __('sentence.Gender') }} :</b> {{ __('sentence.'.$patient->Patient->gender) }}</p> 
+                            <p><b>{{ __('sentence.Gender') }} :</b> {{ __('sentence.'.$patient->Patient->gender) }}</p>
                             @endisset
 
                             @isset($patient->Patient->phone)
@@ -64,7 +64,7 @@
                         <li class="nav-item" role="presentation">
                           <a class="nav-link" id="prescriptions-tab" data-toggle="tab" href="#prescriptions" role="tab" aria-controls="prescriptions" aria-selected="false">{{ __('sentence.Prescriptions') }}</a>
                         </li>
-                        
+
                         <li class="nav-item" role="presentation">
                           <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab" aria-controls="Billing" aria-selected="false">{{ __('sentence.Payment History') }}</a>
                         </li>
@@ -93,11 +93,11 @@
                           @empty
                           <center><img src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br> <b class="text-muted">No health history was found</b></center>
                           @endforelse
-                           
 
-                            
 
-                          
+
+
+
                         </div>
                         <div class="tab-pane fade" id="appointements" role="tabpanel" aria-labelledby="appointements-tab">
                           <div class="row">
@@ -170,13 +170,13 @@
                             @forelse($prescriptions as $prescription)
                             <tr>
                               <td align="center">{{ $prescription->reference }} </td>
-                              <td class="text-center"> 
+                              <td class="text-center">
                                  <label class="badge badge-primary-soft">
-                                    {{ count($prescription->Drug) }} Drugs
+                                    {{ count($prescription->Drug) }} Produits
                                  </label>
                                  <label class="badge badge-primary-soft">
-                                    {{ count($prescription->Test) }} Tests
-                                 </label> 
+                                    {{ count($prescription->Test) }} Soin
+                                 </label>
                               </td>
                               <td align="center"><label class="badge badge-primary-soft">{{ $prescription->created_at }}</label></td>
                               <td align="center">
@@ -330,7 +330,7 @@
                           </table>
                         </div>
                       </div>
-                    
+
                     </div>
                   </div>
                 </div>
