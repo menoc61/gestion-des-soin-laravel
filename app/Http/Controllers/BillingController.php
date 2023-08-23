@@ -16,7 +16,7 @@ class BillingController extends Controller
         $this->middleware('auth');
     }
 
-    
+
     public function create(){
 
     	$patients = User::where('role','patient')->get();
@@ -35,12 +35,22 @@ class BillingController extends Controller
 	        	'invoice_amount.*' => ['required','numeric'],
 	    	]);
 
-        if($request->payment_status == 'Paid'){
-          $request->due_amount = 0;
-          $request->deposited_amount = Collect($request->invoice_amount)->sum()+(Collect($request->invoice_amount)->sum()*Setting::get_option('vat')/100);
-        }
+            // if($request->payment_status == 'Paid' && $request->deposited_amount == $request->invoice_amount){
+            //     $request->due_amount = 0;
+            //     $request->deposited_amount = Collect($request->invoice_amount)->sum()+(Collect($request->invoice_amount)->sum()*Setting::get_option('vat')/100);
+            //   }
 
-            
+            if ($request->deposited_amount >= 1 && $request->deposited_amount < $request->invoice_amount) {
+                $request->payment_status = 'Partially Paid';
+            }
+            else{
+                $request->payment_status = 'Paid';
+            }
+
+            if ($request->deposited_amount == 0) {
+                $request->payment_status = 'Unpaid';
+            }
+
 
     	$billing = new Billing;
 
@@ -64,10 +74,10 @@ class BillingController extends Controller
 
 
   	   	for ($x = 0; $x < $i; $x++) {
-		  
+
 		  echo $request->invoice_title[$x];
 
-		  
+
 
             $invoice_item = new Billing_item;
 
@@ -93,15 +103,15 @@ class BillingController extends Controller
         $billing = Billing::findOrfail($id);
 
         $billing_items = Billing_item::where('billing_id' ,$id)->get();
-        
+
         return view('billing.view',['billing' => $billing, 'billing_items' => $billing_items]);
     }
 
       public function pdf($id){
-        
+
         $billing = Billing::findOrfail($id);
         $billing_items = Billing_item::where('billing_id' ,$id)->get();
-        
+
          view()->share(['billing' => $billing, 'billing_items' => $billing_items]);
       $pdf = PDF::loadView('billing.pdf_view', ['billing' => $billing, 'billing_items' => $billing_items]);
 
@@ -111,7 +121,7 @@ class BillingController extends Controller
 
 
     public function edit($id){
-        
+
         $billing = Billing::findOrfail($id);
         $billing_items = Billing_item::where('billing_id' ,$id)->get();
 
@@ -140,7 +150,7 @@ class BillingController extends Controller
         }
 
         foreach($billing_items as $key => $dz){
-            $filtered[] = "$dz";            
+            $filtered[] = "$dz";
         }
 
 
@@ -164,15 +174,15 @@ class BillingController extends Controller
 
 
             for ($x = 0; $x < $i; $x++) {
-              
 
-               
+
+
                if(isset($request->billing_item_id[$x])){
 
                   Billing_item::where('id', $request->billing_item_id[$x])
                             ->update(['invoice_title' => $request->invoice_title[$x],
                                       'invoice_amount' => $request->invoice_amount[$x]
-                                    ]); 
+                                    ]);
 
 
 
@@ -195,7 +205,7 @@ class BillingController extends Controller
                 $request->due_amount = 0;
                 $request->deposited_amount = Collect($request->invoice_amount)->sum()+(Collect($request->invoice_amount)->sum()*Setting::get_option('vat')/100);
               }
-              
+
               $billing = Billing::find($request->billing_id);
 
                 $billing->user_id = $request->patient_id;
@@ -213,7 +223,7 @@ class BillingController extends Controller
 
 
         return Redirect::route('billing.all')->with('success', 'Invoice Edited Successfully!');;
-        
+
     }
 
     public function destroy($id){

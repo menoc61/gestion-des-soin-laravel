@@ -28,7 +28,7 @@
                   <label for="PaymentMode">{{ __('sentence.Payment Mode') }}</label>
                   <select class="form-control" name="payment_mode" id="PaymentMode">
                      <option value="Cash">{{ __('sentence.Cash') }}</option>
-                     <option value="Cheque">{{ __('sentence.Cheque') }}</option>
+                     <option value="Mobile Transaction">{{ __('sentence.Mobile Transaction') }}</option>
                   </select>
                </div>
 
@@ -130,5 +130,8 @@ $('.billing_labels').each(function(){
 
 }, 1000);
 
+
+
 </script>
+
 @endsection
