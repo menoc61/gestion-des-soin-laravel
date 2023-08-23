@@ -264,7 +264,7 @@
                               <div class="card bg-danger text-white shadow">
                                 <div class="card-body">
                                   {{ __('sentence.Due Balance') }}
-                                  <div class="text-white small">{{ Collect($invoices)->where('payment_status','Partially Paid')->sum('due_amount') }} {{ App\Setting::get_option('currency') }}</div>
+                                  <div class="text-white small">{{ Collect($invoices)->whereIn('payment_status',['Partially Paid','Unpaid'])->sum('due_amount') }} {{ App\Setting::get_option('currency') }}</div>
                                 </div>
                               </div>
                             </div>
@@ -287,7 +287,7 @@
                             @forelse($invoices as $invoice)
                             <tr>
                               <td><a href="{{ url('billing/view/'.$invoice->id) }}">{{ $invoice->reference }}</a></td>
-                              <td><label class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y') }}</label></td>
+                              <td><label class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label></td>
                               <td> {{ $invoice->total_with_tax }} {{ App\Setting::get_option('currency') }}
                                   @if($invoice->payment_status == 'Unpaid' OR $invoice->payment_status == 'Partially Paid')
                                     <label class="badge badge-danger-soft">{{ $invoice->due_amount }} {{ App\Setting::get_option('currency') }} </label>
