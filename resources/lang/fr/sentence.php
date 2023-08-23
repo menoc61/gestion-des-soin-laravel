@@ -66,6 +66,7 @@ return [
   'Add Test' => 'Ajouter un Diagnostic',
   'All Tests' => 'Tout les Diagnostic',
   'Test Name' => 'Diagnostic',
+  'Form Type' => 'Type de diagnostic',
   'Edit Test' => 'Modifier le Diagnostic',
   'Test Deleted Successfully' => 'Diagnostic supprimé avec succès!',
   'Test Created Successfully' => 'Diagnostic crée avec succès!',
@@ -97,7 +98,38 @@ return [
    'Ready to Leave' => 'Prêt à partir?',
    'Ready to Leave Msg' => 'Sélectionnez «Se déconnecter» ci-dessous si vous êtes prêt à mettre fin à votre session en cours.',
 
-      //Traitement
+// diagnostic skin
+    'hand diagnostic sheet' => 'LA FICHE DE DIAGNOSE MAINS',
+    'foot diagnostic sheet' => 'LA FICHE DE DIAGNOSE PIEDS',
+    'skin diagnostic sheet' => 'LA FICHE DE DIAGNOSE PEAU',
+// diagnostic hand
+    'general hand state' => 'Etat générale des mains: ',
+    'nail state' => 'Etats des ongles:',
+    'particular type hand' => 'Signes particuliers des mains:',
+    'finger state' => 'Signes particuliers des ongles:',
+    'vernis' => 'Vernis:',
+    'soin' => 'Soins preferes :',
+    'obseration' => 'Obseration:',
+    'relief' => 'Relief:',
+    'signe particulier' => 'Signes particuliers:',
+    'taches'=> 'Taches:',
+    'espaces inter digitale'=> 'Espaces inter digitale:',
+    'callosites'=> 'Présence des callosités:',
+    'cicatrices'=> 'Présence des Cicatrices:',
+    'etat de la peau'=> 'Etat de la peau:',
+
+//diagnostic foot
+    'general foot state' => 'Etat générale des pieds: ',
+    'particular type foot' => 'Signes particuliers des pieds:',
+    'taches foot' => 'Taches sur les ongles:',
+    'aureoles' => 'Présence des auréoles:',
+    'veines face ext' => 'Veines visibles la face externe:',
+    'veines face int' => 'Veines visibles la face interne:',
+    'douleur talon'=>'Douleurs particulières du talon:',
+
+    //Traitement
+    'oui' => 'oui',
+    'non' => 'non',
    'Test to do' => 'Diagnostic :',
    'Patient Name' => 'Patient',
    'Age' => 'Age',

@@ -47,4 +47,5 @@
 <?php $__env->startSection('footer'); ?>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\codecanyon-28707541-doctorino-doctor-chamber-management-system\v4.0\resources\views/test/edit.blade.php ENDPATH**/ ?>
