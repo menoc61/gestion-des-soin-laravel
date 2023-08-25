@@ -23,7 +23,7 @@ class SettingController extends Controller
         }
     }
 
-    
+
     public function doctorino_settings(Request $request){
     	$settings = Setting::all();
         $language = ['fr' => 'French', 'en' => 'English', 'es' => 'Spanish', 'it' => 'Italian', 'de' => 'German', 'bn' => 'Bengali', 'tr' => 'Turkish', 'ru' => 'Russian', 'in' => 'Hindi', 'pt' => 'Portuguese', 'id' => 'Indonesian', 'ar' => 'Arabic'];
@@ -56,15 +56,15 @@ class SettingController extends Controller
         if($request->hasFile('logo')){
 
             // We Get the image
-            $file = $request->file('logo'); 
-            // We Add String to Image name 
+            $file = $request->file('logo');
+            // We Add String to Image name
             $fileName = Str::random(15).'-'.$file->getClientOriginalName();
-            // We Tell him the uploads path 
+            // We Tell him the uploads path
             $destinationPath = public_path().'/uploads/';
             // We move the image to the destination path
             $file->move($destinationPath,$fileName);
-            // Add fileName to database 
-            
+            // Add fileName to database
+
             Setting::update_option('logo', $fileName);
         }
 
@@ -121,7 +121,7 @@ class SettingController extends Controller
             Setting::update_option('NEXMO_KEY', $request->NEXMO_KEY);
             Setting::update_option('NEXMO_SECRET', $request->NEXMO_SECRET);
 
-            
+
             $this->setEnv('NEXMO_KEY', $request->NEXMO_KEY);
             $this->setEnv('NEXMO_SECRET', $request->NEXMO_SECRET);
 

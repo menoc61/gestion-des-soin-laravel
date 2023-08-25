@@ -39,7 +39,9 @@ class BillingController extends Controller
             //     $request->due_amount = 0;
             //     $request->deposited_amount = Collect($request->invoice_amount)->sum()+(Collect($request->invoice_amount)->sum()*Setting::get_option('vat')/100);
             //   }
-
+            while ($request->deposited_amount < 0){
+                return Redirect::back()->with('danger','le montant de la marchandise ne doit pas être négatif!');
+            }
             if ($request->deposited_amount >= 1 && $request->deposited_amount < $request->invoice_amount) {
                 $request->payment_status = 'Partially Paid';
             }
