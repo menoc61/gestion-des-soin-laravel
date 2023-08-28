@@ -14,7 +14,7 @@ class TestController extends Controller
         $this->middleware('auth');
     }
 
-    
+
     public function create(){
     	return view('test.create');
     }
@@ -23,12 +23,22 @@ class TestController extends Controller
 
     		$validatedData = $request->validate([
 	        	'test_name' => 'required',
+                //skin diagnostic
+                'signes_particuliers_peau' => ['required','array', Rule::in(["Points noirs",'Rosacée','Rousseurs',"Télangiectasie","Pustules","Hypertrichose","Pigmentations","Vitiligo", "Cicatrice","Chéloïdes","Comédons"])],
+                //hand diagnostic
+
+                //foot diagnostic
 	    	]);
 
     	$test = new Test;
 
         $test->test_name = $request->test_name;
         $test->comment = $request->comment;
+                //skin diagnostic
+        $test->signes_particuliers_peau = implode(',',$request->signes_particuliers_peau);
+                //hand diagnostic
+
+                //foot diagnostic
 
         $test->save();
 
@@ -47,16 +57,25 @@ class TestController extends Controller
     }
 
     public function store_edit(Request $request){
-            
+
             $validatedData = $request->validate([
                 'test_name' => 'required',
+                //skin diagnostic
+                'signes_particuliers_peau' => ['required','array', Rule::in(["Points noirs","Rosacée","Rousseurs","Télangiectasie","Pustules","Hypertrichose","Pigmentations","Vitiligo", "Cicatrice","Chéloïdes","Comédons"])],
+                //hand diagnostic
+
+                //foot diagnostic
             ]);
-        
+
         $test = Test::find($request->test_id);
 
         $test->test_name = $request->test_name;
         $test->comment = $request->comment;
+                //skin diagnostic
+                $test->signes_particuliers_peau = implode(',',$request->signes_particuliers_peau);
+                //hand diagnostic
 
+                //foot diagnostic
         $test->save();
 
         return Redirect::route('test.all')->with('success', __('sentence.Test Edited Successfully'));
