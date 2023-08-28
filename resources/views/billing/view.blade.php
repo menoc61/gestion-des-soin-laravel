@@ -17,21 +17,37 @@
       <div class="card shadow mb-4">
          <div class="card-body">
             <!-- ROW : Doctor informations -->
-            <div class="row">
+            <div class="col-md-12">
                <div class="col">
                   @if(!empty(App\Setting::get_option('logo')))
                      <img src="{{ asset('uploads/'.App\Setting::get_option('logo')) }}"><br><br>
                   @endif
-                  {!! clean(App\Setting::get_option('header_left')) !!}
+                  {{-- {!! clean(App\Setting::get_option('header_left')) !!} --}}
                </div>
-               <div class="col-4">
-                  <p>
-                     <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y') }}<br>
-                     <b>{{ __('sentence.Reference') }} :</b> {{ $billing->reference }}<br>
-                     <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->User->name }}
-                  </p>
+               <div class="">
+                    <div class="text-center">
+                        <b>{{ App\Setting::get_option('system_name') }}</b><br>
+                        <b>{{ App\Setting::get_option('title') }}</b><br>
+                        <b>{{ App\Setting::get_option('address') }}</b><br>
+                        <b>{{ App\Setting::get_option('phone') }}</b><br>
+                        <b>{{ App\Setting::get_option('hospital_email') }}</b>
+                    </div>
                </div>
             </div>
+
+    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            <div class="col-4">
+                <p>
+                   <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y') }}<br>
+                   <b>{{ __('sentence.Reference') }} :</b> {{ $billing->reference }}<br>
+                   <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->User->name }}
+                </p>
+             </div>
+
             <!-- END ROW : Doctor informations -->
             <!-- ROW : Drugs List -->
             <div class="row justify-content-center">
