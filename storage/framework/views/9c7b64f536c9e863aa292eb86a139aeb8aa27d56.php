@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.Create Invoice')); ?>
 
@@ -28,7 +30,7 @@
                   <label for="PaymentMode"><?php echo e(__('sentence.Payment Mode')); ?></label>
                   <select class="form-control" name="payment_mode" id="PaymentMode">
                      <option value="Cash"><?php echo e(__('sentence.Cash')); ?></option>
-                     <option value="Cheque"><?php echo e(__('sentence.Cheque')); ?></option>
+                     <option value="Mobile Transaction"><?php echo e(__('sentence.Mobile Transaction')); ?></option>
                   </select>
                </div>
 
@@ -130,6 +132,10 @@ $('.billing_labels').each(function(){
 
 }, 1000);
 
+
+
 </script>
+
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\codecanyon-28707541-doctorino-doctor-chamber-management-system\v4.0\resources\views/billing/create.blade.php ENDPATH**/ ?>

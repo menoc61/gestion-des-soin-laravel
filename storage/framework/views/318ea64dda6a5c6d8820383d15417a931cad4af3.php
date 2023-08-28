@@ -9,7 +9,7 @@
       <!-- CSRF Token -->
       <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
       <link rel="icon" type="image/png" href="<?php echo e(asset('img/favicon.png')); ?>">
-      <title>Doctorino - <?php echo $__env->yieldContent('title'); ?> </title>
+      <title>Sai i lama - <?php echo $__env->yieldContent('title'); ?> </title>
       <!-- Custom styles for this template-->
     <!-- Custom fonts for this template-->
     <link href="<?php echo e(asset('dashboard/vendor/fontawesome-free/css/all.min.css')); ?>" rel="stylesheet" type="text/css" media="all">

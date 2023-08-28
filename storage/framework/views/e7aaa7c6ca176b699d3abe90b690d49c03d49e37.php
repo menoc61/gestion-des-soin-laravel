@@ -7,10 +7,10 @@
       <!-- CSRF Token -->
       <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-      <title>Doctorino - Login</title>
-      
+      <title>Sai i lama - Login</title>
+
       <link rel="icon" type="image/png" href="<?php echo e(asset('img/favicon.png')); ?>">
-      
+
       <!-- Custom styles for this template-->
       <link href="<?php echo e(asset('dashboard/css/sb-admin-2.min.css')); ?>" rel="stylesheet">
 
@@ -85,7 +85,7 @@ unset($__errorArgs, $__bag); ?>
                                        <label class="custom-control-label" for="customCheck"><?php echo e(__('sentence.Remember Me')); ?></label>
                                     </div>
                                  </div>
-                                 <button class="btn btn-warning btn-user btn-block" type="submit"> <?php echo e(__('sentence.Login')); ?></button> 
+                                 <button class="btn btn-warning btn-user btn-block" type="submit"> <?php echo e(__('sentence.Login')); ?></button>
                               </form>
                               <hr>
                               <?php if(Route::has('password.request')): ?>
@@ -94,7 +94,7 @@ unset($__errorArgs, $__bag); ?>
                               </div>
                               <?php endif; ?>
                            </div>
-                          
+
                         </div>
                      </div>
                   </div>

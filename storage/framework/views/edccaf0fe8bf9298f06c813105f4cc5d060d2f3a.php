@@ -8,7 +8,7 @@
       <meta name="author" content="Gilles Momeni">
       <!-- CSRF Token -->
       <meta name="csrf-token" content="zXbiSv6MysbCo84DXZ4JSrdGP6dkFJbqvwo0wgSS">
-      <title>Doctorino - <?php echo e(__('sentence.View Prescription')); ?>
+      <title>Sai i lama - <?php echo e(__('sentence.View Prescription')); ?>
       </title>
       <!-- Custom styles for this template-->
       <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">

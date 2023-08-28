@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.All Patients')); ?>
 
@@ -40,7 +42,9 @@
                       <th><?php echo e(__('sentence.Patient Name')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Age')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Phone')); ?></th>
-                      <th class="text-center"><?php echo e(__('sentence.Blood Group')); ?></th>
+                      <th class="text-center"><?php echo e(__('sentence.Morphology')); ?></th>
+                      <th class="text-center"><?php echo e(__('sentence.Hobbies')); ?></th>
+                      <th class="text-center"><?php echo e(__('sentence.Medication')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Date')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Due Balance')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Prescriptions')); ?></th>
@@ -54,7 +58,9 @@
                       <td><a href="<?php echo e(url('patient/view/'.$patient->id)); ?>"> <?php echo e($patient->name); ?> </a></td>
                       <td class="text-center"> <?php echo e(@\Carbon\Carbon::parse($patient->Patient->birthday)->age); ?> </td>
                       <td class="text-center"> <?php echo e(@$patient->Patient->phone); ?> </td>
-                      <td class="text-center"> <?php echo e(@$patient->Patient->blood); ?> </td>
+                      <td class="text-center"> <?php echo e(@$patient->Patient->morphology); ?> </td>
+                      <td class="text-center"> <?php echo e(@$patient->Patient->hobbie); ?> </td>
+                      <td class="text-center"> <?php echo e(@$patient->Patient->medication); ?> </td>
                       <td class="text-center"><label class="badge badge-primary-soft"><?php echo e($patient->created_at->format('d M Y H:i')); ?></label></td>
                       <td class="text-center"><label class="badge badge-primary-soft"><?php echo e(Collect($patient->Billings)->where('payment_status','Partially Paid')->sum('due_amount')); ?> <?php echo e(App\Setting::get_option('currency')); ?></label></td>
                       <td class="text-center">
@@ -77,11 +83,11 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <tr>
                       <td colspan="9"  align="center"><img src="<?php echo e(asset('img/rest.png')); ?> "/> <br><br> <b class="text-muted">No patients found!</b>
-                        
+
                       </td>
                     </tr>
                     <?php endif; ?>
-                   
+
                   </tbody>
                 </table>
                <span class="float-right mt-3"><?php echo e($patients->links()); ?></span>
@@ -91,5 +97,5 @@
           </div>
 <?php $__env->stopSection(); ?>
 
-  
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\codecanyon-28707541-doctorino-doctor-chamber-management-system\v4.0\resources\views/patient/all.blade.php ENDPATH**/ ?>
