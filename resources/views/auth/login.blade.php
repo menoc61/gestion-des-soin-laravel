@@ -7,10 +7,10 @@
       <!-- CSRF Token -->
       <meta name="csrf-token" content="{{ csrf_token() }}">
 
-      <title>Doctorino - Login</title>
-      
+      <title>sai i lama - Login</title>
+
       <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
-      
+
       <!-- Custom styles for this template-->
       <link href="{{ asset('dashboard/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
@@ -56,7 +56,7 @@
                                        <label class="custom-control-label" for="customCheck">{{ __('sentence.Remember Me') }}</label>
                                     </div>
                                  </div>
-                                 <button class="btn btn-warning btn-user btn-block" type="submit"> {{ __('sentence.Login') }}</button> 
+                                 <button class="btn btn-warning btn-user btn-block" type="submit"> {{ __('sentence.Login') }}</button>
                               </form>
                               <hr>
                               @if(Route::has('password.request'))
@@ -65,7 +65,7 @@
                               </div>
                               @endif
                            </div>
-                          
+
                         </div>
                      </div>
                   </div>

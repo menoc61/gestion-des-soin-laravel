@@ -25,7 +25,7 @@ class AppointmentController extends Controller
     }
 
     public function checkslots($date){
-        
+
     	return $this->getTimeSlot($date);
     }
 
@@ -41,7 +41,7 @@ class AppointmentController extends Controller
 
 
     public function getTimeSlot($date) {
-    
+
     $day = date("l", strtotime($date));
   	$day_from =  strtolower($day.'_from');
   	$day_to =  strtolower($day.'_to');
@@ -56,7 +56,7 @@ class AppointmentController extends Controller
     $end_time = $end->format('H:i');
 
     $i=0;
-    $time = [];	
+    $time = [];
     while(strtotime($start_time) <= strtotime($end_time)){
         $start = $start_time;
         $end = date('H:i',strtotime('+'.$interval.' minutes',strtotime($start_time)));
@@ -70,7 +70,7 @@ class AppointmentController extends Controller
     }
 
     return $time;
-	
+
 	}
 
 	public function store(Request $request){
@@ -103,9 +103,9 @@ class AppointmentController extends Controller
             Nexmo::message()->send([
                 'to'   => $phone,
                 'from' => '213794616181',
-                'text' => 'You have an appointment on '.$request->rdv_time_date.' at '.$request->rdv_time_start.' at Doctorino'
+                'text' => 'You have an appointment on '.$request->rdv_time_date.' at '.$request->rdv_time_start.' at Sai i lama'
             ]);
-            
+
         }
 
 		return Redirect::route('appointment.all')->with('success', 'Appointment Created Successfully!');
@@ -127,13 +127,13 @@ class AppointmentController extends Controller
     }
 
     public function all(){
-        
+
         $appointments = Appointment::orderBy('id','DESC')->paginate(10);
         return view('appointment.all', ['appointments' => $appointments]);
     }
 
     public function calendar(){
-        
+
         $appointments = Appointment::orderBy('id','DESC')->paginate(10);
         return view('appointment.calendar', ['appointments' => $appointments]);
     }
