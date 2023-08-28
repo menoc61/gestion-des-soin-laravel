@@ -29,7 +29,6 @@
                      <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y') }}<br>
                      <b>{{ __('sentence.Reference') }} :</b> {{ $billing->reference }}<br>
                      <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->User->name }}
-                     <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->Setting->val }}
                   </p>
                </div>
             </div>
