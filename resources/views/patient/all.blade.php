@@ -41,7 +41,7 @@
                       <th>{{ __('sentence.Patient Name') }}</th>
                       <th class="text-center">{{ __('sentence.Age') }}</th>
                       <th class="text-center">{{ __('sentence.Phone') }}</th>
-                      <th class="text-center">{{ __('sentence.Blood Group') }}</th>
+                      <th class="text-center">{{ __('sentence.Morphology') }}</th>
                       <th class="text-center">{{ __('sentence.Date') }}</th>
                       <th class="text-center">{{ __('sentence.Due Balance') }}</th>
                       <th class="text-center">{{ __('sentence.Prescriptions') }}</th>
@@ -55,7 +55,7 @@
                       <td><a href="{{ url('patient/view/'.$patient->id) }}"> {{ $patient->name }} </a></td>
                       <td class="text-center"> {{ @\Carbon\Carbon::parse($patient->Patient->birthday)->age }} </td>
                       <td class="text-center"> {{ @$patient->Patient->phone }} </td>
-                      <td class="text-center"> {{ @$patient->Patient->blood }} </td>
+                      <td class="text-center"> {{ @$patient->Patient->morphology }} </td>
                       <td class="text-center"><label class="badge badge-primary-soft">{{ $patient->created_at->format('d M Y H:i') }}</label></td>
                       <td class="text-center"><label class="badge badge-primary-soft">{{ Collect($patient->Billings)->where('payment_status','Partially Paid')->sum('due_amount') }} {{ App\Setting::get_option('currency') }}</label></td>
                       <td class="text-center">
@@ -78,11 +78,11 @@
                     @empty
                     <tr>
                       <td colspan="9"  align="center"><img src="{{ asset('img/rest.png') }} "/> <br><br> <b class="text-muted">No patients found!</b>
-                        
+
                       </td>
                     </tr>
                     @endforelse
-                   
+
                   </tbody>
                 </table>
                <span class="float-right mt-3">{{ $patients->links() }}</span>
@@ -92,4 +92,3 @@
           </div>
 @endsection
 
-  
