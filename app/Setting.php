@@ -18,7 +18,7 @@ class Setting extends Model
 			return $option_value;
 
 		return $return;
-		
+
     }
 
     // update option
@@ -42,5 +42,5 @@ class Setting extends Model
 
     }
 
-    
+
 }
