@@ -39,7 +39,7 @@
                <div class="form-group row">
                     <label for="inputSection" class="col-sm-3 col-form-label"><?php echo e(__('sentence.Form Type')); ?></label>
                     <div class="col-sm-9">
-                        <select multiple class="form-control" id="inputSection" name="section[]">
+                        <select multiple="multiple" class="form-control" id="inputSection" name="section[]">
                             <option value="DIAGNOSE PEAU" >DIAGNOSE PEAU</option>
                             <option value="DIAGNOSE MAIN" >DIAGNOSE MAIN</option>
                             <option value="DIAGNOSE PIED" >DIAGNOSE PIED</option>
@@ -47,19 +47,37 @@
                     </div>
                 </div>
                 <div class="form-group row " id="section-DIAGNOSE PEAU">
-                <!-- Content for DIAGNOSE PEAU section -->
+                 <!-- Content for DIAGNOSE PEAU section -->
                 <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.skin diagnostic sheet')); ?></h6>
                         </div>
                         <div class="card-body">
-                            <p>skin</p>
+                            <div class="form-group row">
+                                <label for="signes-particuliers-peau" class="col-sm-3 col-form-label"><?php echo e(__('sentence.SIGNES PARTICULIERS')); ?></label>
+                                <div class="col-sm-9">
+                                    <select id="signes-particuliers-peau" class="form-control" multiple="multiple" name="signes_particuliers_peau[]">
+                                        <option value="Points noirs">Points noirs</option>
+                                        <option value="Rosacée">Rosacée</option>
+                                        <option value="Rousseurs">Rousseurs</option>
+                                        <option value="Télangiectasie">Télangiectasie</option>
+                                        <option value="Pustules">Pustules</option>
+                                        <option value="Hypertrichose">Hypertrichose</option>
+                                        <option value="Pigmentations">Pigmentations</option>
+                                        <option value="Vitiligo">Vitiligo</option>
+                                        <option value="Cicatrice">Cicatrice</option>
+                                        <option value="Chéloïdes">Chéloïdes</option>
+                                        <option value="Comédons">Comédons</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group row " id="section-DIAGNOSE MAIN">
-                <!-- Content for DIAGNOSE MAIN section -->
+                 <!-- Content for DIAGNOSE MAIN section -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.hand diagnostic sheet')); ?></h6>
@@ -205,8 +223,8 @@
                 </div>
 
                 <div class="form-group row " id="section-DIAGNOSE PIED">
-                <!-- Content for DIAGNOSE PIED section -->
-                <div class="card shadow mb-4">
+                 <!-- Content for DIAGNOSE PIED section -->
+                 <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.foot diagnostic sheet')); ?></h6>
                         </div>
@@ -392,7 +410,7 @@
 <script type="text/javascript" src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
 <!-- Initialize the plugin: -->
 <script type="text/javascript">
-    $('#signes-particuliers-mains, #signes-particuliers-ongles, #soin').multiselect();
+    $('#signes-particuliers-mains,#signes-particuliers-peau, #signes-particuliers-ongles, #soin').multiselect();
 </script>
 <?php $__env->stopSection(); ?>
 
