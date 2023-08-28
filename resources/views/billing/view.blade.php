@@ -29,6 +29,7 @@
                      <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y') }}<br>
                      <b>{{ __('sentence.Reference') }} :</b> {{ $billing->reference }}<br>
                      <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->User->name }}
+                     <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->Setting->val }}
                   </p>
                </div>
             </div>
@@ -72,7 +73,7 @@
                      </tr>
                      @endempty
                   </table>
-                  
+
                </div>
             </div>
                   <div style="margin-bottom: 250px;"></div>
@@ -113,7 +114,7 @@
                                  <!-- ROW : Drugs List -->
                                  <div class="row justify-content-center">
                                     <div class="col">
-                                       
+
                                        <h5 class="text-center mt-5"><b>{{ __('sentence.Invoice') }}</b></h5>
                                        <br><br>
                                        <table class="table">
@@ -153,7 +154,7 @@
                                        <hr>
                                     </div>
                                  </div>
-                               
+
                                  <!-- END ROW : Drugs List -->
                                  <!-- ROW : Footer informations -->
                                  <footer class="footer-nassim" style="position: absolute; bottom: 0;">
@@ -169,7 +170,7 @@
                                     <!-- END ROW : Footer informations -->
                                  </footer>
                               </div>
-                        
+
 @endsection
 
 @section('header')
@@ -177,7 +178,7 @@
 
 <style type="text/css">
    p, u, li {
-      color: #444444 !important; 
+      color: #444444 !important;
    }
 
 </style>
@@ -185,7 +186,7 @@
 @section('footer')
 <script type="text/javascript">
    function PrintPreview(divName) {
-      
+
      var printContents = document.getElementById(divName).innerHTML;
      var originalContents = document.body.innerHTML;
 
@@ -200,16 +201,16 @@
 $(function(){
      $(document).on("click", '.print_prescription',function () {
         PrintPreview('print_area');
-        /* 
+        /*
         $('#print_area').printThis({
          importCSS: true,
-                importStyle: true,//thrown in for extra measure 
+                importStyle: true,//thrown in for extra measure
          loadCSS: "{{ asset('dashboard/css/sb-admin-2.min.css') }}",
-         pageTitle: "xxx", 
-         copyTagClasses: true, 
-          base: true, 
-          printContainer: true, 
-          removeInline: false,  
+         pageTitle: "xxx",
+         copyTagClasses: true,
+          base: true,
+          printContainer: true,
+          removeInline: false,
         });
         */
 
