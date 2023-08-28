@@ -102,6 +102,9 @@ return [
     'hand diagnostic sheet' => 'LA FICHE DE DIAGNOSE MAINS',
     'foot diagnostic sheet' => 'LA FICHE DE DIAGNOSE PIEDS',
     'skin diagnostic sheet' => 'LA FICHE DE DIAGNOSE PEAU',
+
+    'SIGNES PARTICULIERS' => 'Signes particuliers: ',
+
 // diagnostic hand
     'general hand state' => 'Etat générale des mains: ',
     'nail state' => 'Etats des ongles:',
