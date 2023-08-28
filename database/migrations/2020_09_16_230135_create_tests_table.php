@@ -17,6 +17,7 @@ class CreateTestsTable extends Migration
             $table->id();
             $table->string('test_name');
             $table->mediumText('comment')->nullable();
+            $table->string('signes_particuliers_peau');
             $table->timestamps();
         });
     }

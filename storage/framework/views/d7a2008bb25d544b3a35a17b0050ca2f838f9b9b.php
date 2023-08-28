@@ -72,9 +72,9 @@
                      <select class="form-control" name="language" id="Language" required>
                         <option value="<?php echo e(App\Setting::get_option('language')); ?>"><?php echo e($language[App\Setting::get_option('language')]); ?></option>
                         <option value="en">English</option>
-                        <option value="es">Spanish</option>
+                        <!-- <option value="es">Spanish</option> -->
                         <option value="fr">French</option>
-                        <option value="de">Dutch</option>
+                        <!-- <option value="de">Dutch</option>
                         <option value="it">Italian</option>
                         <option value="pt">Portuguese</option>
                         <option value="in">Hindi</option>
@@ -82,7 +82,7 @@
                         <option value="id">Indonesian</option>
                         <option value="tr">Turkish</option>
                         <option value="ru">Russian</option>
-                        <option value="ar">Arabic</option>
+                        <option value="ar">Arabic</option> -->
                      </select>
                   </div>
                </div>
@@ -199,4 +199,5 @@
 <?php $__env->startSection('footer'); ?>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\codecanyon-28707541-doctorino-doctor-chamber-management-system\v4.0\resources\views/settings/doctorino_settings.blade.php ENDPATH**/ ?>

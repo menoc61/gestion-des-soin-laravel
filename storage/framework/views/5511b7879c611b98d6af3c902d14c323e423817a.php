@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group row " id="section-DIAGNOSE PEAU">
                  <!-- Content for DIAGNOSE PEAU section -->
-                <div class="card shadow mb-4">
+                 <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.skin diagnostic sheet')); ?></h6>
                         </div>
@@ -86,7 +86,7 @@
                             <div class="form-group row">
                                     <label for="Etat-generale-des-mains" class="col-sm-3 col-form-label"><?php echo e(__('sentence.general hand state')); ?></label>
                                     <div class="col-sm-9">
-                                        <select id="Etat-generale-des-mains" class="form-control" name="Etat-generale-des-mains">
+                                        <select id="Etat-generale-des-mains" class="form-control" name="Etat_generale_des_mains">
                                             <option value="Normale">Normale</option>
                                             <option value="Sèche">Sèche</option>
                                             <option value="Très sèches">Très sèches</option>
@@ -96,9 +96,9 @@
                             </div>
                             <hr>
                             <div class="form-group row">
-                                    <label for="Etat-des-ongles" class="col-sm-3 col-form-label"><?php echo e(__('sentence.nail state')); ?></label>
+                                    <label for="Etat-des-ongles-mains" class="col-sm-3 col-form-label"><?php echo e(__('sentence.nail state')); ?></label>
                                     <div class="col-sm-9">
-                                        <select id="Etat-des-ongles" class="form-control" name="Etat-des-ongles">
+                                        <select id="Etat-des-ongles-mains" class="form-control" name="Etat_des_ongles_mains">
                                             <option value="Normaux">Normaux</option>
                                             <option value="Dures">Dures</option>
                                             <option value="Cassants">Cassants</option>
@@ -120,9 +120,9 @@
                             </div>
                             <hr>
                             <div class="form-group row">
-                                <label for="signes-particuliers-ongles" class="col-sm-3 col-form-label"><?php echo e(__('sentence.finger state')); ?></label>
+                                <label for="signes-particuliers-ongles-mains" class="col-sm-3 col-form-label"><?php echo e(__('sentence.finger state')); ?></label>
                                 <div class="col-sm-9">
-                                    <select id="signes-particuliers-ongles" class="form-control" multiple="multiple" name="signes_particuliers_ongles[]">
+                                    <select id="signes-particuliers-ongles-mains" class="form-control" multiple="multiple" name="signes_particuliers_ongles_mains[]">
                                         <option value="Epais">Epais</option>
                                         <option value="Décollés">Décollés</option>
                                         <option value="Colorés">Colorés (jaunâtre, vert)</option>
@@ -153,9 +153,9 @@
                             </div>
                             <hr>
                             <div class="form-group row">
-                                <label for="obseration" class="col-sm-3 col-form-label"><?php echo e(__('sentence.obseration')); ?></label>
+                                <label for="obseration-mains" class="col-sm-3 col-form-label"><?php echo e(__('sentence.obseration')); ?></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="obseration" name="obserationInput">
+                                    <input type="text" class="form-control" id="obseration-mains" name="obserationInput">
                                 </div>
                             </div>
                             <hr>
@@ -166,15 +166,15 @@
                                     <input type="text" class="form-control" id="relief" name="reliefInput">
                                 </div>
                                 <div class="col-sm-9">
-                                    <label for="cicatrices" class="col-sm-3 col-form-label"><?php echo e(__('sentence.cicatrices')); ?></label>
-                                    <select class="form-control" id="cicatrices"  name="cicatrices">
+                                    <label for="cicatrices-main" class="col-sm-3 col-form-label"><?php echo e(__('sentence.cicatrices')); ?></label>
+                                    <select class="form-control" id="cicatrices-main"  name="cicatrices-main">
                                     <option value="oui"><?php echo e(__('sentence.oui')); ?></option>
                                     <option value="non"><?php echo e(__('sentence.non')); ?></option>
                                     </select>
                                 </div>
                                 <div class="col-sm-9">
-                                <label for="callosites" class="col-sm-3 col-form-label"><?php echo e(__('sentence.callosites')); ?></label>
-                                    <select class="form-control" id="callosites"  name="callosites">
+                                <label for="callosites-main" class="col-sm-3 col-form-label"><?php echo e(__('sentence.callosites')); ?></label>
+                                    <select class="form-control" id="callosites-main"  name="callosites-main">
                                     <option value="oui"><?php echo e(__('sentence.oui')); ?></option>
                                     <option value="non"><?php echo e(__('sentence.non')); ?></option>
                                     </select>
@@ -188,26 +188,26 @@
                             <h5>FACE  DORSALE</h5>
                             <div class="form-group row">
                                 <div class="col-sm-9">
-                                    <label for="skinState" class="col-sm-3 col-form-label"><?php echo e(__('sentence.etat de la peau')); ?></label>
-                                    <input type="text" class="form-control" id="skinState" name="skinStateInput">
+                                    <label for="skinState-main" class="col-sm-3 col-form-label"><?php echo e(__('sentence.etat de la peau')); ?></label>
+                                    <input type="text" class="form-control" id="skinState-main" name="skinStateInput">
                                 </div>
                                 <div class="col-sm-9">
-                                    <label for="cicatrices" class="col-sm-3 col-form-label"><?php echo e(__('sentence.taches')); ?></label>
-                                    <select class="form-control" id="cicatrices"  name="cicatrices">
+                                    <label for="tache-main" class="col-sm-3 col-form-label"><?php echo e(__('sentence.taches')); ?></label>
+                                    <select class="form-control" id="tache-main"  name="tache-main">
                                     <option value="oui"><?php echo e(__('sentence.oui')); ?></option>
                                     <option value="non"><?php echo e(__('sentence.non')); ?></option>
                                     </select>
                                 </div>
                                 <div class="col-sm-9">
-                                    <label for="cicatrices" class="col-sm-3 col-form-label"><?php echo e(__('sentence.cicatrices')); ?></label>
-                                    <select class="form-control" id="cicatrices"  name="cicatrices">
+                                    <label for="cicatrices-main-dorsal" class="col-sm-3 col-form-label"><?php echo e(__('sentence.cicatrices')); ?></label>
+                                    <select class="form-control" id="cicatrices-main-dorsal"  name="cicatrices-main-dorsal">
                                     <option value="oui"><?php echo e(__('sentence.oui')); ?></option>
                                     <option value="non"><?php echo e(__('sentence.non')); ?></option>
                                     </select>
                                 </div>
                                 <div class="col-sm-9">
-                                <label for="callosites" class="col-sm-3 col-form-label"><?php echo e(__('sentence.espaces inter digitale')); ?></label>
-                                    <select class="form-control" id="callosites"  name="callosites">
+                                <label for="callosites-main-dorsal" class="col-sm-3 col-form-label"><?php echo e(__('sentence.espaces inter digitale')); ?></label>
+                                    <select class="form-control" id="callosites-main-dorsal"  name="callosite-main-dorsal">
                                     <option value="oui"><?php echo e(__('sentence.oui')); ?></option>
                                     <option value="non"><?php echo e(__('sentence.non')); ?></option>
                                     </select>
@@ -410,7 +410,7 @@
 <script type="text/javascript" src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
 <!-- Initialize the plugin: -->
 <script type="text/javascript">
-    $('#signes-particuliers-mains,#signes-particuliers-peau, #signes-particuliers-ongles, #soin').multiselect();
+    $('#signes-particuliers-mains,#signes-particuliers-peau, #signes-particuliers-ongles-mains, #soin').multiselect();
 </script>
 <?php $__env->stopSection(); ?>
 
