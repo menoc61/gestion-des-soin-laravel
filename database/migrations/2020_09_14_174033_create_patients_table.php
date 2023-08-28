@@ -20,11 +20,16 @@ class CreatePatientsTable extends Migration
                   ->onDelete('cascade');
             $table->string('birthday');
             $table->string('phone')->nullable();
-            $table->string('gender');
-            $table->string('blood')->nullable();
             $table->mediumText('adress')->nullable();
-            $table->string('weight')->nullable();
-            $table->string('height')->nullable();
+            $table->string('gender');
+            $table->string('medication')->nullable();
+            $table->string('hobbie')->nullable();
+            $table->string('demande')->nullable();
+            $table->string('allergie')->nullable();
+            $table->string('type_patient')->nullable();
+            $table->string('alimentation')->nullable();
+            $table->string('digestion')->nullable();
+            $table->string('morphology');
 
             $table->timestamps();
         });

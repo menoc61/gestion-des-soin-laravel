@@ -44,14 +44,18 @@ class PatientController extends Controller
         	'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'birthday' => ['required','before:today'],
-            'blood' => ['required',
-            			Rule::in(['Unknown', 'A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']),
-        	],
             'gender' => ['required',
             			Rule::in(['Male', 'Female']),
         				],
-            'weight' => ['numeric','nullable'],
-            'height' => ['numeric','nullable'],
+            'morphology' => ['required','array', Rule::in(['Aucune','Grand(e)','Svelte','Petit(e)','Mince','Maigre','Rondeur','Enveloppé(e)'])],
+
+            'alimentation' => ['required', 'array',
+                Rule::in(['Aucune','Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])],
+
+            'type_patient' => ['required','array', Rule::in(['Aucun','Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
+
+            'digestion' => ['required', 'array', Rule::in(['Aucune','Bonne', 'Alternée', 'Médiocre'])],
+
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5048',
 
     	]);
@@ -64,23 +68,21 @@ class PatientController extends Controller
 		if($request->hasFile('image')){
 
 			// We Get the image
-		 	$file = $request->file('image'); 
-		 	// We Add String to Image name 
+		 	$file = $request->file('image');
+		 	// We Add String to Image name
             $fileName = Str::random(15).'-'.$file->getClientOriginalName();
-            // We Tell him the uploads path 
+            // We Tell him the uploads path
             $destinationPath = public_path().'/uploads/';
             // We move the image to the destination path
             $file->move($destinationPath,$fileName);
-            // Add fileName to database 
-            
+            // Add fileName to database
+
         	$user->image = $fileName;
 		}else{
 			$user->image = "";
 		}
-			
 
 		$user->save();
-
 
 		$patient = new Patient();
 
@@ -88,18 +90,23 @@ class PatientController extends Controller
 		$patient->birthday = $request->birthday;
 		$patient->phone = $request->phone;
 		$patient->gender = $request->gender;
-		$patient->blood = $request->blood;
 		$patient->adress = $request->adress;
-		$patient->weight = $request->weight;
-		$patient->height = $request->height;
+        $patient->allergie = $request->allergie;
+		$patient->medication = $request->medication;
+		$patient->hobbie = $request->hobbie;
+        $patient->demande = $request->demande;
+        $patient->type_patient = implode(',', $request->type_patient);
+        $patient->morphology = implode(',', $request->morphology);
+        $patient->alimentation = implode(',', $request->alimentation);
+        $patient->digestion = implode(',', $request->digestion);
 
 		$patient->save();
 
 		return Redirect::route('patient.all')->with('success', __('sentence.Patient Created Successfully'));
-		
+
 		}
 
-    
+
 
 	    public function edit($id){
 
@@ -117,15 +124,21 @@ class PatientController extends Controller
 			        Rule::unique('users')->ignore($request->user_id),
 		    ],
             'birthday' => ['required','before:today'],
-            'blood' => ['required',
-            			Rule::in(['Unknown', 'A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']),
-        	],
+
             'gender' => ['required',
             			Rule::in(['Male', 'Female']),
         				],
-            'weight' => ['numeric','nullable'],
-            'height' => ['numeric','nullable'],
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5048',
+
+            'morphology' => ['required','array', Rule::in(['Aucune','Grand(e)','Svelte','Petit(e)','Mince','Maigre','Rondeur','Enveloppé(e)'])],
+
+            'alimentation' => ['required', 'array',
+                     Rule::in(['Aucune','Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])],
+
+           'type_patient' => ['','array',Rule::in(['Aucun','Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
+
+           'digestion' => ['', 'array', Rule::in(['Aucune','Bonne', 'Alternée', 'Médiocre'])],
+
+           'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5048',
     	]);
 
     	$user = User::find($request->user_id);
@@ -136,14 +149,14 @@ class PatientController extends Controller
 		if($request->hasFile('image')) {
 
 			// We Get the image
-		 	$file = $request->file('image'); 
-		 	// We Add String to Image name 
+		 	$file = $request->file('image');
+		 	// We Add String to Image name
             $fileName = Str::random(15).'-'.$file->getClientOriginalName();
-            // We Tell him the uploads path 
+            // We Tell him the uploads path
             $destinationPath = public_path().'/uploads/';
             // We move the image to the destination path
             $moved = $file->move($destinationPath,$fileName);
-            // Add fileName to database 
+            // Add fileName to database
 
             $fullpath = public_path().'/uploads/'.$user->image;
 
@@ -154,7 +167,7 @@ class PatientController extends Controller
         	$user->image = $fileName;
 
 		}
-			
+
 
 		$user->update();
 
@@ -163,13 +176,19 @@ class PatientController extends Controller
 		         			->update(['birthday' => $request->birthday,
 										'phone' => $request->phone,
 										'gender' => $request->gender,
-										'blood' => $request->blood,
 										'adress' => $request->adress,
-										'weight' => $request->weight,
-										'height' => $request->height]);
+                                        'allergie' => $request->allergie,
+                                        'medication' => $request->medication,
+                                        'hobbie' => $request->hobbie,
+                                        'demande' => $request->demande,
+                                        'type_patient' => implode(',', $request->type_patient),
+                                        'morphology' => implode(',', $request->morphology),
+                                        'alimentation' => implode(',' , $request->alimentation),
+                                        'digestion' => implode(',', $request->digestion),
+										]);
 
-		
-		
+
+
 
 		return Redirect::back()->with('success', __('sentence.Patient Updated Successfully'));
 
@@ -186,9 +205,9 @@ class PatientController extends Controller
         $historys = History::where('user_id' ,$id)->OrderBy('id','Desc')->get();
 
     	return view('patient.view', [
-    		'patient' => $patient, 
-    		'prescriptions' => $prescriptions, 
-    		'appointments' => $appointments, 
+    		'patient' => $patient,
+    		'prescriptions' => $prescriptions,
+    		'appointments' => $appointments,
     		'invoices' => $invoices,
     		'documents' => $documents,
     		'historys' => $historys
@@ -198,7 +217,7 @@ class PatientController extends Controller
 
 
     public function search(Request $request){
-    	
+
     	$term = $request->term;
 
     	$patients = User::where('name','LIKE','%' . $term . '%')->OrderBy('id','DESC')->paginate(10);
