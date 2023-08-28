@@ -9,7 +9,7 @@
       <!-- CSRF Token -->
       <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
       <link rel="icon" type="image/png" href="<?php echo e(asset('img/favicon.png')); ?>">
-      <title>Doctorino - <?php echo $__env->yieldContent('title'); ?> </title>
+      <title>Sai i lama - <?php echo $__env->yieldContent('title'); ?> </title>
       <!-- Custom styles for this template-->
     <!-- Custom fonts for this template-->
     <link href="<?php echo e(asset('dashboard/vendor/fontawesome-free/css/all.min.css')); ?>" rel="stylesheet" type="text/css">
@@ -50,7 +50,7 @@
                   <div class="sidebar-brand-icon rotate-n-15">
                      <i class="fas fa-user-md"></i>
                   </div>
-                  <div class="sidebar-brand-text mx-3">Doctorino <sup>3.4</sup></div>
+                  <div class="sidebar-brand-text mx-3">Sai i lama <sup>3.4</sup></div>
                </a>
                <!-- Divider -->
                <hr class="sidebar-divider my-0">
@@ -258,7 +258,7 @@
                   </a>
                   <div id="collapseSettings" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                      <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php echo e(route('doctorino_settings.edit')); ?>"><?php echo e(__('sentence.Doctorino Settings')); ?></a>
+                        <a class="collapse-item" href="<?php echo e(route('doctorino_settings.edit')); ?>"><?php echo e(__('sentence.Sai i lama Settings')); ?></a>
                         <a class="collapse-item" href="<?php echo e(route('prescription_settings.edit')); ?>"><?php echo e(__('sentence.Prescription Settings')); ?></a>
                         <a class="collapse-item" href="<?php echo e(route('sms_settings.edit')); ?>"><?php echo e(__('sentence.SMS Gateway Setup')); ?></a>
                      </div>

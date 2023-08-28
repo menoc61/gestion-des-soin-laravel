@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-  
+
 use Illuminate\Database\Seeder;
 
 use Illuminate\Support\Facades\DB;
@@ -17,12 +17,12 @@ class SettingsSeeder extends Seeder
     {
          DB::table('settings')->insert([
             'option_name' => 'system_name',
-            'option_value' => 'Doctorino Doctor Chamber',
+            'option_value' => 'sai i lama gestion soin',
         ]);
 
          DB::table('settings')->insert([
             'option_name' => 'address',
-            'option_value' => '150 Logts : Bloc 16 N° 02 OUED TARFA - Draria',
+            'option_value' => 'Etoa-Meki ',
         ]);
 
          DB::table('settings')->insert([
@@ -32,27 +32,27 @@ class SettingsSeeder extends Seeder
 
          DB::table('settings')->insert([
             'option_name' => 'hospital_email',
-            'option_value' => 'hospital.email@gmail.com',
+            'option_value' => 'sai-i-lama@gmail.com',
         ]);
 
         DB::table('settings')->insert([
             'option_name' => 'currency',
-            'option_value' => '$',
+            'option_value' => 'cfa',
         ]);
 
         DB::table('settings')->insert([
             'option_name' => 'vat',
-            'option_value' => '19',
+            'option_value' => '0',
         ]);
 
         DB::table('settings')->insert([
             'option_name' => 'language',
-            'option_value' => 'en',
+            'option_value' => 'fr',
         ]);
 
         DB::table('settings')->insert([
             'option_name' => 'appointment_interval',
-            'option_value' => '30',
+            'option_value' => '60',
         ]);
 
         DB::table('settings')->insert([
