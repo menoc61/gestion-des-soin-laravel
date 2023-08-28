@@ -47,55 +47,71 @@
                   </div>
                </div>
                <div class="form-row">
-                  <div class="form-group col-md-4">
+                  <div class="form-group col-md-2">
                      <label for="inputCity">{{ __('sentence.Gender') }}<font color="red">*</font></label>
                      <select class="form-control" name="gender" id="Gender">
                         <option value="Male">{{ __('sentence.Male') }}</option>
                         <option value="Female">{{ __('sentence.Female') }}</option>
                      </select>
                   </div>
-                  <div class="form-row col-md-7 ml-5" >
-                    <div class="form-group col-md-4">
+                  <div class="form-row col-md-10 ml-10" >
+                    <div class="form-group col-md-3">
                       <label for="morphology_patient">{{ __('sentence.Morphology') }}<font color="red">*</font></label>
-                      <div class="col-md-4">
+                      <div class="col-md-3">
                           <select class="form-control" id="morphology_patient" multiple="multiple" name="morphology[]">
-                              <option value="1">Grand(e)</option>
-                              <option value="3">Svelte</option>
-                              <option value="2">Petit(e)</option>
-                              <option value="4">Mince</option>
-                              <option value="5">Maigre</option>
-                              <option value="6">Rondeur</option>
-                              <option value="7">Enveloppé(e)</option>
+                              <option value="Aucune">Aucune</option>
+                              <option value="Grand(e)">Grand(e)</option>
+                              <option value="Svelte">Svelte</option>
+                              <option value="Petit(e)">Petit(e)</option>
+                              <option value="Mince">Mince</option>
+                              <option value="Maigre">Maigre</option>
+                              <option value="Rondeur">Rondeur</option>
+                              <option value="Enveloppé(e)">Enveloppé(e)</option>
                           </select>
                       </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                       <label for="alimentation_patient">{{ __('sentence.Alimentation') }}<font color="red">*</font></label>
-                      <div class="col-md-4">
+                      <div class="col-md-3">
                           <select class="form-control" id="alimentation_patient" multiple="multiple" name="alimentation[]">
-                              <option value="1">Viande</option>
-                              <option value="2">Poisson</option>
-                              <option value="3">Légumes</option>
-                              <option value="4">Céréales</option>
-                              <option value="5">Tubercules</option>
-                              <option value="6">Fruits</option>
-                              <option value="7">Alcool</option>
-                              <option value="9">Fumeur</option>
-                              <option value="10">Non-fumeur</option>
+                              <option value="Aucune">Aucune</option>
+                              <option value="Viande">Viande</option>
+                              <option value="Poisson">Poisson</option>
+                              <option value="Légumes">Légumes</option>
+                              <option value="Céréales">Céréales</option>
+                              <option value="Tubercules">Tubercules</option>
+                              <option value="Fruits">Fruits</option>
+                              <option value="Alcool">Alcool</option>
+                              <option value="Pas d'alcool">Pas d'alcool</option>
+                              <option value="Fumeur">Fumeur</option>
+                              <option value="Non-fumeur">Non-fumeur</option>
                           </select>
                       </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                       <label for="digestion_patient">{{ __('sentence.Digestion') }}<font color="red">*</font></label>
-                      <div class="col-md-4">
+                      <div class="col-md-3">
                           <select class="form-control" id="digestion_patient" multiple="multiple" name="digestion[]">
-                              <option value="1">Bonne</option>
-                              <option value="2">Alternée</option>
-                              <option value="3">Médiocre</option>
+                              <option value="Aucune">Aucune</option>
+                              <option value="Bonne">Bonne</option>
+                              <option value="Alternée">Alternée</option>
+                              <option value="Médiocre">Médiocre</option>
                           </select>
                       </div>
                     </div>
-                </div>
+                    <div class="form-group col-md-3">
+                        <label for="typ_patient">{{ __('sentence.Type of patient') }}<font color="red">*</font></label>
+                        <div class="col-md-3">
+                            <select class="form-control" id="typ_patient" multiple="multiple" name="type_patient[]">
+                                <option value="Aucun">Aucun</option>
+                                <option value="Elancé(e)">Elancé(e)</option>
+                                <option value="Mince">Mince</option>
+                                <option value="Amazone">Amazone</option>
+                                <option value="Forte">Forte</option>
+                            </select>
+                        </div>
+                      </div>
+                    </div>
                </div>
                <div class="form-row">
                   <div class="form-group col-md-6">
@@ -112,17 +128,17 @@
                   </div>
                   <div class="form-group col-md-6">
                     <label for="request">{{ __('sentence.Special Requests') }}<font color="red">*</font></label>
-                    <input type="text" class="form-control" id="request" name="request">
+                    <input type="text" class="form-control" id="request" name="demande">
                   </div>
                </div>
                <div class="form-row">
-                  <div class="form-group col-md-6">
-                     <label for="inputState">{{ __('sentence.Image') }}</label>
-                     <label for="file-upload" class="custom-file-upload">
-                     <i class="fa fa-cloud-upload"></i> Sélectionnez l’image
-                     </label>
-                     <input type="file" class="form-control" id="file-upload" name="image">
-                  </div>
+                <div class="form-group col-md-6">
+                   <label for="inputState">{{ __('sentence.Profil') }}</label>
+                   <label for="file-upload" class="custom-file-upload">
+                   <i class="fa fa-cloud-upload"></i> Sélectionnez une Photo
+                   </label>
+                   <input type="file" class="form-control" id="file-upload" name="image">
+                </div>
                </div>
                <div class="form-group row">
                   <div class="col-sm-9">
@@ -152,6 +168,6 @@
 <script type="text/javascript" src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
 <!-- Initialize the plugin: -->
 <script type="text/javascript">
-    $('#morphology_patient, #alimentation_patient, #digestion_patient').multiselect();
+    $('#morphology_patient, #alimentation_patient, #digestion_patient, #typ_patient').multiselect();
 </script>
 @endsection

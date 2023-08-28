@@ -42,6 +42,8 @@
                       <th class="text-center">{{ __('sentence.Age') }}</th>
                       <th class="text-center">{{ __('sentence.Phone') }}</th>
                       <th class="text-center">{{ __('sentence.Morphology') }}</th>
+                      <th class="text-center">{{ __('sentence.Hobbies') }}</th>
+                      <th class="text-center">{{ __('sentence.Medication') }}</th>
                       <th class="text-center">{{ __('sentence.Date') }}</th>
                       <th class="text-center">{{ __('sentence.Due Balance') }}</th>
                       <th class="text-center">{{ __('sentence.Prescriptions') }}</th>
@@ -56,6 +58,8 @@
                       <td class="text-center"> {{ @\Carbon\Carbon::parse($patient->Patient->birthday)->age }} </td>
                       <td class="text-center"> {{ @$patient->Patient->phone }} </td>
                       <td class="text-center"> {{ @$patient->Patient->morphology }} </td>
+                      <td class="text-center"> {{ @$patient->Patient->hobbie }} </td>
+                      <td class="text-center"> {{ @$patient->Patient->medication }} </td>
                       <td class="text-center"><label class="badge badge-primary-soft">{{ $patient->created_at->format('d M Y H:i') }}</label></td>
                       <td class="text-center"><label class="badge badge-primary-soft">{{ Collect($patient->Billings)->where('payment_status','Partially Paid')->sum('due_amount') }} {{ App\Setting::get_option('currency') }}</label></td>
                       <td class="text-center">
