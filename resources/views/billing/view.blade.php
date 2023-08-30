@@ -9,7 +9,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
    <h1 class="h3 mb-0 text-gray-800"></h1>
    @can('print invoice')
-   <button href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm print_prescription"><i class="fas fa-print fa-sm text-white-50"></i> Print</button>
+   <button href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm print_prescription"><i class="fas fa-print fa-sm text-white-50"></i> Imprimer</button>
    @endcan
 </div>
 <div class="row justify-content-center" id="stylesheetd">
@@ -35,14 +35,13 @@
                </div>
             </div>
 
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            <div class="border-top mt-5">
+                <h5 class="text-center mt-4 "><b>{{ __('sentence.Invoice_for_care') }} </b></h5>
+            </div>
 
-
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-            <div class="col-4">
-                <p>
-                   <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y') }}<br>
+            <div class="col-12 border-top mt-4">
+                <p class="mt-4">
+                   <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y h:m:s') }}<br>
                    <b>{{ __('sentence.Reference') }} :</b> {{ $billing->reference }}<br>
                    <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->User->name }}
                 </p>
@@ -52,7 +51,6 @@
             <!-- ROW : Drugs List -->
             <div class="row justify-content-center">
                <div class="col">
-                  <h5 class="text-center mt-5"><b>{{ __('sentence.Invoice') }}</b></h5>
                   <br><br>
                   <table class="table">
                      <tr style="background: #2e3f50; color: #fff;">
@@ -112,14 +110,33 @@
 <!-- Hidden invoice -->
  <div id="print_area" style="display: none;">
                                  <div class="row">
-                                    <div class="col-9">
-                                       @if(!empty(App\Setting::get_option('logo')))
-                                       <img src="{{ asset('uploads/'.App\Setting::get_option('logo')) }}"><br><br>
-                                       @endif
-                                       {!! clean(App\Setting::get_option('header_left')) !!}
+                                    <div class="col-md-12">
+                                        <div class="col">
+                                           @if(!empty(App\Setting::get_option('logo')))
+                                              <img src="{{ asset('uploads/'.App\Setting::get_option('logo')) }}"><br><br>
+                                           @endif
+                                           {{-- {!! clean(App\Setting::get_option('header_left')) !!} --}}
+                                        </div>
+                                        <div class="">
+                                             <div class="text-center">
+                                                 <b>{{ App\Setting::get_option('system_name') }}</b><br>
+                                                 <b>{{ App\Setting::get_option('title') }}</b><br>
+                                                 <b>{{ App\Setting::get_option('address') }}</b><br>
+                                                 <b>{{ App\Setting::get_option('phone') }}</b><br>
+                                                 <b>{{ App\Setting::get_option('hospital_email') }}</b>
+                                             </div>
+                                        </div>
                                     </div>
-                                    <div class="col-3">
-                                       <p class="float-right"><b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y') }}<br>
+
+
+                                    <div class="col-12 border-top mt-5">
+                                        <h5 class="text-center mt-4 "><b>{{ __('sentence.Invoice_for_care') }} </b></h5>
+                                    </div>
+
+
+                                    <div class="col-12 border-top mt-4 ">
+                                       <p class="float-left mt-4">
+                                          <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y h:m:s') }}<br>
                                           <b>{{ __('sentence.Reference') }} :</b> {{ $billing->reference }}<br>
                                           <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->User->name }}
                                        </p>
@@ -129,9 +146,6 @@
                                  <!-- ROW : Drugs List -->
                                  <div class="row justify-content-center">
                                     <div class="col">
-
-                                       <h5 class="text-center mt-5"><b>{{ __('sentence.Invoice') }}</b></h5>
-                                       <br><br>
                                        <table class="table">
                                           <tr >
                                              <td width="10%"><b>#</b></td>
