@@ -30,7 +30,7 @@ class BillingController extends Controller
 	    	 $validatedData = $request->validate([
 	        	'patient_id' => ['required','exists:users,id'],
 	        	'payment_mode' => 'required',
-	        	'payment_status' => 'required',
+	        	// 'payment_status' => 'required',
 	        	'invoice_title.*' => 'required',
 	        	'invoice_amount.*' => ['required','numeric'],
 	    	]);
@@ -45,7 +45,7 @@ class BillingController extends Controller
             if ($request->deposited_amount >= 1 && $request->deposited_amount < $request->invoice_amount) {
                 $request->payment_status = 'Partially Paid';
             }
-            else{
+            if($request->due_amount == 0){
                 $request->payment_status = 'Paid';
             }
 
@@ -203,10 +203,20 @@ class BillingController extends Controller
 
             }
 
-              if($request->payment_status == 'Paid'){
-                $request->due_amount = 0;
-                $request->deposited_amount = Collect($request->invoice_amount)->sum()+(Collect($request->invoice_amount)->sum()*Setting::get_option('vat')/100);
-              }
+            while ($request->deposited_amount < 0){
+                return Redirect::back()->with('danger','le montant de la marchandise ne doit pas être négatif!');
+            }
+            if ($request->deposited_amount >= 1 && $request->deposited_amount < $request->invoice_amount) {
+                $request->payment_status = 'Partially Paid';
+            }
+            if($request->due_amount == 0){
+                $request->payment_status = 'Paid';
+            }
+
+            if ($request->deposited_amount == 0) {
+                $request->payment_status = 'Unpaid';
+            }
+
 
               $billing = Billing::find($request->billing_id);
 

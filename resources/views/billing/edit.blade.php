@@ -31,17 +31,19 @@
                </div>
 
                <div class="form-group">
-                  <label for="DepositedAmount">Deposited Amount</label>
+                  <label for="DepositedAmount">{{__('sentence.Already Paid ')}}</label>
                   <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount" value="{{ $billing->deposited_amount }}">
                </div>
 
                <div class="form-group">
-                  <label for="DueAmount">Due Amount</label>
+                  <label for="DueAmount">{{__('sentence.Due Balance')}}</label>
                   <input class="form-control" type="number" name="due_amount" id="DueAmount">
                </div>
 
 
-               <div class="form-group">
+               {{-- choix du statut de paiement --}}
+
+               {{-- <div class="form-group">
                   <label for="PaymentMode">{{ __('sentence.Payment Status') }}</label>
                   <select class="form-control" name="payment_status">
                      <option value="{{ $billing->payment_status }}">{{ $billing->payment_status }}</option>
@@ -49,7 +51,8 @@
                      <option value="Partially Paid">{{ __('sentence.Partially Paid') }}</option>
                      <option value="Unpaid">{{ __('sentence.Unpaid') }}</option>
                   </select>
-               </div>
+               </div> --}}
+
                <div class="form-group">
                   <input type="submit" value="{{ __('sentence.Update Invoice') }}" class="btn btn-warning btn-block" align="center">
                </div>
@@ -91,9 +94,11 @@
                      <a type="button" class="btn btn-primary btn-sm add text-white" align="center"><i class='fa fa-plus'></i> {{ __('sentence.Add Item') }}</a>
                   </div>
                </fieldset>
-               <span class="float-right">Total excl. tax : <b id="total_without_tax_income">0 </b> {{ App\Setting::get_option('currency') }}</span><br>
-               <span class="float-right">VAT :  {{ App\Setting::get_option('vat') }} %</span><br>
-               <span class="float-right">Total incl. tax : <b id="total_income">0 </b> {{ App\Setting::get_option('currency') }}</span>
+               <div class="d-flex justify-content-between ">
+                    <span class="">Montant sans Taxe : <b id="total_without_tax_income">0 </b> {{ App\Setting::get_option('currency') }}</span><br>
+                    <span class="">TVA : <b>{{ App\Setting::get_option('vat') }} %</b> </span><br>
+                    <span class="">Montant Total : <b id="total_income">0 </b> {{ App\Setting::get_option('currency') }}</span>
+                </div>
             </div>
          </div>
       </div>
