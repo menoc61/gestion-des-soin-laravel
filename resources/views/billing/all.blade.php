@@ -28,7 +28,7 @@
                   <th>{{ __('sentence.Reference') }}</th>
                   <th>{{ __('sentence.Patient') }}</th>
                   <th>{{ __('sentence.Date') }}</th>
-                  <th class="text-center">{{ __('sentence.Amount') }} - <font class="text-danger">Due Balance</font></th>
+                  <th class="text-center">{{ __('sentence.Amount') }} - <font class="text-danger">{{ __('sentence.Due Balance') }}</font></th>
                   <th class="text-center">{{ __('sentence.Status') }}</th>
                   <th class="text-center">{{ __('sentence.Payment Method') }}</th>
                   <th>{{ __('sentence.Actions') }}</th>
@@ -39,10 +39,10 @@
                <tr>
                   <td>{{ $invoice->reference }}</td>
                   <td><a href="{{ url('patient/view/'.$invoice->user_id) }}"> {{ $invoice->User->name }} </a></td>
-                  <td>{{ $invoice->created_at->format('d M Y') }}</td>
-                  <td class="text-center"> {{ $invoice->total_with_tax }} {{ App\Setting::get_option('currency') }} 
+                  <td>{{ $invoice->created_at->format('d M Y h:m:s') }}</td>
+                  <td class="text-center"> {{ $invoice->total_with_tax }} {{ App\Setting::get_option('currency') }}
                      @if($invoice->payment_status == 'Unpaid' OR $invoice->payment_status == 'Partially Paid')
-                     <label class="badge badge-danger-soft">{{ $invoice->due_amount }} {{ App\Setting::get_option('currency') }} </label>
+                        <label class="badge badge-danger-soft">{{ $invoice->due_amount }} {{ App\Setting::get_option('currency') }} </label>
                      @endif
                   </td>
                   <td class="text-center">
@@ -59,7 +59,7 @@
                         <i class="fas fa-hourglass-start"></i> {{ __('sentence.Partially Paid') }}
                      </label>
                      @else
-                     
+
                      @endif
                   </td>
                   <td class="text-center"><label class="badge badge-primary-soft"><i class="fa fa-handshake"></i> {{ $invoice->payment_mode }}</label></td>
