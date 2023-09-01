@@ -34,7 +34,6 @@ return [
   'Drug Edited Successfully' => 'Produit mis à jour avec succès!',
   'Drug Deleted Successfully' => 'Produit supprimé avec succès!',
 
-
   'Tests list' => 'Liste des Diagnostic',
   'Patient informations' => 'Informations du Patient',
   'Billing' => 'Facturation',
@@ -65,7 +64,7 @@ return [
   'Tests' => 'Diagnostic',
   'Add Test' => 'Ajouter un Diagnostic',
   'All Tests' => 'Tout les Diagnostic',
-  'Test Name' => 'Diagnostic',
+  'Test Name' => 'Nom du Diagnostic',
   'Form Type' => 'Type de diagnostic',
   'Edit Test' => 'Modifier le Diagnostic',
   'Test Deleted Successfully' => 'Diagnostic supprimé avec succès!',
@@ -115,22 +114,22 @@ return [
     'obseration' => 'Obseration:',
     'relief' => 'Relief:',
     'signe particulier' => 'Signes particuliers:',
-    'taches'=> 'Taches:',
-    'espaces inter digitale'=> 'Espaces inter digitale:',
-    'callosites'=> 'Présence des callosités:',
-    'cicatrices'=> 'Présence des Cicatrices:',
-    'etat de la peau'=> 'Etat de la peau:',
+    'taches' => 'Taches:',
+    'espaces inter digitale' => 'Espaces inter digitale:',
+    'callosites' => 'Présence des callosités:',
+    'cicatrices' => 'Présence des Cicatrices:',
+    'etat de la peau' => 'Etat de la peau:',
 
-//diagnostic foot
+// diagnostic foot
     'general foot state' => 'Etat générale des pieds: ',
     'particular type foot' => 'Signes particuliers des pieds:',
     'taches foot' => 'Taches sur les ongles:',
     'aureoles' => 'Présence des auréoles:',
     'veines face ext' => 'Veines visibles la face externe:',
     'veines face int' => 'Veines visibles la face interne:',
-    'douleur talon'=>'Douleurs particulières du talon:',
+    'douleur talon' => 'Douleurs particulières du talon:',
 
-    //Traitement
+    // Traitement
     'oui' => 'oui',
     'non' => 'non',
    'Test to do' => 'Diagnostic :',
@@ -144,7 +143,7 @@ return [
    'On' => 'le',
    'Years' => 'Ans',
    'Content' => 'Contenu',
-   //Settings
+   // Settings
    'System Name' => 'Nom du système',
    'Title' => 'Titre',
    'Address' => 'Adresse',
@@ -191,12 +190,12 @@ return [
     'Blood Group' => 'Groupe Sanguin',
     'Unknown' => 'Inconnu',
     'Morphology' => 'Morphologie',
-    'Alimentation'=> 'Alimentation',
+    'Alimentation' => 'Alimentation',
     'Type of patient' => 'Type Hôte',
     'Hobbies' => 'Hobbies',
     'Medication' => 'Médication',
     'Allergies' => 'Allergies',
-    'Digestion'=> 'Digestion',
+    'Digestion' => 'Digestion',
     'Special Requests' => 'Demande Spéciales',
     'Edit Patient' => 'Modifier un patient',
     'Patient Updated Successfully' => 'Patient mis à jour avec succès!',
