@@ -45,5 +45,32 @@
 @endsection
 
 @section('footer')
+<script type="text/javascript" defer>
+    window.addEventListener('DOMContentLoaded', function() {
+        var sections = document.querySelectorAll('.form-group.row[id^="section-"]');
 
+        sections.forEach(function(section) {
+            section.style.display = 'none';
+        });
+
+        document.getElementById('inputSection').addEventListener('change', function() {
+            var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+
+            sections.forEach(function(section) {
+                if (selectedOptions.includes(section.id.replace('section-', ''))) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript"
+    src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+<!-- Initialize the plugin: -->
+<script type="text/javascript">
+    $('#signes-particuliers,#signes-particuliers-ongles,#soin').multiselect();
+</script>
 @endsection

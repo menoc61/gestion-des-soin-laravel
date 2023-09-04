@@ -16,8 +16,8 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                  ->constrained()
-                  ->onDelete('cascade');
+                ->constrained()
+                ->onDelete('cascade');
             $table->string('birthday');
             $table->string('phone')->nullable();
             $table->mediumText('adress')->nullable();
@@ -26,10 +26,10 @@ class CreatePatientsTable extends Migration
             $table->string('hobbie')->nullable();
             $table->string('demande')->nullable();
             $table->string('allergie')->nullable();
-            $table->string('type_patient')->nullable();
-            $table->string('alimentation')->nullable();
+            $table->json('type_patient')->nullable();
+            $table->json('alimentation')->nullable();
             $table->string('digestion')->nullable();
-            $table->string('morphology');
+            $table->json('morphology')->nullable();
 
             $table->timestamps();
         });
