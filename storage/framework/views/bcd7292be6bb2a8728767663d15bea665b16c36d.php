@@ -72,7 +72,8 @@
                                 <label for="inputCity"><?php echo e(__('sentence.Gender')); ?><font color="red">*</font></label><br>
                                 <select class="form-control" name="gender" id="Gender">
                                     <?php $__currentLoopData = ['Male', 'Female']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($option); ?>" <?php echo e($patient->Patient->gender === $option ? 'selected' : ''); ?>>
+                                        <option value="<?php echo e($option); ?>"
+                                            <?php echo e($patient->Patient->gender === $option ? 'selected' : ''); ?>>
                                             <?php echo e($option); ?>
 
                                         </option>
@@ -116,7 +117,8 @@
                                     <div class="col-md-3">
                                         <select class="form-control" id="digestion_patient" name="digestion">
                                             <?php $__currentLoopData = ['Bonne', 'Alternée', 'Médiocre']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($option); ?>" <?php echo e($patient->Patient->digestion === $option ? 'selected' : ''); ?>>
+                                                <option value="<?php echo e($option); ?>"
+                                                    <?php echo e($patient->Patient->digestion === $option ? 'selected' : ''); ?>>
                                                     <?php echo e($option); ?>
 
                                                 </option>
@@ -130,7 +132,7 @@
                                     <div class="col-md-3">
                                         <select class="form-control" id="type_patient" multiple="multiple"
                                             name="type_patient[]">
-                                            <?php $__currentLoopData = ['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php $__currentLoopData = ['Elancé(e)', 'Mince', 'Amazone', 'Forte']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <option value="<?php echo e($option); ?>"
                                                     <?php echo e(in_array($option, json_decode($patient->Patient->type_patient)) ? 'selected' : ''); ?>>
                                                     <?php echo e($option); ?>
@@ -209,4 +211,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\gestion des soins\v4.0\resources\views/patient/edit.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/patient/edit.blade.php ENDPATH**/ ?>

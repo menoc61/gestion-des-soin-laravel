@@ -71,8 +71,9 @@
                             <div class="form-group col-md-2">
                                 <label for="inputCity">{{ __('sentence.Gender') }}<font color="red">*</font></label><br>
                                 <select class="form-control" name="gender" id="Gender">
-                                    @foreach(['Male', 'Female'] as $option)
-                                        <option value="{{ $option }}" {{ $patient->Patient->gender === $option ? 'selected' : '' }}>
+                                    @foreach (['Male', 'Female'] as $option)
+                                        <option value="{{ $option }}"
+                                            {{ $patient->Patient->gender === $option ? 'selected' : '' }}>
                                             {{ $option }}
                                         </option>
                                     @endforeach
@@ -113,8 +114,9 @@
                                         </font></label>
                                     <div class="col-md-3">
                                         <select class="form-control" id="digestion_patient" name="digestion">
-                                            @foreach(['Bonne', 'Alternée', 'Médiocre'] as $option)
-                                                <option value="{{ $option }}" {{ $patient->Patient->digestion === $option ? 'selected' : '' }}>
+                                            @foreach (['Bonne', 'Alternée', 'Médiocre'] as $option)
+                                                <option value="{{ $option }}"
+                                                    {{ $patient->Patient->digestion === $option ? 'selected' : '' }}>
                                                     {{ $option }}
                                                 </option>
                                             @endforeach
@@ -122,12 +124,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label for="typ_patient">{{ __('sentence.Type of patient') }}<font color="red">*
+                                    <label for="type_patient">{{ __('sentence.Type of patient') }}<font color="red">*
                                         </font></label>
                                     <div class="col-md-3">
-                                        <select class="form-control" id="typ_patient" multiple="multiple"
-                                            name="typ_patient[]">
-                                            @foreach (['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'] as $option)
+                                        <select class="form-control" id="type_patient" multiple="multiple"
+                                            name="type_patient[]">
+                                            @foreach (['Elancé(e)', 'Mince', 'Amazone', 'Forte'] as $option)
                                                 <option value="{{ $option }}"
                                                     {{ in_array($option, json_decode($patient->Patient->type_patient)) ? 'selected' : '' }}>
                                                     {{ $option }}
@@ -201,6 +203,6 @@
         src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
-        $('#morphology_patient, #alimentation_patient, #digestion_patient, #typ_patient,#Gender').multiselect();
+        $('#morphology_patient, #alimentation_patient, #digestion_patient, #type_patient,#Gender').multiselect();
     </script>
 @endsection

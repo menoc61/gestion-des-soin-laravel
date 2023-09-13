@@ -59,16 +59,16 @@ class TestController extends Controller
 
         $test->test_name = $request->test_name;
         $test->comment = $request->comment;
-        $test->diagnostic_type = implode(',', $request->diagnostic_type);
+        $test->diagnostic_type = json_encode($request->diagnostic_type);
 
         // skin diagnostic
-        $test->signes_particuliers_peau = $request->has('signes_particuliers_peau') ? implode(',', $request->signes_particuliers_peau) : null;
+        $test->signes_particuliers_peau = json_encode($request->signes_particuliers_peau);
         // hand diagnostic
         $test->Etat_generale_des_mains = $request->Etat_generale_des_mains;
         $test->Etat_des_ongles_mains = $request->Etat_des_ongles_mains;
-        $test->signes_particuliers_mains = $request->has('signes_particuliers_mains') ? implode(',', $request->signes_particuliers_mains) : null;
-        $test->signes_particuliers_ongles_mains = $request->has('signes_particuliers_ongles_mains') ? implode(',', $request->signes_particuliers_ongles_mains) : null;
-        $test->soinList_main = $request->has('soinList_main') ? implode(',', $request->soinList_main) : null;
+        $test->signes_particuliers_mains = json_encode($request->signes_particuliers_mains);
+        $test->signes_particuliers_ongles_mains = json_encode($request->signes_particuliers_ongles_mains);
+        $test->soinList_main = json_encode($request->soinList_main);
         $test->vernisInput_main = $request->vernisInput_main;
         $test->obserationInput_main = $request->obserationInput_main;
         $test->reliefInput_main = $request->reliefInput_main;
@@ -84,9 +84,9 @@ class TestController extends Controller
 
         $test->Etat_generale_des_pieds = $request->Etat_generale_des_pieds;
         $test->Etat_des_ongles_pieds = $request->Etat_des_ongles_pieds;
-        $test->signes_particuliers_pieds = $request->has('signes_particuliers_pieds') ? implode(',', $request->signes_particuliers_pieds) : null;
-        $test->signes_particuliers_ongles_pieds = $request->has('signes_particuliers_pieds') ? implode(',', $request->signes_particuliers_pieds) : null;
-        $test->soinList_pied = $request->has('soinList_pied') ? implode(',', $request->soinList_pied) : null;
+        $test->signes_particuliers_pieds = json_encode($request->signes_particuliers_pieds);
+        $test->signes_particuliers_ongles_pieds = json_encode($request->signes_particuliers_pieds);
+        $test->soinList_pied = json_encode($request->soinList_pied);
         $test->vernisInput_pied = $request->vernisInput_pied;
         $test->obserationInput_pied = $request->obserationInput_pied;
         $test->etat_pieds = $request->etat_pieds;
@@ -157,16 +157,16 @@ class TestController extends Controller
 
         $test->test_name = $request->test_name;
         $test->comment = $request->comment;
-        $test->diagnostic_type = explode(',', $request->diagnostic_type);
+        $test->diagnostic_type = json_encode($request->diagnostic_type);
 
         // skin diagnostic
-        $test->signes_particuliers_peau = $request->has('signes_particuliers_peau') ? explode(',', $request->signes_particuliers_peau) : null;
+        $test->signes_particuliers_peau = json_encode($request->signes_particuliers_peau);
         // hand diagnostic
         $test->Etat_generale_des_mains = $request->Etat_generale_des_mains;
         $test->Etat_des_ongles_mains = $request->Etat_des_ongles_mains;
-        $test->signes_particuliers_mains = $request->has('signes_particuliers_mains') ? explode(',', $request->signes_particuliers_mains) : null;
-        $test->signes_particuliers_ongles_mains = $request->has('signes_particuliers_ongles_mains') ? explode(',', $request->signes_particuliers_ongles_mains) : null;
-        $test->soinList_main = $request->has('soinList_main') ? explode(',', $request->soinList_main) : null;
+        $test->signes_particuliers_mains = json_encode($request->signes_particuliers_mains);
+        $test->signes_particuliers_ongles_mains = json_encode($request->signes_particuliers_ongles_mains);
+        $test->soinList_main = json_encode($request->soinList_main);
         $test->vernisInput_main = $request->vernisInput_main;
         $test->obserationInput_main = $request->obserationInput_main;
         $test->reliefInput_main = $request->reliefInput_main;
@@ -182,9 +182,9 @@ class TestController extends Controller
 
         $test->Etat_generale_des_pieds = $request->Etat_generale_des_pieds;
         $test->Etat_des_ongles_pieds = $request->Etat_des_ongles_pieds;
-        $test->signes_particuliers_pieds = $request->has('signes_particuliers_pieds') ? explode(',', $request->signes_particuliers_pieds) : null;
-        $test->signes_particuliers_ongles_pieds = $request->has('signes_particuliers_pieds') ? explode(',', $request->signes_particuliers_pieds) : null;
-        $test->soinList_pied = $request->has('soinList_pied') ? explode(',', $request->soinList_pied) : null;
+        $test->signes_particuliers_pieds = json_encode($request->signes_particuliers_pieds);
+        $test->signes_particuliers_ongles_pieds = json_encode($request->signes_particuliers_pieds);
+        $test->soinList_pied = json_encode($request->soinList_pied);
         $test->vernisInput_pied = $request->vernisInput_pied;
         $test->obserationInput_pied = $request->obserationInput_pied;
         $test->etat_pieds = $request->etat_pieds;

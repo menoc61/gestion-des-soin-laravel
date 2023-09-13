@@ -17,7 +17,7 @@
                   <h4><b>{{ $patient->name }}</b></h4>
                   <hr>
                   @isset($patient->Patient->birthday)
-                  <p><b>Age :</b> {{ $patient->Patient->birthday }} ({{ \Carbon\Carbon::parse($patient->Patient->birthday)->age }} Years)</p>
+                  <p><b>Age :</b> {{ $patient->Patient->birthday }} ({{ \Carbon\Carbon::parse($patient->Patient->birthday)->age }} ANS)</p>
                   @endisset
                   @isset($patient->Patient->birthday)
                   <p><b>Gender :</b> {{ $patient->Patient->gender }}</p>

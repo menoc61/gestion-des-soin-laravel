@@ -1,62 +1,62 @@
-@extends('layouts.master')
-@section('header')
+<?php $__env->startSection('header'); ?>
     <style>
         .hidden-section {
             display: none;
         }
     </style>
     <link rel="stylesheet" type="text/css" href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
-@endsection
-@section('title')
-{{ __('sentence.New Patient') }}
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('title'); ?>
+<?php echo e(__('sentence.New Patient')); ?>
+
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <div class="row justify-content-center">
    <div class="col-md-10">
       <div class="card shadow mb-4">
          <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.New Patient') }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.New Patient')); ?></h6>
          </div>
          <div class="card-body">
-            <form method="post" action="{{ route('patient.create') }}" enctype="multipart/form-data">
-               @csrf
+            <form method="post" action="<?php echo e(route('patient.create')); ?>" enctype="multipart/form-data">
+               <?php echo csrf_field(); ?>
                <div class="form-row">
                   <div class="form-group col-md-6">
-                     <label for="inputEmail4">{{ __('sentence.Full Name') }}<font color="red">*</font></label>
+                     <label for="inputEmail4"><?php echo e(__('sentence.Full Name')); ?><font color="red">*</font></label>
                      <input type="text" class="form-control" id="Name" name="name">
                   </div>
                   <div class="form-group col-md-6">
-                     <label for="inputPassword4">{{ __('sentence.Email Adress') }}<font color="red">*</font></label>
+                     <label for="inputPassword4"><?php echo e(__('sentence.Email Adress')); ?><font color="red">*</font></label>
                      <input type="email" class="form-control" id="Email" name="email">
                   </div>
                </div>
                <div class="form-row">
                   <div class="form-group col-md-6">
-                     <label for="inputAddress2">{{ __('sentence.Phone') }}</label>
+                     <label for="inputAddress2"><?php echo e(__('sentence.Phone')); ?></label>
                      <input type="text" class="form-control" id="Phone" name="phone">
                   </div>
                   <div class="form-group col-md-6">
-                     <label for="inputAddress">{{ __('sentence.Birthday') }}<font color="red">*</font></label>
+                     <label for="inputAddress"><?php echo e(__('sentence.Birthday')); ?><font color="red">*</font></label>
                      <input type="date" class="form-control" id="Birthday" name="birthday" autocomplete="off">
                   </div>
                </div>
                <div class="form-row">
                   <div class="form-group col-md-12">
-                     <label for="inputAddress2">{{ __('sentence.Address') }}</label>
+                     <label for="inputAddress2"><?php echo e(__('sentence.Address')); ?></label>
                       <input type="text" class="form-control" id="Address" name="adress">
                   </div>
                </div>
                <div class="form-row">
                   <div class="form-group col-md-2">
-                     <label for="inputCity">{{ __('sentence.Gender') }}<font color="red">*</font></label><br>
+                     <label for="inputCity"><?php echo e(__('sentence.Gender')); ?><font color="red">*</font></label><br>
                      <select class="form-control" name="gender" id="Gender">
-                        <option value="Male">{{ __('sentence.Male') }}</option>
-                        <option value="Female">{{ __('sentence.Female') }}</option>
+                        <option value="Male"><?php echo e(__('sentence.Male')); ?></option>
+                        <option value="Female"><?php echo e(__('sentence.Female')); ?></option>
                      </select>
                   </div>
                   <div class="form-row col-md-10 ml-10" >
                     <div class="form-group col-md-3">
-                      <label for="morphology_patient">{{ __('sentence.Morphology') }}<font color="red">*</font></label>
+                      <label for="morphology_patient"><?php echo e(__('sentence.Morphology')); ?><font color="red">*</font></label>
                       <div class="col-md-3">
                           <select class="form-control" id="morphology_patient" multiple="multiple" name="morphology[]">
                               <option value="Grand(e)">Grand(e)</option>
@@ -70,7 +70,7 @@
                       </div>
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="alimentation_patient">{{ __('sentence.Alimentation') }}<font color="red">*</font></label>
+                      <label for="alimentation_patient"><?php echo e(__('sentence.Alimentation')); ?><font color="red">*</font></label>
                       <div class="col-md-3">
                           <select class="form-control" id="alimentation_patient" multiple="multiple" name="alimentation[]">
                               <option value="Viande">Viande</option>
@@ -87,7 +87,7 @@
                       </div>
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="digestion_patient">{{ __('sentence.Digestion') }}<font color="red">*</font></label>
+                      <label for="digestion_patient"><?php echo e(__('sentence.Digestion')); ?><font color="red">*</font></label>
                       <div class="col-md-3">
                           <select class="form-control" id="digestion_patient" name="digestion">
                               <option value="Bonne">Bonne</option>
@@ -97,7 +97,7 @@
                       </div>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="type_patient">{{ __('sentence.Type of patient') }}<font color="red">*</font></label>
+                        <label for="type_patient"><?php echo e(__('sentence.Type of patient')); ?><font color="red">*</font></label>
                         <div class="col-md-3">
                             <select class="form-control" id="type_patient" multiple="multiple" name="type_patient[]">
                                 <option value="Elancé(e)">Elancé(e)</option>
@@ -111,25 +111,25 @@
                </div>
                <div class="form-row">
                   <div class="form-group col-md-6">
-                    <label for="hobbie">{{ __('sentence.Hobbies') }}<font color="red">*</font></label>
+                    <label for="hobbie"><?php echo e(__('sentence.Hobbies')); ?><font color="red">*</font></label>
                     <input type="text" class="form-control" id="hobbie" name="hobbie">
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="medication">{{ __('sentence.Medication') }}<font color="red">*</font></label>
+                    <label for="medication"><?php echo e(__('sentence.Medication')); ?><font color="red">*</font></label>
                     <input type="text" class="form-control" id="medication" name="medication">
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="allergie">{{ __('sentence.Allergies') }}<font color="red">*</font></label>
+                    <label for="allergie"><?php echo e(__('sentence.Allergies')); ?><font color="red">*</font></label>
                     <input type="text" class="form-control" id="allergie" name="allergie">
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="request">{{ __('sentence.Special Requests') }}<font color="red">*</font></label>
+                    <label for="request"><?php echo e(__('sentence.Special Requests')); ?><font color="red">*</font></label>
                     <input type="text" class="form-control" id="request" name="demande">
                   </div>
                </div>
                <div class="form-row">
                 <div class="form-group col-md-6">
-                   <label for="inputState">{{ __('sentence.Profil') }}</label>
+                   <label for="inputState"><?php echo e(__('sentence.Profil')); ?></label>
                    <label for="file-upload" class="custom-file-upload">
                    <i class="fa fa-cloud-upload"></i> Sélectionnez une Photo
                    </label>
@@ -138,7 +138,7 @@
                </div>
                <div class="form-group row">
                   <div class="col-sm-9">
-                     <button type="submit" class="btn btn-primary">{{ __('sentence.Save') }}</button>
+                     <button type="submit" class="btn btn-primary"><?php echo e(__('sentence.Save')); ?></button>
                   </div>
                </div>
             </form>
@@ -146,8 +146,8 @@
       </div>
    </div>
 </div>
-@endsection
-@section('header')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('header'); ?>
 <style type="text/css">
    input[type="file"] {
    display: none;
@@ -160,10 +160,12 @@
    }
 </style>
 
-@section('footer')
+<?php $__env->startSection('footer'); ?>
 <script type="text/javascript" src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
 <!-- Initialize the plugin: -->
 <script type="text/javascript">
     $('#morphology_patient, #alimentation_patient, #digestion_patient, #type_patient,#Gender').multiselect();
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/patient/create.blade.php ENDPATH**/ ?>

@@ -40,12 +40,12 @@ class PatientController extends Controller
             'gender' => ['required',
                         Rule::in(['Male', 'Female']),
                         ],
-            'morphology' => ['required', 'array', Rule::in(['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
+            'morphology' => ['required', 'array', Rule::in(['Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
 
             'alimentation' => ['required', 'array',
-                Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])],
+                Rule::in(['Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])],
 
-            'type_patient' => ['required', 'array', Rule::in(['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
+            'type_patient' => ['required', 'array', Rule::in(['Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
 
             'digestion' => 'required',
 
@@ -116,12 +116,12 @@ class PatientController extends Controller
                         Rule::in(['Male', 'Female']),
                         ],
 
-            'morphology' => ['required', 'array', Rule::in(['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
+            'morphology' => ['required', 'array', Rule::in(['Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
 
             'alimentation' => ['required', 'array',
-                     Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])],
+                     Rule::in(['Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])],
 
-           'type_patient' => ['', 'array', Rule::in(['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
+           'type_patient' => ['required', 'array', Rule::in(['Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
 
            'digestion' => 'required',
 
