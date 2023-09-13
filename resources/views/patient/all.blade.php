@@ -41,9 +41,12 @@
                       <th>{{ __('sentence.Patient Name') }}</th>
                       <th class="text-center">{{ __('sentence.Age') }}</th>
                       <th class="text-center">{{ __('sentence.Phone') }}</th>
+                      <th class="text-center">{{ __('sentence.Address') }}</th>
+                      <th class="text-center">{{ __('sentence.Allergies') }}</th>
+                      <th class="text-center">{{ __('sentence.Type of patient') }}</th>
                       <th class="text-center">{{ __('sentence.Morphology') }}</th>
-                      <th class="text-center">{{ __('sentence.Hobbies') }}</th>
-                      <th class="text-center">{{ __('sentence.Medication') }}</th>
+                      <th class="text-center">{{ __('sentence.Alimentation') }}</th>
+                      <th class="text-center">{{ __('sentence.Digestion') }}</th>
                       <th class="text-center">{{ __('sentence.Date') }}</th>
                       <th class="text-center">{{ __('sentence.Due Balance') }}</th>
                       <th class="text-center">{{ __('sentence.Prescriptions') }}</th>
@@ -55,11 +58,14 @@
                     <tr>
                       <td>{{ $patient->id }}</td>
                       <td><a href="{{ url('patient/view/'.$patient->id) }}"> {{ $patient->name }} </a></td>
-                      <td class="text-center"> {{ @\Carbon\Carbon::parse($patient->Patient->birthday)->age }} </td>
+                      <td class="text-center"> {{ @\Carbon\Carbon::parse($patient->Patient->birthday)->age }}ans </td>
                       <td class="text-center"> {{ @$patient->Patient->phone }} </td>
+                      <td class="text-center"> {{ @$patient->Patient->adress }} </td>
+                      <td class="text-center"> {{ @$patient->Patient->allergie }} </td>
+                      <td class="text-center"> {{ @$patient->Patient->type_patient }} </td>
                       <td class="text-center"> {{ @$patient->Patient->morphology }} </td>
-                      <td class="text-center"> {{ @$patient->Patient->hobbie }} </td>
-                      <td class="text-center"> {{ @$patient->Patient->medication }} </td>
+                      <td class="text-center"> {{ @$patient->Patient->alimentation }} </td>
+                      <td class="text-center"> {{ @$patient->Patient->digestion }} </td>
                       <td class="text-center"><label class="badge badge-primary-soft">{{ $patient->created_at->format('d M Y H:i') }}</label></td>
                       <td class="text-center"><label class="badge badge-primary-soft">{{ Collect($patient->Billings)->where('payment_status','Partially Paid')->sum('due_amount') }} {{ App\Setting::get_option('currency') }}</label></td>
                       <td class="text-center">

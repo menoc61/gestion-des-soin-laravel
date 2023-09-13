@@ -97,9 +97,9 @@
                       </div>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="typ_patient"><?php echo e(__('sentence.Type of patient')); ?><font color="red">*</font></label>
+                        <label for="type_patient"><?php echo e(__('sentence.Type of patient')); ?><font color="red">*</font></label>
                         <div class="col-md-3">
-                            <select class="form-control" id="typ_patient" multiple="multiple" name="type_patient[]">
+                            <select class="form-control" id="type_patient" multiple="multiple" name="type_patient[]">
                                 <option value="Elancé(e)">Elancé(e)</option>
                                 <option value="Mince">Mince</option>
                                 <option value="Amazone">Amazone</option>
@@ -164,7 +164,7 @@
 <script type="text/javascript" src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
 <!-- Initialize the plugin: -->
 <script type="text/javascript">
-    $('#morphology_patient, #alimentation_patient, #digestion_patient, #typ_patient,#Gender').multiselect();
+    $('#morphology_patient, #alimentation_patient, #digestion_patient, #type_patient,#Gender').multiselect();
 </script>
 <?php $__env->stopSection(); ?>
 

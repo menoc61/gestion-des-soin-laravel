@@ -2,14 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\User;
 use Illuminate\Database\Seeder;
-
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
-use App\User;
 
 class RoleSeeder extends Seeder
 {
@@ -20,7 +18,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-       // Reset cached roles and permissions
+        // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
@@ -36,7 +34,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'add medical files']);
         Permission::create(['name' => 'delete medical files']);
 
-
         Permission::create(['name' => 'create appointment']);
         Permission::create(['name' => 'view all appointments']);
         Permission::create(['name' => 'delete appointment']);
@@ -48,7 +45,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'edit prescription']);
         Permission::create(['name' => 'delete prescription']);
         Permission::create(['name' => 'print prescription']);
-
 
         Permission::create(['name' => 'create drug']);
         Permission::create(['name' => 'edit drug']);
@@ -72,19 +68,25 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'manage roles']);
 
         $role1 = Role::create(['name' => 'Admin']);
-        $role2 = Role::create(['name' => 'Receptionist']);
+        $role2 = Role::create(['name' => 'Praticien']);
 
         $role1->givePermissionTo(Permission::all());
+        $role2->givePermissionTo(Permission::all());
 
         $user = User::create([
-            'name' => 'MENOC61',
+            'name' => 'ADMIN',
             'email' => 'admin@admin',
             'password' => Hash::make('admin'),
             'role' => 'admin',
         ]);
+        $user2 = User::create([
+            'name' => 'PRATICIENT',
+            'email' => 'doc@admin',
+            'password' => Hash::make('admin'),
+            'role' => 'praticien',
+        ]);
 
         $user->assignRole($role1);
-
-
+        $user2->assignRole($role2);
     }
 }

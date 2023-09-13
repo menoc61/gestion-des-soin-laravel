@@ -16,16 +16,16 @@ class CreateTestsTable extends Migration
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
             $table->string('test_name');
-            $table->string('diagnostic_type');
+            $table->json('diagnostic_type');
             $table->mediumText('comment')->nullable();
 
-            $table->string('signes_particuliers_peau')->nullable();
+            $table->json('signes_particuliers_peau')->nullable();
 
             $table->string('Etat_generale_des_mains')->nullable();
             $table->string('Etat_des_ongles_mains')->nullable();
-            $table->string('signes_particuliers_mains')->nullable();
-            $table->string('signes_particuliers_ongles_mains')->nullable();
-            $table->string('soinList_main')->nullable();
+            $table->json('signes_particuliers_mains')->nullable();
+            $table->json('signes_particuliers_ongles_mains')->nullable();
+            $table->json('soinList_main')->nullable();
             $table->string('vernisInput_main')->nullable();
             $table->string('obserationInput_main')->nullable();
             $table->string('reliefInput_main')->nullable();
@@ -40,9 +40,9 @@ class CreateTestsTable extends Migration
 
             $table->string('Etat_generale_des_pieds')->nullable();
             $table->string('Etat_des_ongles_pieds')->nullable();
-            $table->string('signes_particuliers_pieds')->nullable();
-            $table->string('signes_particuliers_ongles_pieds')->nullable();
-            $table->string('soinList_pied')->nullable();
+            $table->json('signes_particuliers_pieds')->nullable();
+            $table->json('signes_particuliers_ongles_pieds')->nullable();
+            $table->json('soinList_pied')->nullable();
             $table->string('vernisInput_pied')->nullable();
             $table->string('obserationInput_pied')->nullable();
             $table->string('etat_pieds')->nullable();
