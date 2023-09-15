@@ -71,7 +71,7 @@
                             <div class="form-group col-md-2">
                                 <label for="inputCity">{{ __('sentence.Gender') }}<font color="red">*</font></label><br>
                                 <select class="form-control" name="gender" id="Gender">
-                                    @foreach (['Male', 'Female'] as $option)
+                                    @foreach (['Homme', 'Femme'] as $option)
                                         <option value="{{ $option }}"
                                             {{ $patient->Patient->gender === $option ? 'selected' : '' }}>
                                             {{ $option }}
@@ -86,12 +86,13 @@
                                     <div class="col-md-3">
                                         <select class="form-control" id="morphology_patient" multiple="multiple"
                                             name="morphology[]">
-                                            @foreach (['Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'] as $option)
-                                                <option value="{{ $option }}"
-                                                    {{ in_array($option, json_decode($patient->Patient->morphology)) ? 'selected' : '' }}>
+                                            @if ($patient->Patient->morphology)
+                                            @foreach (['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'] as $option)
+                                                <option value="{{ $option }}" {{ in_array($option, json_decode($patient->Patient->morphology) ?: []) ? 'selected' : '' }}>
                                                     {{ $option }}
                                                 </option>
                                             @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
@@ -101,11 +102,18 @@
                                     <div class="col-md-3">
                                         <select class="form-control" id="alimentation_patient" multiple="multiple"
                                             name="alimentation[]">
-                                            @foreach (['Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', 'Pas d\'alcool', 'Fumeur', 'Non-fumeur'] as $option)
+                                            @if ($patient->Patient->alimentation)
+                                            @foreach (['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', 'Pas d\'alcool', 'Fumeur', 'Non-fumeur'] as $option)
+                                                <option value="{{ $option }}" {{ in_array($option, json_decode($patient->Patient->alimentation) ?: []) ? 'selected' : '' }}>
+                                                    {{ $option }}
+                                                </option>
+                                            @endforeach
+                                            @endif
+                                            {{-- @foreach (['Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', 'Pas d\'alcool', 'Fumeur', 'Non-fumeur'] as $option)
                                                 <option value="{{ $option }}"
                                                     {{ in_array($option, json_decode($patient->Patient->alimentation)) ? 'selected' : '' }}>
                                                     {{ $option }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                 </div>
@@ -129,12 +137,19 @@
                                     <div class="col-md-3">
                                         <select class="form-control" id="type_patient" multiple="multiple"
                                             name="type_patient[]">
-                                            @foreach (['Elancé(e)', 'Mince', 'Amazone', 'Forte'] as $option)
+                                            @if ($patient->Patient->type_patient)
+                                            @foreach (['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'] as $option)
+                                                <option value="{{ $option }}" {{ in_array($option, json_decode($patient->Patient->type_patient) ?: []) ? 'selected' : '' }}>
+                                                    {{ $option }}
+                                                </option>
+                                            @endforeach
+                                            @endif
+                                            {{-- @foreach (['Elancé(e)', 'Mince', 'Amazone', 'Forte'] as $option)
                                                 <option value="{{ $option }}"
                                                     {{ in_array($option, json_decode($patient->Patient->type_patient)) ? 'selected' : '' }}>
                                                     {{ $option }}
                                                 </option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                 </div>
