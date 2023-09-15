@@ -87,7 +87,7 @@
                     </tr>
                     @empty
                     <tr>
-                      <td colspan="9"  align="center"><img src="{{ asset('img/rest.png') }} "/> <br><br> <b class="text-muted">No patients found!</b>
+                      <td colspan="9"  align="center"><img src="{{ asset('img/rest.png') }} "/> <br><br> <b class="text-muted">Aucun hôte trouvé</b>
 
                       </td>
                     </tr>
