@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('header'); ?>
     <style>
         .hidden-section {
@@ -71,7 +72,7 @@
                             <div class="form-group col-md-2">
                                 <label for="inputCity"><?php echo e(__('sentence.Gender')); ?><font color="red">*</font></label><br>
                                 <select class="form-control" name="gender" id="Gender">
-                                    <?php $__currentLoopData = ['Male', 'Female']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php $__currentLoopData = ['Homme', 'Femme']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($option); ?>"
                                             <?php echo e($patient->Patient->gender === $option ? 'selected' : ''); ?>>
                                             <?php echo e($option); ?>
@@ -87,13 +88,14 @@
                                     <div class="col-md-3">
                                         <select class="form-control" id="morphology_patient" multiple="multiple"
                                             name="morphology[]">
-                                            <?php $__currentLoopData = ['Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($option); ?>"
-                                                    <?php echo e(in_array($option, json_decode($patient->Patient->morphology)) ? 'selected' : ''); ?>>
+                                            <?php if($patient->Patient->morphology): ?>
+                                            <?php $__currentLoopData = ['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, json_decode($patient->Patient->morphology) ?: []) ? 'selected' : ''); ?>>
                                                     <?php echo e($option); ?>
 
                                                 </option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php endif; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -103,11 +105,15 @@
                                     <div class="col-md-3">
                                         <select class="form-control" id="alimentation_patient" multiple="multiple"
                                             name="alimentation[]">
-                                            <?php $__currentLoopData = ['Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', 'Pas d\'alcool', 'Fumeur', 'Non-fumeur']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($option); ?>"
-                                                    <?php echo e(in_array($option, json_decode($patient->Patient->alimentation)) ? 'selected' : ''); ?>>
-                                                    <?php echo e($option); ?></option>
+                                            <?php if($patient->Patient->alimentation): ?>
+                                            <?php $__currentLoopData = ['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', 'Pas d\'alcool', 'Fumeur', 'Non-fumeur']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, json_decode($patient->Patient->alimentation) ?: []) ? 'selected' : ''); ?>>
+                                                    <?php echo e($option); ?>
+
+                                                </option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php endif; ?>
+                                            
                                         </select>
                                     </div>
                                 </div>
@@ -132,13 +138,15 @@
                                     <div class="col-md-3">
                                         <select class="form-control" id="type_patient" multiple="multiple"
                                             name="type_patient[]">
-                                            <?php $__currentLoopData = ['Elancé(e)', 'Mince', 'Amazone', 'Forte']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($option); ?>"
-                                                    <?php echo e(in_array($option, json_decode($patient->Patient->type_patient)) ? 'selected' : ''); ?>>
+                                            <?php if($patient->Patient->type_patient): ?>
+                                            <?php $__currentLoopData = ['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, json_decode($patient->Patient->type_patient) ?: []) ? 'selected' : ''); ?>>
                                                     <?php echo e($option); ?>
 
                                                 </option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php endif; ?>
+                                            
                                         </select>
                                     </div>
                                 </div>

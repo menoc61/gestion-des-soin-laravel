@@ -50,8 +50,8 @@
                   <div class="form-group col-md-2">
                      <label for="inputCity"><?php echo e(__('sentence.Gender')); ?><font color="red">*</font></label><br>
                      <select class="form-control" name="gender" id="Gender">
-                        <option value="Male"><?php echo e(__('sentence.Male')); ?></option>
-                        <option value="Female"><?php echo e(__('sentence.Female')); ?></option>
+                        <option value="Homme"><?php echo e(__('sentence.Male')); ?></option>
+                        <option value="Femme"><?php echo e(__('sentence.Female')); ?></option>
                      </select>
                   </div>
                   <div class="form-row col-md-10 ml-10" >

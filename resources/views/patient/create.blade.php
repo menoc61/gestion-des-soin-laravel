@@ -50,8 +50,8 @@
                   <div class="form-group col-md-2">
                      <label for="inputCity">{{ __('sentence.Gender') }}<font color="red">*</font></label><br>
                      <select class="form-control" name="gender" id="Gender">
-                        <option value="Male">{{ __('sentence.Male') }}</option>
-                        <option value="Female">{{ __('sentence.Female') }}</option>
+                        <option value="Homme">{{ __('sentence.Male') }}</option>
+                        <option value="Femme">{{ __('sentence.Female') }}</option>
                      </select>
                   </div>
                   <div class="form-row col-md-10 ml-10" >
