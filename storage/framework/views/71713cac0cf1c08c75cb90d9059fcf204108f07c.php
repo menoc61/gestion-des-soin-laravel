@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.All Patients')); ?>
 
@@ -86,7 +88,7 @@
                     </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <tr>
-                      <td colspan="9"  align="center"><img src="<?php echo e(asset('img/rest.png')); ?> "/> <br><br> <b class="text-muted">No patients found!</b>
+                      <td colspan="9"  align="center"><img src="<?php echo e(asset('img/rest.png')); ?> "/> <br><br> <b class="text-muted">Aucun hôte trouvé</b>
 
                       </td>
                     </tr>
