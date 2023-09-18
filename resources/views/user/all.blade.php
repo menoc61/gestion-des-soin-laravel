@@ -39,9 +39,9 @@
                       <td class="text-center"><label class="badge badge-primary-soft">{{ $user->created_at->format('d M Y H:i') }}</label></td>
                       <td class="text-center">
                         @forelse($user->getRoleNames() as $role)
-                        <label class="badge badge-warning-soft">{{ ucfirst($role) }}</label> 
-                        @empty  
-                        <label class="badge badge-warning-soft">no role for {{ $user->name }}</label> 
+                        <label class="badge badge-warning-soft">{{ ucfirst($role) }}</label>
+                        @empty
+                        <label class="badge badge-warning-soft">Hôte</label>
                         @endforelse
                       </td>
                       <td class="text-center">
@@ -51,7 +51,7 @@
                       </td>
                     </tr>
                     @endforeach
-                   
+
                   </tbody>
                 </table>
                <span class="float-right mt-3">{{ $users->links() }}</span>
@@ -61,4 +61,3 @@
           </div>
 @endsection
 
-  
