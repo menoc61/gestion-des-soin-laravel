@@ -38,9 +38,9 @@
                       <td class="text-center"><label class="badge badge-primary-soft"><?php echo e($user->created_at->format('d M Y H:i')); ?></label></td>
                       <td class="text-center">
                         <?php $__empty_1 = true; $__currentLoopData = $user->getRoleNames(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                        <label class="badge badge-warning-soft"><?php echo e(ucfirst($role)); ?></label> 
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>  
-                        <label class="badge badge-warning-soft">no role for <?php echo e($user->name); ?></label> 
+                        <label class="badge badge-warning-soft"><?php echo e(ucfirst($role)); ?></label>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                        <label class="badge badge-warning-soft">Hôte</label>
                         <?php endif; ?>
                       </td>
                       <td class="text-center">
@@ -50,7 +50,7 @@
                       </td>
                     </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                   
+
                   </tbody>
                 </table>
                <span class="float-right mt-3"><?php echo e($users->links()); ?></span>
@@ -60,5 +60,5 @@
           </div>
 <?php $__env->stopSection(); ?>
 
-  
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/user/all.blade.php ENDPATH**/ ?>

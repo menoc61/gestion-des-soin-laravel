@@ -53,6 +53,10 @@ php artisan key:generate
 ```
 php artisan migrate
 ```
+> To run a migration in Laravel without flushing the database (i.e., without dropping and recreating the tables), you can use the ` --pretend ` option
+```
+php artisan migrate --pretend
+```
 - Run the following command to update the seeder data in the database:
 ```
 php artisan db:seed 
