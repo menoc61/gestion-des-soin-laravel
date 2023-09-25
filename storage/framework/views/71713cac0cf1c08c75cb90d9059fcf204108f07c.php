@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.All Patients')); ?>
 
@@ -102,6 +100,5 @@
             </div>
           </div>
 <?php $__env->stopSection(); ?>
-
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/patient/all.blade.php ENDPATH**/ ?>

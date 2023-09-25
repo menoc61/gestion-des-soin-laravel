@@ -231,7 +231,7 @@
                                                     <td align="center">{{ $prescription->reference }} </td>
                                                     <td class="text-center">
                                                         <label class="badge badge-primary-soft">
-                                                            {{ count($prescription->Drug) }} Produits
+                                                            {{ count($prescription->Drug) }} Soins
                                                         </label>
                                                         <label class="badge badge-primary-soft">
                                                             {{ count($prescription->Test) }} Soin

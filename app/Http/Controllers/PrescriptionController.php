@@ -31,12 +31,14 @@ class PrescriptionController extends Controller
     {
         $validatedData = $request->validate([
                'patient_id' => ['required', 'exists:users,id'],
+               'Doctor_id' => ['required', 'exists:users,id', Rule::exists('users', 'id')->where('role', 'praticien')],
                'trade_name.*' => 'required',
            ]);
 
         $prescription = new Prescription();
 
         $prescription->user_id = $request->patient_id;
+        $prescription->doctor_id = $request->Doctor_id; // Store the doctor's ID
         $prescription->reference = 'p'.rand(10000, 99999);
 
         $prescription->save();

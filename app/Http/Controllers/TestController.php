@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Test;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -15,7 +16,9 @@ class TestController extends Controller
 
     public function create()
     {
-        return view('test.create');
+        $patients = User::where('role', 'patient')->get();
+
+        return view('test.create', compact('patients'));
     }
 
     public function store(Request $request)
@@ -112,15 +115,16 @@ class TestController extends Controller
     public function edit($id)
     {
         $test = Test::find($id);
+        $patients = User::where('role', 'patient')->get();
 
-        return view('test.edit', ['test' => $test]);
+        return view('test.edit', compact('patients', 'test'));
     }
 
     public function store_edit(Request $request)
     {
         $validatedData = $request->validate([
             'test_name' => 'required',
-            'diagnostic_type' => ['required', 'array', Rule::in(['DIAGNOSE PEAU', 'DIAGNOSE MAIN', 'DIAGNOSE PIED'])],
+            // 'diagnostic_type' => ['', 'array', Rule::in(['DIAGNOSE PEAU', 'DIAGNOSE MAIN', 'DIAGNOSE PIED'])],
           // Skin diagnostic section validation rules
             'signes_particuliers_peau' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Points noirs', 'Rosacée', 'Rousseurs', 'Télangiectasie', 'Pustules', 'Hypertrichose', 'Pigmentations', 'Vitiligo', 'Cicatrice', 'Chéloïdes', 'Comédons'])],
             // hand diagnostic section validation rules

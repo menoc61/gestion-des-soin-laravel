@@ -5,6 +5,17 @@
 @endsection
 
 @section('content')
+    <div class="toast" id="myToast" data-delay="5000" style="position: absolute; top: 0; right: 0; z-index: 1">
+        <div class="toast-header bg-primary text-white">
+            <strong class="mr-auto ">Remark :</strong>
+            <small class="text-muted">a l'instant</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+        </div>
+        <div class="toast-body">
+            Rappelez-vous de toujours sélectionner à nouveau le type de diagnostic, sinon vous obtiendrez un message
+            d'erreur.
+        </div>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow mb-4">
@@ -16,9 +27,22 @@
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label">{{ __('sentence.Test Name') }}<font
                                     color="red">*</font></label>
-                            <div class="col-sm-9">
+                            {{-- <div class="col-sm-9">
                                 <input type="text" class="form-control" id="inputEmail3" name="test_name"
                                     value="{{ $test->test_name }}">
+                                {{ csrf_field() }}
+                            </div> --}}
+                            <div class="col-sm-9 input-group">
+                                <select class="input-group-text" name="patient_id" id="PatientID" required
+                                    aria-placeholder="{{ __('sentence.Select Patient') }}" onchange="updateTestName()">
+                                    <option @readonly(true)>{{ __('sentence.Select Patient') }}</option>
+                                    @foreach ($patients as $patient)
+                                        <option value="{{ $patient->id }}" data-name="{{ $patient->name }}">
+                                            {{ $patient->name }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="text" class="form-control" id="inputEmail3" name="test_name"
+                                    value="{{ $test->test_name }}" readonly>
                                 {{ csrf_field() }}
                             </div>
                         </div>
@@ -27,13 +51,14 @@
                                 class="col-sm-3 col-form-label">{{ __('sentence.Description') }}</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="inputPassword3" name="comment"
-                                    value="{{ $test->comment }}">
+                                    value="{{ $test->comment }}" placeholder="Aucune description trouvée ">
                                 <input type="hidden" name="test_id" value="{{ $test->id }}">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputSection" class="col-sm-3 col-form-label">{{ __('sentence.Form Type') }}</label>
+                            <label for="inputSection"
+                                class="col-sm-3 col-form-label">{{ __('sentence.Form Type') }}</label>
                             <div class="col-sm-9">
                                 <select multiple="multiple" class="form-control" id="inputSection" name="diagnostic_type[]">
                                     @foreach (['DIAGNOSE PEAU', 'DIAGNOSE MAIN', 'DIAGNOSE PIED'] as $option)
@@ -181,16 +206,6 @@
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="vernis"
                                                         name="vernisInput_main" value="{{ $test->vernisInput_main }}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="form-group row">
-                                                <label for="obseration-mains"
-                                                    class="col-sm-3 col-form-label">{{ __('sentence.obseration') }}</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="obseration-mains"
-                                                        name="obserationInput_main"
-                                                        value="{{ $test->obserationInput_main }}">
                                                 </div>
                                             </div>
                                             <hr>
@@ -397,16 +412,7 @@
                                                         name="vernisInput_pied" value="{{ $test->vernisInput_pied }}">
                                                 </div>
                                             </div>
-                                            <hr>
-                                            <div class="form-group row">
-                                                <label for="obseration"
-                                                    class="col-sm-3 col-form-label">{{ __('sentence.obseration') }}</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="obseration"
-                                                        name="obserationInput_pied"
-                                                        value="{{ $test->obserationInput_pied }}">
-                                                </div>
-                                            </div>
+
                                             <hr>
                                             <div class="form-group row">
                                                 <div class="col-sm-9">
@@ -514,10 +520,41 @@
 @endsection
 
 @section('footer')
+    <script>
+        function updateTestName() {
+            var patientSelect = document.getElementById('PatientID');
+            var testNameInput = document.getElementById('test_name');
+
+            // Get the selected option element
+            var selectedOption = patientSelect.options[patientSelect.selectedIndex];
+
+            // Get the patient's name from the data-name attribute of the selected option
+            var patientName = selectedOption.getAttribute('data-name');
+
+            // Update the test_name input field value with the selected patient's name
+            testNameInput.value = "Diagnostic de Mr(s) - " + patientName;
+        }
+    </script>
     <script type="text/javascript"
         src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
-        $('#signes-particuliers,#signes-particuliers-ongles,#soin').multiselect();
+        $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            filterPlaceholder: 'Recherche un Hôte...',
+            buttonContainer: '<div class="btn-group w-100" />'
+        });
+    </script>
+    <script>
+        // Function to show the toast
+        function showToast() {
+            $('.toast').toast('show');
+        }
+
+        // Trigger the toast when the page is loaded
+        $(document).ready(function() {
+            showToast();
+        });
     </script>
 @endsection
