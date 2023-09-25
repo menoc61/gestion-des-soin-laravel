@@ -25,10 +25,22 @@
          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                <tr>
-                  <th>{{ __('sentence.Reference') }}</th>
-                  <th>{{ __('sentence.Patient') }}</th>
-                  <th>{{ __('sentence.Date') }}</th>
-                  <th class="text-center">{{ __('sentence.Amount') }} - <font class="text-danger">{{ __('sentence.Due Balance') }}</font></th>
+                  <th>{{ __('sentence.Reference') }}
+                    <a href="{{ route('billing.all', ['sort' => 'reference', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                    <a href="{{ route('billing.all', ['sort' => 'reference', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th>{{ __('sentence.Patient') }}
+                    <a href="{{ route('billing.all', ['sort' => 'name', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                    <a href="{{ route('billing.all', ['sort' => 'name', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th>{{ __('sentence.Date') }}
+                    <a href="{{ route('billing.all', ['sort' => 'created_at', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                    <a href="{{ route('billing.all', ['sort' => 'created_at', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th class="text-center">{{ __('sentence.Amount') }} - <font class="text-danger">{{ __('sentence.Due Balance') }}</font>
+                    <a href="{{ route('billing.all', ['sort' => 'due_amount', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                    <a href="{{ route('billing.all', ['sort' => 'due_amount', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                  </th>
                   <th class="text-center">{{ __('sentence.Status') }}</th>
                   <th class="text-center">{{ __('sentence.Payment Method') }}</th>
                   <th>{{ __('sentence.Actions') }}</th>

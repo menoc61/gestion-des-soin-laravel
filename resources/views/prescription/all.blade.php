@@ -22,9 +22,18 @@
          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                <tr>
-                  <th>ID</th>
-                  <th>{{ __('sentence.Patient') }}</th>
-                  <th class="text-center">{{ __('sentence.Created') }}</th>
+                  <th>ID
+                    <a href="{{ route('prescription.all', ['sort' => 'id', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                    <a href="{{ route('prescription.all', ['sort' => 'id', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th>{{ __('sentence.Patient') }}
+                    <a href="{{ route('prescription.all', ['sort' => 'name', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                    <a href="{{ route('prescription.all', ['sort' => 'name', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th class="text-center">{{ __('sentence.Created') }}
+                    <a href="{{ route('prescription.all', ['sort' => 'created_at', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                    <a href="{{ route('prescription.all', ['sort' => 'created_at', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                  </th>
                   <th class="text-center">{{ __('sentence.Content') }}</th>
                   <th class="text-center">{{ __('sentence.Actions') }}</th>
                </tr>
