@@ -162,7 +162,7 @@
                                                 name="vernisInput_main">
                                         </div>
                                     </div>
-                                    <hr>
+                                    {{-- <hr>
                                     <div class="form-group row">
                                         <label for="obseration-mains"
                                             class="col-sm-3 col-form-label">{{ __('sentence.obseration') }}</label>
@@ -170,7 +170,7 @@
                                             <input type="text" class="form-control" id="obseration-mains"
                                                 name="obserationInput_main">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <hr>
                                     <h5>FACE INTERNE</h5>
                                     <div class="form-group row">
@@ -336,7 +336,7 @@
                                                 name="vernisInput_pied">
                                         </div>
                                     </div>
-                                    <hr>
+                                    {{-- <hr>
                                     <div class="form-group row">
                                         <label for="obseration"
                                             class="col-sm-3 col-form-label">{{ __('sentence.obseration') }}</label>
@@ -344,7 +344,7 @@
                                             <input type="text" class="form-control" id="obseration"
                                                 name="obserationInput_pied">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <hr>
                                     <div class="form-group row">
                                         <div class="col-sm-9">
