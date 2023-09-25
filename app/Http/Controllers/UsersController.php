@@ -18,8 +18,15 @@ class UsersController extends Controller
         $this->middleware('auth');
     }
 
-    public function all(){
-        $users = User::paginate(5);
+    public function all()
+    {
+        $sortColumn = request()->get('sort');
+        $sortOrder = request()->get('order', 'asc');
+        if (!empty($sortColumn)) {
+            $users = User::orderBy($sortColumn, $sortOrder)->paginate(10);
+        } else {
+            $users = User::paginate(10);
+        }
         return view('user.all', ['users' => $users]);
     }
 
@@ -43,7 +50,6 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->name = $request->name;
         $user->save();
-
 
         $patient = new Patient();
         $patient->user_id = $user->id;
