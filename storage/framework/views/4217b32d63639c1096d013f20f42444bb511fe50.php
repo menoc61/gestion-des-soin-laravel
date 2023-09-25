@@ -176,7 +176,7 @@
                               <td align="center"><?php echo e($prescription->reference); ?> </td>
                               <td class="text-center">
                                  <label class="badge badge-primary-soft">
-                                    <?php echo e(count($prescription->Drug)); ?> Produits
+                                    <?php echo e(count($prescription->Drug)); ?> Soins
                                  </label>
                                  <label class="badge badge-primary-soft">
                                     <?php echo e(count($prescription->Test)); ?> Soin

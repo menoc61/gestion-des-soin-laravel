@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('header')
-    <link rel="stylesheet" type="text/css" href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
 @endsection
 
 @section('title')
@@ -19,20 +20,30 @@
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label">{{ __('sentence.Test Name') }}<font
                                     color="red">*</font></label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="inputEmail3" name="test_name">
+                            <div class="col-sm-9 input-group">
+                                <select class="input-group-text" name="patient_id" id="PatientID" required aria-placeholder="{{ __('sentence.Select Patient') }}"
+                                    onchange="updateTestName()">
+                                    <option @readonly(true)>{{ __('sentence.Select Patient') }}</option>
+                                    @foreach ($patients as $patient)
+                                        <option value="{{ $patient->id }}" data-name="{{ $patient->name }}">
+                                            {{ $patient->name }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="text" class="form-control" id="test_name" name="test_name" readonly>
                                 {{ csrf_field() }}
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="inputPassword3"
                                 class="col-sm-3 col-form-label">{{ __('sentence.Description') }}</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="inputPassword3" name="comment">
+                                <input type="text" class="form-control" id="inputPassword3" name="comment" placeholder="Entre une description correspondant au type de diagnostic sélectionné">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputSection" class="col-sm-3 col-form-label">{{ __('sentence.Form Type') }}</label>
+                            <label for="inputSection"
+                                class="col-sm-3 col-form-label">{{ __('sentence.Form Type') }}</label>
                             <div class="col-sm-9">
                                 <select multiple="multiple" class="form-control" id="inputSection" name="diagnostic_type[]">
                                     <option value="DIAGNOSE PEAU">DIAGNOSE PEAU</option>
@@ -45,7 +56,8 @@
                             <!-- Content for DIAGNOSE PEAU section -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.skin diagnostic sheet') }}
+                                    <h6 class="m-0 font-weight-bold text-primary">
+                                        {{ __('sentence.skin diagnostic sheet') }}
                                     </h6>
                                 </div>
                                 <div class="card-body">
@@ -78,7 +90,8 @@
                             <!-- Content for DIAGNOSE MAIN section -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.hand diagnostic sheet') }}
+                                    <h6 class="m-0 font-weight-bold text-primary">
+                                        {{ __('sentence.hand diagnostic sheet') }}
                                     </h6>
                                 </div>
                                 <div class="card-body">
@@ -162,15 +175,6 @@
                                                 name="vernisInput_main">
                                         </div>
                                     </div>
-                                    {{-- <hr>
-                                    <div class="form-group row">
-                                        <label for="obseration-mains"
-                                            class="col-sm-3 col-form-label">{{ __('sentence.obseration') }}</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="obseration-mains"
-                                                name="obserationInput_main">
-                                        </div>
-                                    </div> --}}
                                     <hr>
                                     <h5>FACE INTERNE</h5>
                                     <div class="form-group row">
@@ -336,15 +340,7 @@
                                                 name="vernisInput_pied">
                                         </div>
                                     </div>
-                                    {{-- <hr>
-                                    <div class="form-group row">
-                                        <label for="obseration"
-                                            class="col-sm-3 col-form-label">{{ __('sentence.obseration') }}</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="obseration"
-                                                name="obserationInput_pied">
-                                        </div>
-                                    </div> --}}
+
                                     <hr>
                                     <div class="form-group row">
                                         <div class="col-sm-9">
@@ -446,12 +442,31 @@
                 });
             });
         });
+
+        function updateTestName() {
+            var patientSelect = document.getElementById('PatientID');
+            var testNameInput = document.getElementById('test_name');
+
+            // Get the selected option element
+            var selectedOption = patientSelect.options[patientSelect.selectedIndex];
+
+            // Get the patient's name from the data-name attribute of the selected option
+            var patientName = selectedOption.getAttribute('data-name');
+
+            // Update the test_name input field value with the selected patient's name
+            testNameInput.value = "Diagnostic de Mr(s) - " + patientName;
+        }
     </script>
 
     <script type="text/javascript"
         src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
-        $('#signes-particuliers,#signes-particuliers-ongles,#soin').multiselect();
+        $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            filterPlaceholder: 'Recherche un Hôte...',
+            buttonContainer: '<div class="btn-group w-100" />'
+        });
     </script>
 @endsection

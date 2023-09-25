@@ -1,5 +1,6 @@
 <?php $__env->startSection('header'); ?>
-    <link rel="stylesheet" type="text/css" href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('title'); ?>
@@ -19,21 +20,31 @@
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label"><?php echo e(__('sentence.Test Name')); ?><font
                                     color="red">*</font></label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="inputEmail3" name="test_name">
+                            <div class="col-sm-9 input-group">
+                                <select class="input-group-text" name="patient_id" id="PatientID" required aria-placeholder="<?php echo e(__('sentence.Select Patient')); ?>"
+                                    onchange="updateTestName()">
+                                    <option @readonly(true)><?php echo e(__('sentence.Select Patient')); ?></option>
+                                    <?php $__currentLoopData = $patients; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $patient): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($patient->id); ?>" data-name="<?php echo e($patient->name); ?>">
+                                            <?php echo e($patient->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                                <input type="text" class="form-control" id="test_name" name="test_name" readonly>
                                 <?php echo e(csrf_field()); ?>
 
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="inputPassword3"
                                 class="col-sm-3 col-form-label"><?php echo e(__('sentence.Description')); ?></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="inputPassword3" name="comment">
+                                <input type="text" class="form-control" id="inputPassword3" name="comment" placeholder="Entre une description correspondant au type de diagnostic sélectionné">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputSection" class="col-sm-3 col-form-label"><?php echo e(__('sentence.Form Type')); ?></label>
+                            <label for="inputSection"
+                                class="col-sm-3 col-form-label"><?php echo e(__('sentence.Form Type')); ?></label>
                             <div class="col-sm-9">
                                 <select multiple="multiple" class="form-control" id="inputSection" name="diagnostic_type[]">
                                     <option value="DIAGNOSE PEAU">DIAGNOSE PEAU</option>
@@ -46,7 +57,8 @@
                             <!-- Content for DIAGNOSE PEAU section -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.skin diagnostic sheet')); ?>
+                                    <h6 class="m-0 font-weight-bold text-primary">
+                                        <?php echo e(__('sentence.skin diagnostic sheet')); ?>
 
                                     </h6>
                                 </div>
@@ -80,7 +92,8 @@
                             <!-- Content for DIAGNOSE MAIN section -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.hand diagnostic sheet')); ?>
+                                    <h6 class="m-0 font-weight-bold text-primary">
+                                        <?php echo e(__('sentence.hand diagnostic sheet')); ?>
 
                                     </h6>
                                 </div>
@@ -165,7 +178,6 @@
                                                 name="vernisInput_main">
                                         </div>
                                     </div>
-                                    
                                     <hr>
                                     <h5>FACE INTERNE</h5>
                                     <div class="form-group row">
@@ -331,7 +343,7 @@
                                                 name="vernisInput_pied">
                                         </div>
                                     </div>
-                                    
+
                                     <hr>
                                     <div class="form-group row">
                                         <div class="col-sm-9">
@@ -433,13 +445,32 @@
                 });
             });
         });
+
+        function updateTestName() {
+            var patientSelect = document.getElementById('PatientID');
+            var testNameInput = document.getElementById('test_name');
+
+            // Get the selected option element
+            var selectedOption = patientSelect.options[patientSelect.selectedIndex];
+
+            // Get the patient's name from the data-name attribute of the selected option
+            var patientName = selectedOption.getAttribute('data-name');
+
+            // Update the test_name input field value with the selected patient's name
+            testNameInput.value = "Diagnostic de Mr(s) - " + patientName;
+        }
     </script>
 
     <script type="text/javascript"
         src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
-        $('#signes-particuliers,#signes-particuliers-ongles,#soin').multiselect();
+        $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            filterPlaceholder: 'Recherche un Hôte...',
+            buttonContainer: '<div class="btn-group w-100" />'
+        });
     </script>
 <?php $__env->stopSection(); ?>
 
