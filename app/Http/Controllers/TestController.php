@@ -70,7 +70,7 @@ class TestController extends Controller
         $test->signes_particuliers_ongles_mains = json_encode($request->signes_particuliers_ongles_mains);
         $test->soinList_main = json_encode($request->soinList_main);
         $test->vernisInput_main = $request->vernisInput_main;
-        $test->obserationInput_main = $request->obserationInput_main;
+        // $test->obserationInput_main = $request->obserationInput_main;
         $test->reliefInput_main = $request->reliefInput_main;
         $test->cicatrices_main = $request->cicatrices_main;
         $test->callosites_main = $request->callosites_main;
@@ -88,7 +88,7 @@ class TestController extends Controller
         $test->signes_particuliers_ongles_pieds = json_encode($request->signes_particuliers_pieds);
         $test->soinList_pied = json_encode($request->soinList_pied);
         $test->vernisInput_pied = $request->vernisInput_pied;
-        $test->obserationInput_pied = $request->obserationInput_pied;
+        // $test->obserationInput_pied = $request->obserationInput_pied;
         $test->etat_pieds = $request->etat_pieds;
         $test->taches_pieds = $request->taches_pieds;
         $test->aureoles_pieds = $request->aureoles_pieds;
@@ -168,7 +168,7 @@ class TestController extends Controller
         $test->signes_particuliers_ongles_mains = json_encode($request->signes_particuliers_ongles_mains);
         $test->soinList_main = json_encode($request->soinList_main);
         $test->vernisInput_main = $request->vernisInput_main;
-        $test->obserationInput_main = $request->obserationInput_main;
+        // $test->obserationInput_main = $request->obserationInput_main;
         $test->reliefInput_main = $request->reliefInput_main;
         $test->cicatrices_main = $request->cicatrices_main;
         $test->callosites_main = $request->callosites_main;
@@ -186,7 +186,7 @@ class TestController extends Controller
         $test->signes_particuliers_ongles_pieds = json_encode($request->signes_particuliers_pieds);
         $test->soinList_pied = json_encode($request->soinList_pied);
         $test->vernisInput_pied = $request->vernisInput_pied;
-        $test->obserationInput_pied = $request->obserationInput_pied;
+        // $test->obserationInput_pied = $request->obserationInput_pied;
         $test->etat_pieds = $request->etat_pieds;
         $test->taches_pieds = $request->taches_pieds;
         $test->aureoles_pieds = $request->aureoles_pieds;
