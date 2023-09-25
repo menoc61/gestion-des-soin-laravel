@@ -22,10 +22,22 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>{{ __('sentence.Name') }}</th>
-                      <th class="text-center">{{ __('sentence.Email') }}</th>
-                      <th class="text-center">{{ __('sentence.Register Date') }}</th>
+                      <th>ID
+                        <a href="{{ route('user.all', ['sort' => 'id', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                        <a href="{{ route('user.all', ['sort' => 'id', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                      </th>
+                      <th>{{ __('sentence.Name') }}
+                        <a href="{{ route('user.all', ['sort' => 'name', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                        <a href="{{ route('user.all', ['sort' => 'name', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                      </th>
+                      <th class="text-center">{{ __('sentence.Email') }}
+                        <a href="{{ route('user.all', ['sort' => 'email', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                        <a href="{{ route('user.all', ['sort' => 'email', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                      </th>
+                      <th class="text-center">{{ __('sentence.Register Date') }}
+                        <a href="{{ route('user.all', ['sort' => 'created_at', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                        <a href="{{ route('user.all', ['sort' => 'created_at', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                      </th>
                       <th class="text-center">{{ __('sentence.Roles') }}</th>
                       <th class="text-center">{{ __('sentence.Actions') }}</th>
                     </tr>
