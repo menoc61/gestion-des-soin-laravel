@@ -91,11 +91,16 @@ class BillingController extends Controller
         }
 
 		return Redirect::route('billing.all')->with('success', 'Invoice Created Successfully!');;
-
     }
 
     public function all(){
-    	$invoices = Billing::orderby('id','DESC')->paginate(10);
+        $sortColumn = request()->get('sort');
+        $sortOrder = request()->get('order', 'asc');
+        if (!empty($sortColumn)) {
+            $invoices = Billing::orderby($sortColumn,$sortOrder)->paginate(10);
+        } else {
+            $invoices = Billing::paginate(10);
+        }
     	return view('billing.all',['invoices' => $invoices]);
     }
 

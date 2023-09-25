@@ -104,8 +104,15 @@ class TestController extends Controller
 
     public function all()
     {
+        $sortColumn = request()->get('sort');
+        $sortOrder = request()->get('order', 'asc');
+        if(!empty($sortColumn)){
+            $tests = Test::orderBy($sortColumn, $sortOrder)->paginate(10);
+        }
+        else{
+            $tests = Test::paginate(10);
+        }
         $tests = Test::all();
-
         return view('test.all', ['tests' => $tests]);
     }
 
