@@ -25,9 +25,18 @@
          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                <tr>
-                  <th>ID</th>
-                  <th>{{ __('sentence.Test Name') }}</th>
-                  <th>{{ __('sentence.Description') }}</th>
+                  <th>ID
+                    <a href="{{ route('test.all', ['sort' => 'id', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                    <a href="{{ route('test.all', ['sort' => 'id', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th>{{ __('sentence.Test Name') }}
+                    <a href="{{ route('test.all', ['sort' => 'test_name', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                    <a href="{{ route('test.all', ['sort' => 'test_name', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th>{{ __('sentence.Description') }}
+                    <a href="{{ route('test.all', ['sort' => 'comment', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                    <a href="{{ route('test.all', ['sort' => 'comment', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                  </th>
                   <th class="text-center">{{ __('sentence.Total Use') }}</th>
                   <th class="text-center">{{ __('sentence.Actions') }}</th>
                </tr>
