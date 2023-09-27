@@ -1,11 +1,4 @@
-﻿sku,name,product_category,unit_measurement,unit_type
-SAI-PRO532994199,PRODUIT TEST,Sainess food,100,g
-SAI-SÉR735428653,SÉRUM RÉVEILÉCLAT,Saï i lama cosmétique,10,ml
-SAI-SÉR151836920,Sérum Purifiant & Détoxifiant,Saï i lama cosmétique,10,ml
-SAI-SÈR967121863,Sèrum  Hydra_Oxygénant,Saï i lama cosmétique,10,ml
-SAI-LOT540934774,LOTION TONIQUE ASSAINISSANTE à l'extrait d'abre à thé,Saï i lama cosmétique,200,ml
-SAI-LOT200319236,LOTION TONIQUE OXYGENANTE à l'extrait de citronelle,Saï i lama cosmétique,200,ml
-SAI-LOT456466444,LOTION CLARIFIANTE  aux extraits de fruits  et épices,Saï i lama cosmétique,200,ml
-SAI-GEL291959782,GEL NETTOYANT EXFOLIANT ,Saï i lama cosmétique,200,ml
-SAI-LOT109274981,LOTION TONIQUE Anti-oxydant aux extraits de fleurs de fleurs rouges ,Saï i lama cosmétique,200,ml
-SAI-GEL331633307,GEL NETTOYANT Éclat jeunesse aux trois roses,Saï i lama cosmétique,200,ml
+﻿"id","name","quantity","purchase_price","sale_price","imageName","idSupplier","product_category_id","unit_measurement","unit_type","sku","reorder_quantity","status","created_at","updated_at","product_category","supplier","imageUrl"
+"3","joy stick","98","0","10000","4a652feca78ba1963c8f32ceaf997b88469f0622cf5e2286e1dff09bd0975f30.jpg","1","4","5","g","SAI-JOY406792482","100","true","2023-09-11T11:29:54.517Z","2023-09-16T16:11:05.926Z","electronique","[object Object]","http://localhost:5000/v1/product-image/4a652feca78ba1963c8f32ceaf997b88469f0622cf5e2286e1dff09bd0975f30.jpg"
+"2","huile de cheuveux","89","2500","5000","669f1c6a260daa870dd7578c819d352c3d53c6f0dbf16ad2edd6dddca2c8bed2.jpg","2","1","1","ltr","SAI-HUI506558598","20","true","2023-09-11T11:27:17.978Z","2023-09-16T16:11:05.925Z","cosmetique","[object Object]","http://localhost:5000/v1/product-image/669f1c6a260daa870dd7578c819d352c3d53c6f0dbf16ad2edd6dddca2c8bed2.jpg"
+"1","riz","298","1500","3000","2bd32bfdc36009f816de93fd4701f0187e59abe1afa04359569024739d4a2a5c.jpg","1","2","10","kg","SAI-RIZ533205549","300","true","2023-09-11T11:19:57.236Z","2023-09-16T16:11:05.925Z","alimentation","[object Object]","http://localhost:5000/v1/product-image/2bd32bfdc36009f816de93fd4701f0187e59abe1afa04359569024739d4a2a5c.jpg"
