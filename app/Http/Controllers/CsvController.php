@@ -25,7 +25,7 @@ class CsvController extends Controller
 
             // Check if the uploaded file is named "products.csv"
             if ($uploadedFile->getClientOriginalName() !== 'products.csv') {
-                return redirect()->back()->with('error', 'Incorrect file name. Please upload a file named "products.csv".');
+                return redirect()->back()->with('error', 'Nom de fichier incorrect. Veuillez télécharger un fichier nommé "products.csv".');
             }
 
             // Store the uploaded "products.csv" file in the public/uploads directory
@@ -33,23 +33,30 @@ class CsvController extends Controller
             $uploadedFile->move($pathToSave, 'products.csv');
 
             // Read and extract desired columns from "products.csv"
-            $desiredColumns = ['sku', 'name', 'product_category', 'unit_measurement', 'unit_type'];
+            $desiredColumns = ['id', 'sku', 'name', 'product_category', 'status', 'updated_at', 'imageUrl'];
             $csvData = [];
 
             $reader = Reader::createFromPath($pathToSave.'/products.csv', 'r');
             $reader->setHeaderOffset(0);
 
-            foreach ($reader->getRecords($desiredColumns) as $record) {
-                $csvData[] = $record;
+            // Initialize the header with column names
+            $header = $desiredColumns;
+
+            foreach ($reader->getRecords() as $record) {
+                $rowData = [];
+                foreach ($desiredColumns as $column) {
+                    $rowData[] = $record[$column];
+                }
+                $csvData[] = $rowData;
             }
 
             // Check if "product_db.csv" exists, create it if not
             $dbFilePath = public_path('uploads/product_db.csv');
 
             if (!file_exists($dbFilePath)) {
-                // Create "product_db.csv" with desired column headers
+                // Create "product_db.csv" with the desired column headers in the specified order
                 $writer = Writer::createFromPath($dbFilePath, 'w+');
-                $writer->insertOne($desiredColumns);
+                $writer->insertOne($header);
             }
 
             // Read existing content of "product_db.csv"
@@ -63,13 +70,13 @@ class CsvController extends Controller
 
             // Append new data and update existing rows in "product_db.csv"
             foreach ($csvData as $row) {
-                $sku = $row['sku']; // Assuming SKU is the unique identifier
+                $id = $row[0]; // Assuming ID is the unique identifier
                 $found = false;
 
                 foreach ($existingData as &$dbRow) {
-                    if ($dbRow['sku'] === $sku) {
-                        // Update existing row
-                        $dbRow = $row;
+                    // Check if 'id' key exists in the $dbRow array
+                    if (array_key_exists(0, $dbRow) && $dbRow[0] === $id) {
+                        // Skip this row as it already exists in the database
                         $found = true;
                         break;
                     }
@@ -85,9 +92,9 @@ class CsvController extends Controller
             $writerDb = Writer::createFromPath($dbFilePath, 'w+');
             $writerDb->insertAll($existingData);
 
-            return redirect()->back()->with('success', 'Data copied and updated successfully.');
+            return redirect()->back()->with('success', 'Données copiées et mises à jour avec succès.');
         }
 
-        return redirect()->back()->with('error', 'No file was uploaded.');
+        return redirect()->back()->with('error', "Aucun fichier n'a été téléchargé.");
     }
 }
