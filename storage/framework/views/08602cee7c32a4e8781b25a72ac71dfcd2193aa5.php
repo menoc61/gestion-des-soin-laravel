@@ -8,7 +8,7 @@
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create prescription')): ?>
 <div class="row">
    <div class="col">
-      <div class="alert alert-warning">Simplifies prescription and appointments, helping you to manage patients & you chamber in a smart way. <br><b><a href="<?php echo e(route('appointment.create')); ?>">Create your first prescription</a></b> in less than 60 seconds.</div>
+      <div class="alert alert-warning">Simplifie la prescription et les rendez-vous, vous aidant à gérer les patients et votre chambre de manière intelligente. <br><b><a href="<?php echo e(route('appointment.create')); ?>">enregistrez votre premier rendez-vous</a></b> en moins de 60 secondes.</div>
    </div>
 </div>
 <?php endif; ?>
@@ -310,8 +310,8 @@
                            <a data-rdv_id="<?php echo e($appointment->id); ?>" data-rdv_date="<?php echo e($appointment->date->format('d M Y')); ?>" data-rdv_time_start="<?php echo e($appointment->time_start); ?>" data-rdv_time_end="<?php echo e($appointment->time_end); ?>" data-patient_name="<?php echo e($appointment->User->name); ?>" class="btn btn-outline-success btn-circle btn-sm" data-toggle="modal" data-target="#EDITRDVModal"><i class="fas fa-check"></i></a>
                            <?php endif; ?>
                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete appointment')): ?>
-                           <a class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal" data-target="#DeleteModal" data-link="<?php echo e(url('appointment/delete/'.$appointment->id)); ?>"><i class="fas fa-trash"></i></a>    
-                           <?php endif; ?>                  
+                           <a class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal" data-target="#DeleteModal" data-link="<?php echo e(url('appointment/delete/'.$appointment->id)); ?>"><i class="fas fa-trash"></i></a>
+                           <?php endif; ?>
                         </td>
                      </tr>
                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -369,4 +369,5 @@
 <?php $__env->startSection('footer'); ?>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/home.blade.php ENDPATH**/ ?>
