@@ -27,8 +27,8 @@
                     <a href="{{ route('prescription.all', ['sort' => 'id', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
                   </th>
                   <th>{{ __('sentence.Patient') }}
-                    <a href="{{ route('prescription.all', ['sort' => 'name', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
-                    <a href="{{ route('prescription.all', ['sort' => 'name', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
+                    <a href="{{ route('prescription.all', ['sort' => 'patient_name', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
+                    <a href="{{ route('prescription.all', ['sort' => 'patient_name', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
                   </th>
                   <th class="text-center">{{ __('sentence.Created') }}
                     <a href="{{ route('prescription.all', ['sort' => 'created_at', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
