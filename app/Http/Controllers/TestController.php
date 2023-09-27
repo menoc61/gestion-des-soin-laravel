@@ -113,9 +113,8 @@ class TestController extends Controller
             $tests = Test::orderBy($sortColumn, $sortOrder)->paginate(10);
         }
         else{
-            $tests = Test::paginate(10);
+            $tests = Test::all();
         }
-        $tests = Test::all();
         return view('test.all', ['tests' => $tests]);
     }
 
