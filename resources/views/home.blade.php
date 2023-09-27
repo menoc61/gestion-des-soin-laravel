@@ -9,7 +9,7 @@
 @can('create prescription')
 <div class="row">
    <div class="col">
-      <div class="alert alert-warning">Simplifies prescription and appointments, helping you to manage patients & you chamber in a smart way. <br><b><a href="{{ route('appointment.create') }}">Create your first prescription</a></b> in less than 60 seconds.</div>
+      <div class="alert alert-warning">Simplifie la prescription et les rendez-vous, vous aidant à gérer les patients et votre chambre de manière intelligente. <br><b><a href="{{ route('appointment.create') }}">enregistrez votre premier rendez-vous</a></b> en moins de 60 secondes.</div>
    </div>
 </div>
 @endcan
@@ -308,8 +308,8 @@
                            <a data-rdv_id="{{ $appointment->id }}" data-rdv_date="{{ $appointment->date->format('d M Y') }}" data-rdv_time_start="{{ $appointment->time_start }}" data-rdv_time_end="{{ $appointment->time_end }}" data-patient_name="{{ $appointment->User->name }}" class="btn btn-outline-success btn-circle btn-sm" data-toggle="modal" data-target="#EDITRDVModal"><i class="fas fa-check"></i></a>
                            @endcan
                            @can('delete appointment')
-                           <a class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal" data-target="#DeleteModal" data-link="{{ url('appointment/delete/'.$appointment->id) }}"><i class="fas fa-trash"></i></a>    
-                           @endcan                  
+                           <a class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal" data-target="#DeleteModal" data-link="{{ url('appointment/delete/'.$appointment->id) }}"><i class="fas fa-trash"></i></a>
+                           @endcan
                         </td>
                      </tr>
                      @empty
