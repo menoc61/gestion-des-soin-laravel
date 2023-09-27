@@ -11,9 +11,6 @@ use App\Prescription;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Redirect;
-use Hash;
-use Str;
 
 class PatientController extends Controller
 {
@@ -24,14 +21,8 @@ class PatientController extends Controller
 
     public function all()
     {
-        // $patients = User::where('role', '=', 'patient')->OrderBy('id', 'DESC')->paginate(10);
-        $sortColumn = request()->get('sort');
-        $sortOrder = request()->get('order', 'asc');
-        if(!empty($sortColumn)){
-            $patients = User::where('role', '=', 'patient')->OrderBy($sortColumn, $sortOrder)->paginate(10);
-        } else{
-            $patients = User::paginate(10);
-        }
+        $patients = User::where('role', '=', 'patient')->OrderBy('id', 'DESC')->paginate(10);
+
         return view('patient.all', ['patients' => $patients]);
     }
 
@@ -62,7 +53,7 @@ class PatientController extends Controller
         ]);
 
         $user = new User();
-        $user->password = Hash::make('admin');
+        $user->password = \Hash::make('admin');
         $user->email = $request->email;
         $user->name = $request->name;
 
@@ -70,7 +61,7 @@ class PatientController extends Controller
             // We Get the image
             $file = $request->file('image');
             // We Add String to Image name
-            $fileName = Str::random(15).'-'.$file->getClientOriginalName();
+            $fileName = \Str::random(15).'-'.$file->getClientOriginalName();
             // We Tell him the uploads path
             $destinationPath = public_path().'/uploads/';
             // We move the image to the destination path
@@ -101,7 +92,7 @@ class PatientController extends Controller
         $patient->digestion = $request->digestion;
         $patient->save();
 
-        return Redirect::route('patient.all')->with('success', __('sentence.Patient Created Successfully'));
+        return \Redirect::route('patient.all')->with('success', __('sentence.Patient Created Successfully'));
     }
 
         public function edit($id)
@@ -146,7 +137,7 @@ class PatientController extends Controller
                 // We Get the image
                 $file = $request->file('image');
                 // We Add String to Image name
-                $fileName = Str::random(15).'-'.$file->getClientOriginalName();
+                $fileName = \Str::random(15).'-'.$file->getClientOriginalName();
                 // We Tell him the uploads path
                 $destinationPath = public_path().'/uploads/';
                 // We move the image to the destination path
@@ -179,7 +170,7 @@ class PatientController extends Controller
                                             'digestion' => $request->digestion,
                                             ]);
 
-            return Redirect::back()->with('success', __('sentence.Patient Updated Successfully'));
+            return \Redirect::back()->with('success', __('sentence.Patient Updated Successfully'));
         }
 
     public function view($id)
@@ -214,6 +205,6 @@ class PatientController extends Controller
     {
         $patient = User::destroy($id);
 
-        return Redirect::back()->with('success', 'Patient Deleted Successfully');
+        return \Redirect::back()->with('success', 'Patient Deleted Successfully');
     }
 }

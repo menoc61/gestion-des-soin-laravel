@@ -73,6 +73,7 @@
                         <a href="{{ route('patient.all', ['sort' => 'due_amount', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
                         <a href="{{ route('patient.all', ['sort' => 'due_amount', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
                       </th>
+                      <th class="text-center">{{ __('sentence.Prescriptions') }}</th>
                       <th class="text-center">{{ __('sentence.Actions') }}</th>
                     </tr>
                   </thead>

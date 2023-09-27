@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.All Tests')); ?>
 
@@ -24,9 +26,20 @@
          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                <tr>
-                  <th>ID</th>
-                  <th><?php echo e(__('sentence.Test Name')); ?></th>
-                  <th><?php echo e(__('sentence.Description')); ?></th>
+                  <th>ID
+                    <a href="<?php echo e(route('test.all', ['sort' => 'id', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                    <a href="<?php echo e(route('test.all', ['sort' => 'id', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th><?php echo e(__('sentence.Test Name')); ?>
+
+                    <a href="<?php echo e(route('test.all', ['sort' => 'test_name', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                    <a href="<?php echo e(route('test.all', ['sort' => 'test_name', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th><?php echo e(__('sentence.Description')); ?>
+
+                    <a href="<?php echo e(route('test.all', ['sort' => 'comment', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                    <a href="<?php echo e(route('test.all', ['sort' => 'comment', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                  </th>
                   <th class="text-center"><?php echo e(__('sentence.Total Use')); ?></th>
                   <th class="text-center"><?php echo e(__('sentence.Actions')); ?></th>
                </tr>
@@ -54,4 +67,5 @@
    </div>
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/test/all.blade.php ENDPATH**/ ?>
