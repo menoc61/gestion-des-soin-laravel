@@ -21,9 +21,20 @@
          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                <tr>
-                  <th>ID</th>
-                  <th><?php echo e(__('sentence.Patient')); ?></th>
-                  <th class="text-center"><?php echo e(__('sentence.Created')); ?></th>
+                  <th>ID
+                    <a href="<?php echo e(route('prescription.all', ['sort' => 'id', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                    <a href="<?php echo e(route('prescription.all', ['sort' => 'id', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th><?php echo e(__('sentence.Patient')); ?>
+
+                    <a href="<?php echo e(route('prescription.all', ['sort' => 'patient_name', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                    <a href="<?php echo e(route('prescription.all', ['sort' => 'patient_name', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th class="text-center"><?php echo e(__('sentence.Created')); ?>
+
+                    <a href="<?php echo e(route('prescription.all', ['sort' => 'created_at', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                    <a href="<?php echo e(route('prescription.all', ['sort' => 'created_at', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                  </th>
                   <th class="text-center"><?php echo e(__('sentence.Content')); ?></th>
                   <th class="text-center"><?php echo e(__('sentence.Actions')); ?></th>
                </tr>

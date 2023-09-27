@@ -31,14 +31,14 @@ class PrescriptionController extends Controller
     {
         $validatedData = $request->validate([
                'patient_id' => ['required', 'exists:users,id'],
-               'Doctor_id' => ['required', 'exists:users,id', Rule::exists('users', 'id')->where('role', 'praticien')],
+               'Doctor_id' => ['required', 'exists:users,id'],
                'trade_name.*' => 'required',
            ]);
 
         $prescription = new Prescription();
 
         $prescription->user_id = $request->patient_id;
-        $prescription->doctor_id = $request->Doctor_id; // Store the doctor's ID
+        $prescription->doctor_id = $request->Doctor_id;
         $prescription->reference = 'p'.rand(10000, 99999);
 
         $prescription->save();
@@ -50,13 +50,13 @@ class PrescriptionController extends Controller
                 if ($request->trade_name[$x] != null) {
                     $add_drug = new Prescription_drug();
 
-                    $add_drug->type = $request->type[$x];
-                    $add_drug->strength = $request->strength[$x];
-                    $add_drug->dose = $request->dose[$x];
-                    $add_drug->duration = $request->duration[$x];
-                    $add_drug->drug_advice = $request->drug_advice[$x];
+                    $add_drug->type = $request->input('type.'.$x) ?? null;
+                    $add_drug->strength = $request->input('strength.'.$x) ?? null;
+                    $add_drug->dose = $request->input('dose.'.$x) ?? null;
+                    $add_drug->duration = $request->input('duration.'.$x) ?? null;
+                    $add_drug->drug_advice = $request->input('drug_advice.'.$x) ?? null;
                     $add_drug->prescription_id = $prescription->id;
-                    $add_drug->drug_id = $request->trade_name[$x];
+                    $add_drug->drug_id = $request->input('trade_name.'.$x) ?? null;
 
                     $add_drug->save();
                 }
@@ -84,12 +84,25 @@ class PrescriptionController extends Controller
     {
         $sortColumn = request()->get('sort');
         $sortOrder = request()->get('order', 'asc');
-        if(!empty($sortColumn)){
-            $prescriptions = Prescription::orderBy($sortColumn, $sortOrder)->paginate(10);
+
+        // Define a default sort column and order
+        $defaultSortColumn = 'id';
+        $defaultSortOrder = 'asc';
+
+        // Define a list of valid sort columns
+        $validSortColumns = ['id', 'created_at'];
+
+        // Check if the requested sort column is valid, otherwise use the default
+        if (!in_array($sortColumn, $validSortColumns)) {
+            $sortColumn = $defaultSortColumn;
         }
-        else{
-            $prescriptions = Prescription::paginate(10);
-        }
+
+        // Perform a join with the 'users' table to get the patient names
+        $prescriptions = Prescription::select('prescriptions.*', 'users.name as patient_name')
+            ->join('users', 'prescriptions.user_id', '=', 'users.id')
+            ->orderBy($sortColumn, $sortOrder)
+            ->paginate(10);
+
         return view('prescription.all', ['prescriptions' => $prescriptions]);
     }
 
@@ -111,6 +124,7 @@ class PrescriptionController extends Controller
 
         $pdf = PDF::loadView('prescription.pdf_view', ['prescription' => $prescription, 'prescription_drugs' => $prescription_drugs]);
         $pdf->setOption('viewport-size', '1024x768');
+
         // download PDF file with download method
         return $pdf->download($prescription->User->name.'_pdf.pdf');
     }
