@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.Create Invoice')); ?>
 
@@ -66,11 +64,7 @@
                      <a type="button" class="btn btn-primary btn-sm add text-white" align="center"><i class='fa fa-plus'></i> <?php echo e(__('sentence.Add Item')); ?></a>
                   </div>
                </fieldset>
-               <div class="d-flex justify-content-between ">
-                    <span class="">Montant sans Taxe : <b id="total_without_tax_income">0 </b> <?php echo e(App\Setting::get_option('currency')); ?></span><br>
-                    <span class="">TVA : <b><?php echo e(App\Setting::get_option('vat')); ?> %</b> </span><br>
-                    <span class="">Montant Total : <b id="total_income">0 </b> <?php echo e(App\Setting::get_option('currency')); ?></span>
-               </div>
+               
             </div>
          </div>
       </div>
@@ -108,7 +102,7 @@ $('.billing_labels').each(function(){
   var totalPoints = 0;
   var DepositedAmount = parseFloat($('#DepositedAmount').val());
   var DueAmount = 0;
-  var vat = <?php echo e(App\Setting::get_option('vat')); ?>;
+//   var vat = <?php echo e(App\Setting::get_option('vat')); ?>;
 
   $(this).find('input[aria-label="Amount"]').each(function(){
       if($(this).val() !== ''){
@@ -117,12 +111,12 @@ $('.billing_labels').each(function(){
   });
 
       $('#total_without_tax_income').text(totalPoints);
-      $('#total_income').text(totalPoints+(totalPoints*vat/100));
+    //   $('#total_income').text(totalPoints+(totalPoints*vat/100));
 
       if($('#DepositedAmount').val() !== ''){
-         $('#DueAmount').val((totalPoints+(totalPoints*vat/100))-DepositedAmount);
+         $('#DueAmount').val((totalPoints)-DepositedAmount);
       }else{
-         $('#DueAmount').val((totalPoints+(totalPoints*vat/100)));
+         $('#DueAmount').val((totalPoints));
       }
 
 });
