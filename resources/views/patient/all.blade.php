@@ -46,33 +46,20 @@
                         <a href="{{ route('patient.all', ['sort' => 'name', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
                       </th>
                       <th class="text-center">{{ __('sentence.Age') }}</th>
-                      <th class="text-center">{{ __('sentence.Phone') }}
-                        <a href="{{ route('patient.all', ['sort' => 'phone', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
-                        <a href="{{ route('patient.all', ['sort' => 'phone', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
-                      </th>
-                      <th class="text-center">{{ __('sentence.Address') }}
-                        <a href="{{ route('patient.all', ['sort' => 'adress', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
-                        <a href="{{ route('patient.all', ['sort' => 'adress', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
-                      </th>
-                      <th class="text-center">{{ __('sentence.Allergies') }}
-                        <a href="{{ route('patient.all', ['sort' => 'allergie', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
-                        <a href="{{ route('patient.all', ['sort' => 'allergie', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
-                      </th>
+                      <th class="text-center">{{ __('sentence.Phone') }}</th>
+                      <th class="text-center">{{ __('sentence.Address') }}</th>
+                      <th class="text-center">{{ __('sentence.Allergies') }}</th>
                       <th class="text-center">{{ __('sentence.Type of patient') }}</th>
                       <th class="text-center">{{ __('sentence.Morphology') }}</th>
                       <th class="text-center">{{ __('sentence.Alimentation') }}</th>
-                      <th class="text-center">{{ __('sentence.Digestion') }}
-                        <a href="{{ route('patient.all', ['sort' => 'digestion', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
-                        <a href="{{ route('patient.all', ['sort' => 'digestion', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
-                      </th>
+                      <th class="text-center">{{ __('sentence.Digestion') }}</th>
                       <th class="text-center">{{ __('sentence.Date') }}
                         <a href="{{ route('patient.all', ['sort' => 'created_at', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
                         <a href="{{ route('patient.all', ['sort' => 'created_at', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
                       </th>
                       <th class="text-center">{{ __('sentence.Due Balance') }}
-                        <a href="{{ route('patient.all', ['sort' => 'due_amount', 'order' => 'asc']) }}"><i class="fas fa-sort-up"></i></a>
-                        <a href="{{ route('patient.all', ['sort' => 'due_amount', 'order' => 'desc']) }}"><i class="fas fa-sort-down"></i></a>
                       </th>
+                      <th class="text-center">{{ __('sentence.Prescriptions') }}</th>
                       <th class="text-center">{{ __('sentence.Actions') }}</th>
                     </tr>
                   </thead>

@@ -29,11 +29,7 @@
                     <a href="<?php echo e(route('billing.all', ['sort' => 'reference', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
                     <a href="<?php echo e(route('billing.all', ['sort' => 'reference', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
                   </th>
-                  <th><?php echo e(__('sentence.Patient')); ?>
-
-                    <a href="<?php echo e(route('billing.all', ['sort' => 'name', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
-                    <a href="<?php echo e(route('billing.all', ['sort' => 'name', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
-                  </th>
+                  <th><?php echo e(__('sentence.Patient')); ?> </th>
                   <th><?php echo e(__('sentence.Date')); ?>
 
                     <a href="<?php echo e(route('billing.all', ['sort' => 'created_at', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
@@ -54,10 +50,12 @@
                   <td><?php echo e($invoice->reference); ?></td>
                   <td><a href="<?php echo e(url('patient/view/'.$invoice->user_id)); ?>"> <?php echo e($invoice->User->name); ?> </a></td>
                   <td><?php echo e($invoice->created_at->format('d M Y h:m:s')); ?></td>
-                  <td class="text-center"> <?php echo e($invoice->total_with_tax); ?> <?php echo e(App\Setting::get_option('currency')); ?>
+                  <td class="text-center"> <?php echo e($invoice->total_with_tax); ?>
 
+                  
                      <?php if($invoice->payment_status == 'Unpaid' OR $invoice->payment_status == 'Partially Paid'): ?>
-                        <label class="badge badge-danger-soft"><?php echo e($invoice->due_amount); ?> <?php echo e(App\Setting::get_option('currency')); ?> </label>
+                        <label class="badge badge-danger-soft"><?php echo e($invoice->due_amount); ?></label>
+                        
                      <?php endif; ?>
                   </td>
                   <td class="text-center">
