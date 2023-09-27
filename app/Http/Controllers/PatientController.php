@@ -21,8 +21,13 @@ class PatientController extends Controller
 
     public function all()
     {
-        $patients = User::where('role', '=', 'patient')->OrderBy('id', 'DESC')->paginate(10);
-
+        $sortColumn = request()->get('sort');
+        $sortOrder = request()->get('order', 'asc');
+        if (!empty($sortColumn)) {
+            $patients = User::where('role', '=', 'patient')->OrderBy($sortColumn, $sortOrder)->paginate(10);
+        } else {
+            $patients = User::paginate(10);
+        }
         return view('patient.all', ['patients' => $patients]);
     }
 

@@ -16,7 +16,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="PatientID"><?php echo e(__('sentence.Patient')); ?> :</label>
-                            <select class="form-control multiselect-doctorino" name="patient_id" id="PatientID" required>
+                            <select class="form-control multiselect-search" name="patient_id" id="PatientID" required>
                                 <option><?php echo e(__('sentence.Select Patient')); ?></option>
                                 <?php $__currentLoopData = $patients; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $patient): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($patient->id); ?>"><?php echo e($patient->name); ?></option>
@@ -27,10 +27,10 @@
                         </div>
                         <div class="form-group">
                             <label for="DoctorID"><?php echo e(__('sentence.Doctors')); ?> :</label>
-                            <select class="form-control multiselect-doctorino" name="Doctor_id" id="DoctorID" required>
+                            <select class="form-control multiselect-search" name="Doctor_id" id="DoctorID" required>
                                 <option><?php echo e(__('sentence.Select Doctor')); ?></option>
                                 <?php $__currentLoopData = $praticiens; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
+                                    <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </select>
@@ -85,16 +85,43 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script type="text/javascript">
-        // In your Javascript (external .js resource or <script> tag)
-        $(document).ready(function() {
-            $('.multiselect-doctorino').select2();
-        });
+        $(document).ready(function () {
+            $('.multiselect-search').select2();
 
-        $(document).ready(function() {
-            $('.multiselect-drug').select2();
+            // Get references to the patient and test select elements
+            const patientSelect = $('#PatientID');
+            const testSelect = $('#test');
+
+            // Store the original test options
+            const originalTestOptions = testSelect.html();
+
+            // Function to update test options based on the selected patient
+            function updateTestOptions() {
+                const selectedPatientName = patientSelect.find('option:selected').text();
+
+                // Clear and restore original test options
+                testSelect.empty().html(originalTestOptions);
+
+                // Filter and show test options based on the selected patient
+                testSelect.find('option').each(function () {
+                    const optionText = $(this).text();
+                    if (optionText.includes(selectedPatientName)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                // Trigger the Select2 plugin to update the dropdown
+                testSelect.trigger('change');
+            }
+
+            // Attach a change event listener to the patient select element
+            patientSelect.on('change', function () {
+                updateTestOptions();
+            });
         });
     </script>
-
 
     <script type="text/template" id="drugs_labels">
    <section class="field-group">
@@ -106,7 +133,7 @@
                                  </div>
                              </div>
                              <div class="col-md-6">
-                                 <select class="form-control multiselect-drug" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
+                                 <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
                                    <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
                                    <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                        <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
@@ -114,28 +141,10 @@
                                  </select>
                              </div>
 
-                             <div class="col-md-4">
-                                 <div class="form-group-custom">
-                                     <input type="text" id="strength" name="strength[]"  class="form-control" placeholder="Mg/Ml">
-                                 </div>
-                             </div>
+                             
                          </div>
 
-                         <div class="row">
-
-                             <div class="col-md-6">
-                                 <div class="form-group-custom">
-                                     <input type="text" id="dose" name="dose[]" class="form-control" placeholder="<?php echo e(__('sentence.Dose')); ?>">
-                                     <label class="control-label"></label><i class="bar"></i>
-
-                                 </div>
-                             </div>
-                             <div class="col-md-6">
-                                 <div class="form-group-custom">
-                                     <input type="text" id="duration" name="duration[]" class="form-control" placeholder="<?php echo e(__('sentence.Duration')); ?>">
-                                 </div>
-                             </div>
-                         </div>
+                         
                          <div class="row">
                              <div class="col-md-9">
                                  <div class="form-group-custom">
@@ -155,7 +164,7 @@
                          <div class="field-group row">
 
                              <div class="col-md-4">
-                                 <select class="form-control multiselect-doctorino" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
+                                 <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
                                    <option value=""><?php echo e(__('sentence.Select Test')); ?>...</option>
                                    <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                        <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?></option>
