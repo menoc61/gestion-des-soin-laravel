@@ -101,7 +101,7 @@ class PrescriptionController extends Controller
         $prescriptions = Prescription::select('prescriptions.*', 'users.name as patient_name')
             ->join('users', 'prescriptions.user_id', '=', 'users.id')
             ->orderBy($sortColumn, $sortOrder)
-            ->paginate(10);
+            ->paginate(25);
 
         return view('prescription.all', ['prescriptions' => $prescriptions]);
     }
@@ -262,7 +262,7 @@ class PrescriptionController extends Controller
     {
         $User = User::findOrfail($id);
 
-        $prescriptions = Prescription::where('user_id', $id)->paginate(10);
+        $prescriptions = Prescription::where('user_id', $id)->paginate(25);
 
         return view('prescription.view_for_user', ['prescriptions' => $prescriptions]);
     }
