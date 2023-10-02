@@ -70,3 +70,11 @@ php artisan serve
 ```
 - The Laravel app should now be running. You can access it in your web browser at the following URL: http://localhost/ or 127.0.0.1
 - you can login on the admin pre-build account on "admin@admin" and password: "admin"
+
+## Step 5: Deploy on local server 
+> let us consider you havea already install **pm2** you can do so using `npm i -g pm2` or `yarn add -g pm2`
+- Give execution permission to the **laravel-pm2.sh** script by : ```chmod +x laravel-pm2.sh```
+- lunch the command:
+  ```
+    pm2 start laravel-pm2.json
+  ```
