@@ -110,12 +110,11 @@ class TestController extends Controller
         $sortColumn = request()->get('sort');
         $sortOrder = request()->get('order', 'asc');
         if(!empty($sortColumn)){
-            $tests = Test::orderBy($sortColumn, $sortOrder)->paginate(10);
+            $tests = Test::orderBy($sortColumn, $sortOrder)->paginate(25);
         }
         else{
-            $tests = Test::paginate(10);
+            $tests = Test::all();
         }
-        $tests = Test::all();
         return view('test.all', ['tests' => $tests]);
     }
 

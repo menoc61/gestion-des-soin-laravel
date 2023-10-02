@@ -23,15 +23,14 @@ class UsersController extends Controller
         $sortColumn = request()->get('sort');
         $sortOrder = request()->get('order', 'asc');
         if (!empty($sortColumn)) {
-            $users = User::orderBy($sortColumn, $sortOrder)->paginate(10);
+            $users = User::orderBy($sortColumn, $sortOrder)->paginate(25);
         } else {
-            $users = User::paginate(10);
+            $users = User::paginate(25);
         }
         return view('user.all', ['users' => $users]);
     }
 
     public function create(){
-
         $roles = Role::all()->pluck('name');
         return view('user.create',['roles' => $roles]);
     }
@@ -42,6 +41,9 @@ class UsersController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required',
+            Rule::in(['admin', 'praticien']),
+            ],
 
         ]);
 
@@ -49,6 +51,7 @@ class UsersController extends Controller
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
         $user->name = $request->name;
+        $user->role = $request->role;
         $user->save();
 
         $patient = new Patient();
@@ -57,8 +60,6 @@ class UsersController extends Controller
         $patient->gender = $request->gender;
         $patient->birthday = '00-00-0000';
         $patient->save();
-
-        $user->assignRole($request->role);
 
         return Redirect::route('user.all')->with('success', __('sentence.User Created Successfully'));
 

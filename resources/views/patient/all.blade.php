@@ -15,7 +15,7 @@
                 <div class="col-4">
                  <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="{{ route('patient.search') }}" method="post">
                         <div class="input-group">
-                            <input type="text" name="term" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" name="term" class="form-control bg-light border-0 small" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">
                             @csrf
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
