@@ -1,0 +1,6 @@
+{
+  "name": "laravel-app",
+  "script": "./laravel-pm2.sh",
+  "interpreter": "bash",
+  "log_date_format": "YYYY-MM-DD HH:mm:ss"
+}
