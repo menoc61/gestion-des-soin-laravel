@@ -128,19 +128,19 @@ class AppointmentController extends Controller
 
     public function all(){
 
-        $appointments = Appointment::orderBy('id','DESC')->paginate(10);
+        $appointments = Appointment::orderBy('id','DESC')->paginate(25);
         return view('appointment.all', ['appointments' => $appointments]);
     }
 
     public function calendar(){
 
-        $appointments = Appointment::orderBy('id','DESC')->paginate(10);
+        $appointments = Appointment::orderBy('id','DESC')->paginate(25);
         return view('appointment.calendar', ['appointments' => $appointments]);
     }
 
     public function pending(){
 
-        $appointments = Appointment::where('date', '>', Now())->orderBy('id','DESC')->paginate(10);
+        $appointments = Appointment::where('date', '>', Now())->orderBy('id','DESC')->paginate(25);
         return view('appointment.pending', ['appointments' => $appointments]);
 
     }
