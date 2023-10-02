@@ -32,8 +32,8 @@ class CsvController extends Controller
             $pathToSave = public_path('uploads');
             $uploadedFile->move($pathToSave, 'products.csv');
 
-            // Read and extract desired columns from "products.csv"
-            $desiredColumns = ['id', 'sku', 'name', 'product_category', 'status', 'updated_at', 'imageUrl'];
+            // Read and extract desired columns (id and name) from "products.csv"
+            $desiredColumns = ['id', 'name'];
             $csvData = [];
 
             $reader = Reader::createFromPath($pathToSave.'/products.csv', 'r');
@@ -42,7 +42,7 @@ class CsvController extends Controller
             // Initialize the header with column names
             $header = $desiredColumns;
 
-            foreach ($reader->getRecords() as $record) {
+            foreach ($reader->getRecords($desiredColumns) as $record) {
                 $rowData = [];
                 foreach ($desiredColumns as $column) {
                     $rowData[] = $record[$column];
@@ -68,7 +68,7 @@ class CsvController extends Controller
                 $existingData[] = $record;
             }
 
-            // Append new data and update existing rows in "product_db.csv"
+            // Append new data and update existing rows in "product_db.csv" while checking for duplicate IDs
             foreach ($csvData as $row) {
                 $id = $row[0]; // Assuming ID is the unique identifier
                 $found = false;
@@ -92,7 +92,10 @@ class CsvController extends Controller
             $writerDb = Writer::createFromPath($dbFilePath, 'w+');
             $writerDb->insertAll($existingData);
 
-            return redirect()->back()->with('success', 'Données copiées et mises à jour avec succès.');
+            // Display the values of column B (name) on the screen
+            $columnBValues = array_column($csvData, 1); // 1 represents the 'name' column
+
+            return view('drug.create', ['columnBValues' => $columnBValues]);
         }
 
         return redirect()->back()->with('error', "Aucun fichier n'a été téléchargé.");

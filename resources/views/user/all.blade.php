@@ -50,11 +50,11 @@
                       <td class="text-center"> {{ $user->email }} </td>
                       <td class="text-center"><label class="badge badge-primary-soft">{{ $user->created_at->format('d M Y H:i') }}</label></td>
                       <td class="text-center">
-                        @forelse($user->getRoleNames() as $role)
-                        <label class="badge badge-warning-soft">{{ ucfirst($role) }}</label>
-                        @empty
+                        @if($user->role)
+                        <label class="badge badge-warning-soft">{{ ucfirst($user->role) }}</label>
+                        @else
                         <label class="badge badge-warning-soft">Hôte</label>
-                        @endforelse
+                        @endif
                       </td>
                       <td class="text-center">
                         <a href="{{ url('patient/view/'.$user->id) }}" class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a>

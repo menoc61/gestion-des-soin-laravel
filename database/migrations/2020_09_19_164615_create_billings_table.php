@@ -15,12 +15,17 @@ class CreateBillingsTable extends Migration
     {
         Schema::create('billings', function (Blueprint $table) {
             $table->id();
-             $table->foreignId('user_id')
-                  ->constrained()
-                  ->onDelete('cascade');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
+            $table->foreignId('created_by')
+                ->nullable()
+                ->constrained('users')
+                ->onDelete('set null');
             $table->string('payment_mode')->nullable();
             $table->string('payment_status')->nullable();
             $table->string('reference')->nullable();
+
 
             $table->timestamps();
         });
