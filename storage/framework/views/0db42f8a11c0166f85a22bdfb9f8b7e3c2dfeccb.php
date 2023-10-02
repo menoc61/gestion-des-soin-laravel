@@ -4,16 +4,17 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-<div class="toast" id="myToast" data-delay="5000" style="position: absolute; top: 0; right: 0; z-index: 1">
-    <div class="toast-header bg-primary text-white">
-        <strong class="mr-auto ">Remark :</strong>
-        <small class="text-muted">a l'instant</small>
-        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+    <div class="toast" id="myToast" data-delay="5000" style="position: absolute; top: 0; right: 0; z-index: 1">
+        <div class="toast-header bg-primary text-white">
+            <strong class="mr-auto ">Remark :</strong>
+            <small class="text-muted">a l'instant</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+        </div>
+        <div class="toast-body">
+            Rappelez-vous de toujours sélectionner à nouveau le type de diagnostic, sinon vous obtiendrez un message
+            d'erreur.
+        </div>
     </div>
-    <div class="toast-body">
-        Rappelez-vous de toujours sélectionner à nouveau le type de diagnostic, sinon vous obtiendrez un message d'erreur.
-    </div>
-</div>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow mb-4">
@@ -27,15 +28,16 @@
                                     color="red">*</font></label>
                             
                             <div class="col-sm-9 input-group">
-                                <select class="input-group-text" name="patient_id" id="PatientID" required aria-placeholder="<?php echo e(__('sentence.Select Patient')); ?>"
-                                    onchange="updateTestName()">
+                                <select class="input-group-text" name="patient_id" id="PatientID" required
+                                    aria-placeholder="<?php echo e(__('sentence.Select Patient')); ?>" onchange="updateTestName()">
                                     <option @readonly(true)><?php echo e(__('sentence.Select Patient')); ?></option>
                                     <?php $__currentLoopData = $patients; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $patient): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($patient->id); ?>" data-name="<?php echo e($patient->name); ?>">
                                             <?php echo e($patient->name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
-                                <input type="text" class="form-control" id="inputEmail3" name="test_name" value="<?php echo e($test->test_name); ?>" readonly>
+                                <input type="text" class="form-control" id="inputEmail3" name="test_name"
+                                    value="<?php echo e($test->test_name); ?>" readonly>
                                 <?php echo e(csrf_field()); ?>
 
                             </div>
@@ -51,9 +53,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputSection" class="col-sm-3 col-form-label"><?php echo e(__('sentence.Form Type')); ?></label>
+                            <label for="inputSection"
+                                class="col-sm-3 col-form-label"><?php echo e(__('sentence.Form Type')); ?></label>
                             <div class="col-sm-9">
-                                <select multiple="multiple" class="form-control" id="inputSection" name="diagnostic_type[]" @readonly(true)>
+                                <select multiple="multiple" class="form-control" id="inputSection" name="diagnostic_type[]">
                                     <?php $__currentLoopData = ['DIAGNOSE PEAU', 'DIAGNOSE MAIN', 'DIAGNOSE PIED']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($option); ?>"
                                             <?php echo e(in_array($option, json_decode($test->diagnostic_type)) ? 'selected' : ''); ?>>
@@ -208,16 +211,6 @@
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="vernis"
                                                         name="vernisInput_main" value="<?php echo e($test->vernisInput_main); ?>">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="form-group row">
-                                                <label for="obseration-mains"
-                                                    class="col-sm-3 col-form-label"><?php echo e(__('sentence.obseration')); ?></label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="obseration-mains"
-                                                        name="obserationInput_main"
-                                                        value="<?php echo e($test->obserationInput_main); ?>">
                                                 </div>
                                             </div>
                                             <hr>
@@ -435,16 +428,7 @@
                                                         name="vernisInput_pied" value="<?php echo e($test->vernisInput_pied); ?>">
                                                 </div>
                                             </div>
-                                            <hr>
-                                            <div class="form-group row">
-                                                <label for="obseration"
-                                                    class="col-sm-3 col-form-label"><?php echo e(__('sentence.obseration')); ?></label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="obseration"
-                                                        name="obserationInput_pied"
-                                                        value="<?php echo e($test->obserationInput_pied); ?>">
-                                                </div>
-                                            </div>
+
                                             <hr>
                                             <div class="form-group row">
                                                 <div class="col-sm-9">
@@ -557,45 +541,43 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer'); ?>
+    <script>
+        function updateTestName() {
+            var patientSelect = document.getElementById('PatientID');
+            var testNameInput = document.getElementById('test_name');
 
-        <script>
-            function updateTestName() {
-                var patientSelect = document.getElementById('PatientID');
-                var testNameInput = document.getElementById('test_name');
+            // Get the selected option element
+            var selectedOption = patientSelect.options[patientSelect.selectedIndex];
 
-                // Get the selected option element
-                var selectedOption = patientSelect.options[patientSelect.selectedIndex];
+            // Get the patient's name from the data-name attribute of the selected option
+            var patientName = selectedOption.getAttribute('data-name');
 
-                // Get the patient's name from the data-name attribute of the selected option
-                var patientName = selectedOption.getAttribute('data-name');
+            // Update the test_name input field value with the selected patient's name
+            testNameInput.value = "Diagnostic de Mr(s) - " + patientName;
+        }
+    </script>
+    <script type="text/javascript"
+        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+    <!-- Initialize the plugin: -->
+    <script type="text/javascript">
+        $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            filterPlaceholder: 'Recherche un Hôte...',
+            buttonContainer: '<div class="btn-group w-100" />'
+        });
+    </script>
+    <script>
+        // Function to show the toast
+        function showToast() {
+            $('.toast').toast('show');
+        }
 
-                // Update the test_name input field value with the selected patient's name
-                testNameInput.value = "Diagnostic de Mr(s) - " + patientName;
-            }
-        </script>
-        <script type="text/javascript"
-            src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
-        <!-- Initialize the plugin: -->
-        <script type="text/javascript">
-            $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({
-                includeSelectAllOption: true,
-                enableFiltering: true,
-                filterPlaceholder: 'Recherche un Hôte...',
-                buttonContainer: '<div class="btn-group w-100" />'
-            });
-        </script>
-        <script>
-            // Function to show the toast
-            function showToast() {
-                $('.toast').toast('show');
-            }
-
-            // Trigger the toast when the page is loaded
-            $(document).ready(function() {
-                showToast();
-            });
-        </script>
-
+        // Trigger the toast when the page is loaded
+        $(document).ready(function() {
+            showToast();
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/test/edit.blade.php ENDPATH**/ ?>
