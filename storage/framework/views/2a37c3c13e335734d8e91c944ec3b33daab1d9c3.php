@@ -26,10 +26,21 @@
          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                <tr>
-                  <th><?php echo e(__('sentence.Reference')); ?></th>
-                  <th><?php echo e(__('sentence.Patient')); ?></th>
-                  <th><?php echo e(__('sentence.Date')); ?></th>
-                  <th class="text-center"><?php echo e(__('sentence.Amount')); ?> - <font class="text-danger"><?php echo e(__('sentence.Due Balance')); ?></font></th>
+                  <th><?php echo e(__('sentence.Reference')); ?>
+
+                    <a href="<?php echo e(route('billing.all', ['sort' => 'reference', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                    <a href="<?php echo e(route('billing.all', ['sort' => 'reference', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th><?php echo e(__('sentence.Patient')); ?> </th>
+                  <th><?php echo e(__('sentence.Date')); ?>
+
+                    <a href="<?php echo e(route('billing.all', ['sort' => 'created_at', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                    <a href="<?php echo e(route('billing.all', ['sort' => 'created_at', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                  </th>
+                  <th class="text-center"><?php echo e(__('sentence.Amount')); ?> - <font class="text-danger"><?php echo e(__('sentence.Due Balance')); ?></font>
+                    <a href="<?php echo e(route('billing.all', ['sort' => 'due_amount', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                    <a href="<?php echo e(route('billing.all', ['sort' => 'due_amount', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                  </th>
                   <th class="text-center"><?php echo e(__('sentence.Status')); ?></th>
                   <th class="text-center"><?php echo e(__('sentence.Payment Method')); ?></th>
                   <th><?php echo e(__('sentence.Actions')); ?></th>
@@ -41,10 +52,12 @@
                   <td><?php echo e($invoice->reference); ?></td>
                   <td><a href="<?php echo e(url('patient/view/'.$invoice->user_id)); ?>"> <?php echo e($invoice->User->name); ?> </a></td>
                   <td><?php echo e($invoice->created_at->format('d M Y h:m:s')); ?></td>
-                  <td class="text-center"> <?php echo e($invoice->total_with_tax); ?> <?php echo e(App\Setting::get_option('currency')); ?>
+                  <td class="text-center"> <?php echo e($invoice->total_with_tax); ?>
 
+                  
                      <?php if($invoice->payment_status == 'Unpaid' OR $invoice->payment_status == 'Partially Paid'): ?>
-                        <label class="badge badge-danger-soft"><?php echo e($invoice->due_amount); ?> <?php echo e(App\Setting::get_option('currency')); ?> </label>
+                        <label class="badge badge-danger-soft"><?php echo e($invoice->due_amount); ?></label>
+                        
                      <?php endif; ?>
                   </td>
                   <td class="text-center">
