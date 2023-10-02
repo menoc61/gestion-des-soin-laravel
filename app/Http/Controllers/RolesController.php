@@ -15,14 +15,14 @@ class RolesController extends Controller
 
     public function all_roles(){
 
-        $roles = Role::paginate(10);
+        $roles = Role::paginate(25);
         return view('role.all', ['roles' => $roles]);
 
     }
 
 
     public function create(){
-        
+
         $permissions = Permission::all();
 
         return view('role.create', ['permissions' => $permissions]);
@@ -43,7 +43,7 @@ class RolesController extends Controller
 
 
     public function edit_role(Request $request,$id){
-        
+
         $role = Role::findorfail($id);
         $permissions = Permission::all();
 
@@ -51,7 +51,7 @@ class RolesController extends Controller
     }
 
     public function store_edit_role(Request $request){
-        
+
         $this->validate($request, [
             'name' => 'required',
         ]);
@@ -67,13 +67,13 @@ class RolesController extends Controller
     }
 
     public function destroy($id){
-        
+
         $role = Role::findorfail($id);
 
         if($role->name == 'Admin' or $role->name == 'Receptionist'):
             return Redirect::route('roles.all')->with('warning', 'You cannot delete Admin/Receptionist role !');;
         endif;
-        
+
         Role::destroy($id);
         return Redirect::route('roles.all')->with('success', 'Role Deleted Successfully!');;
     }
