@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.All users')); ?>
 
@@ -21,10 +23,25 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th><?php echo e(__('sentence.Name')); ?></th>
-                      <th class="text-center"><?php echo e(__('sentence.Email')); ?></th>
-                      <th class="text-center"><?php echo e(__('sentence.Register Date')); ?></th>
+                      <th>ID
+                        <a href="<?php echo e(route('user.all', ['sort' => 'id', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                        <a href="<?php echo e(route('user.all', ['sort' => 'id', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                      </th>
+                      <th><?php echo e(__('sentence.Name')); ?>
+
+                        <a href="<?php echo e(route('user.all', ['sort' => 'name', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                        <a href="<?php echo e(route('user.all', ['sort' => 'name', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                      </th>
+                      <th class="text-center"><?php echo e(__('sentence.Email')); ?>
+
+                        <a href="<?php echo e(route('user.all', ['sort' => 'email', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                        <a href="<?php echo e(route('user.all', ['sort' => 'email', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                      </th>
+                      <th class="text-center"><?php echo e(__('sentence.Register Date')); ?>
+
+                        <a href="<?php echo e(route('user.all', ['sort' => 'created_at', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                        <a href="<?php echo e(route('user.all', ['sort' => 'created_at', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                      </th>
                       <th class="text-center"><?php echo e(__('sentence.Roles')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Actions')); ?></th>
                     </tr>
