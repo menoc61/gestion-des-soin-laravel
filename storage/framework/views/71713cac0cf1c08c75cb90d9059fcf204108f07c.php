@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.All Patients')); ?>
 
@@ -46,29 +48,13 @@
                         <a href="<?php echo e(route('patient.all', ['sort' => 'name', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
                       </th>
                       <th class="text-center"><?php echo e(__('sentence.Age')); ?></th>
-                      <th class="text-center"><?php echo e(__('sentence.Phone')); ?>
-
-                        <a href="<?php echo e(route('patient.all', ['sort' => 'phone', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
-                        <a href="<?php echo e(route('patient.all', ['sort' => 'phone', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
-                      </th>
-                      <th class="text-center"><?php echo e(__('sentence.Address')); ?>
-
-                        <a href="<?php echo e(route('patient.all', ['sort' => 'adress', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
-                        <a href="<?php echo e(route('patient.all', ['sort' => 'adress', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
-                      </th>
-                      <th class="text-center"><?php echo e(__('sentence.Allergies')); ?>
-
-                        <a href="<?php echo e(route('patient.all', ['sort' => 'allergie', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
-                        <a href="<?php echo e(route('patient.all', ['sort' => 'allergie', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
-                      </th>
+                      <th class="text-center"><?php echo e(__('sentence.Phone')); ?></th>
+                      <th class="text-center"><?php echo e(__('sentence.Address')); ?></th>
+                      <th class="text-center"><?php echo e(__('sentence.Allergies')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Type of patient')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Morphology')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Alimentation')); ?></th>
-                      <th class="text-center"><?php echo e(__('sentence.Digestion')); ?>
-
-                        <a href="<?php echo e(route('patient.all', ['sort' => 'digestion', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
-                        <a href="<?php echo e(route('patient.all', ['sort' => 'digestion', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
-                      </th>
+                      <th class="text-center"><?php echo e(__('sentence.Digestion')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Date')); ?>
 
                         <a href="<?php echo e(route('patient.all', ['sort' => 'created_at', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
@@ -76,8 +62,6 @@
                       </th>
                       <th class="text-center"><?php echo e(__('sentence.Due Balance')); ?>
 
-                        <a href="<?php echo e(route('patient.all', ['sort' => 'due_amount', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
-                        <a href="<?php echo e(route('patient.all', ['sort' => 'due_amount', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
                       </th>
                       <th class="text-center"><?php echo e(__('sentence.Prescriptions')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Actions')); ?></th>
