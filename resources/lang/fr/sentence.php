@@ -38,6 +38,7 @@ return [
   'Drug added Successfully' => 'Soin ajouté avec succès!',
   'Drug Edited Successfully' => 'Soin mis à jour avec succès!',
   'Drug Deleted Successfully' => 'Soin supprimé avec succès!',
+  'Product List' => 'List des Produits',
 
   'Tests list' => 'Liste des Diagnostic',
   'Patient informations' => 'Informations du Patient',
