@@ -7,7 +7,28 @@
 @section('content')
     <form method="post" action="{{ route('billing.store') }}">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-6">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Invoice Details') }}</h6>
+                    </div>
+                    <div class="card-body">
+                        <fieldset class="billing_labels">
+                            <div class="repeatable"></div>
+                            <div class="form-group">
+                                <a type="button" class="btn btn-primary btn-sm add text-white" align="center"><i
+                                        class='fa fa-plus'></i> {{ __('sentence.Add Item') }}</a>
+                            </div>
+                        </fieldset>
+                        {{-- <div class="d-flex justify-content-between ">
+                    <span class="">Montant sans Taxe : <b id="total_without_tax_income">0 </b> {{ App\Setting::get_option('currency') }}</span><br>
+                    <span class="">TVA : <b>{{ App\Setting::get_option('vat') }} %</b> </span><br>
+                    <span class="">Montant Total : <b id="total_income">0 </b> {{ App\Setting::get_option('currency') }}</span>
+               </div> --}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Informations') }}</h6>
@@ -57,27 +78,6 @@
                             <input type="submit" value="{{ __('sentence.Create Invoice') }}"
                                 class="btn btn-warning btn-block" align="center">
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Invoice Details') }}</h6>
-                    </div>
-                    <div class="card-body">
-                        <fieldset class="billing_labels">
-                            <div class="repeatable"></div>
-                            <div class="form-group">
-                                <a type="button" class="btn btn-primary btn-sm add text-white" align="center"><i
-                                        class='fa fa-plus'></i> {{ __('sentence.Add Item') }}</a>
-                            </div>
-                        </fieldset>
-                        {{-- <div class="d-flex justify-content-between ">
-                    <span class="">Montant sans Taxe : <b id="total_without_tax_income">0 </b> {{ App\Setting::get_option('currency') }}</span><br>
-                    <span class="">TVA : <b>{{ App\Setting::get_option('vat') }} %</b> </span><br>
-                    <span class="">Montant Total : <b id="total_income">0 </b> {{ App\Setting::get_option('currency') }}</span>
-               </div> --}}
                     </div>
                 </div>
             </div>
