@@ -16,7 +16,7 @@ class CreateDrugsTable extends Migration
         Schema::create('drugs', function (Blueprint $table) {
             $table->id();
             $table->string('trade_name');
-            $table->string('generic_name');
+            $table->json('generic_name')->nullable();
             $table->longText('note')->nullable();
             $table->timestamps();
         });

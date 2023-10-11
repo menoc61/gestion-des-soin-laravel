@@ -123,3 +123,4 @@ Route::get('/role/delete/{id}', 'RolesController@destroy')->where('id', '[0-9]+'
 
 /* [process csv] */
 Route::post('/process-csv', 'CsvController@processCsv')->name('process.csv');
+Route::get('/display-products', 'CsvController@displayProducts')->name('display.products');

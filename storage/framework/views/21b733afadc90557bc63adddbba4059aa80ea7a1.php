@@ -46,7 +46,6 @@
             </div>
         </div>
     </div>
-
     
 
     <div class="row justify-content-center">
@@ -66,14 +65,20 @@
                             <?php echo e(csrf_field()); ?>
 
                         </div>
+
                         <div class="form-group">
                             <label for="exampleInputPassword1"><?php echo e(__('sentence.Generic Name')); ?><font color="red">*
                                 </font></label>
-                            <input type="text" class="form-control" name="generic_name" id="GenericName">
+                            <select name="generic_name[]" multiple id="GenericName" class="form-control">
+                                <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($product['name']); ?>"><?php echo e($product['name']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
                         </div>
+
                         <div class="form-group">
                             <label for="exampleInputPassword1"><?php echo e(__('sentence.Note')); ?></label>
-                            <input type="text" class="form-control" name="note" id="Note">
+                            <input type="text" class="form-control" name="note" id="Note" placeholder="Description...">
                         </div>
                         <button type="submit" class="btn btn-primary"><?php echo e(__('sentence.Save')); ?></button>
                     </form>
@@ -81,10 +86,66 @@
             </div>
         </div>
     </div>
+
+    
+    <div class="row">
+        <div class="col">
+            <h2><?php echo e(__('sentence.Product List')); ?></h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>SKU</th>
+                        <th>Name</th>
+                        <th>Product Category</th>
+                        <th>Updated At</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if(count($products) > 0): ?>
+                        <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td><?php echo e($product['id']); ?></td>
+                                <td><?php echo e($product['sku']); ?></td>
+                                <td><?php echo e($product['name']); ?></td>
+                                <td><?php echo e($product['product_category']); ?></td>
+                                <td><?php echo e($product['updated_at']); ?></td>
+                                <td>
+                                    <?php if(!empty($product['imageUrl'])): ?>
+                                        <img src="<?php echo e($product['imageUrl']); ?>" alt="Unable to reach backend"
+                                            style="max-width: 100px;">
+                                    <?php else: ?>
+                                        le produit n'as pas d'image
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7">No data available.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer'); ?>
-
+<script type="text/javascript"
+src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+<!-- Initialize the plugin: -->
+<script type="text/javascript">
+$('#GenericName').multiselect({
+    includeSelectAllOption: true,
+    enableFiltering: true,
+    filterPlaceholder: 'Recherche un Hôte...',
+    buttonContainer: '<div class="btn-group w-100" />'
+});
+</script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/drug/create.blade.php ENDPATH**/ ?>
