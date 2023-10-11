@@ -1,7 +1,4 @@
-1,riz
-3,"joy stick"
-2,"huile de cheuveux"
-1,riz
-3,"joy stick"
-2,"huile de cheuveux"
-1,riz
+id,sku,name,product_category,status,updated_at,imageUrl
+3,SAI-JOY406792482,"joy stick",electronique,true,2023-09-16T16:11:05.926Z,http://localhost:5000/v1/product-image/4a652feca78ba1963c8f32ceaf997b88469f0622cf5e2286e1dff09bd0975f30.jpg
+2,SAI-HUI506558598,"huile de cheuveux",cosmetique,true,2023-09-16T16:11:05.925Z,http://localhost:5000/v1/product-image/669f1c6a260daa870dd7578c819d352c3d53c6f0dbf16ad2edd6dddca2c8bed2.jpg
+1,SAI-RIZ533205549,riz,alimentation,true,2023-09-16T16:11:05.925Z,http://localhost:5000/v1/product-image/2bd32bfdc36009f816de93fd4701f0187e59abe1afa04359569024739d4a2a5c.jpg

@@ -47,7 +47,6 @@
             </div>
         </div>
     </div>
-
     {{-- Upload product.csv End --}}
 
     <div class="row justify-content-center">
@@ -66,14 +65,20 @@
                                 aria-describedby="TradeName">
                             {{ csrf_field() }}
                         </div>
+
                         <div class="form-group">
                             <label for="exampleInputPassword1">{{ __('sentence.Generic Name') }}<font color="red">*
                                 </font></label>
-                            <input type="text" class="form-control" name="generic_name" id="GenericName">
+                            <select name="generic_name[]" multiple id="GenericName" class="form-control">
+                                @foreach ($products as $product)
+                                    <option value="{{ $product['name'] }}">{{ $product['name'] }}</option>
+                                @endforeach
+                            </select>
                         </div>
+
                         <div class="form-group">
                             <label for="exampleInputPassword1">{{ __('sentence.Note') }}</label>
-                            <input type="text" class="form-control" name="note" id="Note">
+                            <input type="text" class="form-control" name="note" id="Note" placeholder="Description...">
                         </div>
                         <button type="submit" class="btn btn-primary">{{ __('sentence.Save') }}</button>
                     </form>
@@ -81,8 +86,64 @@
             </div>
         </div>
     </div>
+
+    {{-- Display Products Section --}}
+    <div class="row">
+        <div class="col">
+            <h2>{{ __('sentence.Product List') }}</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>SKU</th>
+                        <th>Name</th>
+                        <th>Product Category</th>
+                        <th>Updated At</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (count($products) > 0)
+                        @foreach ($products as $product)
+                            <tr>
+                                <td>{{ $product['id'] }}</td>
+                                <td>{{ $product['sku'] }}</td>
+                                <td>{{ $product['name'] }}</td>
+                                <td>{{ $product['product_category'] }}</td>
+                                <td>{{ $product['updated_at'] }}</td>
+                                <td>
+                                    @if (!empty($product['imageUrl']))
+                                        <img src="{{ $product['imageUrl'] }}" alt="Unable to reach backend"
+                                            style="max-width: 100px;">
+                                    @else
+                                        le produit n'as pas d'image
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="7">No data available.</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    {{-- End Display Products Section --}}
 @endsection
 
 @section('footer')
-
+<script type="text/javascript"
+src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+<!-- Initialize the plugin: -->
+<script type="text/javascript">
+$('#GenericName').multiselect({
+    includeSelectAllOption: true,
+    enableFiltering: true,
+    filterPlaceholder: 'Recherche un Hôte...',
+    buttonContainer: '<div class="btn-group w-100" />'
+});
+</script>
 @endsection
