@@ -32,8 +32,14 @@ class CsvController extends Controller
             $pathToSave = public_path('uploads');
             $uploadedFile->move($pathToSave, 'products.csv');
 
-            // Read and extract desired columns (id and name) from "products.csv"
-            $desiredColumns = ['id', 'name'];
+            // Delete the old "product_db.csv" if it exists
+            $dbFilePath = public_path('uploads/product_db.csv');
+            if (file_exists($dbFilePath)) {
+                unlink($dbFilePath);
+            }
+
+            // Read and extract desired columns from "products.csv"
+            $desiredColumns = ['id', 'sku', 'name', 'product_category', 'status', 'updated_at', 'imageUrl'];
             $csvData = [];
 
             $reader = Reader::createFromPath($pathToSave.'/products.csv', 'r');
@@ -42,7 +48,11 @@ class CsvController extends Controller
             // Initialize the header with column names
             $header = $desiredColumns;
 
-            foreach ($reader->getRecords($desiredColumns) as $record) {
+            // Create "product_db.csv" with the desired column headers
+            $writer = Writer::createFromPath($dbFilePath, 'w+');
+            $writer->insertOne($header);
+
+            foreach ($reader->getRecords() as $record) {
                 $rowData = [];
                 foreach ($desiredColumns as $column) {
                     $rowData[] = $record[$column];
@@ -50,54 +60,33 @@ class CsvController extends Controller
                 $csvData[] = $rowData;
             }
 
-            // Check if "product_db.csv" exists, create it if not
-            $dbFilePath = public_path('uploads/product_db.csv');
+            // Save the extracted data to "product_db.csv"
+            $writerDb = Writer::createFromPath($dbFilePath, 'a+'); // Append mode to avoid overwriting
+            $writerDb->insertAll($csvData);
 
-            if (!file_exists($dbFilePath)) {
-                // Create "product_db.csv" with the desired column headers in the specified order
-                $writer = Writer::createFromPath($dbFilePath, 'w+');
-                $writer->insertOne($header);
-            }
-
-            // Read existing content of "product_db.csv"
-            $existingData = [];
-            $readerDb = Reader::createFromPath($dbFilePath, 'r');
-            $readerDb->setHeaderOffset(0);
-
-            foreach ($readerDb->getRecords() as $record) {
-                $existingData[] = $record;
-            }
-
-            // Append new data and update existing rows in "product_db.csv" while checking for duplicate IDs
-            foreach ($csvData as $row) {
-                $id = $row[0]; // Assuming ID is the unique identifier
-                $found = false;
-
-                foreach ($existingData as &$dbRow) {
-                    // Check if 'id' key exists in the $dbRow array
-                    if (array_key_exists(0, $dbRow) && $dbRow[0] === $id) {
-                        // Skip this row as it already exists in the database
-                        $found = true;
-                        break;
-                    }
-                }
-
-                if (!$found) {
-                    // Append new row
-                    $existingData[] = $row;
-                }
-            }
-
-            // Save the updated data back to "product_db.csv"
-            $writerDb = Writer::createFromPath($dbFilePath, 'w+');
-            $writerDb->insertAll($existingData);
-
-            // Display the values of column B (name) on the screen
-            $columnBValues = array_column($csvData, 1); // 1 represents the 'name' column
-
-            return view('drug.create', ['columnBValues' => $columnBValues]);
+            return redirect()->back()->with('success', 'Données copiées avec succès.');
         }
 
         return redirect()->back()->with('error', "Aucun fichier n'a été téléchargé.");
+    }
+
+    public function displayProducts()
+    {
+        // Define the path to the CSV file
+        $csvFilePath = public_path('uploads/product_db.csv');
+
+        // Check if the file exists
+        if (!file_exists($csvFilePath)) {
+            // If the file doesn't exist, set an empty array to $products
+            $products = [];
+        } else {
+            // Read the product_db.csv file
+            $csv = Reader::createFromPath($csvFilePath, 'r');
+            $csv->setHeaderOffset(0); // Assuming the first row contains headers
+
+            $products = $csv->getRecords(); // Get all records from the CSV file
+        }
+
+        return view('drug.create', compact('products'));
     }
 }
