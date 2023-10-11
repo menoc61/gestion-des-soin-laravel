@@ -60,6 +60,7 @@ class TestController extends Controller
 
         $test = new Test();
 
+        $test->user_id = $request->patient_id;
         $test->test_name = $request->test_name;
         $test->comment = $request->comment;
         $test->diagnostic_type = json_encode($request->diagnostic_type);
@@ -215,5 +216,13 @@ class TestController extends Controller
         Test::destroy($id);
 
         return \Redirect::route('test.all')->with('success', __('sentence.Test Deleted Successfully'));
+    }
+
+    public function view_diagnostic($id){
+        $User = User::findOrfail($id);
+
+        $tests = Test::where('user_id', $id)->paginate(25);
+
+        return view('test.view_diagnostic', ['tests' => $tests]);
     }
 }
