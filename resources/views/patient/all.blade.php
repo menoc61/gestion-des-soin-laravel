@@ -59,7 +59,8 @@
                       </th>
                       <th class="text-center">{{ __('sentence.Due Balance') }}
                       </th>
-                      <th class="text-center">{{ __('sentence.Prescriptions') }}</th>
+                      <th class="text-center">{{ __('sentence.Prescription') }}</th>
+                      <th class="text-center">{{ __('sentence.Test') }}</th>
                       <th class="text-center">{{ __('sentence.Actions') }}</th>
                     </tr>
                   </thead>
@@ -81,6 +82,11 @@
                       <td class="text-center">
                         @can('view patient')
                         <a href="{{ route('prescription.view_for_user', ['id' => $patient->id]) }}" class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> View</a>
+                        @endcan
+                      </td>
+                      <td class="text-center">
+                        @can('view patient')
+                        <a href="{{ route('test.view_diagnostic', ['id' => $patient->id]) }}" class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> View</a>
                         @endcan
                       </td>
                       <td class="text-center">

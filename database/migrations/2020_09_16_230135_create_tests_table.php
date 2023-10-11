@@ -15,6 +15,11 @@ class CreateTestsTable extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->onDelete('cascade');
+
             $table->string('test_name');
             $table->json('diagnostic_type');
             $table->mediumText('comment')->nullable();
