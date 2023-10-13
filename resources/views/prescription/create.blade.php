@@ -4,6 +4,10 @@
 @endsection
 
 @section('content')
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
+
     <form method="post" action="{{ route('prescription.store') }}">
 
         <div class="row justify-content-center">
@@ -34,12 +38,13 @@
                             </select>
                             {{ csrf_field() }}
                         </div>
-                        <div class="form-group text-center">
-                            <img src="{{ asset('img/patient-icon.png') }}" class="img-profile rounded-circle img-fluid">
+                        <div class="form-group text-center ">
+                            <img src="{{ asset('img/patient-icon.png') }}"
+                                class="img-profile rounded-circle img-fluid w-50 h-50">
                         </div>
                         <div class="form-group">
                             <input type="submit" value="{{ __('sentence.Create Prescription') }}"
-                                class="btn btn-warning btn-block" align="center">
+                                class="btn btn-success btn-block" align="center">
                         </div>
                     </div>
                 </div>
@@ -82,7 +87,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.multiselect-search').select2();
 
             // Get references to the patient and test select elements
@@ -100,7 +105,7 @@
                 testSelect.empty().html(originalTestOptions);
 
                 // Filter and show test options based on the selected patient
-                testSelect.find('option').each(function () {
+                testSelect.find('option').each(function() {
                     const optionText = $(this).text();
                     if (optionText.includes(selectedPatientName)) {
                         $(this).show();
@@ -114,7 +119,7 @@
             }
 
             // Attach a change event listener to the patient select element
-            patientSelect.on('change', function () {
+            patientSelect.on('change', function() {
                 updateTestOptions();
             });
         });

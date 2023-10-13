@@ -5,6 +5,10 @@
 @endsection
 
 @section('content')
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
+
     <!-- DataTables  -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
