@@ -5,6 +5,9 @@
 @endsection
 
 @section('content')
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
     {{-- Upload product.csv Open --}}
     <div class="row">
         <div class="col">
@@ -78,9 +81,10 @@
 
                         <div class="form-group">
                             <label for="exampleInputPassword1">{{ __('sentence.Note') }}</label>
-                            <input type="text" class="form-control" name="note" id="Note" placeholder="Description...">
+                            <input type="text" class="form-control" name="note" id="Note"
+                                placeholder="Description...">
                         </div>
-                        <button type="submit" class="btn btn-primary">{{ __('sentence.Save') }}</button>
+                        <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
                     </form>
                 </div>
             </div>
@@ -135,15 +139,15 @@
 @endsection
 
 @section('footer')
-<script type="text/javascript"
-src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
-<!-- Initialize the plugin: -->
-<script type="text/javascript">
-$('#GenericName').multiselect({
-    includeSelectAllOption: true,
-    enableFiltering: true,
-    filterPlaceholder: 'Recherche un Hôte...',
-    buttonContainer: '<div class="btn-group w-100" />'
-});
-</script>
+    <script type="text/javascript"
+        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+    <!-- Initialize the plugin: -->
+    <script type="text/javascript">
+        $('#GenericName').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            filterPlaceholder: 'Recherche un Hôte...',
+            buttonContainer: '<div class="btn-group w-100" />'
+        });
+    </script>
 @endsection

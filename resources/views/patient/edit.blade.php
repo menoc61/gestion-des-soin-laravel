@@ -1,4 +1,5 @@
 @extends('layouts.master')
+
 @section('header')
     <style>
         .hidden-section {
@@ -8,10 +9,17 @@
     <link rel="stylesheet" type="text/css"
         href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
 @endsection
+
+
 @section('title')
     {{ __('sentence.Edit Patient') }}
 @endsection
+
+
 @section('content')
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card shadow mb-4">
@@ -49,7 +57,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="inputAddress2">{{ __('sentence.Phone') }}</label>
+                                <label for="inputAddress2">{{ __('sentence.Phone') }}<font color="red">*</font></label>
                                 <input type="text" class="form-control" id="Phone" name="phone"
                                     value="{{ $patient->Patient->phone }}">
                             </div>
@@ -62,7 +70,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="inputAddress2">{{ __('sentence.Address') }}</label>
+                                <label for="inputAddress2">{{ __('sentence.Address') }}<font color="red">*</font></label>
                                 <input type="text" class="form-control" id="Address" name="adress"
                                     value="{{ $patient->Patient->adress }}">
                             </div>
@@ -87,11 +95,12 @@
                                         <select class="form-control" id="morphology_patient" multiple="multiple"
                                             name="morphology[]">
                                             @if ($patient->Patient->morphology)
-                                            @foreach (['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'] as $option)
-                                                <option value="{{ $option }}" {{ in_array($option, json_decode($patient->Patient->morphology) ?: []) ? 'selected' : '' }}>
-                                                    {{ $option }}
-                                                </option>
-                                            @endforeach
+                                                @foreach (['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'] as $option)
+                                                    <option value="{{ $option }}"
+                                                        {{ in_array($option, json_decode($patient->Patient->morphology) ?: []) ? 'selected' : '' }}>
+                                                        {{ $option }}
+                                                    </option>
+                                                @endforeach
                                             @endif
                                         </select>
                                     </div>
@@ -103,11 +112,12 @@
                                         <select class="form-control" id="alimentation_patient" multiple="multiple"
                                             name="alimentation[]">
                                             @if ($patient->Patient->alimentation)
-                                            @foreach (['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', 'Pas d\'alcool', 'Fumeur', 'Non-fumeur'] as $option)
-                                                <option value="{{ $option }}" {{ in_array($option, json_decode($patient->Patient->alimentation) ?: []) ? 'selected' : '' }}>
-                                                    {{ $option }}
-                                                </option>
-                                            @endforeach
+                                                @foreach (['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', 'Pas d\'alcool', 'Fumeur', 'Non-fumeur'] as $option)
+                                                    <option value="{{ $option }}"
+                                                        {{ in_array($option, json_decode($patient->Patient->alimentation) ?: []) ? 'selected' : '' }}>
+                                                        {{ $option }}
+                                                    </option>
+                                                @endforeach
                                             @endif
                                             {{-- @foreach (['Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', 'Pas d\'alcool', 'Fumeur', 'Non-fumeur'] as $option)
                                                 <option value="{{ $option }}"
@@ -138,11 +148,12 @@
                                         <select class="form-control" id="type_patient" multiple="multiple"
                                             name="type_patient[]">
                                             @if ($patient->Patient->type_patient)
-                                            @foreach (['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'] as $option)
-                                                <option value="{{ $option }}" {{ in_array($option, json_decode($patient->Patient->type_patient) ?: []) ? 'selected' : '' }}>
-                                                    {{ $option }}
-                                                </option>
-                                            @endforeach
+                                                @foreach (['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'] as $option)
+                                                    <option value="{{ $option }}"
+                                                        {{ in_array($option, json_decode($patient->Patient->type_patient) ?: []) ? 'selected' : '' }}>
+                                                        {{ $option }}
+                                                    </option>
+                                                @endforeach
                                             @endif
                                             {{-- @foreach (['Elancé(e)', 'Mince', 'Amazone', 'Forte'] as $option)
                                                 <option value="{{ $option }}"

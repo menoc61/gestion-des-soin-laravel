@@ -1,8 +1,17 @@
 @extends('layouts.master')
+
+
 @section('title')
 {{ __('sentence.View Prescription') }}
 @endsection
+
+
 @section('content')
+
+<div class="mb-3">
+    <button class="btn btn-primary" onclick="history.back()">Retour</button>
+</div>
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
    <h1 class="h3 mb-0 text-gray-800"></h1>
    <button href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm print_prescription"><i class="fas fa-print fa-sm text-white-50"></i> Print</button>
@@ -222,25 +231,25 @@
 @section('header')
 <style type="text/css">
    p, u, li {
-   color: #444444 !important; 
+   color: #444444 !important;
    }
 </style>
 @endsection
 @section('footer')
 <script type="text/javascript">
    function printDiv(divName) {
-      
+
      var printContents = document.getElementById(divName).innerHTML;
      var originalContents = document.body.innerHTML;
-   
+
      document.body.innerHTML = printContents;
-   
+
      window.print();
-   
+
      document.body.innerHTML = originalContents;
    }
-   
-   
+
+
    $(function(){
      $(document).on("click", '.print_prescription',function () {
         printDiv('print_area');

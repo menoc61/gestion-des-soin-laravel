@@ -61,6 +61,20 @@ html {
   }
 
 
+.card-po{
+    position: absolute;
+    bottom: 50%;
+    margin-left: 50%;
+}
+.card-po1 {
+    position: fixed;
+  }
+.top{
+    margin-top: 2%;
+    gap: 10%;
+}
+
+
 article,
 aside,
 figcaption,
