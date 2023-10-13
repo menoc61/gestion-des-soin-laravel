@@ -35,7 +35,7 @@
                     <div class="modal-body">
                         <!-- Input field for CSV file upload -->
                         <div class="form-group">
-                            <label for="csvFile">Sélectionner le fichier CSV :</label>
+                            <label for="csvFile">Sélectionnez le fichier CSV :</label>
                             <input type="file" name="csvFile" id="csvFile" accept=".csv">
                         </div>
                     </div>

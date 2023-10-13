@@ -14,8 +14,8 @@ return [
   'Admin' => 'Admin',
   'Doctor' => 'Praticien',
 
-  'New Prescription' => 'Nouveau Traitement',
-  'All Prescriptions' => 'Tous les Traitements',
+  'New Prescription' => 'Nouvelle Traitement',
+  'All Prescriptions' => 'Toutes les Traitements',
   'Create Prescription' => 'Créer un Traitement',
   'Type' => 'Type',
   'Duration' => 'Durée',
@@ -30,7 +30,7 @@ return [
   'Drugs' => 'Soins',
   'Drug' => 'Soin',
   'Add Drug' => 'Ajouter un Soin',
-  'All Drugs' => 'Tous les Soins',
+  'All Drugs' => 'Tout les Soins',
   'Drugs list' => 'Liste des Soins',
   'Trade Name' => 'Nom des Soins',
   'Generic Name' => 'List des Produits',
@@ -234,6 +234,4 @@ return [
     'Users & Roles' => 'Utilisateurs & Rôles',
     'Create as new' => 'Créer un(e)',
     'Invoice' => 'Facture',
-    'Total Use'=>'Utilisation totale',
-    'Add Item'=>'Ajouter un élément',
 ];
