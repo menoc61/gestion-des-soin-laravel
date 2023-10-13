@@ -5,6 +5,10 @@
 @endsection
 
 @section('content')
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow mb-4">
