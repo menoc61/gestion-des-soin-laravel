@@ -5,7 +5,9 @@
 @endsection
 
 @section('content')
-
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
     <div class="row justify-content-center">
         <div class="col">
             <div class="card shadow mb-4">
@@ -263,7 +265,8 @@
                                                     <td colspan="4" align="center"> <img
                                                             src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br>
                                                         <b class="text-muted">
-                                                            {{ __('sentence.No prescription available') }}</b></td>
+                                                            {{ __('sentence.No prescription available') }}</b>
+                                                    </td>
                                                 </tr>
                                             @endforelse
                                         </table>

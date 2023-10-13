@@ -5,8 +5,11 @@
 @endsection
 
 @section('content')
-    <div class="row justify-content-center">
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
 
+    <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -40,7 +43,8 @@
 
                         <div class="form-group row">
                             <label for="Password" class="col-sm-3 col-form-label">{{ __('sentence.Password Confirmation') }}
-                                <font color="red">*</font></label>
+                                <font color="red">*</font>
+                            </label>
                             <div class="col-sm-9">
                                 <input type="password" class="form-control" id="Password" name="password_confirmation">
                             </div>
@@ -80,7 +84,7 @@
 
                         <div class="form-group row">
                             <div class="col-sm-9">
-                                <button type="submit" class="btn btn-primary">{{ __('sentence.Save') }}</button>
+                                <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
                             </div>
                         </div>
                     </form>
