@@ -181,4 +181,4 @@
 
         }, 1000);
     </script>
-@endsection
+    @endsection

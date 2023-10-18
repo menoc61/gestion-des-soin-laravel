@@ -321,13 +321,21 @@
                                 data-toggle="dropdown" aria-expanded="false">
                                 {{ __('sentence.Create as new') }} </button>
                             <div class="dropdown-menu shadow">
+                                @if (Auth::user()->can('add patient'))
+                                    <a class="dropdown-item"
+                                        href="{{ route('patient.create') }}">{{ __('sentence.Patient') }}</a>
+                                @endif
+                                @if (Auth::user()->can('create diagnostic test'))
+                                    <a class="dropdown-item"
+                                        href="{{ route('test.create') }}">{{ __('sentence.Test') }}</a>
+                                @endif
                                 @if (Auth::user()->can('create prescription'))
                                     <a class="dropdown-item"
                                         href="{{ route('prescription.create') }}">{{ __('sentence.Prescription') }}</a>
                                 @endif
-                                @if (Auth::user()->can('add patient'))
+                                @if (Auth::user()->can('create drug'))
                                     <a class="dropdown-item"
-                                        href="{{ route('patient.create') }}">{{ __('sentence.Patient') }}</a>
+                                        href="{{ route('drug.create') }}">{{ __('sentence.Drug') }}</a>
                                 @endif
                                 {{-- Module pour créer une facture depuis la navbar --}}
 
@@ -338,14 +346,6 @@
                                 @if (Auth::user()->can('create invoice'))
                                     <a class="dropdown-item"
                                         href="{{ route('billing.create') }}">{{ __('sentence.Invoice') }}</a>
-                                @endif
-                                @if (Auth::user()->can('create drug'))
-                                    <a class="dropdown-item"
-                                        href="{{ route('drug.create') }}">{{ __('sentence.Drug') }}</a>
-                                @endif
-                                @if (Auth::user()->can('create diagnostic test'))
-                                    <a class="dropdown-item"
-                                        href="{{ route('test.create') }}">{{ __('sentence.Test') }}</a>
                                 @endif
                             </div>
                         </div>
