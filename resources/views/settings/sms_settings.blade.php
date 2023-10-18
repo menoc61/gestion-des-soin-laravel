@@ -6,6 +6,10 @@
 
 @section('content')
 
+<div class="mb-3">
+    <button class="btn btn-primary" onclick="history.back()">Retour</button>
+</div>
+
 <div class="row justify-content-center">
    <div class="col-md-8">
       <div class="card shadow mb-4">
@@ -27,10 +31,10 @@
                      <input type="text" class="form-control" id="NEXMO_SECRET" name="NEXMO_SECRET" value="{{ App\Setting::get_option('NEXMO_SECRET') }}" required>
                   </div>
                </div>
-            
+
                <div class="form-group row">
                   <div class="col-sm-9">
-                     <button type="submit" class="btn btn-primary">{{ __('sentence.Save') }}</button>
+                     <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
                   </div>
                </div>
             </form>
