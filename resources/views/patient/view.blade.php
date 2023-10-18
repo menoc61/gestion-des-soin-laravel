@@ -17,10 +17,10 @@
                         <div class="col-md-4 col-sm-6">
                             @empty(!$patient->image)
                                 <center><img src="{{ asset('uploads/' . $patient->image) }}"
-                                        class="img-profile rounded-circle img-fluid" width="256" height="256"></center>
+                                        class="img-profile rounded-circle img-fluid" width="256" height="256" style="object-fit: cover;" alt="profil-img"></center>
                             @else
-                                <center><img src="{{ asset('img/patient-icon.png') }}"
-                                        class="img-profile rounded-circle img-fluid" width="256" height="256"></center>
+                                <center><img src="{{ asset('img/default-image.jpeg') }}"
+                                        class="img-profile rounded-circle img-fluid" width="256" height="256" style="object-fit: cover;" alt="profil-img"></center>
                             @endempty
                             <h4 class="text-center mt-3"><b>{{ $patient->name }}</b> <label
                                     class="badge badge-primary-soft"> <a href="{{ url('patient/edit/' . $patient->id) }}"><i
@@ -80,13 +80,13 @@
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents"
-                                        role="tab" aria-controls="documents" aria-selected="false">Medical Files</a>
+                                        role="tab" aria-controls="documents" aria-selected="false">Fichier Médical</a>
                                 </li>
-                                <li class="nav-item" role="presentation">
+                                {{-- <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="appointements-tab" data-toggle="tab" href="#appointements"
                                         role="tab" aria-controls="appointements"
                                         aria-selected="false">{{ __('sentence.Appointments') }}</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="prescriptions-tab" data-toggle="tab" href="#prescriptions"
                                         role="tab" aria-controls="prescriptions"
@@ -108,7 +108,7 @@
                                             @can('create health history')
                                                 <button type="button" class="btn btn-primary btn-sm my-4 float-right"
                                                     data-toggle="modal" data-target="#MedicalHistoryModel"><i
-                                                        class="fa fa-plus"></i> Add New</button>
+                                                        class="fa fa-plus"></i> {{__('sentence.Add New')}}</button>
                                             @endcan
                                         </div>
                                     </div>
@@ -127,7 +127,7 @@
                                         </div>
                                     @empty
                                         <center><img src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br> <b
-                                                class="text-muted">No health history was found</b></center>
+                                                class="text-muted">Aucun Historique Trouvé</b></center>
                                     @endforelse
 
 
@@ -217,7 +217,7 @@
                                                 @can('create prescription')
                                                     <a class="btn btn-primary btn-sm my-4 float-right"
                                                         href="{{ route('prescription.create') }}"><i class="fa fa-pen"></i>
-                                                        {{ __('sentence.Write New Prescription') }}</a>
+                                                        {{ __('sentence.Create Prescription') }}</a>
                                                 @endcan
                                             </div>
                                         </div>
@@ -279,7 +279,7 @@
                                                 @can('edit patient')
                                                     <button type="button" class="btn btn-primary btn-sm my-4 float-right"
                                                         data-toggle="modal" data-target="#NewDocumentModel"><i
-                                                            class="fa fa-plus"></i> Add New</button>
+                                                            class="fa fa-plus"></i> {{__('sentence.Add New')}}</button>
                                                 @endcan
                                             </div>
                                         </div>
@@ -505,7 +505,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="form-control" name="title" placeholder="Title" required>
+                                    <input type="text" class="form-control" name="title" placeholder="Titre" required>
                                     <input type="hidden" name="patient_id" value="{{ $patient->id }}">
                                     {{ csrf_field() }}
                                 </div>
@@ -544,7 +544,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="form-control" name="title" placeholder="Title" required>
+                                    <input type="text" class="form-control" name="title" placeholder="Titre" required>
                                     <input type="hidden" name="patient_id" value="{{ $patient->id }}">
                                     {{ csrf_field() }}
                                 </div>

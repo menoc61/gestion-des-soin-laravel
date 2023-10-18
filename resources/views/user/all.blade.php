@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    {{ __('sentence.All users') }}
+    {{ __('sentence.All Users') }}
 @endsection
 
 

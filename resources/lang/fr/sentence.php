@@ -14,7 +14,7 @@ return [
   'Admin' => 'Admin',
   'Doctor' => 'Praticien',
 
-  'New Prescription' => 'Nouvelle Traitement',
+  'New Prescription' => 'Nouveau Traitement',
   'All Prescriptions' => 'Tous les Traitements',
   'Create Prescription' => 'Créer un Traitement',
   'Type' => 'Type',
@@ -218,7 +218,7 @@ return [
     'Status' => 'Statut',
     'Actions' => 'Actions',
     'Created at' => 'Date de Creation',
-    'Medical Info' => 'Informations Médicales',
+    'New Medical Info' => 'Informations Médicales',
     'Prescription List' => 'Liste des Traitements',
     'No appointment available' => 'Aucun rendez-vous disponible',
     'No prescription available' => 'Aucune prescription disponible',
@@ -234,4 +234,8 @@ return [
     'Users & Roles' => 'Utilisateurs & Rôles',
     'Create as new' => 'Créer un(e)',
     'Invoice' => 'Facture',
+    'Update Invoice' => 'Mettre à jour',
+    'Health History' => 'Observation Générale',
+    'Payment History'=> 'Historique de Paiements',
+    'Add New' => 'Créer un Nouveau',
 ];
