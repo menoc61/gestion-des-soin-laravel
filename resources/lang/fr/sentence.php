@@ -13,8 +13,7 @@ return [
   'Prescription' => 'Traitement',
   'Admin' => 'Admin',
   'Doctor' => 'Praticien',
-
-  'New Prescription' => 'Nouvelle Traitement',
+  'New Prescription' => 'Nouveau Traitement',
   'All Prescriptions' => 'Tous les Traitements',
   'Create Prescription' => 'Créer un Traitement',
   'Type' => 'Type',
@@ -234,4 +233,6 @@ return [
     'Users & Roles' => 'Utilisateurs & Rôles',
     'Create as new' => 'Créer un(e)',
     'Invoice' => 'Facture',
+    'Total Use'=>'Utilisation totale',
+    'Add Item'=>'Ajouter un élément',
 ];
