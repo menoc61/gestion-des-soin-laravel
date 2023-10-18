@@ -6,7 +6,10 @@
 
 @section('content')
 
-   
+<div class="mb-3">
+    <button class="btn btn-primary" onclick="history.back()">Retour</button>
+</div>
+
 <form method="post" action="{{ route('prescription.update') }}">
 
    <div class="row justify-content-center">
@@ -27,7 +30,7 @@
                   <img src="{{ asset('img/patient-icon.png') }}" class="img-profile rounded-circle img-fluid">
                </div>
                <div class="form-group">
-                  <input type="submit" value="{{ __('sentence.Edit Prescription') }}" class="btn btn-warning btn-block" align="center">
+                  <input type="submit" value="{{ __('sentence.Edit Prescription') }}" class="btn btn-success btn-block" align="center">
                </div>
             </div>
          </div>
@@ -58,21 +61,21 @@
                                        @endforeach
                                      </select>
                                  </div>
-                                
+
                                  <div class="col-md-4">
                                      <div class="form-group-custom">
                                          <input type="text" id="strength" name="strength[]"  class="form-control" placeholder="Mg/Ml" value="{{ $prescription_drug->strength }}">
                                      </div>
                                  </div>
                              </div>
-       
+
                              <div class="row">
-       
+
                                  <div class="col-md-6">
                                      <div class="form-group-custom">
                                          <input type="text" id="dose" name="dose[]" class="form-control" placeholder="{{ __('sentence.Dose') }}" value="{{ $prescription_drug->dose }}">
                                          <label class="control-label"></label><i class="bar"></i>
-       
+
                                      </div>
                                  </div>
                                  <div class="col-md-6">
@@ -95,7 +98,7 @@
                                   </div>
                              </div>
                         </section>
-                @endforeach 
+                @endforeach
                   </div>
                   <div class="form-group">
                      <a type="button" class="btn btn-sm btn-primary add text-white" align="center"><i class='fa fa-plus'></i> {{ __('sentence.Add Drug') }}</a>
@@ -112,7 +115,7 @@
                   <div class="repeatable">
                       @foreach($prescription_tests as $prescription_test)
                             <div class="field-group row">
-                            
+
                              <div class="col-md-4">
                                  <select class="form-control multiselect-doctorino" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
                                    <option value="{{ $prescription_test->test_id }}">{{ $prescription_test->Test->test_name }} </option>
@@ -121,7 +124,7 @@
                                        @endforeach
                                  </select>
                              </div>
-                            
+
                              <div class="col-md-4">
                                  <div class="form-group-custom">
                                      <input type="text" id="strength" name="description[]"  class="form-control" placeholder="{{ __('sentence.Description') }}">
@@ -183,21 +186,21 @@ $(document).ready(function() {
                                    @endforeach
                                  </select>
                              </div>
-                            
+
                              <div class="col-md-4">
                                  <div class="form-group-custom">
                                      <input type="text" id="strength" name="strength[]"  class="form-control" placeholder="Mg/Ml">
                                  </div>
                              </div>
                          </div>
-   
+
                          <div class="row">
-   
+
                              <div class="col-md-6">
                                  <div class="form-group-custom">
                                      <input type="text" id="dose" name="dose[]" class="form-control" placeholder="{{ __('sentence.Dose') }}">
                                      <label class="control-label"></label><i class="bar"></i>
-   
+
                                  </div>
                              </div>
                              <div class="col-md-6">
@@ -225,7 +228,7 @@ $(document).ready(function() {
 </script>
 <script type="text/template" id="test_labels">
                          <div class="field-group row">
-                            
+
                              <div class="col-md-4">
                                  <select class="form-control multiselect-doctorino" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
                                    <option value="">{{ __('sentence.Select Test') }}...</option>
@@ -234,7 +237,7 @@ $(document).ready(function() {
                                    @endforeach
                                  </select>
                              </div>
-                            
+
                              <div class="col-md-4">
                                  <div class="form-group-custom">
                                      <input type="text" id="strength" name="description[]"  class="form-control" placeholder="{{ __('sentence.Description') }}">

@@ -9,6 +9,10 @@
 @endsection
 
 @section('content')
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow mb-4">
@@ -21,8 +25,8 @@
                             <label for="inputEmail3" class="col-sm-3 col-form-label">{{ __('sentence.Test Name') }}<font
                                     color="red">*</font></label>
                             <div class="col-sm-9 input-group">
-                                <select class="input-group-text" name="patient_id" id="PatientID" required aria-placeholder="{{ __('sentence.Select Patient') }}"
-                                    onchange="updateTestName()">
+                                <select class="input-group-text" name="patient_id" id="PatientID" required
+                                    aria-placeholder="{{ __('sentence.Select Patient') }}" onchange="updateTestName()">
                                     <option @readonly(true)>{{ __('sentence.Select Patient') }}</option>
                                     @foreach ($patients as $patient)
                                         <option value="{{ $patient->id }}" data-name="{{ $patient->name }}">
@@ -38,7 +42,8 @@
                             <label for="inputPassword3"
                                 class="col-sm-3 col-form-label">{{ __('sentence.Description') }}</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="inputPassword3" name="comment" placeholder="Entre une description correspondant au type de diagnostic sélectionné">
+                                <input type="text" class="form-control" id="inputPassword3" name="comment"
+                                    placeholder="Entre une description correspondant au type de diagnostic sélectionné">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -410,7 +415,7 @@
 
                         <div class="form-group row">
                             <div class="col-sm-9">
-                                <button type="submit" class="btn btn-primary">{{ __('sentence.Save') }}</button>
+                                <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
                             </div>
                         </div>
                     </form>

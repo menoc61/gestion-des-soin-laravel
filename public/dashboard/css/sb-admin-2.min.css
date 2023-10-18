@@ -20,7 +20,7 @@
     --red: #e74a3b;
     --orange: #fd7e14;
     --yellow: #f6c23e;
-    --green: #1cc88a;
+    --green: #157954;
     --teal: #20c9a6;
     --cyan: #36b9cc;
     --white: #fff;
@@ -55,6 +55,25 @@ html {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent
 }
+
+.custom-colors {
+    background-color: var(--green);
+  }
+
+
+.card-po{
+    position: absolute;
+    bottom: 50%;
+    margin-left: 50%;
+}
+.card-po1 {
+    position: fixed;
+  }
+.top{
+    margin-top: 2%;
+    gap: 10%;
+}
+
 
 article,
 aside,
