@@ -4,9 +4,30 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
+
     <form method="post" action="<?php echo e(route('billing.store')); ?>">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-6">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.Invoice Details')); ?></h6>
+                    </div>
+                    <div class="card-body">
+                        <fieldset class="billing_labels">
+                            <div class="repeatable"></div>
+                            <div class="form-group">
+                                <a type="button" class="btn btn-primary btn-sm add text-white" align="center"><i
+                                        class='fa fa-plus'></i> <?php echo e(__('sentence.Add Item')); ?></a>
+                            </div>
+                        </fieldset>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.Informations')); ?></h6>
@@ -48,25 +69,8 @@
 
                         <div class="form-group">
                             <input type="submit" value="<?php echo e(__('sentence.Create Invoice')); ?>"
-                                class="btn btn-warning btn-block" align="center">
+                                class="btn btn-success btn-block" align="center">
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.Invoice Details')); ?></h6>
-                    </div>
-                    <div class="card-body">
-                        <fieldset class="billing_labels">
-                            <div class="repeatable"></div>
-                            <div class="form-group">
-                                <a type="button" class="btn btn-primary btn-sm add text-white" align="center"><i
-                                        class='fa fa-plus'></i> <?php echo e(__('sentence.Add Item')); ?></a>
-                            </div>
-                        </fieldset>
-                        
                     </div>
                 </div>
             </div>
@@ -166,6 +170,6 @@
 
         }, 1000);
     </script>
-<?php $__env->stopSection(); ?>
+    <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/billing/create.blade.php ENDPATH**/ ?>

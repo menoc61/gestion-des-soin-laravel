@@ -455,7 +455,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" name="title" placeholder="Title" required>
+                                <input type="text" class="form-control" name="title" placeholder="Titre" required>
                                 <input type="hidden" name="patient_id" value="{{ $patient->id }}">
                                 {{ csrf_field() }}
                             </div>
@@ -494,7 +494,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" name="title" placeholder="Title" required>
+                                <input type="text" class="form-control" name="title" placeholder="Titre" required>
                                 <input type="hidden" name="patient_id" value="{{ $patient->id }}">
                                 {{ csrf_field() }}
                             </div>

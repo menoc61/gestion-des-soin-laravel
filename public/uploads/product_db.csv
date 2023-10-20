@@ -1,4 +1,11 @@
 id,sku,name,product_category,status,updated_at,imageUrl
-3,SAI-JOY406792482,"joy stick",electronique,true,2023-09-16T16:11:05.926Z,http://localhost:5000/v1/product-image/4a652feca78ba1963c8f32ceaf997b88469f0622cf5e2286e1dff09bd0975f30.jpg
-2,SAI-HUI506558598,"huile de cheuveux",cosmetique,true,2023-09-16T16:11:05.925Z,http://localhost:5000/v1/product-image/669f1c6a260daa870dd7578c819d352c3d53c6f0dbf16ad2edd6dddca2c8bed2.jpg
-1,SAI-RIZ533205549,riz,alimentation,true,2023-09-16T16:11:05.925Z,http://localhost:5000/v1/product-image/2bd32bfdc36009f816de93fd4701f0187e59abe1afa04359569024739d4a2a5c.jpg
+31,SAI-PRO532994199,"PRODUIT TEST","Sainess food",true,2023-10-16T07:33:47.690Z,http://192.168.1.176:5000/v1/product-image/3ddfb9235bdd360e9d9cb44e5bd85cfd5aacb7dea195430f2e40ca42b5a44b56.jpg
+30,SAI-SÉR735428653,"SÉRUM RÉVEILÉCLAT","Saï i lama cosmétique",true,2023-10-16T07:38:36.639Z,http://192.168.1.176:5000/v1/product-image/3e8c88c9e77b0f0abc22a94e0901c1645c048d38dc2c950881b86be79af5fd7c.jpg
+29,SAI-SÉR151836920,"Sérum Purifiant & Détoxifiant","Saï i lama cosmétique",true,2023-09-04T16:40:19.565Z,http://192.168.1.176:5000/v1/product-image/dfef4ece0b02e7cc39cf23e84177c5079e83d4236a2a97cd1d1d227be9c585da.jpg
+28,SAI-SÈR967121863,"Sèrum  Hydra_Oxygénant","Saï i lama cosmétique",true,2023-09-04T15:53:48.634Z,http://192.168.1.176:5000/v1/product-image/f5ce497b6ee6f21161e2475339084aa75481073ddb05579c182834a70d3dead1.jpg
+27,SAI-LOT540934774,"LOTION TONIQUE ASSAINISSANTE à l'extrait d'abre à thé","Saï i lama cosmétique",true,2023-10-16T07:38:36.639Z,http://192.168.1.176:5000/v1/product-image/40a425299c61d69889c7b1ab1cd1b82cada83c66d1c83f888bca8a09eec25c6d.jpg
+26,SAI-LOT200319236,"LOTION TONIQUE OXYGENANTE à l'extrait de citronelle","Saï i lama cosmétique",true,2023-10-16T07:38:36.639Z,http://192.168.1.176:5000/v1/product-image/ad6ec1d71ce1fc1491b9244dac0d38d6e7f1d0f95f403a8a89548087ae26d11f.jpg
+25,SAI-LOT456466444,"LOTION CLARIFIANTE  aux extraits de fruits  et épices","Saï i lama cosmétique",true,2023-09-04T15:14:56.049Z,http://192.168.1.176:5000/v1/product-image/37079043e8fb65f9abf3f33f444f654129a65a9ea342e454fb65f32f0d4665be.jpg
+24,SAI-GEL291959782,"GEL NETTOYANT EXFOLIANT ","Saï i lama cosmétique",true,2023-10-16T07:22:49.030Z,http://192.168.1.176:5000/v1/product-image/da172d8b674b320d17754091147f1f78846f632b55bb7ac5d392fb3c683db3a9.jpg
+23,SAI-LOT109274981,"LOTION TONIQUE Anti-oxydant aux extraits de fleurs de fleurs rouges ","Saï i lama cosmétique",true,2023-10-16T07:22:49.030Z,http://192.168.1.176:5000/v1/product-image/a34f01a47f1c61d9b2c3552da349a4210d66e771e52ae273f6c7d95cbc58cf60.jpg
+22,SAI-GEL331633307,"GEL NETTOYANT Éclat jeunesse aux trois roses","Saï i lama cosmétique",true,2023-09-01T11:26:13.678Z,http://192.168.1.176:5000/v1/product-image/7683cc8c9b6bbefe7a41645d79587b00bd71513f7d255c008d5a7ddbfd780c3c.jpg

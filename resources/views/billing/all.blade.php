@@ -56,7 +56,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($invoices as $invoice)
+                        @forelse ($invoices as $invoice)
                             <tr>
                                 <td>{{ $invoice->reference }}</td>
                                 <td><a href="{{ url('patient/view/' . $invoice->user_id) }}"> {{ $invoice->User->name }}
@@ -104,7 +104,11 @@
                                     @endcan
                                 </td>
                             </tr>
-                        @endforeach
+                            @empty
+                            <tr>
+                               <td colspan="9" class="text-center"><img src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br> <b class="text-muted">Aucune facture trouvé</b></td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
                 <span class="float-right mt-3">{{ $invoices->links() }}</span>

@@ -6,7 +6,7 @@
 <?php $__env->startSection('content'); ?>
 
 
-    <div class="row justify-content-center">                  
+    <div class="row justify-content-center">
 
         <div class="col-md-8">
             <div class="card shadow mb-4">
@@ -34,8 +34,8 @@
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
                             <?php endif; ?>
-                           
-                        </select>             
+
+                        </select>
                       </div>
                     </div>
 
@@ -47,7 +47,7 @@
                   </form>
                 </div>
               </div>
-            
+
         </div>
 
     </div>
@@ -55,11 +55,11 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('header'); ?>
-<link rel="stylesheet" type="text/css" href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer'); ?>
-<script type="text/javascript" src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
 <!-- Initialize the plugin: -->
 <script type="text/javascript">
     $('#example-multiple-selected').multiselect();
