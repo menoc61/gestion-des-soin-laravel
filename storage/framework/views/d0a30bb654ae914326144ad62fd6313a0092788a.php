@@ -30,7 +30,6 @@
         const SITE_URL = "<?php echo e(url('/')); ?>";
     </script>
 
-
     <?php echo $__env->yieldContent('header'); ?>
 
 

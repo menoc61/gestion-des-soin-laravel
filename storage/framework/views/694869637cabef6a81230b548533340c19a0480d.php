@@ -28,8 +28,19 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th><?php echo e(__('sentence.Trade Name')); ?></th>
+                            <th>ID
+                                <a href="<?php echo e(route('drug.all', ['sort' => 'id', 'order' => 'asc'])); ?>"><i
+                                        class="fas fa-sort-up"></i></a>
+                                <a href="<?php echo e(route('drug.all', ['sort' => 'id', 'order' => 'desc'])); ?>"><i
+                                        class="fas fa-sort-down"></i></a>
+                            </th>
+                            <th><?php echo e(__('sentence.Trade Name')); ?>
+
+                                <a href="<?php echo e(route('drug.all', ['sort' => 'trade_name', 'order' => 'asc'])); ?>"><i
+                                        class="fas fa-sort-up"></i></a>
+                                <a href="<?php echo e(route('drug.all', ['sort' => 'trade_name', 'order' => 'desc'])); ?>"><i
+                                        class="fas fa-sort-down"></i></a>
+                            </th>
                             <th><?php echo e(__('sentence.Generic Name')); ?></th>
                             <th class="text-center"><?php echo e(__('sentence.Total Use')); ?></th>
                             <th class="text-center"><?php echo e(__('sentence.Actions')); ?></th>
