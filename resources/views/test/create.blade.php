@@ -461,6 +461,19 @@
             // Update the test_name input field value with the selected patient's name
             testNameInput.value = "Diagnostic de Mr(s) - " + patientName;
         }
+        document.getElementById('inputSection').addEventListener('change', function() {
+            var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+            var descriptionInput = document.getElementById('inputPassword3');
+            var descriptions = {
+                'DIAGNOSE PEAU': 'DIAGNOSE PEAU',
+                'DIAGNOSE MAIN': 'DIAGNOSE MAIN',
+                'DIAGNOSE PIED': 'DIAGNOSE PIED'
+            };
+
+            var selectedDescriptions = selectedOptions.map(option => descriptions[option]);
+
+            descriptionInput.value = selectedDescriptions.join(', ');
+        });
     </script>
 
     <script type="text/javascript"

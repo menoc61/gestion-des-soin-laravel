@@ -33,7 +33,7 @@
                             @endisset
 
                             @isset($patient->Patient->gender)
-                                <p><b>{{ __('sentence.Gender') }} :</b> {{ __('sentence.' . $patient->Patient->gender) }}</p>
+                                <p><b>{{ __('sentence.Gender') }} :</b> {{ $patient->Patient->gender}}</p>
                             @endisset
 
                             @isset($patient->Patient->phone)
@@ -496,7 +496,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add File / Note</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter un Fichier / Note</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
