@@ -13,6 +13,7 @@ return [
   'Prescription' => 'Traitement',
   'Admin' => 'Admin',
   'Doctor' => 'Praticien',
+  'New Prescription' => 'Nouveau Traitement',
 
   'New Prescription' => 'Nouveau Traitement',
   'All Prescriptions' => 'Tous les Traitements',
