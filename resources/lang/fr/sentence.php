@@ -238,4 +238,5 @@ return [
     'Health History' => 'Observation Générale',
     'Payment History'=> 'Historique de Paiements',
     'Add New' => 'Créer un Nouveau',
+    'No document available' => 'Aucun document trouvé',
 ];
