@@ -128,9 +128,8 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9" align="center"><img src="{{ asset('img/rest.png') }} " /> <br><br> <b
+                                <td colspan="15" align="center"><img src="{{ asset('img/rest.png') }} " /> <br><br> <b
                                         class="text-muted">Aucun hôte trouvé</b>
-
                                 </td>
                             </tr>
                         @endforelse
