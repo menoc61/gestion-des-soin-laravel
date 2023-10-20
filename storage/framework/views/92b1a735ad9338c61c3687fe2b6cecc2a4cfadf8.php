@@ -1,11 +1,13 @@
-
-
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.All Prescriptions')); ?>
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+
+<div class="mb-3">
+    <button class="btn btn-primary" onclick="history.back()">Retour</button>
+</div>
 
 <div class="card shadow mb-4">
    <div class="card-header py-3">
@@ -29,8 +31,8 @@
                   </th>
                   <th><?php echo e(__('sentence.Patient')); ?>
 
-                    <a href="<?php echo e(route('prescription.all', ['sort' => 'name', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
-                    <a href="<?php echo e(route('prescription.all', ['sort' => 'name', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
+                    <a href="<?php echo e(route('prescription.all', ['sort' => 'patient_name', 'order' => 'asc'])); ?>"><i class="fas fa-sort-up"></i></a>
+                    <a href="<?php echo e(route('prescription.all', ['sort' => 'patient_name', 'order' => 'desc'])); ?>"><i class="fas fa-sort-down"></i></a>
                   </th>
                   <th class="text-center"><?php echo e(__('sentence.Created')); ?>
 
