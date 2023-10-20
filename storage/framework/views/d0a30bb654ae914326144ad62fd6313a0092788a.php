@@ -30,6 +30,8 @@
         const SITE_URL = "<?php echo e(url('/')); ?>";
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <?php echo $__env->yieldContent('header'); ?>
 

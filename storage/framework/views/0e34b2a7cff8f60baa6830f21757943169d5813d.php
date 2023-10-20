@@ -161,7 +161,7 @@
                                  <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
                                    <option value=""><?php echo e(__('sentence.Select Test')); ?>...</option>
                                    <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                   <option value="<?php echo e($test->id); ?>" data-patient-id="<?php echo e($test->patient_id); ?>"><?php echo e($test->name); ?></option>
+                                    <option value="<?php echo e($test->id); ?>" data-patient-id="<?php echo e($test->patient_id); ?>"><?php echo e($test->name); ?></option>
                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                  </select>
                              </div>

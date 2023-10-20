@@ -1,9 +1,14 @@
+
+
 <?php $__env->startSection('title'); ?>
     <?php echo e(__('sentence.Add Drug')); ?>
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
     
     <div class="row">
         <div class="col">
@@ -34,7 +39,7 @@
                     <div class="modal-body">
                         <!-- Input field for CSV file upload -->
                         <div class="form-group">
-                            <label for="csvFile">Sélectionnez le fichier CSV :</label>
+                            <label for="csvFile">Sélectionner le fichier CSV :</label>
                             <input type="file" name="csvFile" id="csvFile" accept=".csv">
                         </div>
                     </div>
@@ -78,9 +83,10 @@
 
                         <div class="form-group">
                             <label for="exampleInputPassword1"><?php echo e(__('sentence.Note')); ?></label>
-                            <input type="text" class="form-control" name="note" id="Note" placeholder="Description...">
+                            <input type="text" class="form-control" name="note" id="Note"
+                                placeholder="Description...">
                         </div>
-                        <button type="submit" class="btn btn-primary"><?php echo e(__('sentence.Save')); ?></button>
+                        <button type="submit" class="btn btn-success"><?php echo e(__('sentence.Save')); ?></button>
                     </form>
                 </div>
             </div>
@@ -135,17 +141,17 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer'); ?>
-<script type="text/javascript"
-src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
-<!-- Initialize the plugin: -->
-<script type="text/javascript">
-$('#GenericName').multiselect({
-    includeSelectAllOption: true,
-    enableFiltering: true,
-    filterPlaceholder: 'Recherche un Hôte...',
-    buttonContainer: '<div class="btn-group w-100" />'
-});
-</script>
+    <script type="text/javascript"
+        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+    <!-- Initialize the plugin: -->
+    <script type="text/javascript">
+        $('#GenericName').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            filterPlaceholder: 'Recherche un Hôte...',
+            buttonContainer: '<div class="btn-group w-100" />'
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/drug/create.blade.php ENDPATH**/ ?>
