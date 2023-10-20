@@ -180,6 +180,7 @@
     </style>
 
 @section('footer')
+<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
     <script type="text/javascript"
         src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->

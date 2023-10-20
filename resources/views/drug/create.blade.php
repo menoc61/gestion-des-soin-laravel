@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
     <div class="mb-3">
         <button class="btn btn-primary" onclick="history.back()">Retour</button>
     </div>
@@ -99,7 +100,7 @@
                     <h6 class="m-0 font-weight-bold text-primary w-75 p-2">{{ __('sentence.Product list') }}</h6>
                 </div>
                 <div class="col-3">
-                    <a href="#" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i>
+                    <a href="http://192.168.1.176:3000/product" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i>
                         {{ __('sentence.Add a product') }}</a>
                 </div>
                 <div class="col-3">
@@ -112,23 +113,28 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable">
                     <thead>
                         <tr>
-                            <th>ID <a href="#"><i class="fas fa-sort-up"></i></a>
-                                <a href=" #"><i class="fas fa-sort-down"></i></a>
+                            <th class="sortable" data-col="id">ID
+                                <i class="fas fa-sort-up sortable-icon"></i>
+                                <i class="fas fa-sort-down sortable-icon"></i>
                             </th>
-                            <th>SKU <a href="#"><i class="fas fa-sort-up"></i></a>
-                                <a href=" #"><i class="fas fa-sort-down"></i></a>
+                            <th class="sortable" data-col="sku">SKU
+                                <i class="fas fa-sort-up sortable-icon"></i>
+                                <i class="fas fa-sort-down sortable-icon"></i>
                             </th>
-                            <th>Name <a href="#"><i class="fas fa-sort-up"></i></a>
-                                <a href=" #"><i class="fas fa-sort-down"></i></a>
+                            <th class="sortable" data-col="name">Name
+                                <i class="fas fa-sort-up sortable-icon"></i>
+                                <i class="fas fa-sort-down sortable-icon"></i>
                             </th>
-                            <th>Product Category <a href="#"><i class="fas fa-sort-up"></i></a>
-                                <a href=" #"><i class="fas fa-sort-down"></i></a>
+                            <th class="sortable" data-col="product_category">Product Category
+                                <i class="fas fa-sort-up sortable-icon"></i>
+                                <i class="fas fa-sort-down sortable-icon"></i>
                             </th>
-                            <th>Updated At <a href="#"><i class="fas fa-sort-up"></i></a>
-                                <a href=" #"><i class="fas fa-sort-down"></i></a>
+                            <th class="sortable" data-col="updated_at">Updated At
+                                <i class="fas fa-sort-up sortable-icon"></i>
+                                <i class="fas fa-sort-down sortable-icon"></i>
                             </th>
                             <th>Image</th>
                         </tr>
@@ -154,12 +160,11 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="7">No data available.</td>
+                                <td colspan="6">No data available.</td>
                             </tr>
                         @endif
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>
@@ -167,6 +172,11 @@
 @endsection
 
 @section('footer')
+    <style>
+        .sortable-icon {
+            cursor: pointer;
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
     <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->
@@ -176,6 +186,27 @@
             enableFiltering: true,
             filterPlaceholder: 'Recherche un Hôte...',
             buttonContainer: '<div class="btn-group w-100" />'
+        });
+    </script>
+    <script>
+        // JavaScript to handle sorting
+        $(document).ready(function() {
+            $(".sortable-icon").click(function() {
+                // Get the index of the clicked th within its parent tr
+                const column = $(this).closest('th').index();
+                const order = $(this).hasClass('fa-sort-up') ? 1 : -1;
+
+                const sortedRows = [...document.querySelectorAll('tbody tr')];
+                sortedRows.sort((a, b) => {
+                    const aValue = a.querySelectorAll('td')[column].textContent.trim();
+                    const bValue = b.querySelectorAll('td')[column].textContent.trim();
+                    return order * (aValue.localeCompare(bValue));
+                });
+
+                const tableBody = document.querySelector('tbody');
+                tableBody.innerHTML = '';
+                sortedRows.forEach(row => tableBody.appendChild(row));
+            });
         });
     </script>
 @endsection

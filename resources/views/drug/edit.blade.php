@@ -19,14 +19,13 @@
                 <div class="card-body">
                     <form method="post" action="{{ route('drug.store_edit') }}">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Trade Name *</label>
+                            <label for="exampleInputEmail1">{{ __('sentence.Trade Name') }}<font color="red">*</font></label>
                             <input type="text" class="form-control" name="trade_name" id="TradeName"
                                 aria-describedby="TradeName" value="{{ $drug->trade_name }}">
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">{{ __('sentence.Generic Name') }}<font color="red">*
-                                </font></label>
+                            <label for="exampleInputPassword1">{{ __('sentence.Generic Name') }}<font color="red">*</font></label>
                             <select name="generic_name[]" multiple id="GenericName" class="form-control">
                                 @foreach ($products as $product)
                                     <option value="{{ $product['name'] }}">{{ $product['name'] }}</option>

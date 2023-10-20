@@ -480,7 +480,7 @@
     </script>
 
     <script type="text/javascript"
-        src="<?php echo e(asset('js/bootstrap-multiselect.js')); ?>></script>
+        src="<?php echo e(asset('js/bootstrap-multiselect.js')); ?>"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({

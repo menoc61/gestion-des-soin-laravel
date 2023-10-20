@@ -36,7 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__empty_1 = true; $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
                                 <td><?php echo e($drug->id); ?></td>
                                 <td><?php echo e($drug->trade_name); ?></td>
@@ -50,12 +50,18 @@
                                     <?php endif; ?>
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete drug')): ?>
                                         <a class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal"
-                                            data-target="#DeleteModal" data-link="<?php echo e(url('test/delete/' . $drug->id)); ?>"><i
+                                            data-target="#DeleteModal" data-link="<?php echo e(url('drug/delete/' . $drug->id)); ?>"><i
                                                 class="fas fa-trash"></i></a>
                                     <?php endif; ?>
                                 </td>
                             </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                            <tr>
+                                <td colspan="5" align="center"><img src="<?php echo e(asset('img/rest.png')); ?> " /> <br><br> <b
+                                        class="text-muted">Aucun soin trouvé</b>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>

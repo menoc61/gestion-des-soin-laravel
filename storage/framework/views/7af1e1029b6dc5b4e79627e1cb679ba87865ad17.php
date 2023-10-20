@@ -179,6 +179,7 @@
     </style>
 
 <?php $__env->startSection('footer'); ?>
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/bootstrap-multiselect.css')); ?>">
     <script type="text/javascript"
         src="<?php echo e(asset('js/bootstrap-multiselect.js')); ?>"></script>
     <!-- Initialize the plugin: -->
