@@ -1,11 +1,13 @@
-
-
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.All Prescriptions')); ?>
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+
+<div class="mb-3">
+    <button class="btn btn-primary" onclick="history.back()">Retour</button>
+</div>
 
 <div class="card shadow mb-4">
    <div class="card-header py-3">

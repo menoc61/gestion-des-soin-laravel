@@ -39,7 +39,7 @@ return [
   'Drug added Successfully' => 'Soin ajouté avec succès!',
   'Drug Edited Successfully' => 'Soin mis à jour avec succès!',
   'Drug Deleted Successfully' => 'Soin supprimé avec succès!',
-  'Product List' => 'List des Produits',
+  'update product list' => 'Mettre a jour la list',
 
   'Tests list' => 'Liste des Diagnostic',
   'Patient informations' => 'Informations du Patient',
@@ -237,7 +237,9 @@ return [
     'Invoice' => 'Facture',
     'Update Invoice' => 'Mettre à jour',
     'Health History' => 'Observation Générale',
-    'Payment History'=> 'Historique de Paiements',
+    'Payment History' => 'Historique de Paiements',
     'Add New' => 'Créer un Nouveau',
     'No document available' => 'Aucun document trouvé',
+    'Product list' => 'List des produits',
+    'Add a product' => 'Ajoute un produit',
 ];

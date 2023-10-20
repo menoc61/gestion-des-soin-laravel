@@ -30,6 +30,9 @@
         const SITE_URL = "<?php echo e(url('/')); ?>";
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
     <?php echo $__env->yieldContent('header'); ?>
 
 
@@ -88,9 +91,9 @@
                 <?php endif; ?>
 
 
-                
 
-                
+
+
 
 
                 <?php if(Auth::user()->can('create diagnostic test') ||
@@ -315,9 +318,9 @@
                                     <a class="dropdown-item"
                                         href="<?php echo e(route('drug.create')); ?>"><?php echo e(__('sentence.Drug')); ?></a>
                                 <?php endif; ?>
-                                
 
-                                
+
+
                                 <?php if(Auth::user()->can('create invoice')): ?>
                                     <a class="dropdown-item"
                                         href="<?php echo e(route('billing.create')); ?>"><?php echo e(__('sentence.Invoice')); ?></a>

@@ -47,7 +47,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($drugs as $drug)
+                        @forelse ($drugs as $drug)
                             <tr>
                                 <td>{{ $drug->id }}</td>
                                 <td>{{ $drug->trade_name }}</td>
@@ -61,12 +61,18 @@
                                     @endcan
                                     @can('delete drug')
                                         <a class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal"
-                                            data-target="#DeleteModal" data-link="{{ url('test/delete/' . $drug->id) }}"><i
+                                            data-target="#DeleteModal" data-link="{{ url('drug/delete/' . $drug->id) }}"><i
                                                 class="fas fa-trash"></i></a>
                                     @endcan
                                 </td>
                             </tr>
-                        @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="5" align="center"><img src="{{ asset('img/rest.png') }} " /> <br><br> <b
+                                        class="text-muted">Aucun soin trouvé</b>
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
