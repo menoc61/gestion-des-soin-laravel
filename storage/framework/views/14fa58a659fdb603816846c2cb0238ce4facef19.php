@@ -42,7 +42,7 @@
     </div>
 
     <script type="text/javascript"
-        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+        src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#GenericName').multiselect({

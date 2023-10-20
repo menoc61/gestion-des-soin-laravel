@@ -7,7 +7,7 @@
     <div class="mb-3">
         <button class="btn btn-primary" onclick="history.back()">Retour</button>
     </div>
-    
+
     <div class="row">
         <div class="col">
             <div class="alert alert-warning">
@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    
+
     <div class="row">
         <div class="col">
             <h2><?php echo e(__('sentence.Product List')); ?></h2>
@@ -135,12 +135,12 @@
 
         </div>
     </div>
-    
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer'); ?>
     <script type="text/javascript"
-        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+        src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#GenericName').multiselect({

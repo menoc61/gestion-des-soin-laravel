@@ -540,8 +540,10 @@
             testNameInput.value = "Diagnostic de Mr(s) - " + patientName;
         }
     </script>
+        <link rel="stylesheet" type="text/css"
+        href="{{ asset('css/bootstrap-multiselect.css') }}">
     <script type="text/javascript"
-        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+        src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({

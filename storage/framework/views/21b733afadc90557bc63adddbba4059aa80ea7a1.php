@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title'); ?>
     <?php echo e(__('sentence.Add Drug')); ?>
 
@@ -28,7 +26,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header btn-primary">
+                <div class="modal-header btn-success">
                     <h5 class="modal-title " id="importCSVModalLabel">Importer la dernière version <b>"product.csv"</b></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -94,55 +92,83 @@
     </div>
 
     
-    <div class="row">
-        <div class="col">
-            <h2><?php echo e(__('sentence.Product List')); ?></h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>SKU</th>
-                        <th>Name</th>
-                        <th>Product Category</th>
-                        <th>Updated At</th>
-                        <th>Image</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if(count($products) > 0): ?>
-                        <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <tr>
-                                <td><?php echo e($product['id']); ?></td>
-                                <td><?php echo e($product['sku']); ?></td>
-                                <td><?php echo e($product['name']); ?></td>
-                                <td><?php echo e($product['product_category']); ?></td>
-                                <td><?php echo e($product['updated_at']); ?></td>
-                                <td>
-                                    <?php if(!empty($product['imageUrl'])): ?>
-                                        <img src="<?php echo e($product['imageUrl']); ?>" alt="Unable to reach backend"
-                                            style="max-width: 100px;">
-                                    <?php else: ?>
-                                        le produit n'as pas d'image
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <?php else: ?>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row">
+                <div class="col-6">
+                    <h6 class="m-0 font-weight-bold text-primary w-75 p-2"><?php echo e(__('sentence.Product list')); ?></h6>
+                </div>
+                <div class="col-3">
+                    <a href="#" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i>
+                        <?php echo e(__('sentence.Add a product')); ?></a>
+                </div>
+                <div class="col-3">
+                    <a href="#" class="btn btn-primary btn-sm float-right" id="importCSVLink" data-toggle="modal"
+                        data-target="#importCSVModal">
+                        <i class="fa fa-edit"></i>
+                        <?php echo e(__('sentence.update product list')); ?></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
                         <tr>
-                            <td colspan="7">No data available.</td>
+                            <th>ID <a href="#"><i class="fas fa-sort-up"></i></a>
+                                <a href=" #"><i class="fas fa-sort-down"></i></a>
+                            </th>
+                            <th>SKU <a href="#"><i class="fas fa-sort-up"></i></a>
+                                <a href=" #"><i class="fas fa-sort-down"></i></a>
+                            </th>
+                            <th>Name <a href="#"><i class="fas fa-sort-up"></i></a>
+                                <a href=" #"><i class="fas fa-sort-down"></i></a>
+                            </th>
+                            <th>Product Category <a href="#"><i class="fas fa-sort-up"></i></a>
+                                <a href=" #"><i class="fas fa-sort-down"></i></a>
+                            </th>
+                            <th>Updated At <a href="#"><i class="fas fa-sort-up"></i></a>
+                                <a href=" #"><i class="fas fa-sort-down"></i></a>
+                            </th>
+                            <th>Image</th>
                         </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php if(count($products) > 0): ?>
+                            <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <tr>
+                                    <td><?php echo e($product['id']); ?></td>
+                                    <td><?php echo e($product['sku']); ?></td>
+                                    <td><?php echo e($product['name']); ?></td>
+                                    <td><?php echo e($product['product_category']); ?></td>
+                                    <td><?php echo e($product['updated_at']); ?></td>
+                                    <td>
+                                        <?php if(!empty($product['imageUrl'])): ?>
+                                            <img src="<?php echo e($product['imageUrl']); ?>" alt="Unable to reach backend"
+                                                style="max-width: 50px; max-height: 50px">
+                                        <?php else: ?>
+                                            "Le produit n'a pas d'image"
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="7">No data available.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
 
+            </div>
         </div>
     </div>
     
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer'); ?>
-    <script type="text/javascript"
-        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/bootstrap-multiselect.css')); ?>">
+    <script type="text/javascript" src="<?php echo e(asset('js/bootstrap-multiselect.js')); ?>"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#GenericName').multiselect({

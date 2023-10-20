@@ -26,7 +26,7 @@
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label"><?php echo e(__('sentence.Test Name')); ?><font
                                     color="red">*</font></label>
-                            
+
                             <div class="col-sm-9 input-group">
                                 <select class="input-group-text" name="patient_id" id="PatientID" required
                                     aria-placeholder="<?php echo e(__('sentence.Select Patient')); ?>" onchange="updateTestName()">
@@ -557,7 +557,7 @@
         }
     </script>
     <script type="text/javascript"
-        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+        src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({
