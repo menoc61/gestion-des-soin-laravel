@@ -59,15 +59,52 @@
                             <hr>
 
                             @isset($patient->Patient->morphology)
-                                <p><b>{{ __('sentence.Morphology') }} :</b> {{ $patient->Patient->morphology }}</p>
+                            <p><b>{{ __('sentence.Morphology') }} :</b>
+                                @php
+                                $morphologyArray = json_decode($patient->Patient->morphology);
+                                @endphp
+
+                                @if (is_array($morphologyArray))
+                                    @foreach ($morphologyArray as $item)
+                                        <label class="badge badge-warning-soft">{{ $item }}</label>
+                                    @endforeach
+                                @else
+                                    <span>No morphology data available.</span>
+                                @endif
+                            </p>
                             @endisset
 
                             @isset($patient->Patient->alimentation)
-                                <p><b>{{ __('sentence.Alimentation') }} :</b> {{ $patient->Patient->alimentation }}</p>
+                                <p><b>{{ __('sentence.Alimentation') }} :</b>
+                                        @php
+                                        $alimentationArray = json_decode($patient->Patient->alimentation);
+                                        @endphp
+
+                                        @if (is_array($alimentationArray))
+                                            @foreach ($alimentationArray as $item)
+                                                <label class="badge badge-warning-soft">{{ $item }}</label>
+                                            @endforeach
+                                        @else
+                                            <span>No alimentation data available.</span>
+                                        @endif
+                                    </p>
+                                </p>
                             @endisset
 
                             @isset($patient->Patient->type_patient)
-                                <p><b>{{ __('sentence.Type of patient') }} :</b> {{ $patient->Patient->type_patient }}</p>
+                                <p><b>{{ __('sentence.Type of patient') }} :</b>
+                                    @php
+                                    $type_patientArray = json_decode($patient->Patient->type_patient);
+                                    @endphp
+
+                                    @if (is_array($type_patientArray))
+                                        @foreach ($type_patientArray as $item)
+                                            <label class="badge badge-warning-soft">{{ $item }}</label>
+                                        @endforeach
+                                    @else
+                                        <span>No patient type data available.</span>
+                                    @endif
+                                </p>
                             @endisset
 
                         </div>
@@ -95,7 +132,7 @@
 
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab"
-                                        aria-controls="Billing"
+                                        aria-controls="Billing"Alert
                                         aria-selected="false">{{ __('sentence.Payment History') }}</a>
                                 </li>
                             </ul>
