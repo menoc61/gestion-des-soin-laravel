@@ -1,11 +1,13 @@
-
-
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.Doctorino Settings')); ?>
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+
+<div class="mb-3">
+    <button class="btn btn-primary" onclick="history.back()">Retour</button>
+</div>
 
 <div class="row justify-content-center">
    <div class="col-md-8">
@@ -174,7 +176,7 @@
                </div>
                <div class="form-group row">
                   <div class="col-sm-9">
-                     <button type="submit" class="btn btn-primary"><?php echo e(__('sentence.Save')); ?></button>
+                     <button type="submit" class="btn btn-success"><?php echo e(__('sentence.Save')); ?></button>
                   </div>
                </div>
             </form>

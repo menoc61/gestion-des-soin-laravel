@@ -1,10 +1,13 @@
-
 <?php $__env->startSection('title'); ?>
     <?php echo e(__('sentence.New Prescription')); ?>
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
+
     <form method="post" action="<?php echo e(route('prescription.store')); ?>">
 
         <div class="row justify-content-center">
@@ -37,12 +40,13 @@
                             <?php echo e(csrf_field()); ?>
 
                         </div>
-                        <div class="form-group text-center">
-                            <img src="<?php echo e(asset('img/patient-icon.png')); ?>" class="img-profile rounded-circle img-fluid">
+                        <div class="form-group text-center ">
+                            <img src="<?php echo e(asset('img/patient-icon.png')); ?>"
+                                class="img-profile rounded-circle img-fluid w-50 h-50">
                         </div>
                         <div class="form-group">
                             <input type="submit" value="<?php echo e(__('sentence.Create Prescription')); ?>"
-                                class="btn btn-warning btn-block" align="center">
+                                class="btn btn-success btn-block" align="center">
                         </div>
                     </div>
                 </div>
@@ -85,40 +89,31 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('.multiselect-search').select2();
+        $(document).ready(function() {
+            // Initialiser le menu déroulant Select2
+            $('#patient-select').select2();
 
-            // Get references to the patient and test select elements
-            const patientSelect = $('#PatientID');
-            const testSelect = $('#test');
+            // Filtrer les options des tests en fonction du patient sélectionné
+            $('#patient-select').change(function() {
+                var selectedPatientId = $(this).val();
+                var $testSelect = $('#test-select');
 
-            // Store the original test options
-            const originalTestOptions = testSelect.html();
+                // Vider les options du menu déroulant des tests
+                $testSelect.empty();
 
-            // Function to update test options based on the selected patient
-            function updateTestOptions() {
-                const selectedPatientName = patientSelect.find('option:selected').text();
+                // Parcourir toutes les options des tests
+                $('#test-select option').each(function() {
+                    var testPatientId = $(this).data('patient-id');
 
-                // Clear and restore original test options
-                testSelect.empty().html(originalTestOptions);
-
-                // Filter and show test options based on the selected patient
-                testSelect.find('option').each(function () {
-                    const optionText = $(this).text();
-                    if (optionText.includes(selectedPatientName)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
+                    // Vérifier si le test est associé au patient sélectionné ou s'il est disponible pour tous les patients (patient_id = null)
+                    if (testPatientId == selectedPatientId || testPatientId === null) {
+                        // Ajouter l'option au menu déroulant des tests
+                        $testSelect.append($(this));
                     }
                 });
 
-                // Trigger the Select2 plugin to update the dropdown
-                testSelect.trigger('change');
-            }
-
-            // Attach a change event listener to the patient select element
-            patientSelect.on('change', function () {
-                updateTestOptions();
+                // Réinitialiser le menu déroulant Select2 pour mettre à jour les options affichées
+                $testSelect.val('').trigger('change');
             });
         });
     </script>
@@ -162,12 +157,11 @@
 </script>
     <script type="text/template" id="test_labels">
                          <div class="field-group row">
-
                              <div class="col-md-4">
                                  <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
                                    <option value=""><?php echo e(__('sentence.Select Test')); ?>...</option>
                                    <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                       <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?></option>
+                                   <option value="<?php echo e($test->id); ?>" data-patient-id="<?php echo e($test->patient_id); ?>"><?php echo e($test->name); ?></option>
                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                  </select>
                              </div>
