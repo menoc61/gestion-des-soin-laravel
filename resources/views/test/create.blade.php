@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('header')
     <link rel="stylesheet" type="text/css"
-        href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
+        href="{{ asset('css/bootstrap-multiselect.css') }}">
 @endsection
 
 @section('title')
@@ -461,10 +461,23 @@
             // Update the test_name input field value with the selected patient's name
             testNameInput.value = "Diagnostic de Mr(s) - " + patientName;
         }
+        document.getElementById('inputSection').addEventListener('change', function() {
+            var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+            var descriptionInput = document.getElementById('inputPassword3');
+            var descriptions = {
+                'DIAGNOSE PEAU': 'DIAGNOSE PEAU',
+                'DIAGNOSE MAIN': 'DIAGNOSE MAIN',
+                'DIAGNOSE PIED': 'DIAGNOSE PIED'
+            };
+
+            var selectedDescriptions = selectedOptions.map(option => descriptions[option]);
+
+            descriptionInput.value = selectedDescriptions.join(', ');
+        });
     </script>
 
     <script type="text/javascript"
-        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+        src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({

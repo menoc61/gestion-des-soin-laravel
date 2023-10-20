@@ -519,7 +519,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="form-control" name="title" placeholder="Title" required>
+                                    <input type="text" class="form-control" name="title" placeholder="Titre" required>
                                     <input type="hidden" name="patient_id" value="<?php echo e($patient->id); ?>">
                                     <?php echo e(csrf_field()); ?>
 
@@ -559,7 +559,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="form-control" name="title" placeholder="Title" required>
+                                    <input type="text" class="form-control" name="title" placeholder="Titre" required>
                                     <input type="hidden" name="patient_id" value="<?php echo e($patient->id); ?>">
                                     <?php echo e(csrf_field()); ?>
 

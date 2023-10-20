@@ -88,39 +88,30 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $('.multiselect-search').select2();
+            // Initialiser le menu déroulant Select2
+            $('#patient-select').select2();
 
-            // Get references to the patient and test select elements
-            const patientSelect = $('#PatientID');
-            const testSelect = $('#test');
+            // Filtrer les options des tests en fonction du patient sélectionné
+            $('#patient-select').change(function() {
+                var selectedPatientId = $(this).val();
+                var $testSelect = $('#test-select');
 
-            // Store the original test options
-            const originalTestOptions = testSelect.html();
+                // Vider les options du menu déroulant des tests
+                $testSelect.empty();
 
-            // Function to update test options based on the selected patient
-            function updateTestOptions() {
-                const selectedPatientName = patientSelect.find('option:selected').text();
+                // Parcourir toutes les options des tests
+                $('#test-select option').each(function() {
+                    var testPatientId = $(this).data('patient-id');
 
-                // Clear and restore original test options
-                testSelect.empty().html(originalTestOptions);
-
-                // Filter and show test options based on the selected patient
-                testSelect.find('option').each(function() {
-                    const optionText = $(this).text();
-                    if (optionText.includes(selectedPatientName)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
+                    // Vérifier si le test est associé au patient sélectionné ou s'il est disponible pour tous les patients (patient_id = null)
+                    if (testPatientId == selectedPatientId || testPatientId === null) {
+                        // Ajouter l'option au menu déroulant des tests
+                        $testSelect.append($(this));
                     }
                 });
 
-                // Trigger the Select2 plugin to update the dropdown
-                testSelect.trigger('change');
-            }
-
-            // Attach a change event listener to the patient select element
-            patientSelect.on('change', function() {
-                updateTestOptions();
+                // Réinitialiser le menu déroulant Select2 pour mettre à jour les options affichées
+                $testSelect.val('').trigger('change');
             });
         });
     </script>
@@ -182,12 +173,11 @@
 </script>
     <script type="text/template" id="test_labels">
                          <div class="field-group row">
-
                              <div class="col-md-4">
                                  <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
                                    <option value="">{{ __('sentence.Select Test') }}...</option>
                                    @foreach($tests as $test)
-                                       <option value="{{ $test->id }}">{{ $test->test_name }}</option>
+                                    <option value="{{ $test->id }}" data-patient-id="{{ $test->patient_id }}">{{ $test->name }}</option>
                                    @endforeach
                                  </select>
                              </div>
