@@ -30,7 +30,6 @@
         const SITE_URL = "{{ url('/') }}";
     </script>
 
-
     @yield('header')
 
 

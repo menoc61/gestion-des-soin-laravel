@@ -29,8 +29,18 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>{{ __('sentence.Trade Name') }}</th>
+                            <th>ID
+                                <a href="{{ route('drug.all', ['sort' => 'id', 'order' => 'asc']) }}"><i
+                                        class="fas fa-sort-up"></i></a>
+                                <a href="{{ route('drug.all', ['sort' => 'id', 'order' => 'desc']) }}"><i
+                                        class="fas fa-sort-down"></i></a>
+                            </th>
+                            <th>{{ __('sentence.Trade Name') }}
+                                <a href="{{ route('drug.all', ['sort' => 'trade_name', 'order' => 'asc']) }}"><i
+                                        class="fas fa-sort-up"></i></a>
+                                <a href="{{ route('drug.all', ['sort' => 'trade_name', 'order' => 'desc']) }}"><i
+                                        class="fas fa-sort-down"></i></a>
+                            </th>
                             <th>{{ __('sentence.Generic Name') }}</th>
                             <th class="text-center">{{ __('sentence.Total Use') }}</th>
                             <th class="text-center">{{ __('sentence.Actions') }}</th>
