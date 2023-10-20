@@ -4,7 +4,7 @@
             display: none;
         }
     </style>
-    <link rel="stylesheet" type="text/css" href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.New Patient')); ?>
@@ -161,7 +161,7 @@
 </style>
 
 <?php $__env->startSection('footer'); ?>
-<script type="text/javascript" src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
 <!-- Initialize the plugin: -->
 <script type="text/javascript">
     $('#morphology_patient, #alimentation_patient, #digestion_patient, #type_patient,#Gender').multiselect();

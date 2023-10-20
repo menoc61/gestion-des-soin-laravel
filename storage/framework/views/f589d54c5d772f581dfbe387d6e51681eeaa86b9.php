@@ -1,6 +1,6 @@
 <?php $__env->startSection('header'); ?>
     <link rel="stylesheet" type="text/css"
-        href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
+        href="<?php echo e(asset('css/bootstrap-multiselect.css')); ?>">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('title'); ?>
@@ -9,6 +9,10 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow mb-4">
@@ -21,8 +25,8 @@
                             <label for="inputEmail3" class="col-sm-3 col-form-label"><?php echo e(__('sentence.Test Name')); ?><font
                                     color="red">*</font></label>
                             <div class="col-sm-9 input-group">
-                                <select class="input-group-text" name="patient_id" id="PatientID" required aria-placeholder="<?php echo e(__('sentence.Select Patient')); ?>"
-                                    onchange="updateTestName()">
+                                <select class="input-group-text" name="patient_id" id="PatientID" required
+                                    aria-placeholder="<?php echo e(__('sentence.Select Patient')); ?>" onchange="updateTestName()">
                                     <option @readonly(true)><?php echo e(__('sentence.Select Patient')); ?></option>
                                     <?php $__currentLoopData = $patients; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $patient): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($patient->id); ?>" data-name="<?php echo e($patient->name); ?>">
@@ -39,7 +43,8 @@
                             <label for="inputPassword3"
                                 class="col-sm-3 col-form-label"><?php echo e(__('sentence.Description')); ?></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="inputPassword3" name="comment" placeholder="Entre une description correspondant au type de diagnostic sélectionné">
+                                <input type="text" class="form-control" id="inputPassword3" name="comment"
+                                    placeholder="Entre une description correspondant au type de diagnostic sélectionné">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -413,7 +418,7 @@
 
                         <div class="form-group row">
                             <div class="col-sm-9">
-                                <button type="submit" class="btn btn-primary"><?php echo e(__('sentence.Save')); ?></button>
+                                <button type="submit" class="btn btn-success"><?php echo e(__('sentence.Save')); ?></button>
                             </div>
                         </div>
                     </form>
@@ -459,10 +464,23 @@
             // Update the test_name input field value with the selected patient's name
             testNameInput.value = "Diagnostic de Mr(s) - " + patientName;
         }
+        document.getElementById('inputSection').addEventListener('change', function() {
+            var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+            var descriptionInput = document.getElementById('inputPassword3');
+            var descriptions = {
+                'DIAGNOSE PEAU': 'DIAGNOSE PEAU',
+                'DIAGNOSE MAIN': 'DIAGNOSE MAIN',
+                'DIAGNOSE PIED': 'DIAGNOSE PIED'
+            };
+
+            var selectedDescriptions = selectedOptions.map(option => descriptions[option]);
+
+            descriptionInput.value = selectedDescriptions.join(', ');
+        });
     </script>
 
     <script type="text/javascript"
-        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+        src="<?php echo e(asset('js/bootstrap-multiselect.js')); ?>></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({
