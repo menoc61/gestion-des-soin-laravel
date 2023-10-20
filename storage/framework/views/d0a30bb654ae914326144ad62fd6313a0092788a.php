@@ -91,9 +91,9 @@
                 <?php endif; ?>
 
 
-                
 
-                
+
+
 
 
                 <?php if(Auth::user()->can('create diagnostic test') ||
@@ -318,9 +318,9 @@
                                     <a class="dropdown-item"
                                         href="<?php echo e(route('drug.create')); ?>"><?php echo e(__('sentence.Drug')); ?></a>
                                 <?php endif; ?>
-                                
 
-                                
+
+
                                 <?php if(Auth::user()->can('create invoice')): ?>
                                     <a class="dropdown-item"
                                         href="<?php echo e(route('billing.create')); ?>"><?php echo e(__('sentence.Invoice')); ?></a>

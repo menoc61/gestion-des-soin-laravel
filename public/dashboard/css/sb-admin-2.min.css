@@ -69,6 +69,60 @@ html {
 .card-po1 {
     position: fixed;
   }
+
+/* Styles pour les écrans de grande taille (col-xl) */
+@media (min-width: 1200px) {
+    .card-po {
+      position: absolute;
+      bottom: 50%;
+      margin-left: 50%;
+    }
+    .card-po1 {
+      position: fixed;
+    }
+  }
+
+  /* Styles pour les écrans de taille moyenne (col-md) */
+  @media (max-width: 1199px) and (min-width:993px) {
+    .card-po {
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .card-po1 {
+      position: absolute;
+    }
+  }
+
+  @media (max-width:992px) and (min-width:768px) {
+    .marge{
+        margin-top: auto;
+    }
+    .card-po {
+        position: absolute;
+        margin-left: 50%;
+      }
+      .card-po1 {
+        position: absolute;
+      }
+  }
+
+  @media (max-width:576px){
+    .taille{
+        height: 25%;
+    }
+    .card-po {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50%;
+      }
+      .card-po1 {
+        position: absolute;
+      }
+  }
+
+
 .top{
     margin-top: 2%;
     gap: 10%;

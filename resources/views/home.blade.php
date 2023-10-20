@@ -65,7 +65,7 @@
 
 
             <!-- Tasks Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-info shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-info col-md-9">
                         <div class="col-auto">
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-warning shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-warning col-md-9">
                         <div class="col-auto">
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
                         <div class="col-auto">
@@ -132,7 +132,7 @@
 
         <div class="row top">
             <!-- Earnings (Annual) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-success shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-success col-md-9" >
                         <div class="col-auto">
@@ -151,7 +151,7 @@
                 </div>
             </div>
             <!-- Tasks Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-secondary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-secondary col-md-9 ">
                         <div class="col-auto">
@@ -175,7 +175,7 @@
                 </div>
             </div>
             <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-danger shadow h-100 py-2 card-po1 ">
                     <div class="card-body shadow-lg card-po bg-danger col-md-9  ">
                         <div class="col-auto">
@@ -197,11 +197,10 @@
         </div>
     @endrole
 
-    @role('Receptionist')
-        <div class="row">
-
+    @role('Praticien')
+        <div class="row top">
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            {{-- <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -234,9 +233,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
+
             <!-- Tasks Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-info shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-info col-md-9">
                         <div class="col-auto">
@@ -260,7 +260,7 @@
                 </div>
             </div>
             <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-warning shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-warning col-md-9">
                         <div class="col-auto">
@@ -278,13 +278,32 @@
                     </div>
                 </div>
             </div>
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-primary col-md-9">
+                        <div class="col-auto">
+                            <center><i class="fas fa-pills fa-2x text-gray-300"></i></center>
+                        </div>
+                    </div>
+                    <div class="card-body card-po1">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    {{ __('sentence.Total Prescriptions') }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_prescriptions }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     @endrole
 
 
     <!-- Afficher les rendez-vous du jour au niveau de la page d'accueil -->
 
-    {{-- @role('Admin|Receptionist')
+    {{-- @role('Admin|Praticien')
 
 <div class="row">
    <div class="col">

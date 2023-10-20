@@ -57,7 +57,7 @@ class RolesController extends Controller
         ]);
 
             $role = Role::findorfail($request->role_id);
-                if($role->name != 'Admin' and $role->name != 'Receptionist'):
+                if($role->name != 'Admin' and $role->name != 'Praticien'):
                     $role->name = $request->name;
                 endif;
             $role->update();
@@ -70,7 +70,7 @@ class RolesController extends Controller
 
         $role = Role::findorfail($id);
 
-        if($role->name == 'Admin' or $role->name == 'Receptionist'):
+        if($role->name == 'Admin' or $role->name == 'Praticien'):
             return Redirect::route('roles.all')->with('warning', 'You cannot delete Admin/Receptionist role !');;
         endif;
 
