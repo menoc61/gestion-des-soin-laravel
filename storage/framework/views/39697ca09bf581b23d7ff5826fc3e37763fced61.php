@@ -30,6 +30,8 @@
         const SITE_URL = "<?php echo e(url('/')); ?>";
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <?php echo $__env->yieldContent('header'); ?>
 
@@ -41,7 +43,7 @@
         <!-- Page Wrapper -->
         <div id="wrapper">
             <!-- Sidebar -->
-            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <ul class="navbar-nav custom-colors sidebar sidebar-dark accordion" id="accordionSidebar">
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo e(route('home')); ?>">
                     <div class="sidebar-brand-icon rotate-n-15 d-none d-lg-block d-xl-none">
@@ -300,13 +302,21 @@
                                 data-toggle="dropdown" aria-expanded="false">
                                 <?php echo e(__('sentence.Create as new')); ?> </button>
                             <div class="dropdown-menu shadow">
+                                <?php if(Auth::user()->can('add patient')): ?>
+                                    <a class="dropdown-item"
+                                        href="<?php echo e(route('patient.create')); ?>"><?php echo e(__('sentence.Patient')); ?></a>
+                                <?php endif; ?>
+                                <?php if(Auth::user()->can('create diagnostic test')): ?>
+                                    <a class="dropdown-item"
+                                        href="<?php echo e(route('test.create')); ?>"><?php echo e(__('sentence.Test')); ?></a>
+                                <?php endif; ?>
                                 <?php if(Auth::user()->can('create prescription')): ?>
                                     <a class="dropdown-item"
                                         href="<?php echo e(route('prescription.create')); ?>"><?php echo e(__('sentence.Prescription')); ?></a>
                                 <?php endif; ?>
-                                <?php if(Auth::user()->can('add patient')): ?>
+                                <?php if(Auth::user()->can('create drug')): ?>
                                     <a class="dropdown-item"
-                                        href="<?php echo e(route('patient.create')); ?>"><?php echo e(__('sentence.Patient')); ?></a>
+                                        href="<?php echo e(route('drug.create')); ?>"><?php echo e(__('sentence.Drug')); ?></a>
                                 <?php endif; ?>
                                 
 
@@ -314,14 +324,6 @@
                                 <?php if(Auth::user()->can('create invoice')): ?>
                                     <a class="dropdown-item"
                                         href="<?php echo e(route('billing.create')); ?>"><?php echo e(__('sentence.Invoice')); ?></a>
-                                <?php endif; ?>
-                                <?php if(Auth::user()->can('create drug')): ?>
-                                    <a class="dropdown-item"
-                                        href="<?php echo e(route('drug.create')); ?>"><?php echo e(__('sentence.Drug')); ?></a>
-                                <?php endif; ?>
-                                <?php if(Auth::user()->can('create diagnostic test')): ?>
-                                    <a class="dropdown-item"
-                                        href="<?php echo e(route('test.create')); ?>"><?php echo e(__('sentence.Test')); ?></a>
                                 <?php endif; ?>
                             </div>
                         </div>

@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
     <div class="mb-3">
         <button class="btn btn-primary" onclick="history.back()">Retour</button>
     </div>
@@ -27,7 +28,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header btn-primary">
+                <div class="modal-header btn-success">
                     <h5 class="modal-title " id="importCSVModalLabel">Importer la dernière version <b>"product.csv"</b></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -91,56 +92,93 @@
         </div>
     </div>
 
-    {{-- Display Products Section --}}
-    <div class="row">
-        <div class="col">
-            <h2>{{ __('sentence.Product List') }}</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>SKU</th>
-                        <th>Name</th>
-                        <th>Product Category</th>
-                        <th>Updated At</th>
-                        <th>Image</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (count($products) > 0)
-                        @foreach ($products as $product)
-                            <tr>
-                                <td>{{ $product['id'] }}</td>
-                                <td>{{ $product['sku'] }}</td>
-                                <td>{{ $product['name'] }}</td>
-                                <td>{{ $product['product_category'] }}</td>
-                                <td>{{ $product['updated_at'] }}</td>
-                                <td>
-                                    @if (!empty($product['imageUrl']))
-                                        <img src="{{ $product['imageUrl'] }}" alt="Unable to reach backend"
-                                            style="max-width: 100px;">
-                                    @else
-                                        le produit n'as pas d'image
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
+    {{-- Display Products using csv data Section --}}
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row">
+                <div class="col-6">
+                    <h6 class="m-0 font-weight-bold text-primary w-75 p-2">{{ __('sentence.Product list') }}</h6>
+                </div>
+                <div class="col-3">
+                    <a href="http://192.168.1.176:3000/product" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i>
+                        {{ __('sentence.Add a product') }}</a>
+                </div>
+                <div class="col-3">
+                    <a href="#" class="btn btn-primary btn-sm float-right" id="importCSVLink" data-toggle="modal"
+                        data-target="#importCSVModal">
+                        <i class="fa fa-edit"></i>
+                        {{ __('sentence.update product list') }}</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable">
+                    <thead>
                         <tr>
-                            <td colspan="7">No data available.</td>
+                            <th class="sortable" data-col="id">ID
+                                <i class="fas fa-sort-up sortable-icon"></i>
+                                <i class="fas fa-sort-down sortable-icon"></i>
+                            </th>
+                            <th class="sortable" data-col="sku">SKU
+                                <i class="fas fa-sort-up sortable-icon"></i>
+                                <i class="fas fa-sort-down sortable-icon"></i>
+                            </th>
+                            <th class="sortable" data-col="name">Name
+                                <i class="fas fa-sort-up sortable-icon"></i>
+                                <i class="fas fa-sort-down sortable-icon"></i>
+                            </th>
+                            <th class="sortable" data-col="product_category">Product Category
+                                <i class="fas fa-sort-up sortable-icon"></i>
+                                <i class="fas fa-sort-down sortable-icon"></i>
+                            </th>
+                            <th class="sortable" data-col="updated_at">Updated At
+                                <i class="fas fa-sort-up sortable-icon"></i>
+                                <i class="fas fa-sort-down sortable-icon"></i>
+                            </th>
+                            <th>Image</th>
                         </tr>
-                    @endif
-                </tbody>
-            </table>
-
+                    </thead>
+                    <tbody>
+                        @if (count($products) > 0)
+                            @foreach ($products as $product)
+                                <tr>
+                                    <td>{{ $product['id'] }}</td>
+                                    <td>{{ $product['sku'] }}</td>
+                                    <td>{{ $product['name'] }}</td>
+                                    <td>{{ $product['product_category'] }}</td>
+                                    <td>{{ $product['updated_at'] }}</td>
+                                    <td>
+                                        @if (!empty($product['imageUrl']))
+                                            <img src="{{ $product['imageUrl'] }}" alt="Unable to reach backend"
+                                                style="max-width: 50px; max-height: 50px">
+                                        @else
+                                            "Le produit n'a pas d'image"
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="6">No data available.</td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     {{-- End Display Products Section --}}
 @endsection
 
 @section('footer')
-    <script type="text/javascript"
-        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+    <style>
+        .sortable-icon {
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
+    <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#GenericName').multiselect({
@@ -148,6 +186,27 @@
             enableFiltering: true,
             filterPlaceholder: 'Recherche un Hôte...',
             buttonContainer: '<div class="btn-group w-100" />'
+        });
+    </script>
+    <script>
+        // JavaScript to handle sorting
+        $(document).ready(function() {
+            $(".sortable-icon").click(function() {
+                // Get the index of the clicked th within its parent tr
+                const column = $(this).closest('th').index();
+                const order = $(this).hasClass('fa-sort-up') ? 1 : -1;
+
+                const sortedRows = [...document.querySelectorAll('tbody tr')];
+                sortedRows.sort((a, b) => {
+                    const aValue = a.querySelectorAll('td')[column].textContent.trim();
+                    const bValue = b.querySelectorAll('td')[column].textContent.trim();
+                    return order * (aValue.localeCompare(bValue));
+                });
+
+                const tableBody = document.querySelector('tbody');
+                tableBody.innerHTML = '';
+                sortedRows.forEach(row => tableBody.appendChild(row));
+            });
         });
     </script>
 @endsection

@@ -1,6 +1,6 @@
 <?php $__env->startSection('header'); ?>
     <link rel="stylesheet" type="text/css"
-        href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
+        href="{{ asset('css/bootstrap-multiselect.css') }}">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('title'); ?>
@@ -480,7 +480,7 @@
     </script>
 
     <script type="text/javascript"
-        src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+        src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({

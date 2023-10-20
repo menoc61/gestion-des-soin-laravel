@@ -6,7 +6,7 @@
 <?php $__env->startSection('content'); ?>
 
 
-    <div class="row justify-content-center">                  
+    <div class="row justify-content-center">
 
         <div class="col-md-8">
             <div class="card shadow mb-4">
@@ -34,13 +34,13 @@
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
                             <?php endif; ?>
-                           
+
                         </select>
                         <hr>
                           <?php $__empty_1 = true; $__currentLoopData = $role->permissions->pluck('name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                        <label class="badge badge-success-soft"><?php echo e(ucfirst($permission)); ?></label> 
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>  
-                        <label class="badge badge-warning-soft">No permissions for <?php echo e($role->name); ?></label> 
+                        <label class="badge badge-success-soft"><?php echo e(ucfirst($permission)); ?></label>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                        <label class="badge badge-warning-soft">No permissions for <?php echo e($role->name); ?></label>
                         <?php endif; ?>
                       </div>
                     </div>
@@ -53,7 +53,7 @@
                   </form>
                 </div>
               </div>
-            
+
         </div>
 
     </div>
@@ -61,11 +61,11 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('header'); ?>
-<link rel="stylesheet" type="text/css" href="https://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer'); ?>
-<script type="text/javascript" src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
 <!-- Initialize the plugin: -->
 <script type="text/javascript">
     $('#example-multiple-selected').multiselect();
