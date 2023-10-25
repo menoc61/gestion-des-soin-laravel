@@ -111,7 +111,15 @@ return [
     'foot diagnostic sheet' => 'LA FICHE DE DIAGNOSE PIEDS',
     'skin diagnostic sheet' => 'LA FICHE DE DIAGNOSE PEAU',
 
-    'SIGNES PARTICULIERS' => 'Signes particuliers: ',
+    'SEBUM' => 'Sebum:',
+    'HYDRATATION' => 'Hydratation:',
+    'KERATINISATION' => 'keratinisation:',
+    'FOLLICULE' => 'Follicule:',
+    'RELIEF' => 'Relief:',
+    'ELASTICITE' => 'Elasticite:',
+    'SENSIBILITE' => 'Sensibilite:',
+    'CIRCULATION' => 'Circulation:',
+    'SIGNES PARTICULIERS' => 'Signes particuliers:',
 
 // diagnostic hand
     'general hand state' => 'Etat générale des mains: ',
@@ -238,6 +246,7 @@ return [
     'Update Invoice' => 'Mettre à jour',
     'Health History' => 'Observation Générale',
     'Payment History' => 'Historique de Paiements',
+    // OTHER
     'Add New' => 'Créer un Nouveau',
     'No document available' => 'Aucun document trouvé',
     'Product list' => 'List des produits',
