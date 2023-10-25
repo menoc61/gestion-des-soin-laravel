@@ -102,7 +102,7 @@
                                             <label class="badge badge-warning-soft"><?php echo e($item); ?></label>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php else: ?>
-                                        <span>No type_patient data available.</span>
+                                        <span>No patient type data available.</span>
                                     <?php endif; ?>
                                 </p>
                             <?php endif; ?>

@@ -88,6 +88,260 @@
                                         </div>
                                         <!-- Rest of the content -->
                                         <div class="card-body">
+                                            {{-- SEBUM --}}
+                                            <div class="form-group row">
+                                                <label for="SEBUM"
+                                                    class="col-sm-3 col-form-label">{{ __('sentence.SEBUM') }}</label>
+                                                <div class="col-sm-9">
+                                                    <select id="sebum" class="form-control" multiple="multiple"
+                                                        name="sebum_grp[]">
+                                                        <optgroup label="NORMALE">
+                                                            <option value="Léger"
+                                                                {{ in_array('Léger', json_decode($test->sebum_grp) ?: []) ? 'selected' : '' }}>
+                                                                Léger</option>
+                                                            <option value="Normale"
+                                                                {{ in_array('Normale', json_decode($test->sebum_grp) ?: []) ? 'selected' : '' }}>
+                                                                Normale</option>
+                                                        </optgroup>
+                                                        <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE"
+                                                            disabled>
+                                                        </optgroup>
+                                                        <optgroup
+                                                            label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                            <option value="Grasse"
+                                                                {{ in_array('Grasse', json_decode($test->sebum_grp) ?: []) ? 'selected' : '' }}>
+                                                                Grasse</option>
+                                                            <option value="Acnéique"
+                                                                {{ in_array('Acnéique', json_decode($test->sebum_grp) ?: []) ? 'selected' : '' }}>
+                                                                Acnéique</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <!-- HYDRATATION -->
+                                            <div class="form-group row">
+                                                <label for="HYDRATATION"
+                                                    class="col-sm-3 col-form-label">{{ __('sentence.HYDRATATION') }}</label>
+                                                <div class="col-sm-9">
+                                                    <select id="hydratation" class="form-control" multiple="multiple"
+                                                        name="hydratation_grp[]">
+                                                        <optgroup label="NORMALE">
+                                                            <option value="Léger"
+                                                                {{ in_array('Léger', json_decode($test->hydratation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Léger</option>
+                                                            <option value="Normale"
+                                                                {{ in_array('Normale', json_decode($test->hydratation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Normale</option>
+                                                        </optgroup>
+                                                        <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                            <option value="Sèche"
+                                                                {{ in_array('Sèche', json_decode($test->hydratation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Sèche</option>
+                                                        </optgroup>
+                                                        <optgroup
+                                                            label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                            <option value="Tiraillement"
+                                                                {{ in_array('Tiraillement', json_decode($test->hydratation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Tiraillement</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <!-- KERATINISATION -->
+                                            <div class="form-group row">
+                                                <label for="KERATINISATION"
+                                                    class="col-sm-3 col-form-label">{{ __('sentence.KERATINISATION') }}</label>
+                                                <div class="col-sm-9">
+                                                    <select id="keratinisation" class="form-control" multiple="multiple"
+                                                        name="keratinisation_grp[]">
+                                                        <optgroup label="NORMALE">
+                                                            <option value="Léger"
+                                                                {{ in_array('Léger', json_decode($test->keratinisation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Léger</option>
+                                                            <option value="Normale"
+                                                                {{ in_array('Normale', json_decode($test->keratinisation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Normale</option>
+                                                        </optgroup>
+                                                        <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                            <option value="Sèche"
+                                                                {{ in_array('Sèche', json_decode($test->keratinisation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Sèche</option>
+                                                            <option value="Desquamée"
+                                                                {{ in_array('Desquamée', json_decode($test->keratinisation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Desquamée</option>
+                                                        </optgroup>
+                                                        <optgroup
+                                                            label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                            <option value="Gerssures"
+                                                                {{ in_array('Gerssures', json_decode($test->keratinisation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Gerssures</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <!-- FOLLICULE -->
+                                            <div class="form-group row">
+                                                <label for="FOLLICULE"
+                                                    class="col-sm-3 col-form-label">{{ __('sentence.FOLLICULE') }}</label>
+                                                <div class="col-sm-9">
+                                                    <select id="follicule" class="form-control" multiple="multiple"
+                                                        name="follicule_grp[]">
+                                                        <optgroup label="NORMALE">
+                                                            <option value="Léger"
+                                                                {{ in_array('Léger', json_decode($test->follicule_grp) ?: []) ? 'selected' : '' }}>
+                                                                Léger</option>
+                                                            <option value="Normale"
+                                                                {{ in_array('Normale', json_decode($test->follicule_grp) ?: []) ? 'selected' : '' }}>
+                                                                Normale</option>
+                                                        </optgroup>
+                                                        <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                            <option value="Faible"
+                                                                {{ in_array('Faible', json_decode($test->follicule_grp) ?: []) ? 'selected' : '' }}>
+                                                                Faible</option>
+                                                            <option value="Sèche"
+                                                                {{ in_array('Sèche', json_decode($test->follicule_grp) ?: []) ? 'selected' : '' }}>
+                                                                Sèche</option>
+                                                            <option value="Desquamée"
+                                                                {{ in_array('Desquamée', json_decode($test->follicule_grp) ?: []) ? 'selected' : '' }}>
+                                                                Desquamée</option>
+                                                        </optgroup>
+                                                        <optgroup
+                                                            label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE"
+                                                            disabled></optgroup>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <!-- RELIEF -->
+                                            <div class="form-group row">
+                                                <label for="RELIEF"
+                                                    class="col-sm-3 col-form-label">{{ __('sentence.RELIEF') }}</label>
+                                                <div class="col-sm-9">
+                                                    <select id="relief" class="form-control" multiple="multiple"
+                                                        name="relief_grp[]">
+                                                        <optgroup label="NORMALE">
+                                                            <option value="Léger"
+                                                                {{ in_array('Léger', json_decode($test->relief_grp) ?: []) ? 'selected' : '' }}>
+                                                                Léger</option>
+                                                            <option value="Normale"
+                                                                {{ in_array('Normale', json_decode($test->relief_grp) ?: []) ? 'selected' : '' }}>
+                                                                Normale</option>
+                                                        </optgroup>
+                                                        <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                            <option value="Fin"
+                                                                {{ in_array('Fin', json_decode($test->relief_grp) ?: []) ? 'selected' : '' }}>
+                                                                Fin</option>
+                                                            <option value="Serré"
+                                                                {{ in_array('Serré', json_decode($test->relief_grp) ?: []) ? 'selected' : '' }}>
+                                                                Serré</option>
+                                                        </optgroup>
+                                                        <optgroup
+                                                            label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                            <option value="Pores dilatés"
+                                                                {{ in_array('Pores dilatés', json_decode($test->relief_grp)) ? 'selected' : '' }}>
+                                                                Pores dilatés</option>
+                                                            <option value="Pores obstrués"
+                                                                {{ in_array('Pores obstrués', json_decode($test->relief_grp) ?: []) ? 'selected' : '' }}>
+                                                                Pores obstrués</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <!-- ELASTICITE -->
+                                            <div class="form-group row">
+                                                <label for="ELASTICITE"
+                                                    class="col-sm-3 col-form-label">{{ __('sentence.ELASTICITE') }}</label>
+                                                <div class="col-sm-9">
+                                                    <select id="elasticite" class="form-control" multiple="multiple"
+                                                        name="elasticite_grp[]">
+                                                        <optgroup label="NORMALE">
+                                                            <option value="Léger"
+                                                                {{ in_array('Léger', json_decode($test->elasticite_grp) ?: []) ? 'selected' : '' }}>
+                                                                Léger</option>
+                                                            <option value="Normale"
+                                                                {{ in_array('Normale', json_decode($test->elasticite_grp) ?: []) ? 'selected' : '' }}>
+                                                                Normale</option>
+                                                        </optgroup>
+                                                        <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                            <option value="Faible"
+                                                                {{ in_array('Faible', json_decode($test->elasticite_grp) ?: []) ? 'selected' : '' }}>
+                                                                Faible</option>
+                                                            <option value="Bonne"
+                                                                {{ in_array('Bonne', json_decode($test->elasticite_grp) ?: []) ? 'selected' : '' }}>
+                                                                Bonne</option>
+                                                        </optgroup>
+                                                        <optgroup
+                                                            label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE"
+                                                            disabled></optgroup>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <!-- SENSIBILITE -->
+                                            <div class="form-group row">
+                                                <label for="SENSIBILITE"
+                                                    class="col-sm-3 col-form-label">{{ __('sentence.SENSIBILITE') }}</label>
+                                                <div class="col-sm-9">
+                                                    <select id="sensibilite" class="form-control" multiple="multiple"
+                                                        name="sensibilite_grp[]">
+                                                        <optgroup label="NORMALE">
+                                                            <option value="Léger"
+                                                                {{ in_array('Léger', json_decode($test->sensibilite_grp) ?: []) ? 'selected' : '' }}>
+                                                                Léger</option>
+                                                            <option value="Normale"
+                                                                {{ in_array('Normale', json_decode($test->sensibilite_grp) ?: []) ? 'selected' : '' }}>
+                                                                Normale</option>
+                                                        </optgroup>
+                                                        <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                            <option value="Sensible"
+                                                                {{ in_array('Sensible', json_decode($test->sensibilite_grp) ?: []) ? 'selected' : '' }}>
+                                                                Sensible</option>
+                                                            <option value="Réactive"
+                                                                {{ in_array('Réactive', json_decode($test->sensibilite_grp) ?: []) ? 'selected' : '' }}>
+                                                                Réactive</option>
+                                                        </optgroup>
+                                                        <optgroup
+                                                            label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                            <option value="Hypersensibilité"
+                                                                {{ in_array('Hypersensibilité', json_decode($test->sensibilite_grp) ?: []) ? 'selected' : '' }}>
+                                                                Hypersensibilité</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <!-- CIRCULATION -->
+                                            <div class="form-group row">
+                                                <label for="CIRCULATION"
+                                                    class="col-sm-3 col-form-label">{{ __('sentence.CIRCULATION') }}</label>
+                                                <div class="col-sm-9">
+                                                    <select id="circulation" class="form-control" multiple="multiple"
+                                                        name="circulation_grp[]">
+                                                        <optgroup label="NORMALE">
+                                                            <option value="Régulière"
+                                                                {{ in_array('Régulière', json_decode($test->circulation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Régulière</option>
+                                                        </optgroup>
+                                                        <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                            <option value="Irrégulière"
+                                                                {{ in_array('Irrégulière', json_decode($test->circulation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Irrégulière</option>
+                                                        </optgroup>
+                                                        <optgroup
+                                                            label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                            <option value="Plaques"
+                                                                {{ in_array('Plaques', json_decode($test->circulation_grp) ?: []) ? 'selected' : '' }}>
+                                                                Plaques</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <hr>
                                             <div class="form-group row">
                                                 <label for="signes-particuliers-peau"
                                                     class="col-sm-3 col-form-label">{{ __('sentence.SIGNES PARTICULIERS') }}</label>
@@ -105,7 +359,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <hr>
                                         </div>
                                     </div>
                                 @elseif ($diagnosticType === 'DIAGNOSE MAIN')
@@ -540,16 +793,26 @@
             testNameInput.value = "Diagnostic de Mr(s) - " + patientName;
         }
     </script>
-        <link rel="stylesheet" type="text/css"
-        href="{{ asset('css/bootstrap-multiselect.css') }}">
-    <script type="text/javascript"
-        src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
+    <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({
             includeSelectAllOption: true,
             enableFiltering: true,
+            enableResetButton: true,
+            nonSelectedText: 'sélectionnez un option',
             filterPlaceholder: 'Recherche un Hôte...',
+            buttonContainer: '<div class="btn-group w-100" />'
+        });
+    </script>
+    <script type="text/javascript">
+        $('#sebum,#hydratation,#keratinisation,#follicule,#relief,#elasticite,#sensibilite,#circulation').multiselect({
+            enableFiltering: true,
+            enableResetButton: true,
+            enableCollapsibleOptGroups: true,
+            nonSelectedText: 'sélectionnez un option',
+            filterPlaceholder: 'Rechercher une option...',
             buttonContainer: '<div class="btn-group w-100" />'
         });
     </script>
