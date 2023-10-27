@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?>
     <?php echo e(__('sentence.Billing List')); ?>
 
@@ -57,7 +59,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $__currentLoopData = $invoices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $invoice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__empty_1 = true; $__currentLoopData = $invoices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $invoice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
                                 <td><?php echo e($invoice->reference); ?></td>
                                 <td><a href="<?php echo e(url('patient/view/' . $invoice->user_id)); ?>"> <?php echo e($invoice->User->name); ?>
@@ -110,7 +112,11 @@
                                     <?php endif; ?>
                                 </td>
                             </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                            <tr>
+                               <td colspan="9" class="text-center"><img src="<?php echo e(asset('img/not-found.svg')); ?>" width="200" /> <br><br> <b class="text-muted">Aucune facture trouvé</b></td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
                 <span class="float-right mt-3"><?php echo e($invoices->links()); ?></span>

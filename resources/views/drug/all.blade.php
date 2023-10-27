@@ -29,8 +29,18 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>{{ __('sentence.Trade Name') }}</th>
+                            <th>ID
+                                <a href="{{ route('drug.all', ['sort' => 'id', 'order' => 'asc']) }}"><i
+                                        class="fas fa-sort-up"></i></a>
+                                <a href="{{ route('drug.all', ['sort' => 'id', 'order' => 'desc']) }}"><i
+                                        class="fas fa-sort-down"></i></a>
+                            </th>
+                            <th>{{ __('sentence.Trade Name') }}
+                                <a href="{{ route('drug.all', ['sort' => 'trade_name', 'order' => 'asc']) }}"><i
+                                        class="fas fa-sort-up"></i></a>
+                                <a href="{{ route('drug.all', ['sort' => 'trade_name', 'order' => 'desc']) }}"><i
+                                        class="fas fa-sort-down"></i></a>
+                            </th>
                             <th>{{ __('sentence.Generic Name') }}</th>
                             <th class="text-center">{{ __('sentence.Total Use') }}</th>
                             <th class="text-center">{{ __('sentence.Actions') }}</th>
@@ -41,7 +51,20 @@
                             <tr>
                                 <td>{{ $drug->id }}</td>
                                 <td>{{ $drug->trade_name }}</td>
-                                <td>{{ $drug->generic_name }}</td>
+                                <td>
+                                    @php
+                                        $product = json_decode($drug->generic_name);
+                                    @endphp
+
+                                    @if (is_array($product))
+                                        @foreach ($product as $products)
+                                        <label class="badge badge-primary-soft">{{ $products }}</label>
+                                        @endforeach
+                                    @else
+                                        {{ $product }}
+                                    @endif
+
+                                </td>
                                 <td align="center">{{ __('sentence.In Prescription') }} :
                                     {{ $drug->Prescription->count() }} {{ __('sentence.time use') }}</td>
                                 <td class="text-center">

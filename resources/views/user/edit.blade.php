@@ -68,12 +68,14 @@
                             <label for="role" class="col-sm-3 col-form-label">{{ __('sentence.Role') }}</label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="role" id="role">
-                                    <option value="">{{ __('sentence.Select Role') }}</option>
-                                    @forelse($roles as $role)
-                                        <option value="{{ $role }}"
-                                            @if ($role == @$user->getRoleNames()[0]) selected @endif>{{ ucfirst($role) }}</option>
+                                    {{-- <option value="Unknown">{{ __('sentence.Select Role') }}</option> --}}
+                                    <option value="admin">{{ __('sentence.Admin') }}</option>
+                                    <option value="praticien">{{ __('sentence.Doctor') }}</option>
+
+                                    {{-- @forelse($roles as $role)
+                                        <option value="{{ $role }}">{{ ucfirst($role) }}</option>
                                     @empty
-                                    @endforelse
+                                    @endforelse --}}
                                 </select>
                             </div>
                         </div>

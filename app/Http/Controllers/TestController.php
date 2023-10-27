@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Test;
 use App\User;
+use App\Prescription_test;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -258,4 +259,11 @@ class TestController extends Controller
 
         return view('test.view_diagnostic', ['tests' => $tests]);
     }
+
+    public function view_test($id)
+    {
+        $prescription_tests = Prescription_test::where('prescription_id', $id)->get();
+        return view('test.view_test', ['prescription_tests' => $prescription_tests]);
+    }
+
 }
