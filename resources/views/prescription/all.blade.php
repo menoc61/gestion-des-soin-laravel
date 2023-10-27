@@ -50,10 +50,10 @@
                   <td class="text-center">{{ $prescription->created_at->format('d M Y H:i') }}</td>
                   <td class="text-center">
                      <label class="badge badge-primary-soft">
-                        {{ count($prescription->Drug) }} Soins
+                        {{ count($prescription->Drug) }} Soin(s)
                      </label>
                      <label class="badge badge-primary-soft">
-                        {{ count($prescription->Test) }} Soins
+                        {{ count($prescription->Test) }} Diagnostic(s)
                      </label>
                   </td>
                   <td class="text-center">
@@ -64,7 +64,7 @@
                </tr>
                @empty
                <tr>
-                  <td colspan="5" class="text-center"><img src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br> <b class="text-muted">No prescriptions found</b></td>
+                  <td colspan="5" class="text-center"><img src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br> <b class="text-muted">Aucun traitement trouvé</b></td>
                </tr>
                @endforelse
             </tbody>

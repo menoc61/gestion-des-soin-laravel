@@ -142,7 +142,6 @@
                                    @endforeach
                                  </select>
                              </div>
-
                              {{-- <div class="col-md-4">
                                  <div class="form-group-custom">
                                      <input type="text" id="strength" name="strength[]"  class="form-control" placeholder="Mg/Ml">

@@ -45,6 +45,8 @@
                                 <td align="center"><?php echo e(__('sentence.In Prescription')); ?> :
                                     <?php echo e($test->Prescription->count()); ?> <?php echo e(__('sentence.time use')); ?></td>
                                 <td class="text-center">
+                                    <a href="<?php echo e(url('test/view/' . $test->id)); ?>"
+                                        class="btn btn-outline-primary btn-circle btn-sm"><i class="fa fa-eye"></i></a>
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit diagnostic test')): ?>
                                         <a href="<?php echo e(url('test/edit/' . $test->id)); ?>"
                                             class="btn btn-outline-warning btn-circle btn-sm"><i class="fa fa-pen"></i></a>

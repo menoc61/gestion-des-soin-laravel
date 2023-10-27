@@ -133,7 +133,6 @@
                             <tr>
                                 <td colspan="15" align="center"><img src="<?php echo e(asset('img/rest.png')); ?> " /> <br><br> <b
                                         class="text-muted">Aucun hôte trouvé</b>
-
                                 </td>
                             </tr>
                         <?php endif; ?>

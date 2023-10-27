@@ -1,7 +1,8 @@
 <?php $__env->startSection('title'); ?>
-    <?php echo e(__('sentence.All Tests')); ?>
+    <?php echo e(__('sentence.All tests')); ?>
 
 <?php $__env->stopSection(); ?>
+
 
 <?php $__env->startSection('content'); ?>
     <div class="mb-3">
@@ -17,7 +18,8 @@
                 <div class="col-4">
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create diagnostic test')): ?>
                         <a href="<?php echo e(route('test.create')); ?>" class="btn btn-primary btn-sm float-right"><i
-                                class="fa fa-plus"></i> <?php echo e(__('sentence.Add Test')); ?></a>
+                                class="fa fa-plus"></i>
+                            <?php echo e(__('sentence.Add Test')); ?></a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -27,32 +29,15 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID
-                                <a href="<?php echo e(route('test.all', ['sort' => 'id', 'order' => 'asc'])); ?>"><i
-                                        class="fas fa-sort-up"></i></a>
-                                <a href="<?php echo e(route('test.all', ['sort' => 'id', 'order' => 'desc'])); ?>"><i
-                                        class="fas fa-sort-down"></i></a>
-                            </th>
-                            <th><?php echo e(__('sentence.Test Name')); ?>
-
-                                <a href="<?php echo e(route('test.all', ['sort' => 'test_name', 'order' => 'asc'])); ?>"><i
-                                        class="fas fa-sort-up"></i></a>
-                                <a href="<?php echo e(route('test.all', ['sort' => 'test_name', 'order' => 'desc'])); ?>"><i
-                                        class="fas fa-sort-down"></i></a>
-                            </th>
-                            <th><?php echo e(__('sentence.Description')); ?>
-
-                                <a href="<?php echo e(route('test.all', ['sort' => 'comment', 'order' => 'asc'])); ?>"><i
-                                        class="fas fa-sort-up"></i></a>
-                                <a href="<?php echo e(route('test.all', ['sort' => 'comment', 'order' => 'desc'])); ?>"><i
-                                        class="fas fa-sort-down"></i></a>
-                            </th>
+                            <th>ID</th>
+                            <th><?php echo e(__('sentence.Test Name')); ?> </th>
+                            <th><?php echo e(__('sentence.Description')); ?> </th>
                             <th class="text-center"><?php echo e(__('sentence.Total Use')); ?></th>
                             <th class="text-center"><?php echo e(__('sentence.Actions')); ?></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $__empty_1 = true; $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                        <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td><?php echo e($test->id); ?></td>
                                 <td><?php echo e($test->test_name); ?></td>
@@ -60,10 +45,6 @@
                                 <td align="center"><?php echo e(__('sentence.In Prescription')); ?> :
                                     <?php echo e($test->Prescription->count()); ?> <?php echo e(__('sentence.time use')); ?></td>
                                 <td class="text-center">
-
-                                        <a href="<?php echo e(url('test/view/' . $test->id)); ?>"
-                                        class="btn btn-outline-primary btn-circle btn-sm"><i class="fa fa-eye"></i></a>
-
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit diagnostic test')): ?>
                                         <a href="<?php echo e(url('test/edit/' . $test->id)); ?>"
                                             class="btn btn-outline-warning btn-circle btn-sm"><i class="fa fa-pen"></i></a>
@@ -75,12 +56,7 @@
                                     <?php endif; ?>
                                 </td>
                             </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                            <tr>
-                                <td colspan="5" class="text-center"><img src="<?php echo e(asset('img/not-found.svg')); ?>"
-                                        width="200" /> <br><br> <b class="text-muted">pas de diagnostic trouvé</b></td>
-                            </tr>
-                        <?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
@@ -88,4 +64,4 @@
     </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\HS\gestion-des-soin-laravel\resources\views/test/all.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/test/view_diagnostic.blade.php ENDPATH**/ ?>

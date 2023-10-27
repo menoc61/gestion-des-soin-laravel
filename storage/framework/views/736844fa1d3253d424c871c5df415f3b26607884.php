@@ -1,11 +1,13 @@
-
-
 <?php $__env->startSection('title'); ?>
 <?php echo e(__('sentence.All Prescriptions')); ?>
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+
+<div class="mb-3">
+    <button class="btn btn-primary" onclick="history.back()">Retour</button>
+</div>
 
 <div class="card shadow mb-4">
    <div class="card-header py-3">
@@ -38,10 +40,10 @@
                   <td class="text-center"><?php echo e($prescription->created_at->format('d M Y H:i')); ?></td>
                   <td class="text-center">
                      <label class="badge badge-primary-soft">
-                        <?php echo e(count($prescription->Drug)); ?> Produits
+                        <?php echo e(count($prescription->Drug)); ?> Soin(s)
                      </label>
                      <label class="badge badge-primary-soft">
-                        <?php echo e(count($prescription->Test)); ?> Soins
+                        <?php echo e(count($prescription->Test)); ?> Diagnosti(c)
                      </label>
                   </td>
                   <td class="text-center">
@@ -53,7 +55,7 @@
                </tr>
                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                <tr>
-                  <td colspan="5" class="text-center"><img src="<?php echo e(asset('img/not-found.svg')); ?>" width="200" /> <br><br> <b class="text-muted">No prescriptions found</b></td>
+                  <td colspan="5" class="text-center"><img src="<?php echo e(asset('img/not-found.svg')); ?>" width="200" /> <br><br> <b class="text-muted">Aucun traitement trouvé</b></td>
                </tr>
                <?php endif; ?>
             </tbody>

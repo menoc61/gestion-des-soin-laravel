@@ -4,7 +4,9 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    </div>
     <div class="row justify-content-center">
         <div class="col">
             <div class="card shadow mb-4">
@@ -14,10 +16,10 @@
                         <div class="col-md-4 col-sm-6">
                             <?php if(empty(!$patient->image)): ?>
                                 <center><img src="<?php echo e(asset('uploads/' . $patient->image)); ?>"
-                                        class="img-profile rounded-circle img-fluid" width="256" height="256"></center>
+                                        class="img-profile rounded-circle img-fluid" width="256" height="256" style="object-fit: cover;" alt="profil-img"></center>
                             <?php else: ?>
-                                <center><img src="<?php echo e(asset('img/patient-icon.png')); ?>"
-                                        class="img-profile rounded-circle img-fluid" width="256" height="256"></center>
+                                <center><img src="<?php echo e(asset('img/default-image.jpeg')); ?>"
+                                        class="img-profile rounded-circle img-fluid" width="256" height="256" style="object-fit: cover;" alt="profil-img"></center>
                             <?php endif; ?>
                             <h4 class="text-center mt-3"><b><?php echo e($patient->name); ?></b> <label
                                     class="badge badge-primary-soft"> <a href="<?php echo e(url('patient/edit/' . $patient->id)); ?>"><i
@@ -31,7 +33,7 @@
                             <?php endif; ?>
 
                             <?php if(isset($patient->Patient->gender)): ?>
-                                <p><b><?php echo e(__('sentence.Gender')); ?> :</b> <?php echo e(__('sentence.' . $patient->Patient->gender)); ?></p>
+                                <p><b><?php echo e(__('sentence.Gender')); ?> :</b> <?php echo e($patient->Patient->gender); ?></p>
                             <?php endif; ?>
 
                             <?php if(isset($patient->Patient->phone)): ?>
@@ -57,15 +59,52 @@
                             <hr>
 
                             <?php if(isset($patient->Patient->morphology)): ?>
-                                <p><b><?php echo e(__('sentence.Morphology')); ?> :</b> <?php echo e($patient->Patient->morphology); ?></p>
+                            <p><b><?php echo e(__('sentence.Morphology')); ?> :</b>
+                                <?php
+                                $morphologyArray = json_decode($patient->Patient->morphology);
+                                ?>
+
+                                <?php if(is_array($morphologyArray)): ?>
+                                    <?php $__currentLoopData = $morphologyArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <label class="badge badge-warning-soft"><?php echo e($item); ?></label>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php else: ?>
+                                    <span>No morphology data available.</span>
+                                <?php endif; ?>
+                            </p>
                             <?php endif; ?>
 
                             <?php if(isset($patient->Patient->alimentation)): ?>
-                                <p><b><?php echo e(__('sentence.Alimentation')); ?> :</b> <?php echo e($patient->Patient->alimentation); ?></p>
+                                <p><b><?php echo e(__('sentence.Alimentation')); ?> :</b>
+                                        <?php
+                                        $alimentationArray = json_decode($patient->Patient->alimentation);
+                                        ?>
+
+                                        <?php if(is_array($alimentationArray)): ?>
+                                            <?php $__currentLoopData = $alimentationArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <label class="badge badge-warning-soft"><?php echo e($item); ?></label>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php else: ?>
+                                            <span>No alimentation data available.</span>
+                                        <?php endif; ?>
+                                    </p>
+                                </p>
                             <?php endif; ?>
 
                             <?php if(isset($patient->Patient->type_patient)): ?>
-                                <p><b><?php echo e(__('sentence.Type of patient')); ?> :</b> <?php echo e($patient->Patient->type_patient); ?></p>
+                                <p><b><?php echo e(__('sentence.Type of patient')); ?> :</b>
+                                    <?php
+                                    $type_patientArray = json_decode($patient->Patient->type_patient);
+                                    ?>
+
+                                    <?php if(is_array($type_patientArray)): ?>
+                                        <?php $__currentLoopData = $type_patientArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <label class="badge badge-warning-soft"><?php echo e($item); ?></label>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
+                                        <span>No patient type data available.</span>
+                                    <?php endif; ?>
+                                </p>
                             <?php endif; ?>
 
                         </div>
@@ -78,13 +117,9 @@
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents"
-                                        role="tab" aria-controls="documents" aria-selected="false">Medical Files</a>
+                                        role="tab" aria-controls="documents" aria-selected="false">Fichier Médical</a>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="appointements-tab" data-toggle="tab" href="#appointements"
-                                        role="tab" aria-controls="appointements"
-                                        aria-selected="false"><?php echo e(__('sentence.Appointments')); ?></a>
-                                </li>
+                                
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="prescriptions-tab" data-toggle="tab" href="#prescriptions"
                                         role="tab" aria-controls="prescriptions"
@@ -93,7 +128,7 @@
 
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab"
-                                        aria-controls="Billing"
+                                        aria-controls="Billing"Alert
                                         aria-selected="false"><?php echo e(__('sentence.Payment History')); ?></a>
                                 </li>
                             </ul>
@@ -106,7 +141,7 @@
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create health history')): ?>
                                                 <button type="button" class="btn btn-primary btn-sm my-4 float-right"
                                                     data-toggle="modal" data-target="#MedicalHistoryModel"><i
-                                                        class="fa fa-plus"></i> Add New</button>
+                                                        class="fa fa-plus"></i> <?php echo e(__('sentence.Add New')); ?></button>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -127,7 +162,7 @@
                                         </div>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                         <center><img src="<?php echo e(asset('img/not-found.svg')); ?>" width="200" /> <br><br> <b
-                                                class="text-muted">No health history was found</b></center>
+                                                class="text-muted">Aucun Historique Trouvé</b></center>
                                     <?php endif; ?>
 
 
@@ -220,7 +255,7 @@
                                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create prescription')): ?>
                                                     <a class="btn btn-primary btn-sm my-4 float-right"
                                                         href="<?php echo e(route('prescription.create')); ?>"><i class="fa fa-pen"></i>
-                                                        <?php echo e(__('sentence.Write New Prescription')); ?></a>
+                                                        <?php echo e(__('sentence.Create Prescription')); ?></a>
                                                 <?php endif; ?>
                                             </div>
                                         </div>
@@ -268,7 +303,8 @@
                                                     <td colspan="4" align="center"> <img
                                                             src="<?php echo e(asset('img/not-found.svg')); ?>" width="200" /> <br><br>
                                                         <b class="text-muted">
-                                                            <?php echo e(__('sentence.No prescription available')); ?></b></td>
+                                                            <?php echo e(__('sentence.No prescription available')); ?></b>
+                                                    </td>
                                                 </tr>
                                             <?php endif; ?>
                                         </table>
@@ -281,7 +317,7 @@
                                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
                                                     <button type="button" class="btn btn-primary btn-sm my-4 float-right"
                                                         data-toggle="modal" data-target="#NewDocumentModel"><i
-                                                            class="fa fa-plus"></i> Add New</button>
+                                                            class="fa fa-plus"></i> <?php echo e(__('sentence.Add New')); ?></button>
                                                 <?php endif; ?>
                                             </div>
                                         </div>
@@ -510,7 +546,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add File / Note</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter un Fichier / Note</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
