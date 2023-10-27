@@ -59,6 +59,10 @@
                                 <td align="center">{{ __('sentence.In Prescription') }} :
                                     {{ $test->Prescription->count() }} {{ __('sentence.time use') }}</td>
                                 <td class="text-center">
+
+                                        <a href="{{ url('test/view/' . $test->id) }}"
+                                        class="btn btn-outline-primary btn-circle btn-sm"><i class="fa fa-eye"></i></a>
+
                                     @can('edit diagnostic test')
                                         <a href="{{ url('test/edit/' . $test->id) }}"
                                             class="btn btn-outline-warning btn-circle btn-sm"><i class="fa fa-pen"></i></a>

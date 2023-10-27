@@ -1,7 +1,9 @@
+
+
 <?php $__env->startSection('header'); ?>
     <link rel="stylesheet" href="<?php echo e(asset('css/index.css')); ?>">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('css/bootstrap-multiselect.css') }}">
+        href="<?php echo e(asset('css/bootstrap-multiselect.css')); ?>">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('title'); ?>
@@ -179,8 +181,9 @@
     </style>
 
 <?php $__env->startSection('footer'); ?>
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/bootstrap-multiselect.css')); ?>">
     <script type="text/javascript"
-        src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
+        src="<?php echo e(asset('js/bootstrap-multiselect.js')); ?>"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#morphology_patient, #alimentation_patient, #digestion_patient, #type_patient,#Gender').multiselect();
