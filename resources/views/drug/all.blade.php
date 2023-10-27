@@ -51,7 +51,20 @@
                             <tr>
                                 <td>{{ $drug->id }}</td>
                                 <td>{{ $drug->trade_name }}</td>
-                                <td>{{ $drug->generic_name }}</td>
+                                <td>
+                                    @php
+                                        $product = json_decode($drug->generic_name);
+                                    @endphp
+
+                                    @if (is_array($product))
+                                        @foreach ($product as $products)
+                                        <label class="badge badge-primary-soft">{{ $products }}</label>
+                                        @endforeach
+                                    @else
+                                        {{ $product }}
+                                    @endif
+
+                                </td>
                                 <td align="center">{{ __('sentence.In Prescription') }} :
                                     {{ $drug->Prescription->count() }} {{ __('sentence.time use') }}</td>
                                 <td class="text-center">

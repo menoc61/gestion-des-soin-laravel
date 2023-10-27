@@ -72,12 +72,10 @@
                             <div class="col-sm-9">
                                 <select class="form-control" name="role" id="role">
                                     
-                                    
+                                    <option value="admin"><?php echo e(__('sentence.Admin')); ?></option>
+                                    <option value="praticien"><?php echo e(__('sentence.Doctor')); ?></option>
 
-                                    <?php $__empty_1 = true; $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                        <option value="<?php echo e($role); ?>"><?php echo e(ucfirst($role)); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                                    <?php endif; ?>
+                                    
                                 </select>
                             </div>
                         </div>
