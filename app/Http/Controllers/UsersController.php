@@ -85,6 +85,9 @@ class UsersController extends Controller
                     'required', 'email', 'max:255',
                     Rule::unique('users')->ignore($request->user_id),
             ],
+            'role' => ['required',
+            Rule::in(['admin', 'praticien']),
+            ],
 
         ]);
 
@@ -92,6 +95,7 @@ class UsersController extends Controller
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
         $user->name = $request->name;
+        $user->role = $request->role;
         $user->update();
 
 

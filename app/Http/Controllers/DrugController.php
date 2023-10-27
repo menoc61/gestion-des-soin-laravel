@@ -57,8 +57,13 @@ class DrugController extends Controller
     public function all()
     {
         $products = $this->products;
-        $drugs = Drug::all();
-
+        $sortColumn = request()->get('sort');
+        $sortOrder = request()->get('order', 'asc');
+        if (!empty($sortColumn)) {
+            $drugs = Drug::orderby($sortColumn, $sortOrder)->paginate(25);
+        } else {
+            $drugs = Drug::all();
+        }
         return view('drug.all', ['drugs' => $drugs, 'products' => $products]);
     }
 
