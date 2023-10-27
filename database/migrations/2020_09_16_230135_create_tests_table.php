@@ -24,6 +24,14 @@ class CreateTestsTable extends Migration
             $table->json('diagnostic_type');
             $table->mediumText('comment')->nullable();
 
+            $table->json('sebum_grp')->nullable();
+            $table->json('hydratation_grp')->nullable();
+            $table->json('keratinisation_grp')->nullable();
+            $table->json('follicule_grp')->nullable();
+            $table->json('relief_grp')->nullable();
+            $table->json('elasticite_grp')->nullable();
+            $table->json('sensibilite_grp')->nullable();
+            $table->json('circulation_grp')->nullable();
             $table->json('signes_particuliers_peau')->nullable();
 
             $table->string('Etat_generale_des_mains')->nullable();

@@ -27,6 +27,14 @@ class TestController extends Controller
             'test_name' => 'required',
             'diagnostic_type' => ['required', 'array', Rule::in(['DIAGNOSE PEAU', 'DIAGNOSE MAIN', 'DIAGNOSE PIED'])],
           // Skin diagnostic section validation rules
+            // 'sebum_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Grasse', 'Acnéique'])],
+            // 'hydratation_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Sèche', 'Tiraillement'])],
+            // 'keratinisation_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Sèche', 'Desquamée', 'Gerssures'])],
+            // 'follicule_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Faible', 'Sèche', 'Desquamée'])],
+            // 'relief_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Fin', 'Serré', 'Pores dilatés', 'Pores obstrués'])],
+            // 'elasticite_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Faible', 'Bonne'])],
+            // 'sensibilite_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Sensible', 'Réactive', 'Hypersensibilité'])],
+            // 'circulation_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Régulière', 'Irrégulière', 'Plaques'])],
             'signes_particuliers_peau' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Points noirs', 'Rosacée', 'Rousseurs', 'Télangiectasie', 'Pustules', 'Hypertrichose', 'Pigmentations', 'Vitiligo', 'Cicatrice', 'Chéloïdes', 'Comédons'])],
             // hand diagnostic section validation rules
             'Etat_generale_des_mains' => ['required_if:diagnostic_type,DIAGNOSE MAIN', Rule::in(['Normale', 'Sèche', 'Très sèches', 'Atrophiées'])],
@@ -66,6 +74,14 @@ class TestController extends Controller
         $test->diagnostic_type = json_encode($request->diagnostic_type);
 
         // skin diagnostic
+        $test->sebum_grp = json_encode($request->sebum_grp);
+        $test->hydratation_grp = json_encode($request->hydratation_grp);
+        $test->keratinisation_grp = json_encode($request->keratinisation_grp);
+        $test->follicule_grp = json_encode($request->follicule_grp);
+        $test->relief_grp = json_encode($request->relief_grp);
+        $test->elasticite_grp = json_encode($request->elasticite_grp);
+        $test->sensibilite_grp = json_encode($request->sensibilite_grp);
+        $test->circulation_grp = json_encode($request->circulation_grp);
         $test->signes_particuliers_peau = json_encode($request->signes_particuliers_peau);
         // hand diagnostic
         $test->Etat_generale_des_mains = $request->Etat_generale_des_mains;
@@ -110,12 +126,12 @@ class TestController extends Controller
     {
         $sortColumn = request()->get('sort');
         $sortOrder = request()->get('order', 'asc');
-        if(!empty($sortColumn)){
+        if (!empty($sortColumn)) {
             $tests = Test::orderBy($sortColumn, $sortOrder)->paginate(25);
-        }
-        else{
+        } else {
             $tests = Test::all();
         }
+
         return view('test.all', ['tests' => $tests]);
     }
 
@@ -133,6 +149,14 @@ class TestController extends Controller
             'test_name' => 'required',
             // 'diagnostic_type' => ['', 'array', Rule::in(['DIAGNOSE PEAU', 'DIAGNOSE MAIN', 'DIAGNOSE PIED'])],
           // Skin diagnostic section validation rules
+            // 'sebum_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Grasse', 'Acnéique'])],
+            // 'hydratation_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Sèche', 'Tiraillement'])],
+            // 'keratinisation_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Sèche', 'Desquamée', 'Gerssures'])],
+            // 'follicule_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Faible', 'Sèche', 'Desquamée'])],
+            // 'relief_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Fin', 'Serré', 'Pores dilatés', 'Pores obstrués'])],
+            // 'elasticite_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Faible', 'Bonne'])],
+            // 'sensibilite_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Sensible', 'Réactive', 'Hypersensibilité'])],
+            // 'circulation_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Régulière', 'Irrégulière', 'Plaques'])],
             'signes_particuliers_peau' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Points noirs', 'Rosacée', 'Rousseurs', 'Télangiectasie', 'Pustules', 'Hypertrichose', 'Pigmentations', 'Vitiligo', 'Cicatrice', 'Chéloïdes', 'Comédons'])],
             // hand diagnostic section validation rules
             'Etat_generale_des_mains' => ['required_if:diagnostic_type,DIAGNOSE MAIN', Rule::in(['Normale', 'Sèche', 'Très sèches', 'Atrophiées'])],
@@ -171,6 +195,14 @@ class TestController extends Controller
         $test->diagnostic_type = json_encode($request->diagnostic_type);
 
         // skin diagnostic
+        $test->sebum_grp = json_encode($request->sebum_grp);
+        $test->hydratation_grp = json_encode($request->hydratation_grp);
+        $test->keratinisation_grp = json_encode($request->keratinisation_grp);
+        $test->follicule_grp = json_encode($request->follicule_grp);
+        $test->relief_grp = json_encode($request->relief_grp);
+        $test->elasticite_grp = json_encode($request->elasticite_grp);
+        $test->sensibilite_grp = json_encode($request->sensibilite_grp);
+        $test->circulation_grp = json_encode($request->circulation_grp);
         $test->signes_particuliers_peau = json_encode($request->signes_particuliers_peau);
         // hand diagnostic
         $test->Etat_generale_des_mains = $request->Etat_generale_des_mains;
@@ -218,7 +250,8 @@ class TestController extends Controller
         return \Redirect::route('test.all')->with('success', __('sentence.Test Deleted Successfully'));
     }
 
-    public function view_diagnostic($id){
+    public function view_diagnostic($id)
+    {
         $User = User::findOrfail($id);
 
         $tests = Test::where('user_id', $id)->paginate(25);
