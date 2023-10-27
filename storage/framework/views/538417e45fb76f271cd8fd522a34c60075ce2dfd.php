@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?>
     <?php echo e($patient->name); ?>
 
@@ -59,15 +61,52 @@
                             <hr>
 
                             <?php if(isset($patient->Patient->morphology)): ?>
-                                <p><b><?php echo e(__('sentence.Morphology')); ?> :</b> <?php echo e($patient->Patient->morphology); ?></p>
+                            <p><b><?php echo e(__('sentence.Morphology')); ?> :</b>
+                                <?php
+                                $morphologyArray = json_decode($patient->Patient->morphology);
+                                ?>
+
+                                <?php if(is_array($morphologyArray)): ?>
+                                    <?php $__currentLoopData = $morphologyArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <label class="badge badge-warning-soft"><?php echo e($item); ?></label>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php else: ?>
+                                    <span>No morphology data available.</span>
+                                <?php endif; ?>
+                            </p>
                             <?php endif; ?>
 
                             <?php if(isset($patient->Patient->alimentation)): ?>
-                                <p><b><?php echo e(__('sentence.Alimentation')); ?> :</b> <?php echo e($patient->Patient->alimentation); ?></p>
+                                <p><b><?php echo e(__('sentence.Alimentation')); ?> :</b>
+                                        <?php
+                                        $alimentationArray = json_decode($patient->Patient->alimentation);
+                                        ?>
+
+                                        <?php if(is_array($alimentationArray)): ?>
+                                            <?php $__currentLoopData = $alimentationArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <label class="badge badge-warning-soft"><?php echo e($item); ?></label>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php else: ?>
+                                            <span>No alimentation data available.</span>
+                                        <?php endif; ?>
+                                    </p>
+                                </p>
                             <?php endif; ?>
 
                             <?php if(isset($patient->Patient->type_patient)): ?>
-                                <p><b><?php echo e(__('sentence.Type of patient')); ?> :</b> <?php echo e($patient->Patient->type_patient); ?></p>
+                                <p><b><?php echo e(__('sentence.Type of patient')); ?> :</b>
+                                    <?php
+                                    $type_patientArray = json_decode($patient->Patient->type_patient);
+                                    ?>
+
+                                    <?php if(is_array($type_patientArray)): ?>
+                                        <?php $__currentLoopData = $type_patientArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <label class="badge badge-warning-soft"><?php echo e($item); ?></label>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
+                                        <span>No patient type data available.</span>
+                                    <?php endif; ?>
+                                </p>
                             <?php endif; ?>
 
                         </div>
@@ -91,7 +130,7 @@
 
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab"
-                                        aria-controls="Billing"
+                                        aria-controls="Billing"Alert
                                         aria-selected="false"><?php echo e(__('sentence.Payment History')); ?></a>
                                 </li>
                             </ul>
