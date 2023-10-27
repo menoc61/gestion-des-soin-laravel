@@ -1,6 +1,5 @@
 <?php $__env->startSection('header'); ?>
-    <link rel="stylesheet" type="text/css"
-        href="<?php echo e(asset('css/bootstrap-multiselect.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/bootstrap-multiselect.css')); ?>">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('title'); ?>
@@ -68,6 +67,177 @@
                                     </h6>
                                 </div>
                                 <div class="card-body">
+                                    
+                                    <div class="form-group row">
+                                        <label for="SEBUM"
+                                            class="col-sm-3 col-form-label"><?php echo e(__('sentence.SEBUM')); ?></label>
+                                        <div class="col-sm-9">
+                                            <select id="sebum" class="form-control" multiple="multiple" name="sebum_grp[]">
+                                                <optgroup label="NORMALE">
+                                                    <option value="Léger">Léger</option>
+                                                    <option value="Normale">Normale</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE" disabled>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                    <option value="Grasse">Grasse</option>
+                                                    <option value="Acnéique">Acnéique</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- HYDRATATION -->
+                                    <div class="form-group row">
+                                        <label for="HYDRATATION"
+                                            class="col-sm-3 col-form-label"><?php echo e(__('sentence.HYDRATATION')); ?></label>
+                                        <div class="col-sm-9">
+                                            <select id="hydratation" class="form-control" multiple="multiple"
+                                                name="hydratation_grp[]">
+                                                <optgroup label="NORMALE">
+                                                    <option value="Léger">Léger</option>
+                                                    <option value="Normale">Normale</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                    <option value="Sèche">Sèche</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                    <option value="Tiraillement">Tiraillement</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- KERATINISATION -->
+                                    <div class="form-group row">
+                                        <label for="KERATINISATION"
+                                            class="col-sm-3 col-form-label"><?php echo e(__('sentence.KERATINISATION')); ?></label>
+                                        <div class="col-sm-9">
+                                            <select id="keratinisation" class="form-control" multiple="multiple"
+                                                name="keratinisation_grp[]">
+                                                <optgroup label="NORMALE">
+                                                    <option value="Léger">Léger</option>
+                                                    <option value="Normale">Normale</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                    <option value="Sèche">Sèche</option>
+                                                    <option value="Desquamée">Desquamée</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                    <option value="Gerssures">Gerssures</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- FOLLICULE -->
+                                    <div class="form-group row">
+                                        <label for="FOLLICULE"
+                                            class="col-sm-3 col-form-label"><?php echo e(__('sentence.FOLLICULE')); ?></label>
+                                        <div class="col-sm-9">
+                                            <select id="follicule" class="form-control" multiple="multiple"
+                                                name="follicule_grp[]">
+                                                <optgroup label="NORMALE">
+                                                    <option value="Léger">Léger</option>
+                                                    <option value="Normale">Normale</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                    <option value="Faible">Faible</option>
+                                                    <option value="Sèche">Sèche</option>
+                                                    <option value="Desquamée">Desquamée</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE"
+                                                    disabled></optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- RELIEF -->
+                                    <div class="form-group row">
+                                        <label for="RELIEF"
+                                            class="col-sm-3 col-form-label"><?php echo e(__('sentence.RELIEF')); ?></label>
+                                        <div class="col-sm-9">
+                                            <select id="relief" class="form-control" multiple="multiple"
+                                                name="relief_grp[]">
+                                                <optgroup label="NORMALE">
+                                                    <option value="Léger">Léger</option>
+                                                    <option value="Normale">Normale</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                    <option value="Fin">Fin</option>
+                                                    <option value="Serré">Serré</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                    <option value="Pores dilatés">Pores dilatés</option>
+                                                    <option value="Pores obstrués">Pores obstrués</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- ELASTICITE -->
+                                    <div class="form-group row">
+                                        <label for="ELASTICITE"
+                                            class="col-sm-3 col-form-label"><?php echo e(__('sentence.ELASTICITE')); ?></label>
+                                        <div class="col-sm-9">
+                                            <select id="elasticite" class="form-control" multiple="multiple"
+                                                name="elasticite_grp[]">
+                                                <optgroup label="NORMALE">
+                                                    <option value="Léger">Léger</option>
+                                                    <option value="Normale">Normale</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                    <option value="Faible">Faible</option>
+                                                    <option value="Bonne">Bonne</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE"
+                                                    disabled></optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- SENSIBILITE -->
+                                    <div class="form-group row">
+                                        <label for="SENSIBILITE"
+                                            class="col-sm-3 col-form-label"><?php echo e(__('sentence.SENSIBILITE')); ?></label>
+                                        <div class="col-sm-9">
+                                            <select id="sensibilite" class="form-control" multiple="multiple"
+                                                name="sensibilite_grp[]">
+                                                <optgroup label="NORMALE">
+                                                    <option value="Léger">Léger</option>
+                                                    <option value="Normale">Normale</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                    <option value="Sensible">Sensible</option>
+                                                    <option value="Réactive">Réactive</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                    <option value="Hypersensibilité">Hypersensibilité</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- CIRCULATION -->
+                                    <div class="form-group row">
+                                        <label for="CIRCULATION"
+                                            class="col-sm-3 col-form-label"><?php echo e(__('sentence.CIRCULATION')); ?></label>
+                                        <div class="col-sm-9">
+                                            <select id="circulation" class="form-control" multiple="multiple"
+                                                name="circulation_grp[]">
+                                                <optgroup label="NORMALE">
+                                                    <option value="Régulière">Régulière</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DU DERME / ATROPHIE OU SEBOSTASEE">
+                                                    <option value="Irrégulière">Irrégulière</option>
+                                                </optgroup>
+                                                <optgroup label="ANOMALIE DE L’EPIDERME /SEBORRHEE  OU HYPERSENSIBLE">
+                                                    <option value="Plaques">Plaques</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr>
                                     <div class="form-group row">
                                         <label for="signes-particuliers-peau"
                                             class="col-sm-3 col-form-label"><?php echo e(__('sentence.SIGNES PARTICULIERS')); ?></label>
@@ -88,7 +258,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <hr>
                                 </div>
                             </div>
                         </div>
@@ -479,14 +648,25 @@
         });
     </script>
 
-    <script type="text/javascript"
-        src="<?php echo e(asset('js/bootstrap-multiselect.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('js/bootstrap-multiselect.js')); ?>"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({
             includeSelectAllOption: true,
             enableFiltering: true,
+            enableResetButton: true,
+            nonSelectedText: 'sélectionnez un option',
             filterPlaceholder: 'Recherche un Hôte...',
+            buttonContainer: '<div class="btn-group w-100" />'
+        });
+    </script>
+    <script type="text/javascript">
+        $('#sebum,#hydratation,#keratinisation,#follicule,#relief,#elasticite,#sensibilite,#circulation').multiselect({
+            enableFiltering: true,
+            enableResetButton: true,
+            enableCollapsibleOptGroups: true,
+            nonSelectedText: 'sélectionnez un option',
+            filterPlaceholder: 'Rechercher une option...',
             buttonContainer: '<div class="btn-group w-100" />'
         });
     </script>
