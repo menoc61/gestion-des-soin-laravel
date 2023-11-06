@@ -141,6 +141,11 @@
                                        <option value="{{ $drug->id }}">{{ $drug->trade_name }}</option>
                                    @endforeach
                                  </select>
+                                 <div>
+                                    @foreach($drugs as $drug)
+                                       <p>{{ $drug->generic_name }}
+                                   @endforeach
+                                 </div>
                              </div>
                              {{-- <div class="col-md-4">
                                  <div class="form-group-custom">

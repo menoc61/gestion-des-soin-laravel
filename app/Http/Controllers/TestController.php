@@ -260,10 +260,16 @@ class TestController extends Controller
         return view('test.view_diagnostic', ['tests' => $tests]);
     }
 
+    // public function view_test($id)
+    // {
+    //     $prescription_tests = Prescription_test::where('prescription_id', $id)->get();
+    //     return view('test.view_test', ['prescription_tests' => $prescription_tests]);
+    // }
+
     public function view_test($id)
     {
-        $prescription_tests = Prescription_test::where('prescription_id', $id)->get();
-        return view('test.view_test', ['prescription_tests' => $prescription_tests]);
+        $tests = Test::where('id', $id)->get();
+        return view('test.view_test', ['tests' => $tests]);
     }
 
 }

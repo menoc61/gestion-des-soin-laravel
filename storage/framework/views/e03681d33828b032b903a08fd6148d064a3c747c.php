@@ -77,29 +77,285 @@
                                         <th>Nom Diagnostic</th>
                                         <th>Type Diagnostic</th>
                                         <th>Description Diagnostic</th>
-                                        
+                                        <th>Détail Diagnostic</th>
                                     </tr>
                                     <?php $__empty_1 = true; $__currentLoopData = $prescription_tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tests): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                        <tr>
-                                            <td><?php echo e($tests->Test->test_name); ?></td>
-                                            <td>
-                                                <!-- décoder sous le format json-->
-                                                <?php
-                                                    $diagnosticType = json_decode($tests->Test->diagnostic_type);
-                                                ?>
+                                    <tr>
+                                        <td><?php echo e($tests->Test->test_name); ?></td>
+                                        <td>
+                                            <!-- décoder sous le format json-->
+                                            <?php
+                                                $diagnosticType = json_decode($tests->Test->diagnostic_type);
+                                            ?>
 
-                                                <?php if(is_array($diagnosticType)): ?>
-                                                    <?php $__currentLoopData = $diagnosticType; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <?php echo e($diagnostic); ?>,
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                <?php else: ?>
-                                                    <?php echo e($diagnosticType); ?>
+                                            <?php if(is_array($diagnosticType)): ?>
+                                                <?php $__currentLoopData = $diagnosticType; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $diagnostic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php echo e($diagnostic); ?>,
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php else: ?>
+                                                <?php echo e($diagnosticType); ?>
 
-                                                <?php endif; ?>
-                                            </td>
-                                            <td><?php echo e($tests->description); ?></td>
-                                            
-                                        </tr>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?php echo e($tests->description); ?></td>
+                                        <td>
+                                            <table class="w-100">
+
+                                                
+                                                <tr>
+                                                    <td>
+                                                        <b>ETATS DES ONGLES:</b>
+                                                        <?php echo e($tests->Test->Etat_des_ongles_mains); ?>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>ETAT GÉNÉRALE DES MAINS:</b>
+                                                        <?php echo e($tests->Test->Etat_generale_des_mains); ?>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>SIGNES PARTICULIERS MAINS :</b>
+                                                        <?php
+                                                            $signes_mains = json_decode($tests->Test->signes_particuliers_mains);
+                                                        ?>
+                                                        <?php if(is_array($signes_mains)): ?>
+                                                            <?php $__currentLoopData = $signes_mains; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($signes_mains); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>SIGNES PARTICULIERS DES ONGLES :</b>
+                                                        <?php
+                                                            $signes_ongles_mains = json_decode($tests->Test->signes_particuliers_ongles_mains);
+                                                        ?>
+                                                        <?php if(is_array($signes_ongles_mains)): ?>
+                                                            <?php $__currentLoopData = $signes_ongles_mains; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($signes_ongles_mains); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>SIGNES PARTICULIERS MAINS :</b>
+                                                        <?php
+                                                            $soin_List_main = json_decode($tests->Test->soinList_main);
+                                                        ?>
+                                                        <?php if(is_array($soin_List_main)): ?>
+                                                            <?php $__currentLoopData = $soin_List_main; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($soin_List_main); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>SIGNES PARTICULIERS MAINS :</b>
+                                                        <?php echo e($tests->Test->vernisInput_main); ?>
+
+                                                    </td>
+                                                </tr>
+
+                                                
+                                                <tr>
+                                                    <td>
+                                                        <b>SIGNES PARTICULIERS PIEDS :</b>
+                                                        <?php
+                                                            $signe_peau = json_decode($tests->Test->signes_particuliers_peau);
+                                                        ?>
+                                                        <?php if(is_array($signe_peau)): ?>
+                                                            <?php $__currentLoopData = $signe_peau; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($signe_peau); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>SEBUM:</b>
+                                                        <?php
+                                                            $sebum_grpe = json_decode($tests->Test->sebum_grp);
+                                                        ?>
+                                                        <?php if(is_array($sebum_grpe)): ?>
+                                                            <?php $__currentLoopData = $sebum_grpe; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($sebum_grpe); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>HYDRATATION:</b>
+                                                        <?php
+                                                            $hydratation_grpe = json_decode($tests->Test->hydratation_grp);
+                                                        ?>
+                                                        <?php if(is_array($hydratation_grpe)): ?>
+                                                            <?php $__currentLoopData = $hydratation_grpe; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($hydratation_grpe); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>KERATINISATION:</b>
+                                                        <?php
+                                                            $keratinisation_grpe = json_decode($tests->Test->keratinisation_grp);
+                                                        ?>
+                                                        <?php if(is_array($keratinisation_grpe)): ?>
+                                                            <?php $__currentLoopData = $keratinisation_grpe; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($keratinisation_grpe); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>FOLLICULE:</b>
+                                                        <?php
+                                                            $follicule_grpe = json_decode($tests->Test->follicule_grp);
+                                                        ?>
+                                                        <?php if(is_array($follicule_grpe)): ?>
+                                                            <?php $__currentLoopData = $follicule_grpe; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($follicule_grpe); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>RELIEF:</b>
+                                                        <?php
+                                                            $relief_grpe = json_decode($tests->Test->relief_grp);
+                                                        ?>
+                                                        <?php if(is_array($relief_grpe)): ?>
+                                                            <?php $__currentLoopData = $relief_grpe; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($relief_grpe); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>ELASTICITE:</b>
+                                                        <?php
+                                                            $elasticite_grpe = json_decode($tests->Test->elasticite_grp);
+                                                        ?>
+                                                        <?php if(is_array($elasticite_grpe)): ?>
+                                                            <?php $__currentLoopData = $elasticite_grpe; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($elasticite_grpe); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>SENSIBILITE:</b>
+                                                        <?php
+                                                            $sensibilite_grpe = json_decode($tests->Test->sensibilite_grp);
+                                                        ?>
+                                                        <?php if(is_array($sensibilite_grpe)): ?>
+                                                            <?php $__currentLoopData = $sensibilite_grpe; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($sensibilite_grpe); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>CIRCULATION:</b>
+                                                        <?php
+                                                            $circulation_grpe = json_decode($tests->Test->circulation_grp);
+                                                        ?>
+                                                        <?php if(is_array($circulation_grpe)): ?>
+                                                            <?php $__currentLoopData = $circulation_grpe; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <label class="badge badge-primary-soft">
+                                                                    <?php echo e($signe); ?>
+
+                                                                </label>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
+                                                            <?php echo e($circulation_grpe); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                         <tr>
                                             <td colspan="3">Aucun Diagnostic disponible.</td>
