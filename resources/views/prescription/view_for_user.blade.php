@@ -36,7 +36,7 @@
             <tbody>
                @forelse($prescriptions as $prescription)
                <tr>
-                  <td>{{ $prescription->id }}</td>
+                  <td>{{ $prescription->id  }}</td>
                   <td><a href="{{ url('patient/view/'.$prescription->user_id) }}"> {{ $prescription->User->name }} </a></td>
                   <td class="text-center">{{ $prescription->created_at->format('d M Y H:i') }}</td>
                   <td class="text-center">
@@ -44,12 +44,14 @@
                         {{ count($prescription->Drug) }} Soin(s)
                      </label>
                      <label class="badge badge-primary-soft">
-                        {{ count($prescription->Test) }} Diagnosti(c)
+                        {{ count($prescription->Test) }} Diagnostic(s)
                      </label>
                   </td>
                   <td class="text-center">
                      <a href="{{ url('prescription/view/'.$prescription->id) }}" class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a>
-                     <a href="{{ url('prescription/pdf/'.$prescription->id) }}" class="btn btn-outline-primary btn-circle btn-sm"><i class="fas fa-print"></i></a>
+                     <a href="{{ url('/prescription/pdf/'.$prescription->id) }}" class="btn btn-outline-primary btn-circle btn-sm"><i class="fas fa-print"></i></a>
+                     <button href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm print_prescription"><i
+                        class="fas fa-print fa-sm text-white-50"></i> Imprimer</button>
                      <a href="{{ url('prescription/edit/'.$prescription->id) }}" class="btn btn-outline-warning btn-circle btn-sm"><i class="fas fa-pen"></i></a>
                      <a class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal" data-target="#DeleteModal" data-link="{{ url('prescription/delete/'.$prescription->id) }}"><i class="fas fa-trash"></i></a>
                   </td>

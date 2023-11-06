@@ -43,12 +43,14 @@
                         <?php echo e(count($prescription->Drug)); ?> Soin(s)
                      </label>
                      <label class="badge badge-primary-soft">
-                        <?php echo e(count($prescription->Test)); ?> Diagnosti(c)
+                        <?php echo e(count($prescription->Test)); ?> Diagnostic(s)
                      </label>
                   </td>
                   <td class="text-center">
                      <a href="<?php echo e(url('prescription/view/'.$prescription->id)); ?>" class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a>
-                     <a href="<?php echo e(url('prescription/pdf/'.$prescription->id)); ?>" class="btn btn-outline-primary btn-circle btn-sm"><i class="fas fa-print"></i></a>
+                     <a href="<?php echo e(url('/prescription/pdf/'.$prescription->id)); ?>" class="btn btn-outline-primary btn-circle btn-sm"><i class="fas fa-print"></i></a>
+                     <button href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm print_prescription"><i
+                        class="fas fa-print fa-sm text-white-50"></i> Imprimer</button>
                      <a href="<?php echo e(url('prescription/edit/'.$prescription->id)); ?>" class="btn btn-outline-warning btn-circle btn-sm"><i class="fas fa-pen"></i></a>
                      <a class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal" data-target="#DeleteModal" data-link="<?php echo e(url('prescription/delete/'.$prescription->id)); ?>"><i class="fas fa-trash"></i></a>
                   </td>

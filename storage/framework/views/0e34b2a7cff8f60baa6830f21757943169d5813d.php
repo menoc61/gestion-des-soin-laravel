@@ -143,8 +143,13 @@
                                        <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                  </select>
-                             </div>
+                                 <div>
+                                    <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                       <p><?php echo e($drug->generic_name); ?>
 
+                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                 </div>
+                             </div>
                              
                          </div>
 

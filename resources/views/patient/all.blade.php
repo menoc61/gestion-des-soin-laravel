@@ -87,9 +87,48 @@
                                 <td class="text-center"> {{ @$patient->Patient->phone }} </td>
                                 <td class="text-center"> {{ @$patient->Patient->adress }} </td>
                                 <td class="text-center"> {{ @$patient->Patient->allergie }} </td>
-                                <td class="text-center"> {{ @$patient->Patient->type_patient }} </td>
-                                <td class="text-center"> {{ @$patient->Patient->morphology }} </td>
-                                <td class="text-center"> {{ @$patient->Patient->alimentation }} </td>
+                                <td class="text-center"> @isset($patient->Patient->type_patient)
+                                        @php
+                                            $type_patientArray = json_decode($patient->Patient->type_patient);
+                                        @endphp
+
+                                        @if (is_array($type_patientArray))
+                                            @foreach ($type_patientArray as $item)
+                                                <label class="badge badge-primary-soft">{{ $item }}</label>
+                                            @endforeach
+                                        @else
+                                            <span>Aucune donnée trouvée.</span>
+                                        @endif
+                                    @endisset
+                                </td>
+                                <td class="text-center"> @isset($patient->Patient->morphology)
+                                        @php
+                                            $morphologyArray = json_decode($patient->Patient->morphology);
+                                        @endphp
+
+                                        @if (is_array($morphologyArray))
+                                            @foreach ($morphologyArray as $item)
+                                                <label class="badge badge-primary-soft">{{ $item }}</label>
+                                            @endforeach
+                                        @else
+                                            <span>Aucune donnée trouvée.</span>
+                                        @endif
+                                    @endisset
+                                </td>
+                                <td class="text-center"> @isset($patient->Patient->alimentation)
+                                        @php
+                                            $alimentationArray = json_decode($patient->Patient->alimentation);
+                                        @endphp
+
+                                        @if (is_array($alimentationArray))
+                                            @foreach ($alimentationArray as $item)
+                                                <label class="badge badge-success-soft">{{ $item }}</label>
+                                            @endforeach
+                                        @else
+                                            <span>Aucune donnée trouvée.</span>
+                                        @endif
+                                    @endisset
+                                </td>
                                 <td class="text-center"> {{ @$patient->Patient->digestion }} </td>
                                 <td class="text-center"><label
                                         class="badge badge-primary-soft">{{ $patient->created_at->format('d M Y H:i') }}</label>
@@ -100,13 +139,13 @@
                                 <td class="text-center">
                                     @can('view patient')
                                         <a href="{{ route('prescription.view_for_user', ['id' => $patient->id]) }}"
-                                            class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> View</a>
+                                            class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> Voir</a>
                                     @endcan
                                 </td>
                                 <td class="text-center">
                                     @can('view patient')
                                         <a href="{{ route('test.view_diagnostic', ['id' => $patient->id]) }}"
-                                            class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> View</a>
+                                            class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> Voir</a>
                                     @endcan
                                 </td>
                                 <td class="text-center">
