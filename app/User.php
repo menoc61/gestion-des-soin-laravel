@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * The attributes that are mass assignable.
      *
      * @var array
-     */    
+     */
     protected $table = 'users';
 
     protected $fillable = [
@@ -48,6 +49,9 @@ class User extends Authenticatable
         return $this->hasOne('App\Patient');
     }
 
+    public function roleUser(){
+        return $this->hasOne('Spatie\Permission\Models\Role', 'id', 'role_id');
+    }
 
     public function getNameAttribute($value)
     {

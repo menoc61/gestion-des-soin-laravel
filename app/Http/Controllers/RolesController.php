@@ -14,7 +14,6 @@ class RolesController extends Controller
     }
 
     public function all_roles(){
-
         $roles = Role::paginate(25);
         return view('role.all', ['roles' => $roles]);
 

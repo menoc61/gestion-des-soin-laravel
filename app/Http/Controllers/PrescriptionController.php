@@ -9,6 +9,7 @@ use App\Prescription_test;
 use App\Test;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PDF;
 
 class PrescriptionController extends Controller
 {
@@ -20,8 +21,8 @@ class PrescriptionController extends Controller
     public function create()
     {
         $drugs = Drug::all();
-        $patients = User::where('role', 'patient')->get();
-        $praticiens = User::where('role', 'praticien')->get();
+        $patients = User::where('role_id','3')->get();
+        $praticiens = User::where('role_id','2')->get();
         $tests = Test::all();
 
         return view('prescription.create', compact('drugs', 'patients', 'praticiens', 'tests'));
@@ -263,7 +264,6 @@ class PrescriptionController extends Controller
         $User = User::findOrfail($id);
 
         $prescriptions = Prescription::where('user_id', $id)->paginate(25);
-
         return view('prescription.view_for_user', ['prescriptions' => $prescriptions]);
     }
 }

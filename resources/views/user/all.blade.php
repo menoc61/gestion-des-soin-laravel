@@ -67,10 +67,10 @@
                                         class="badge badge-primary-soft">{{ $user->created_at->format('d M Y H:i') }}</label>
                                 </td>
                                 <td class="text-center">
-                                    @if ($user->role)
-                                        <label class="badge badge-warning-soft">{{ ucfirst($user->role) }}</label>
+                                    @if ($user->roleUser->name)
+                                        <label class="badge badge-warning-soft">{{ ($user->roleUser->name) }}</label>
                                     @else
-                                        <label class="badge badge-warning-soft">Hôte</label>
+                                        <label class="badge badge-warning-soft">RAS</label>
                                     @endif
                                 </td>
                                 <td class="text-center">

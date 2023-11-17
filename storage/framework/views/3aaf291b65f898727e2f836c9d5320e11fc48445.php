@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title'); ?>
     <?php echo e(__('sentence.All Patients')); ?>
 
@@ -91,9 +89,48 @@
                                 <td class="text-center"> <?php echo e(@$patient->Patient->phone); ?> </td>
                                 <td class="text-center"> <?php echo e(@$patient->Patient->adress); ?> </td>
                                 <td class="text-center"> <?php echo e(@$patient->Patient->allergie); ?> </td>
-                                <td class="text-center"> <?php echo e(@$patient->Patient->type_patient); ?> </td>
-                                <td class="text-center"> <?php echo e(@$patient->Patient->morphology); ?> </td>
-                                <td class="text-center"> <?php echo e(@$patient->Patient->alimentation); ?> </td>
+                                <td class="text-center"> <?php if(isset($patient->Patient->type_patient)): ?>
+                                        <?php
+                                            $type_patientArray = json_decode($patient->Patient->type_patient);
+                                        ?>
+
+                                        <?php if(is_array($type_patientArray)): ?>
+                                            <?php $__currentLoopData = $type_patientArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <label class="badge badge-primary-soft"><?php echo e($item); ?></label>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php else: ?>
+                                            <span>Aucune donnée trouvée.</span>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="text-center"> <?php if(isset($patient->Patient->morphology)): ?>
+                                        <?php
+                                            $morphologyArray = json_decode($patient->Patient->morphology);
+                                        ?>
+
+                                        <?php if(is_array($morphologyArray)): ?>
+                                            <?php $__currentLoopData = $morphologyArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <label class="badge badge-primary-soft"><?php echo e($item); ?></label>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php else: ?>
+                                            <span>Aucune donnée trouvée.</span>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="text-center"> <?php if(isset($patient->Patient->alimentation)): ?>
+                                        <?php
+                                            $alimentationArray = json_decode($patient->Patient->alimentation);
+                                        ?>
+
+                                        <?php if(is_array($alimentationArray)): ?>
+                                            <?php $__currentLoopData = $alimentationArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <label class="badge badge-success-soft"><?php echo e($item); ?></label>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php else: ?>
+                                            <span>Aucune donnée trouvée.</span>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="text-center"> <?php echo e(@$patient->Patient->digestion); ?> </td>
                                 <td class="text-center"><label
                                         class="badge badge-primary-soft"><?php echo e($patient->created_at->format('d M Y H:i')); ?></label>
@@ -105,13 +142,13 @@
                                 <td class="text-center">
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view patient')): ?>
                                         <a href="<?php echo e(route('prescription.view_for_user', ['id' => $patient->id])); ?>"
-                                            class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> View</a>
+                                            class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> Voir</a>
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-center">
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view patient')): ?>
                                         <a href="<?php echo e(route('test.view_diagnostic', ['id' => $patient->id])); ?>"
-                                            class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> View</a>
+                                            class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> Voir</a>
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-center">
