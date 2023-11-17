@@ -69,10 +69,10 @@
                                         class="badge badge-primary-soft"><?php echo e($user->created_at->format('d M Y H:i')); ?></label>
                                 </td>
                                 <td class="text-center">
-                                    <?php if($user->role): ?>
-                                        <label class="badge badge-warning-soft"><?php echo e(ucfirst($user->role)); ?></label>
+                                    <?php if($user->roleUser->name): ?>
+                                        <label class="badge badge-warning-soft"><?php echo e(($user->roleUser->name)); ?></label>
                                     <?php else: ?>
-                                        <label class="badge badge-warning-soft">Hôte</label>
+                                        <label class="badge badge-warning-soft">RAS</label>
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-center">

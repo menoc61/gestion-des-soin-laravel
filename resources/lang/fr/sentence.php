@@ -251,5 +251,6 @@ return [
     'No document available' => 'Aucun document trouvé',
     'Product list' => 'List des produits',
     'Add a product' => 'Ajoute un produit',
-    'View Test Detail' => 'Detail du Diagnostic'
+    'View Test Detail' => 'Detail du Diagnostic',
+    'New User' => 'Nouveau',
 ];

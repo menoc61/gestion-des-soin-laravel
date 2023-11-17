@@ -240,7 +240,7 @@
                                         <div class="col">
                                             <button type="button" class="btn btn-primary btn-sm my-4 float-right"
                                                 data-toggle="modal" data-target="#NewDocumentModel"><i
-                                                    class="fa fa-plus"></i> Add New</button>
+                                                    class="fa fa-plus"></i> Nouveau</button>
                                         </div>
                                     </div>
 
@@ -265,7 +265,7 @@
                                                         </p>
                                                         <a href="{{ url('/uploads/' . $document->file) }}"
                                                             class="btn btn-primary btn-sm" download><i
-                                                                class="fa fa-cloud-download-alt"></i> Download</a>
+                                                                class="fa fa-cloud-download-alt"></i> Télécharger</a>
                                                         <a class="btn btn-danger btn-sm" data-toggle="modal"
                                                             data-target="#DeleteModal"
                                                             data-link="{{ url('document/delete/' . $document->id) }}"><i
@@ -446,7 +446,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add File / Note</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Ajouter un Fichier / Note</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
