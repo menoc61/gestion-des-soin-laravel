@@ -84,11 +84,11 @@ $permission = Permission::create(['name' => 'edit invoice']);
 $permission = Permission::create(['name' => 'view invoice']);
 $permission = Permission::create(['name' => 'view all invoices']);
 $permission = Permission::create(['name' => 'delete invoice']);
-        
+
 */
 
-        $total_patients = User::where('role','patient')->count();
-        $total_patients_today = User::where('role','patient')->wheredate('created_at', Today())->count();
+        $total_patients = User::where('role_id','3')->count();
+        $total_patients_today = User::where('role_id','3')->wheredate('created_at', Today())->count();
         $total_appointments = Appointment::all()->count();
         $total_appointments_today = Appointment::wheredate('date', Today())->get();
         $total_prescriptions = Prescription::all()->count();
@@ -99,8 +99,8 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $total_payments_year = Billing_item::whereYear('created_at',date('Y'))->sum('invoice_amount');
 
         return view('home', [
-            'total_patients' => $total_patients, 
-            'total_prescriptions' => $total_prescriptions, 
+            'total_patients' => $total_patients,
+            'total_prescriptions' => $total_prescriptions,
             'total_patients_today' => $total_patients_today,
             'total_appointments' => $total_appointments,
             'total_appointments_today' => $total_appointments_today,

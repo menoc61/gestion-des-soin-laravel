@@ -17,7 +17,7 @@ class TestController extends Controller
 
     public function create()
     {
-        $patients = User::where('role', 'patient')->get();
+        $patients = User::where('role_id','3')->get();
 
         return view('test.create', compact('patients'));
     }

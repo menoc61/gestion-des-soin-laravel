@@ -136,20 +136,17 @@
                                      <label class="control-label"></label><i class="bar"></i>
                                  </div>
                              </div>
-                             <div class="col-md-6">
-                                 <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
-                                   <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
-                                   <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                       <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
-                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                 </select>
-                                 <div>
-                                    <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                       <p><?php echo e($drug->generic_name); ?>
 
-                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                 </div>
+                             <div class="col-md-6">
+                                <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
+                                    <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
+                                    <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                                <div id="genericNames"></div>
                              </div>
+
                              
                          </div>
 
@@ -194,6 +191,7 @@
                               </div>
                          </div>
 </script>
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('header'); ?>
