@@ -70,12 +70,13 @@
                         <div class="form-group row">
                             <label for="role" class="col-sm-3 col-form-label"><?php echo e(__('sentence.Role')); ?></label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="role" id="role">
+                                <select class="form-control" name="role_id" id="roleID">
                                     
-                                    <option value="admin"><?php echo e(__('sentence.Admin')); ?></option>
-                                    <option value="praticien"><?php echo e(__('sentence.Doctor')); ?></option>
-
                                     
+                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($role->id); ?>">
+                                            <?php echo e($role->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                         </div>

@@ -48,7 +48,7 @@
                                         <a href="{{ route('role.edit_role', ['id' => $role->id]) }}"
                                             class="btn btn-outline-warning btn-circle btn-sm"><i class="fa fa-pen"></i></a>
                                     @endif
-                                    @if ($role->name != 'Admin' && $role->name != 'Receptionist')
+                                    @if ($role->name != 'Admin' && $role->name != 'Praticien')
                                         <a href="#" class="btn btn-outline-danger btn-circle btn-sm"
                                             data-toggle="modal" data-target="#DeleteModal"
                                             data-link="{{ route('role.destroy', ['id' => $role->id]) }}"><i

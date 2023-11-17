@@ -21,8 +21,8 @@ class PrescriptionController extends Controller
     public function create()
     {
         $drugs = Drug::all();
-        $patients = User::where('role', 'patient')->get();
-        $praticiens = User::where('role', 'praticien')->get();
+        $patients = User::where('role_id','3')->get();
+        $praticiens = User::where('role_id','2')->get();
         $tests = Test::all();
 
         return view('prescription.create', compact('drugs', 'patients', 'praticiens', 'tests'));

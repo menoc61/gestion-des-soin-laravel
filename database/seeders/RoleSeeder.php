@@ -69,21 +69,23 @@ class RoleSeeder extends Seeder
 
         $role1 = Role::create(['name' => 'Admin']);
         $role2 = Role::create(['name' => 'Praticien']);
+        $role3 = Role::create(['name' => 'Hôte']);
 
         $role1->givePermissionTo(Permission::all());
         $role2->givePermissionTo(Permission::all()->except(['delete invoice', 'manage settings', 'manage roles']));
+        $role3->givePermissionTo(Permission::all()->except(['delete invoice', 'manage settings', 'manage roles','create diagnostic test','delete diagnostic test']));
 
         $user = User::create([
             'name' => 'ADMIN',
             'email' => 'admin@admin',
             'password' => Hash::make('admin'),
-            'role' => 'admin',
+            'role_id' => '1',
         ]);
         $user2 = User::create([
             'name' => 'PRATICIENT',
             'email' => 'doc@admin',
             'password' => Hash::make('admin'),
-            'role' => 'praticien',
+            'role_id' => '2',
         ]);
 
         $user->assignRole($role1);
