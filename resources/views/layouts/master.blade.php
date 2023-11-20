@@ -32,7 +32,6 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
     @yield('header')
 
 
@@ -121,72 +120,19 @@
                @endif --}}
 
 
-                @if (Auth::user()->can('create diagnostic test') ||
-                        Auth::user()->can('edit diagnostic test') ||
-                        Auth::user()->can('view all diagnostic tests'))
+                {{-- ********************* Debut Section Traitements de la sidenav ************************** --}}
+
+                @if (Auth::user()->can('create drug') ||
+                        Auth::user()->can('view all drugs') ||
+                        Auth::user()->can('view drug') ||
+                        Auth::user()->can('edit drug'))
                     <!-- Divider -->
                     <hr class="sidebar-divider">
                     <!-- Heading -->
                     <div class="sidebar-heading">
                         {{ __('sentence.Prescriptions') }}
                     </div>
-                    <!-- Nav Item - Pages Collapse Menu -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTests"
-                            aria-expanded="true" aria-controls="collapseTests">
-                            <i class="fas fa-fw fa-heartbeat"></i>
-                            <span>{{ __('sentence.Tests') }}</span>
-                        </a>
-                        <div id="collapseTests" class="collapse" aria-labelledby="headingPages"
-                            data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                @can('create diagnostic test')
-                                    <a class="collapse-item"
-                                        href="{{ route('test.create') }}">{{ __('sentence.Add Test') }}</a>
-                                @endcan
-                                @can('view all diagnostic tests')
-                                    <a class="collapse-item"
-                                        href="{{ route('test.all') }}">{{ __('sentence.All Tests') }}</a>
-                                @endcan
-                            </div>
-                        </div>
-                    </li>
-                @endif
 
-
-
-                @if (Auth::user()->can('create prescription') ||
-                        Auth::user()->can('view all prescriptions') ||
-                        Auth::user()->can('view prescription') ||
-                        Auth::user()->can('view prescription'))
-                    <!-- Nav Item - Pages Collapse Menu -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                            aria-expanded="true" aria-controls="collapseTwo">
-                            <i class="fas fa-fw fa-prescription"></i>
-                            <span>{{ __('sentence.Prescriptions') }}</span>
-                        </a>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                            data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                @can('create prescription')
-                                    <a class="collapse-item"
-                                        href="{{ route('prescription.create') }}">{{ __('sentence.New Prescription') }}</a>
-                                @endcan
-                                @can('view all prescriptions')
-                                    <a class="collapse-item"
-                                        href="{{ route('prescription.all') }}">{{ __('sentence.All Prescriptions') }}</a>
-                                @endcan
-                            </div>
-                        </div>
-                    </li>
-                @endif
-
-
-                @if (Auth::user()->can('create drug') ||
-                        Auth::user()->can('view all drugs') ||
-                        Auth::user()->can('view drug') ||
-                        Auth::user()->can('edit drug'))
                     <!-- Nav Item - Pages Collapse Menu -->
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -210,7 +156,62 @@
                     </li>
                 @endif
 
+                @if (Auth::user()->can('create diagnostic test') ||
+                        Auth::user()->can('edit diagnostic test') ||
+                        Auth::user()->can('view all diagnostic tests'))
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTests"
+                            aria-expanded="true" aria-controls="collapseTests">
+                            <i class="fas fa-fw fa-heartbeat"></i>
+                            <span>{{ __('sentence.Tests') }}</span>
+                        </a>
+                        <div id="collapseTests" class="collapse" aria-labelledby="headingPages"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                @can('create diagnostic test')
+                                    <a class="collapse-item"
+                                        href="{{ route('test.create') }}">{{ __('sentence.Add Test') }}</a>
+                                @endcan
+                                @can('view all diagnostic tests')
+                                    <a class="collapse-item"
+                                        href="{{ route('test.all') }}">{{ __('sentence.All Tests') }}</a>
+                                @endcan
+                            </div>
+                        </div>
+                    </li>
+                @endif
 
+                @if (Auth::user()->can('create prescription') ||
+                        Auth::user()->can('view all prescriptions') ||
+                        Auth::user()->can('view prescription') ||
+                        Auth::user()->can('view prescription'))
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            <i class="fas fa-fw fa-prescription"></i>
+                            <span>{{ __('sentence.Prescriptions') }}</span>
+                        </a>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                @can('create prescription')
+                                    <a class="collapse-item"
+                                        href="{{ route('prescription.create') }}">{{ __('sentence.New Prescription') }}</a>
+                                @endcan
+                                @can('view all prescriptions')
+                                    <a class="collapse-item"
+                                        href="{{ route('prescription.all') }}">{{ __('sentence.All Prescriptions') }}</a>
+                                @endcan
+                            </div>
+                        </div>
+                    </li>
+                @endif
+
+                {{-- ********************* Fin Section Traitements de la sidenav ************************** --}}
+
+                {{-- ********************* Debut Section Facturation de la sidenav ************************** --}}
                 @if (Auth::user()->can('create invoice') ||
                         Auth::user()->can('edit invoice') ||
                         Auth::user()->can('view invoice') ||
@@ -221,6 +222,7 @@
                     <div class="sidebar-heading">
                         {{ __('sentence.Billings') }}
                     </div>
+
                     <!-- Nav Item - Utilities Collapse Menu -->
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="#" data-toggle="collapse"
@@ -243,6 +245,10 @@
                         </div>
                     </li>
                 @endif
+
+                {{-- ********************* Fin Section Facturation de la sidenav ************************** --}}
+
+                {{-- ********************* Debut Section Utilisateurs et rôles de la sidenav ************************** --}}
 
                 @if (Auth::user()->can('manage roles'))
                     <!-- Divider -->
@@ -272,6 +278,10 @@
                     </li>
                 @endif
 
+                {{-- ********************* Fin Section Utilisateurs et rôles de la sidenav ************************** --}}
+
+                {{-- ********************* Debut Section Paramètres de la sidenav ************************** --}}
+
                 @if (Auth::user()->can('manage settings'))
                     <!-- Divider -->
                     <hr class="sidebar-divider">
@@ -299,6 +309,8 @@
                         </div>
                     </li>
                 @endif
+
+                {{-- ********************* Debut Section Paramètres de la sidenav ************************** --}}
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">

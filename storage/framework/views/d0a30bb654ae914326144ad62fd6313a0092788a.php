@@ -32,7 +32,6 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
     <?php echo $__env->yieldContent('header'); ?>
 
 
@@ -91,14 +90,17 @@
                 <?php endif; ?>
 
 
+                
+
+                
 
 
+                
 
-
-
-                <?php if(Auth::user()->can('create diagnostic test') ||
-                        Auth::user()->can('edit diagnostic test') ||
-                        Auth::user()->can('view all diagnostic tests')): ?>
+                <?php if(Auth::user()->can('create drug') ||
+                        Auth::user()->can('view all drugs') ||
+                        Auth::user()->can('view drug') ||
+                        Auth::user()->can('edit drug')): ?>
                     <!-- Divider -->
                     <hr class="sidebar-divider">
                     <!-- Heading -->
@@ -106,63 +108,7 @@
                         <?php echo e(__('sentence.Prescriptions')); ?>
 
                     </div>
-                    <!-- Nav Item - Pages Collapse Menu -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTests"
-                            aria-expanded="true" aria-controls="collapseTests">
-                            <i class="fas fa-fw fa-heartbeat"></i>
-                            <span><?php echo e(__('sentence.Tests')); ?></span>
-                        </a>
-                        <div id="collapseTests" class="collapse" aria-labelledby="headingPages"
-                            data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create diagnostic test')): ?>
-                                    <a class="collapse-item"
-                                        href="<?php echo e(route('test.create')); ?>"><?php echo e(__('sentence.Add Test')); ?></a>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view all diagnostic tests')): ?>
-                                    <a class="collapse-item"
-                                        href="<?php echo e(route('test.all')); ?>"><?php echo e(__('sentence.All Tests')); ?></a>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </li>
-                <?php endif; ?>
 
-
-
-                <?php if(Auth::user()->can('create prescription') ||
-                        Auth::user()->can('view all prescriptions') ||
-                        Auth::user()->can('view prescription') ||
-                        Auth::user()->can('view prescription')): ?>
-                    <!-- Nav Item - Pages Collapse Menu -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                            aria-expanded="true" aria-controls="collapseTwo">
-                            <i class="fas fa-fw fa-prescription"></i>
-                            <span><?php echo e(__('sentence.Prescriptions')); ?></span>
-                        </a>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                            data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create prescription')): ?>
-                                    <a class="collapse-item"
-                                        href="<?php echo e(route('prescription.create')); ?>"><?php echo e(__('sentence.New Prescription')); ?></a>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view all prescriptions')): ?>
-                                    <a class="collapse-item"
-                                        href="<?php echo e(route('prescription.all')); ?>"><?php echo e(__('sentence.All Prescriptions')); ?></a>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </li>
-                <?php endif; ?>
-
-
-                <?php if(Auth::user()->can('create drug') ||
-                        Auth::user()->can('view all drugs') ||
-                        Auth::user()->can('view drug') ||
-                        Auth::user()->can('edit drug')): ?>
                     <!-- Nav Item - Pages Collapse Menu -->
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -186,7 +132,62 @@
                     </li>
                 <?php endif; ?>
 
+                <?php if(Auth::user()->can('create diagnostic test') ||
+                        Auth::user()->can('edit diagnostic test') ||
+                        Auth::user()->can('view all diagnostic tests')): ?>
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTests"
+                            aria-expanded="true" aria-controls="collapseTests">
+                            <i class="fas fa-fw fa-heartbeat"></i>
+                            <span><?php echo e(__('sentence.Tests')); ?></span>
+                        </a>
+                        <div id="collapseTests" class="collapse" aria-labelledby="headingPages"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create diagnostic test')): ?>
+                                    <a class="collapse-item"
+                                        href="<?php echo e(route('test.create')); ?>"><?php echo e(__('sentence.Add Test')); ?></a>
+                                <?php endif; ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view all diagnostic tests')): ?>
+                                    <a class="collapse-item"
+                                        href="<?php echo e(route('test.all')); ?>"><?php echo e(__('sentence.All Tests')); ?></a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </li>
+                <?php endif; ?>
 
+                <?php if(Auth::user()->can('create prescription') ||
+                        Auth::user()->can('view all prescriptions') ||
+                        Auth::user()->can('view prescription') ||
+                        Auth::user()->can('view prescription')): ?>
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            <i class="fas fa-fw fa-prescription"></i>
+                            <span><?php echo e(__('sentence.Prescriptions')); ?></span>
+                        </a>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create prescription')): ?>
+                                    <a class="collapse-item"
+                                        href="<?php echo e(route('prescription.create')); ?>"><?php echo e(__('sentence.New Prescription')); ?></a>
+                                <?php endif; ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view all prescriptions')): ?>
+                                    <a class="collapse-item"
+                                        href="<?php echo e(route('prescription.all')); ?>"><?php echo e(__('sentence.All Prescriptions')); ?></a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </li>
+                <?php endif; ?>
+
+                
+
+                
                 <?php if(Auth::user()->can('create invoice') ||
                         Auth::user()->can('edit invoice') ||
                         Auth::user()->can('view invoice') ||
@@ -198,6 +199,7 @@
                         <?php echo e(__('sentence.Billings')); ?>
 
                     </div>
+
                     <!-- Nav Item - Utilities Collapse Menu -->
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="#" data-toggle="collapse"
@@ -220,6 +222,10 @@
                         </div>
                     </li>
                 <?php endif; ?>
+
+                
+
+                
 
                 <?php if(Auth::user()->can('manage roles')): ?>
                     <!-- Divider -->
@@ -250,6 +256,10 @@
                     </li>
                 <?php endif; ?>
 
+                
+
+                
+
                 <?php if(Auth::user()->can('manage settings')): ?>
                     <!-- Divider -->
                     <hr class="sidebar-divider">
@@ -278,6 +288,8 @@
                         </div>
                     </li>
                 <?php endif; ?>
+
+                
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
@@ -318,9 +330,9 @@
                                     <a class="dropdown-item"
                                         href="<?php echo e(route('drug.create')); ?>"><?php echo e(__('sentence.Drug')); ?></a>
                                 <?php endif; ?>
+                                
 
-
-
+                                
                                 <?php if(Auth::user()->can('create invoice')): ?>
                                     <a class="dropdown-item"
                                         href="<?php echo e(route('billing.create')); ?>"><?php echo e(__('sentence.Invoice')); ?></a>
