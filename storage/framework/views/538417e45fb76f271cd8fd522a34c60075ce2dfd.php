@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title'); ?>
     <?php echo e($patient->name); ?>
 
@@ -18,10 +16,12 @@
                         <div class="col-md-4 col-sm-6">
                             <?php if(empty(!$patient->image)): ?>
                                 <center><img src="<?php echo e(asset('uploads/' . $patient->image)); ?>"
-                                        class="img-profile rounded-circle img-fluid" width="256" height="256" style="object-fit: cover;" alt="profil-img"></center>
+                                        class="img-profile rounded-circle img-fluid" width="256" height="256"
+                                        style="object-fit: cover;" alt="profil-img"></center>
                             <?php else: ?>
                                 <center><img src="<?php echo e(asset('img/default-image.jpeg')); ?>"
-                                        class="img-profile rounded-circle img-fluid" width="256" height="256" style="object-fit: cover;" alt="profil-img"></center>
+                                        class="img-profile rounded-circle img-fluid" width="256" height="256"
+                                        style="object-fit: cover;" alt="profil-img"></center>
                             <?php endif; ?>
                             <h4 class="text-center mt-3"><b><?php echo e($patient->name); ?></b> <label
                                     class="badge badge-primary-soft"> <a href="<?php echo e(url('patient/edit/' . $patient->id)); ?>"><i
@@ -61,42 +61,42 @@
                             <hr>
 
                             <?php if(isset($patient->Patient->morphology)): ?>
-                            <p><b><?php echo e(__('sentence.Morphology')); ?> :</b>
-                                <?php
-                                $morphologyArray = json_decode($patient->Patient->morphology);
-                                ?>
+                                <p><b><?php echo e(__('sentence.Morphology')); ?> :</b>
+                                    <?php
+                                        $morphologyArray = json_decode($patient->Patient->morphology);
+                                    ?>
 
-                                <?php if(is_array($morphologyArray)): ?>
-                                    <?php $__currentLoopData = $morphologyArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <label class="badge badge-warning-soft"><?php echo e($item); ?></label>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php else: ?>
-                                    <span>No morphology data available.</span>
-                                <?php endif; ?>
-                            </p>
+                                    <?php if(is_array($morphologyArray)): ?>
+                                        <?php $__currentLoopData = $morphologyArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <label class="badge badge-warning-soft"><?php echo e($item); ?></label>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
+                                        <span>No morphology data available.</span>
+                                    <?php endif; ?>
+                                </p>
                             <?php endif; ?>
 
                             <?php if(isset($patient->Patient->alimentation)): ?>
                                 <p><b><?php echo e(__('sentence.Alimentation')); ?> :</b>
-                                        <?php
+                                    <?php
                                         $alimentationArray = json_decode($patient->Patient->alimentation);
-                                        ?>
+                                    ?>
 
-                                        <?php if(is_array($alimentationArray)): ?>
-                                            <?php $__currentLoopData = $alimentationArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <label class="badge badge-warning-soft"><?php echo e($item); ?></label>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <?php else: ?>
-                                            <span>No alimentation data available.</span>
-                                        <?php endif; ?>
-                                    </p>
+                                    <?php if(is_array($alimentationArray)): ?>
+                                        <?php $__currentLoopData = $alimentationArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <label class="badge badge-warning-soft"><?php echo e($item); ?></label>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
+                                        <span>No alimentation data available.</span>
+                                    <?php endif; ?>
+                                </p>
                                 </p>
                             <?php endif; ?>
 
                             <?php if(isset($patient->Patient->type_patient)): ?>
                                 <p><b><?php echo e(__('sentence.Type of patient')); ?> :</b>
                                     <?php
-                                    $type_patientArray = json_decode($patient->Patient->type_patient);
+                                        $type_patientArray = json_decode($patient->Patient->type_patient);
                                     ?>
 
                                     <?php if(is_array($type_patientArray)): ?>
@@ -122,6 +122,10 @@
                                         role="tab" aria-controls="documents" aria-selected="false">Fichier Médical</a>
                                 </li>
                                 
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="tests-tab" data-toggle="tab" href="#tests" role="tab"
+                                        aria-controls="tests" aria-selected="false"><?php echo e(__('sentence.Test')); ?></a>
+                                </li>
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="prescriptions-tab" data-toggle="tab" href="#prescriptions"
                                         role="tab" aria-controls="prescriptions"
@@ -168,8 +172,7 @@
                                     <?php endif; ?>
 
 
-
-
+                                    
 
                                 </div>
                                 <div class="tab-pane fade" id="appointements" role="tabpanel"
@@ -250,6 +253,64 @@
                                         </table>
                                     </div>
 
+                                    
+
+
+                                    
+
+                                    <div class="tab-pane fade" id="tests" role="tabpanel"
+                                        aria-labelledby="tests-tab">
+                                        <div class="row">
+                                            <div class="col">
+                                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create test_By_id')): ?>
+                                                    <a class="btn btn-primary btn-sm my-4 float-right"
+                                                        href="<?php echo e(route('test.create_by', ['id' => $patient->id])); ?>"><i class="fa fa-pen"></i>
+                                                        <?php echo e(__('sentence.Add Test')); ?></a>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <?php $__empty_1 = true; $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                                <tr>
+                                                    <td><?php echo e($test->id); ?></td>
+                                                    <td><?php echo e($test->test_name); ?></td>
+                                                    <td> <?php echo e($test->comment); ?> </td>
+                                                    <td align="center"><?php echo e(__('sentence.In Prescription')); ?> :
+                                                        <?php echo e($test->Prescription->count()); ?> <?php echo e(__('sentence.time use')); ?></td>
+                                                    <td class="text-center">
+
+                                                        <a href="<?php echo e(url('test/view/' . $test->id)); ?>"
+                                                            class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                class="fa fa-eye"></i></a>
+
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit diagnostic test')): ?>
+                                                            <a href="<?php echo e(url('test/edit/' . $test->id)); ?>"
+                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                    class="fa fa-pen"></i></a>
+                                                        <?php endif; ?>
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete diagnostic test')): ?>
+                                                            <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                data-toggle="modal" data-target="#DeleteModal"
+                                                                data-link="<?php echo e(url('test/delete/' . $test->id)); ?>"><i
+                                                                    class="fa fa-trash"></i></a>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                                <tr>
+                                                    <td colspan="5" class="text-center"><img
+                                                            src="<?php echo e(asset('img/not-found.svg')); ?>" width="200" /> <br><br>
+                                                        <b class="text-muted">pas de diagnostic trouvé</b></td>
+                                                </tr>
+                                            <?php endif; ?>
+                                        </table>
+                                    </div>
+
+                                    
+
+
+                                    
+
                                     <div class="tab-pane fade" id="prescriptions" role="tabpanel"
                                         aria-labelledby="prescriptions-tab">
                                         <div class="row">
@@ -312,6 +373,8 @@
                                         </table>
                                     </div>
 
+                                    
+
                                     <div class="tab-pane fade" id="documents" role="tabpanel"
                                         aria-labelledby="documents-tab">
                                         <div class="row">
@@ -368,6 +431,8 @@
                                         </div>
                                     </div>
 
+
+                                    
 
                                     <div class="tab-pane fade" id="Billing" role="tabpanel" aria-labelledby="Billing-tab">
                                         <div class="row mt-4">
@@ -491,6 +556,9 @@
                                             <?php endif; ?>
                                         </table>
                                     </div>
+
+                                    
+
                                 </div>
 
                             </div>

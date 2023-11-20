@@ -18,8 +18,14 @@ class TestController extends Controller
     public function create()
     {
         $patients = User::where('role_id','3')->get();
-
         return view('test.create', compact('patients'));
+    }
+
+    public function create_By_id($id)
+    {
+        $test = Test::find($id);
+        $patients = User::where('role_id','3')->get();
+        return view('test.create_By_user', compact('patients', 'test'));
     }
 
     public function store(Request $request)
@@ -139,8 +145,7 @@ class TestController extends Controller
     public function edit($id)
     {
         $test = Test::find($id);
-        $patients = User::where('role', 'patient')->get();
-
+        $patients = User::where('role_id','3')->get();
         return view('test.edit', compact('patients', 'test'));
     }
 

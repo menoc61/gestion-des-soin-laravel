@@ -73,10 +73,7 @@
                                     {{-- <option value="Unknown">{{ __('sentence.Select Role') }}</option>
                                     <option value="admin">{{ __('sentence.Admin') }}</option>
                                     <option value="praticien">{{ __('sentence.Doctor') }}</option> --}}
-                                    {{-- @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}">
-                                            {{ $role->name }}</option>
-                                    @endforeach --}}
+
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">
                                             {{ $role->name }}</option>

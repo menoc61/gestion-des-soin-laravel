@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "chart.js": "^4.4.0",
         "gijgo": "^1.9.13",
         "startbootstrap-sb-admin-2": "^4.1.1"
     }
