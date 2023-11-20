@@ -17,10 +17,12 @@
                         <div class="col-md-4 col-sm-6">
                             @empty(!$patient->image)
                                 <center><img src="{{ asset('uploads/' . $patient->image) }}"
-                                        class="img-profile rounded-circle img-fluid" width="256" height="256" style="object-fit: cover;" alt="profil-img"></center>
+                                        class="img-profile rounded-circle img-fluid" width="256" height="256"
+                                        style="object-fit: cover;" alt="profil-img"></center>
                             @else
                                 <center><img src="{{ asset('img/default-image.jpeg') }}"
-                                        class="img-profile rounded-circle img-fluid" width="256" height="256" style="object-fit: cover;" alt="profil-img"></center>
+                                        class="img-profile rounded-circle img-fluid" width="256" height="256"
+                                        style="object-fit: cover;" alt="profil-img"></center>
                             @endempty
                             <h4 class="text-center mt-3"><b>{{ $patient->name }}</b> <label
                                     class="badge badge-primary-soft"> <a href="{{ url('patient/edit/' . $patient->id) }}"><i
@@ -33,7 +35,7 @@
                             @endisset
 
                             @isset($patient->Patient->gender)
-                                <p><b>{{ __('sentence.Gender') }} :</b> {{ $patient->Patient->gender}}</p>
+                                <p><b>{{ __('sentence.Gender') }} :</b> {{ $patient->Patient->gender }}</p>
                             @endisset
 
                             @isset($patient->Patient->phone)
@@ -59,42 +61,42 @@
                             <hr>
 
                             @isset($patient->Patient->morphology)
-                            <p><b>{{ __('sentence.Morphology') }} :</b>
-                                @php
-                                $morphologyArray = json_decode($patient->Patient->morphology);
-                                @endphp
+                                <p><b>{{ __('sentence.Morphology') }} :</b>
+                                    @php
+                                        $morphologyArray = json_decode($patient->Patient->morphology);
+                                    @endphp
 
-                                @if (is_array($morphologyArray))
-                                    @foreach ($morphologyArray as $item)
-                                        <label class="badge badge-warning-soft">{{ $item }}</label>
-                                    @endforeach
-                                @else
-                                    <span>No morphology data available.</span>
-                                @endif
-                            </p>
+                                    @if (is_array($morphologyArray))
+                                        @foreach ($morphologyArray as $item)
+                                            <label class="badge badge-warning-soft">{{ $item }}</label>
+                                        @endforeach
+                                    @else
+                                        <span>No morphology data available.</span>
+                                    @endif
+                                </p>
                             @endisset
 
                             @isset($patient->Patient->alimentation)
                                 <p><b>{{ __('sentence.Alimentation') }} :</b>
-                                        @php
+                                    @php
                                         $alimentationArray = json_decode($patient->Patient->alimentation);
-                                        @endphp
+                                    @endphp
 
-                                        @if (is_array($alimentationArray))
-                                            @foreach ($alimentationArray as $item)
-                                                <label class="badge badge-warning-soft">{{ $item }}</label>
-                                            @endforeach
-                                        @else
-                                            <span>No alimentation data available.</span>
-                                        @endif
-                                    </p>
+                                    @if (is_array($alimentationArray))
+                                        @foreach ($alimentationArray as $item)
+                                            <label class="badge badge-warning-soft">{{ $item }}</label>
+                                        @endforeach
+                                    @else
+                                        <span>No alimentation data available.</span>
+                                    @endif
+                                </p>
                                 </p>
                             @endisset
 
                             @isset($patient->Patient->type_patient)
                                 <p><b>{{ __('sentence.Type of patient') }} :</b>
                                     @php
-                                    $type_patientArray = json_decode($patient->Patient->type_patient);
+                                        $type_patientArray = json_decode($patient->Patient->type_patient);
                                     @endphp
 
                                     @if (is_array($type_patientArray))
@@ -125,6 +127,10 @@
                                         aria-selected="false">{{ __('sentence.Appointments') }}</a>
                                 </li> --}}
                                 <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="tests-tab" data-toggle="tab" href="#tests" role="tab"
+                                        aria-controls="tests" aria-selected="false">{{ __('sentence.Test') }}</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="prescriptions-tab" data-toggle="tab" href="#prescriptions"
                                         role="tab" aria-controls="prescriptions"
                                         aria-selected="false">{{ __('sentence.Prescriptions') }}</a>
@@ -145,7 +151,7 @@
                                             @can('create health history')
                                                 <button type="button" class="btn btn-primary btn-sm my-4 float-right"
                                                     data-toggle="modal" data-target="#MedicalHistoryModel"><i
-                                                        class="fa fa-plus"></i> {{__('sentence.Add New')}}</button>
+                                                        class="fa fa-plus"></i> {{ __('sentence.Add New') }}</button>
                                             @endcan
                                         </div>
                                     </div>
@@ -168,8 +174,7 @@
                                     @endforelse
 
 
-
-
+                                    {{-- Start Rendez-vous  --}}
 
                                 </div>
                                 <div class="tab-pane fade" id="appointements" role="tabpanel"
@@ -247,6 +252,64 @@
                                         </table>
                                     </div>
 
+                                    {{-- End Rendez-vous  --}}
+
+
+                                    {{-- Start Test  --}}
+
+                                    <div class="tab-pane fade" id="tests" role="tabpanel"
+                                        aria-labelledby="tests-tab">
+                                        <div class="row">
+                                            <div class="col">
+                                                @can('create test_By_id')
+                                                    <a class="btn btn-primary btn-sm my-4 float-right"
+                                                        href="{{ route('test.create_by', ['id' => $patient->id]) }}"><i class="fa fa-pen"></i>
+                                                        {{ __('sentence.Add Test') }}</a>
+                                                @endcan
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            @forelse($tests as $test)
+                                                <tr>
+                                                    <td>{{ $test->id }}</td>
+                                                    <td>{{ $test->test_name }}</td>
+                                                    <td> {{ $test->comment }} </td>
+                                                    <td align="center">{{ __('sentence.In Prescription') }} :
+                                                        {{ $test->Prescription->count() }} {{ __('sentence.time use') }}</td>
+                                                    <td class="text-center">
+
+                                                        <a href="{{ url('test/view/' . $test->id) }}"
+                                                            class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                class="fa fa-eye"></i></a>
+
+                                                        @can('edit diagnostic test')
+                                                            <a href="{{ url('test/edit/' . $test->id) }}"
+                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                    class="fa fa-pen"></i></a>
+                                                        @endcan
+                                                        @can('delete diagnostic test')
+                                                            <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                data-toggle="modal" data-target="#DeleteModal"
+                                                                data-link="{{ url('test/delete/' . $test->id) }}"><i
+                                                                    class="fa fa-trash"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="5" class="text-center"><img
+                                                            src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br>
+                                                        <b class="text-muted">pas de diagnostic trouvé</b></td>
+                                                </tr>
+                                            @endforelse
+                                        </table>
+                                    </div>
+
+                                    {{-- End Test  --}}
+
+
+                                    {{-- Start Prescription  --}}
+
                                     <div class="tab-pane fade" id="prescriptions" role="tabpanel"
                                         aria-labelledby="prescriptions-tab">
                                         <div class="row">
@@ -309,6 +372,8 @@
                                         </table>
                                     </div>
 
+                                    {{-- End Prescription  --}}
+
                                     <div class="tab-pane fade" id="documents" role="tabpanel"
                                         aria-labelledby="documents-tab">
                                         <div class="row">
@@ -316,7 +381,7 @@
                                                 @can('edit patient')
                                                     <button type="button" class="btn btn-primary btn-sm my-4 float-right"
                                                         data-toggle="modal" data-target="#NewDocumentModel"><i
-                                                            class="fa fa-plus"></i> {{__('sentence.Add New')}}</button>
+                                                            class="fa fa-plus"></i> {{ __('sentence.Add New') }}</button>
                                                 @endcan
                                             </div>
                                         </div>
@@ -365,6 +430,8 @@
                                         </div>
                                     </div>
 
+
+                                    {{-- Start Facturation --}}
 
                                     <div class="tab-pane fade" id="Billing" role="tabpanel" aria-labelledby="Billing-tab">
                                         <div class="row mt-4">
@@ -476,6 +543,9 @@
                                             @endforelse
                                         </table>
                                     </div>
+
+                                    {{-- End Facturation --}}
+
                                 </div>
 
                             </div>

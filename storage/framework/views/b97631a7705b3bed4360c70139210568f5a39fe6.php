@@ -72,7 +72,7 @@
                             <div class="col-sm-9">
                                 <select class="form-control" name="role_id" id="roleID">
                                     
-                                    
+
                                     <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($role->id); ?>">
                                             <?php echo e($role->name); ?></option>

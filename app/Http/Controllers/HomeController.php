@@ -10,7 +10,7 @@ use App\Billing;
 use App\Billing_item;
 use App;
 use Auth;
-
+use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -34,18 +34,18 @@ class HomeController extends Controller
     public function index()
     {
 
-$user = Auth::user();
-//$user->assignRole('admin');
-//$user->syncRoles(['assistant']);
+        $user = Auth::user();
+        //$user->assignRole('admin');
+        //$user->syncRoles(['assistant']);
 
-//$role = Role::create(['name' => 'admin']);
-//1$role = Role::create(['name' => 'assistant']);
+        //$role = Role::create(['name' => 'admin']);
+        //1$role = Role::create(['name' => 'assistant']);
 
-//$role = Role::findById(4); $role->givePermissionTo(Permission::all());
+        //$role = Role::findById(4); $role->givePermissionTo(Permission::all());
 
-//$permission = Permission::create(['name' => 'manage roles']);
+        //$permission = Permission::create(['name' => 'manage roles']);
 
-/*
+        /*
 
 $permission = Permission::create(['name' => 'view patient']);
 $permission = Permission::create(['name' => 'view all patients']);
@@ -87,16 +87,29 @@ $permission = Permission::create(['name' => 'delete invoice']);
 
 */
 
-        $total_patients = User::where('role_id','3')->count();
-        $total_patients_today = User::where('role_id','3')->wheredate('created_at', Today())->count();
+        $total_patients = User::where('role_id', '3')->count();
+        $total_patients_today = User::where('role_id', '3')->wheredate('created_at', Today())->count();
         $total_appointments = Appointment::all()->count();
         $total_appointments_today = Appointment::wheredate('date', Today())->get();
         $total_prescriptions = Prescription::all()->count();
         $total_payments = Billing::all()->count();
         $total_payments = Billing::all()->count();
-        $total_payments_month = Billing_item::whereMonth('created_at',date('m'))->sum('invoice_amount');
-        $total_payments_month = Billing_item::whereMonth('created_at',date('m'))->sum('invoice_amount');
-        $total_payments_year = Billing_item::whereYear('created_at',date('Y'))->sum('invoice_amount');
+        $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
+        $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
+        $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
+
+        $total_payment_by_month = Billing_item::select('id', 'created_at')->get()->groupBy(
+            function ($total_payment_by_month) {
+                return Carbon::parse($total_payment_by_month->created_at)->format('m');
+            }
+        );
+        $months = [];
+        $monthCount = [];
+        foreach ($total_payment_by_month as $month => $values) {
+            $months[] = $month;
+            $monthCount[] = count($values);
+        }
+
 
         return view('home', [
             'total_patients' => $total_patients,
@@ -106,12 +119,15 @@ $permission = Permission::create(['name' => 'delete invoice']);
             'total_appointments_today' => $total_appointments_today,
             'total_payments' => $total_payments,
             'total_payments_month' => $total_payments_month,
-            'total_payments_year' => $total_payments_year
+            'total_payments_year' => $total_payments_year,
+            '$total_payment_by_month' => $total_payment_by_month,
+            'months' => $months,
+            'monthCount' => $monthCount,
         ]);
     }
 
-
-    public function lang($locale){
+    public function lang($locale)
+    {
 
         App::setLocale($locale);
         session()->put('locale', $locale);
