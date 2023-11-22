@@ -262,11 +262,9 @@
                                         aria-labelledby="tests-tab">
                                         <div class="row">
                                             <div class="col">
-                                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create test_By_id')): ?>
                                                     <a class="btn btn-primary btn-sm my-4 float-right"
                                                         href="<?php echo e(route('test.create_by', ['id' => $patient->id])); ?>"><i class="fa fa-pen"></i>
                                                         <?php echo e(__('sentence.Add Test')); ?></a>
-                                                <?php endif; ?>
                                             </div>
                                         </div>
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

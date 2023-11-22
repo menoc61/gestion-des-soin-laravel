@@ -98,17 +98,32 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
         $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
 
-        $total_payment_by_month = Billing_item::select('id', 'created_at')->get()->groupBy(
+        $total_payment_by_month = Billing_item::select('id', 'created_at','invoice_amount')->get()->groupBy(
             function ($total_payment_by_month) {
-                return Carbon::parse($total_payment_by_month->created_at)->format('m');
+                return Carbon::parse($total_payment_by_month->created_at)->format('F Y');
             }
         );
         $months = [];
         $monthCount = [];
+        $totalAmounts = [];
         foreach ($total_payment_by_month as $month => $values) {
             $months[] = $month;
             $monthCount[] = count($values);
+            $totalAmount = $values->sum('invoice_amount');
+            $totalAmounts[] = $totalAmount;
         }
+
+        // $total_payment_by_month = Billing_item::select('id', 'created_at')->get()->groupBy(
+        //     function ($total_payment_by_month) {
+        //         return Carbon::parse($total_payment_by_month->created_at)->format('F');
+        //     }
+        // );
+        // $months = [];
+        // $monthCount = [];
+        // foreach ($total_payment_by_month as $month => $values) {
+        //     $months[] = $month;
+        //     $monthCount[] = count($values);
+        // }
 
 
         return view('home', [
@@ -120,7 +135,8 @@ $permission = Permission::create(['name' => 'delete invoice']);
             'total_payments' => $total_payments,
             'total_payments_month' => $total_payments_month,
             'total_payments_year' => $total_payments_year,
-            '$total_payment_by_month' => $total_payment_by_month,
+            'total_payment_by_month' => $total_payment_by_month,
+            'totalAmounts'=> $totalAmounts,
             'months' => $months,
             'monthCount' => $monthCount,
         ]);
