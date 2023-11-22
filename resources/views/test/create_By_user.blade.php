@@ -19,14 +19,25 @@
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Add Test') }}</h6>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{ route('test.create') }}">
+                    <form method="post" action="{{ route('test.store_id', ['id' => $userId])}}">
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label">{{ __('sentence.Test Name') }}<font
                                     color="red">*</font></label>
-                            <div class="col-sm-9 input-group">
-                                {{-- <input type="text" class="form-control" id="PatientID" value="{{ $patients->id }}" name="patient_id" readonly> --}}
-                                {{ csrf_field() }}
-                            </div>
+                                    <div class="col-sm-9 input-group">
+                                        {{-- <select class="input-group-text" name="patient_id" id="PatientID" required
+                                            aria-placeholder="{{ __('sentence.Select Patient') }}" onchange="updateTestName()">
+                                            <option @readonly(true)>{{ __('sentence.Select Patient') }}</option>
+                                            @foreach ($patients as $patient)
+                                                <option value="{{ $patient->id }}" data-name="{{ $patient->name }}">
+                                                    {{ $patient->id }}</option>
+                                            @endforeach
+                                        </select> --}}
+
+                                        <input type="text" class="form-control" value="{{ $userId }}"  name="patient_id" readonly>
+
+                                        <input type="text" class="form-control" id="test_name" name="test_name" >
+                                        {{ csrf_field() }}
+                                    </div>
                         </div>
 
                         <div class="form-group row">

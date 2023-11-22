@@ -167,7 +167,7 @@
             <div class="col-xl-5">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <i class="fas fa-chart-bar "> Bar Chart</i>
+                        <i class=" fas fa-chart-bar "> Chiffre d'affaire par mois </i>
                     </div>
                     <div class="card-body">
                         <canvas id="myBarChart" width="100%" height="40%"></canvas>
@@ -178,10 +178,10 @@
             <div class="col-xl-5">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <i class="fas fa-chart-bar "> Bar Chart</i>
+                        <i class="fas fa-chart-bar "> Test Line</i>
                     </div>
                     <div class="card-body">
-                        <canvas id="myBarChart" width="100%" height="40%"></canvas>
+                        <canvas id="myAreaChart" width="100%" height="40%"></canvas>
                     </div>
                 </div>
             </div>
@@ -269,13 +269,14 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer'); ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="/dashboard/vendor/chart.js/Chart.bundle.js"></script>
     <script type="text/javascript">
         var _ydata = JSON.parse('<?php echo json_encode($months); ?>');
-        var _xdata = JSON.parse('<?php echo json_encode($monthCount); ?>');
+        var _xdata = JSON.parse('<?php echo json_encode($totalAmounts); ?>');
     </script>
-    <script src="<?php echo e(asset('/chart-bar-demo.js')); ?>"></script>
-
+    <script src="<?php echo e(asset('assets/demo/chart-bar-demo.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/demo/chart-area-demo.js')); ?>"></script>
     
 <?php $__env->stopSection(); ?>
 

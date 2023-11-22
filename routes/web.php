@@ -73,6 +73,7 @@ Route::get('/test/delete/{id}', 'TestController@destroy')->where('id', '[0-9]+')
 Route::get('/test/view/{id}', 'TestController@view_test')->where('id', '[0-9]+');
 Route::get('/test/user/{id}','TestController@view_diagnostic')->where('id', '[0-9]+')->name('test.view_diagnostic')->middleware(['role_or_permission:Admin|view patient']);
 Route::get('/test/create_by/{id}','TestController@create_By_Id')->where('id', '[0-9]+')->name('test.create_by');
+Route::post('/test/create_by/{id}', 'TestController@store')->name('test.store_id');
 // Prescriptions
 Route::get('/prescription/create', 'PrescriptionController@create')->name('prescription.create')->middleware(['role_or_permission:Admin|create prescription']);
 Route::post('/prescription/create', 'PrescriptionController@store')->name('prescription.store');
