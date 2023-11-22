@@ -21,11 +21,13 @@ class TestController extends Controller
         return view('test.create', compact('patients'));
     }
 
-    public function create_By_id($id)
-    {
-        $test = Test::find($id);
-        $patients = User::where('role_id','3')->get();
-        return view('test.create_By_user', compact('patients', 'test'));
+    public function create_By_id($id){
+        // $user = User::find($id);
+        // // Vérifiez si l'utilisateur existe
+        // if (!$user) {
+        //     // Gérez le cas où l'utilisateur n'est pas trouvé
+        // }
+        return view('test.create_By_user', ['userId' => $id]);
     }
 
     public function store(Request $request)

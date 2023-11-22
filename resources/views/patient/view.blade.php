@@ -261,11 +261,9 @@
                                         aria-labelledby="tests-tab">
                                         <div class="row">
                                             <div class="col">
-                                                @can('create test_By_id')
                                                     <a class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="{{ route('test.create_by', ['id' => $patient->id]) }}"><i class="fa fa-pen"></i>
+                                                        href="{{ route('test.create_by', ['id' => $patient->id])}}"><i class="fa fa-pen"></i>
                                                         {{ __('sentence.Add Test') }}</a>
-                                                @endcan
                                             </div>
                                         </div>
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
