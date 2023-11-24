@@ -101,7 +101,7 @@
             <!-- Earnings (Annual) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-success shadow h-100 py-2 card-po1">
-                    <div class="card-body shadow-lg card-po bg-success col-md-9" >
+                    <div class="card-body shadow-lg card-po bg-success col-md-9">
                         <div class="col-auto">
                             <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
                         </div>
@@ -160,6 +160,28 @@
                                     <?php echo e(App\Setting::get_option('currency')); ?></div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-5">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class=" fas fa-chart-bar "> Chiffre d'affaire par mois </i>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myBarChart" width="100%" height="40%"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-5">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar "> Test Line</i>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myAreaChart" width="100%" height="40%"></canvas>
                     </div>
                 </div>
             </div>
@@ -247,6 +269,15 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer'); ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="/dashboard/vendor/chart.js/Chart.bundle.js"></script>
+    <script type="text/javascript">
+        var _ydata = JSON.parse('<?php echo json_encode($months); ?>');
+        var _xdata = JSON.parse('<?php echo json_encode($totalAmounts); ?>');
+    </script>
+    <script src="<?php echo e(asset('assets/demo/chart-bar-demo.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/demo/chart-area-demo.js')); ?>"></script>
+    
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\HS\gestion-des-soin-laravel\resources\views/home.blade.php ENDPATH**/ ?>

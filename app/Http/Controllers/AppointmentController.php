@@ -20,8 +20,8 @@ class AppointmentController extends Controller
 
     public function create(){
 
-    	$patients = User::where('role','patient')->get();
-	    return view('appointment.create', ['patients' => $patients]);
+    	$patients = User::where('role_id','3')->get();
+        	    return view('appointment.create', ['patients' => $patients]);
     }
 
     public function checkslots($date){

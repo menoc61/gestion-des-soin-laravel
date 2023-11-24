@@ -69,15 +69,15 @@
                         <div class="form-group row">
                             <label for="role" class="col-sm-3 col-form-label">{{ __('sentence.Role') }}</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="role" id="role">
-                                    {{-- <option value="Unknown">{{ __('sentence.Select Role') }}</option> --}}
+                                <select class="form-control" name="role_id" id="roleID">
+                                    {{-- <option value="Unknown">{{ __('sentence.Select Role') }}</option>
                                     <option value="admin">{{ __('sentence.Admin') }}</option>
-                                    <option value="praticien">{{ __('sentence.Doctor') }}</option>
+                                    <option value="praticien">{{ __('sentence.Doctor') }}</option> --}}
 
-                                    {{-- @forelse($roles as $role)
-                                        <option value="{{ $role }}">{{ ucfirst($role) }}</option>
-                                    @empty
-                                    @endforelse --}}
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}">
+                                            {{ $role->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

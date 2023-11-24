@@ -37,9 +37,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td><?php echo e($test->id); ?></td>
+                                <td><?php echo e($key+1); ?></td>
                                 <td><?php echo e($test->test_name); ?></td>
                                 <td> <?php echo e($test->comment); ?> </td>
                                 <td align="center"><?php echo e(__('sentence.In Prescription')); ?> :
