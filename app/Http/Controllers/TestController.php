@@ -22,12 +22,12 @@ class TestController extends Controller
     }
 
     public function create_By_id($id){
-        // $user = User::find($id);
-        // // Vérifiez si l'utilisateur existe
-        // if (!$user) {
-        //     // Gérez le cas où l'utilisateur n'est pas trouvé
-        // }
-        return view('test.create_By_user', ['userId' => $id]);
+        $user = User::find($id);
+        // Vérifiez si l'utilisateur existe
+        if (!$user) {
+            // Gérez le cas où l'utilisateur n'est pas trouvé
+        }
+        return view('test.create_By_user', ['userId' => $id, 'userName' => $user->name]);
     }
 
     public function store(Request $request)
