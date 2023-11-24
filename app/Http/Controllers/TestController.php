@@ -17,9 +17,17 @@ class TestController extends Controller
 
     public function create()
     {
-        $patients = User::where('role', 'patient')->get();
-
+        $patients = User::where('role_id','3')->get();
         return view('test.create', compact('patients'));
+    }
+
+    public function create_By_id($id){
+        // $user = User::find($id);
+        // // Vérifiez si l'utilisateur existe
+        // if (!$user) {
+        //     // Gérez le cas où l'utilisateur n'est pas trouvé
+        // }
+        return view('test.create_By_user', ['userId' => $id]);
     }
 
     public function store(Request $request)
@@ -139,8 +147,7 @@ class TestController extends Controller
     public function edit($id)
     {
         $test = Test::find($id);
-        $patients = User::where('role', 'patient')->get();
-
+        $patients = User::where('role_id','3')->get();
         return view('test.edit', compact('patients', 'test'));
     }
 
@@ -260,10 +267,16 @@ class TestController extends Controller
         return view('test.view_diagnostic', ['tests' => $tests]);
     }
 
+    // public function view_test($id)
+    // {
+    //     $prescription_tests = Prescription_test::where('prescription_id', $id)->get();
+    //     return view('test.view_test', ['prescription_tests' => $prescription_tests]);
+    // }
+
     public function view_test($id)
     {
-        $prescription_tests = Prescription_test::where('prescription_id', $id)->get();
-        return view('test.view_test', ['prescription_tests' => $prescription_tests]);
+        $tests = Test::where('id', $id)->get();
+        return view('test.view_test', ['tests' => $tests]);
     }
 
 }

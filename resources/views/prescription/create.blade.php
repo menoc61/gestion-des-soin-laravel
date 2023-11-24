@@ -134,14 +134,17 @@
                                      <label class="control-label"></label><i class="bar"></i>
                                  </div>
                              </div>
+
                              <div class="col-md-6">
-                                 <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
-                                   <option value="">{{ __('sentence.Select Drug') }}...</option>
-                                   @foreach($drugs as $drug)
-                                       <option value="{{ $drug->id }}">{{ $drug->trade_name }}</option>
-                                   @endforeach
-                                 </select>
+                                <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
+                                    <option value="">{{ __('sentence.Select Drug') }}...</option>
+                                    @foreach($drugs as $drug)
+                                        <option value="{{ $drug->id }}">{{ $drug->trade_name }}</option>
+                                    @endforeach
+                                </select>
+                                <div id="genericNames"></div>
                              </div>
+
                              {{-- <div class="col-md-4">
                                  <div class="form-group-custom">
                                      <input type="text" id="strength" name="strength[]"  class="form-control" placeholder="Mg/Ml">
@@ -204,6 +207,7 @@
                               </div>
                          </div>
 </script>
+
 @endsection
 
 @section('header')

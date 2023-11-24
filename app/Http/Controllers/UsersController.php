@@ -14,7 +14,8 @@ use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -30,20 +31,20 @@ class UsersController extends Controller
         return view('user.all', ['users' => $users]);
     }
 
-    public function create(){
-        $roles = Role::all()->pluck('name');
-        return view('user.create',['roles' => $roles]);
+    public function create()
+    {
+        $roles = Role::all();
+        return view('user.create', ['roles' => $roles]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required',
-            Rule::in(['admin', 'praticien']),
-            ],
+            'role_id' => ['required'],
 
         ]);
 
@@ -51,7 +52,7 @@ class UsersController extends Controller
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
         $user->name = $request->name;
-        $user->role = $request->role;
+        $user->role_id = $request->role_id;
         $user->save();
 
         $patient = new Patient();
@@ -62,32 +63,32 @@ class UsersController extends Controller
         $patient->save();
 
         return Redirect::route('user.all')->with('success', __('sentence.User Created Successfully'));
-
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $user = User::findorfail($id);
         $roles = Role::all()->pluck('name');
-        return view('user.edit',['user' => $user,'roles' => $roles]);
+        return view('user.edit', ['user' => $user, 'roles' => $roles]);
     }
 
-    public function edit_profile(){
+    public function edit_profile()
+    {
         $user = Auth::user();
         $roles = Role::all()->pluck('name');
-        return view('user.edit',['user' => $user,'roles' => $roles]);
+        return view('user.edit', ['user' => $user, 'roles' => $roles]);
     }
 
-    public function store_edit(Request $request){
+    public function store_edit(Request $request)
+    {
 
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => [
-                    'required', 'email', 'max:255',
-                    Rule::unique('users')->ignore($request->user_id),
+                'required', 'email', 'max:255',
+                Rule::unique('users')->ignore($request->user_id),
             ],
-            'role' => ['required',
-            Rule::in(['admin', 'praticien']),
-            ],
+            // 'role' => ['required'],
 
         ]);
 
@@ -95,7 +96,7 @@ class UsersController extends Controller
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
         $user->name = $request->name;
-        $user->role = $request->role;
+        $user->role_id = $request->role_id;
         $user->update();
 
 
@@ -106,15 +107,14 @@ class UsersController extends Controller
         $patient->birthday = '00-00-0000';
         $patient->update();
 
-        if(!empty($request->role)):
-            $count_admins = User::role('admin')->count();
-            if($count_admins == 1 && $user->hasRole('admin') == 1 && $request->role != "admin"){
-                return Redirect::route('user.all')->with('warning', __('You Cannot delete the only existant admin'));
-            }
-            $user->syncRoles($request->role);
-        endif;
+        // if(!empty($request->role)):
+        //     $count_admins = User::role('Admin')->count();
+        //     if($count_admins == 1 && $user->hasRole('Admin') == 1 && $request->role != "Admin"){
+        //         return Redirect::route('user.all')->with('warning', __('You Cannot delete the only existant admin'));
+        //     }
+        //     $user->syncRoles($request->role);
+        // endif;
 
         return Redirect::route('user.all')->with('success', __('sentence.User Updated Successfully'));
-
     }
 }

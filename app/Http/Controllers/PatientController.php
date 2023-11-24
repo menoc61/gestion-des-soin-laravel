@@ -8,6 +8,7 @@ use App\Document;
 use App\History;
 use App\Patient;
 use App\Prescription;
+use App\Test;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -24,9 +25,9 @@ class PatientController extends Controller
         $sortColumn = request()->get('sort');
         $sortOrder = request()->get('order', 'asc');
         if (!empty($sortColumn)) {
-            $patients = User::where('role', '=', 'patient')->OrderBy($sortColumn, $sortOrder)->paginate(25);
+            $patients = User::where('role_id','3')->OrderBy($sortColumn, $sortOrder)->paginate(25);
         } else {
-            $patients = User::where('role', '=', 'patient')->paginate(25);
+            $patients = User::where('role_id','3')->paginate(25);
         }
         return view('patient.all', ['patients' => $patients]);
     }
@@ -183,6 +184,7 @@ class PatientController extends Controller
         $patient = User::findOrfail($id);
         $prescriptions = Prescription::where('user_id', $id)->OrderBy('id', 'Desc')->get();
         $appointments = Appointment::where('user_id', $id)->OrderBy('id', 'Desc')->get();
+        $tests = Test::where('user_id', $id)->OrderBy('id', 'Desc')->get();
         $documents = Document::where('user_id', $id)->OrderBy('id', 'Desc')->get();
         $invoices = Billing::where('user_id', $id)->OrderBy('id', 'Desc')->get();
         $historys = History::where('user_id', $id)->OrderBy('id', 'Desc')->get();
@@ -194,6 +196,7 @@ class PatientController extends Controller
             'invoices' => $invoices,
             'documents' => $documents,
             'historys' => $historys,
+            'tests' => $tests,
         ]);
     }
 

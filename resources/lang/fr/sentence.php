@@ -91,9 +91,9 @@ return [
   'Total Appointments' => 'Tous les RDV',
   'New Patients' => 'Nouveaux Hôtes',
   'Total Prescriptions' => 'Traitements',
-  'Total Payments' => 'Paiements',
-  'Payments this month' => 'Paiements du mois',
-  'Payments this year' => 'Paiements de l\'année',
+  'Total Payments' => 'Nombres Paiements',
+  'Payments this month' => 'C.A. du mois de Novembre',
+  'Payments this year' => 'C.A. année 2023',
    'Login' => 'Se Connecter',
    'Email' => 'Adresse e-mail',
    'Password' => 'Mot de passe',
@@ -251,5 +251,6 @@ return [
     'No document available' => 'Aucun document trouvé',
     'Product list' => 'List des produits',
     'Add a product' => 'Ajoute un produit',
-    'View Test Detail' => 'Detail du Diagnostic'
+    'View Test Detail' => 'Detail du Diagnostic',
+    'New User' => 'Nouveau',
 ];
