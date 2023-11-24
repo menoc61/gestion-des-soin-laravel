@@ -7,6 +7,7 @@ use App\User;
 use App\Setting;
 use App\Billing;
 use App\Billing_item;
+use App\Prescription;
 use Redirect;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,17 +19,27 @@ class BillingController extends Controller
         $this->middleware('auth');
     }
 
-
     public function create()
     {
-        $patients = User::where('role_id','3')->get();
-
+        $patients = User::where('role_id', '3')->get();
         return view('billing.create', ['patients' => $patients]);
+    }
+
+    public function create_By_id($id){
+        $user = User::find($id);
+        // Vérifiez si l'utilisateur existe
+        if (!$user) {
+            // Gérez le cas où l'utilisateur n'est pas trouvé
+        }
+
+        $prescriptions = Prescription::join('users', 'prescriptions.user_id', '=', 'users.id')
+                 ->where('users.id', $id)
+                 ->get();
+        return view('billing.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('prescriptions'));
     }
 
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'patient_id' => ['required', 'exists:users,id'],
             'payment_mode' => 'required',
@@ -54,7 +65,6 @@ class BillingController extends Controller
         if ($request->deposited_amount == 0) {
             $request->payment_status = 'Unpaid';
         }
-
 
         $billing = new Billing;
 

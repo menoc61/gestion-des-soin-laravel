@@ -204,7 +204,7 @@ return [
     'Reason for Payment' => 'Motif du Paiement',
     'Total With Tax' => 'Montant Total des Soins',
     'Already Paid' => 'Montant Payé',
-    'Due Balance' => 'Montant à Payer',
+    'Due Balance' => 'Reste à Payer',
     'Payment Method' => 'Méthode de Paiement',
     // Patient
     'Full Name' => 'Nom complet',
