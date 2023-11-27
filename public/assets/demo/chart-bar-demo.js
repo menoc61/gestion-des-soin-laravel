@@ -19,20 +19,20 @@ var myLineChart = new Chart(ctx, {
     scales: {
       xAxes: [{
         time: {
-          unit: 'month'
+          unit: 'date'
         },
         gridLines: {
           display: false
         },
         ticks: {
-          maxTicksLimit: 12
+          maxTicksLimit: 7
         }
       }],
       yAxes: [{
         ticks: {
           min: 0,
-          max: 1000000,
-          maxTicksLimit: 5
+          max: 10000000,
+          maxTicksLimit: 10,
         },
         gridLines: {
           display: true
