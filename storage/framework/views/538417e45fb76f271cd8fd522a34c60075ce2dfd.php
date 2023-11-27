@@ -121,7 +121,11 @@
                                     <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents"
                                         role="tab" aria-controls="documents" aria-selected="false">Fichier Médical</a>
                                 </li>
-                                
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="appointements-tab" data-toggle="tab" href="#appointements"
+                                        role="tab" aria-controls="appointements"
+                                        aria-selected="false"><?php echo e(__('sentence.Appointment')); ?></a>
+                                </li>
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="tests-tab" data-toggle="tab" href="#tests" role="tab"
                                         aria-controls="tests" aria-selected="false"><?php echo e(__('sentence.Test')); ?></a>
