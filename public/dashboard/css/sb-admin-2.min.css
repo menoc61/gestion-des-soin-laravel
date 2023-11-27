@@ -74,11 +74,11 @@ html {
 @media (min-width: 1200px) {
     .card-po {
       position: absolute;
-      bottom: 50%;
+      bottom: 0;
       margin-left: 50%;
     }
     .card-po1 {
-      position: fixed;
+      position: relative;
     }
   }
 

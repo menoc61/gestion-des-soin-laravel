@@ -91,7 +91,7 @@
 
                 {{-- Code concernant le Module Rendez-Vous sur la Sidenav --}}
 
-                {{-- @if (Auth::user()->can('create appointment') || Auth::user()->can('view all appointments') || Auth::user()->can('delete appointment'))
+                @if (Auth::user()->can('create appointment') || Auth::user()->can('view all appointments') || Auth::user()->can('delete appointment'))
                <!-- Divider -->
                <hr class="sidebar-divider">
                <!-- Heading -->
@@ -117,7 +117,7 @@
                      </div>
                   </div>
                </li>
-               @endif --}}
+               @endif
 
 
                 {{-- ********************* Debut Section Traitements de la sidenav ************************** --}}
