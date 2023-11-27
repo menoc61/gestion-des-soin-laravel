@@ -21,26 +21,39 @@ class PrescriptionController extends Controller
     public function create()
     {
         $drugs = Drug::all();
-        $patients = User::where('role_id','3')->get();
-        $praticiens = User::where('role_id','2')->get();
+        $patients = User::where('role_id', '3')->get();
+        $praticiens = User::where('role_id', '2')->get();
         $tests = Test::all();
-
         return view('prescription.create', compact('drugs', 'patients', 'praticiens', 'tests'));
+    }
+
+    public function create_By_Id($id)
+    {
+        $user = User::find($id);
+        // Vérifiez si l'utilisateur existe
+        if (!$user) {
+            // Gérez le cas où l'utilisateur n'est pas trouvé
+        }
+        $drugs = Drug::all();
+        $patients = User::where('role_id', '3')->get();
+        $praticiens = User::where('role_id', '2')->get();
+        $tests = Test::where('user_id', $id)->get();
+        return view('prescription.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-               'patient_id' => ['required', 'exists:users,id'],
-               'Doctor_id' => ['required', 'exists:users,id'],
-               'trade_name.*' => 'required',
-           ]);
+            'patient_id' => ['required', 'exists:users,id'],
+            'Doctor_id' => ['required', 'exists:users,id'],
+            'trade_name.*' => 'required',
+        ]);
 
         $prescription = new Prescription();
 
         $prescription->user_id = $request->patient_id;
         $prescription->doctor_id = $request->Doctor_id;
-        $prescription->reference = 'p'.rand(10000, 99999);
+        $prescription->reference = 'p' . rand(10000, 99999);
 
         $prescription->save();
 
@@ -51,13 +64,13 @@ class PrescriptionController extends Controller
                 if ($request->trade_name[$x] != null) {
                     $add_drug = new Prescription_drug();
 
-                    $add_drug->type = $request->input('type.'.$x) ?? null;
-                    $add_drug->strength = $request->input('strength.'.$x) ?? null;
-                    $add_drug->dose = $request->input('dose.'.$x) ?? null;
-                    $add_drug->duration = $request->input('duration.'.$x) ?? null;
-                    $add_drug->drug_advice = $request->input('drug_advice.'.$x) ?? null;
+                    $add_drug->type = $request->input('type.' . $x) ?? null;
+                    $add_drug->strength = $request->input('strength.' . $x) ?? null;
+                    $add_drug->dose = $request->input('dose.' . $x) ?? null;
+                    $add_drug->duration = $request->input('duration.' . $x) ?? null;
+                    $add_drug->drug_advice = $request->input('drug_advice.' . $x) ?? null;
                     $add_drug->prescription_id = $prescription->id;
-                    $add_drug->drug_id = $request->input('trade_name.'.$x) ?? null;
+                    $add_drug->drug_id = $request->input('trade_name.' . $x) ?? null;
 
                     $add_drug->save();
                 }
@@ -127,7 +140,7 @@ class PrescriptionController extends Controller
         $pdf->setOption('viewport-size', '1024x768');
 
         // download PDF file with download method
-        return $pdf->download($prescription->User->name.'_pdf.pdf');
+        return $pdf->download($prescription->User->name . '_pdf.pdf');
     }
 
     public function edit($id)
@@ -145,8 +158,8 @@ class PrescriptionController extends Controller
     public function update(Request $request)
     {
         $validatedData = $request->validate([
-               'patient_id' => ['required', 'exists:users,id'],
-               'trade_name.*' => 'required',
+            'patient_id' => ['required', 'exists:users,id'],
+            'trade_name.*' => 'required',
         ]);
 
         $prescription_drugs = Prescription_drug::where('prescription_id', $request->prescription_id)->pluck('id')->toArray();
@@ -179,13 +192,14 @@ class PrescriptionController extends Controller
             for ($x = 0; $x < $i; ++$x) {
                 if (isset($request->prescription_drug_id[$x])) {
                     Prescription_drug::where('id', $request->prescription_drug_id[$x])
-                              ->update(['type' => $request->type[$x],
-                                          'strength' => $request->strength[$x],
-                                          'dose' => $request->dose[$x],
-                                          'duration' => $request->duration[$x],
-                                          'drug_advice' => $request->drug_advice[$x],
-                                          'drug_id' => $request->trade_name[$x],
-                                      ]);
+                        ->update([
+                            'type' => $request->type[$x],
+                            'strength' => $request->strength[$x],
+                            'dose' => $request->dose[$x],
+                            'duration' => $request->duration[$x],
+                            'drug_advice' => $request->drug_advice[$x],
+                            'drug_id' => $request->trade_name[$x],
+                        ]);
                 } else {
                     $add_drug = new Prescription_drug();
 
@@ -233,9 +247,10 @@ class PrescriptionController extends Controller
             for ($x = 0; $x < $i; ++$x) {
                 if (isset($request->prescription_test_id[$x])) {
                     Prescription_test::where('id', $request->prescription_test_id[$x])
-                              ->update(['description' => $request->description[$x],
-                                          'test_id' => $request->test_name[$x],
-                                      ]);
+                        ->update([
+                            'description' => $request->description[$x],
+                            'test_id' => $request->test_name[$x],
+                        ]);
                 } else {
                     $add_test = new Prescription_test();
                     $add_test->description = $request->description[$x];

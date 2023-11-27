@@ -257,16 +257,23 @@
 
                                     {{-- Start Test  --}}
 
-                                    <div class="tab-pane fade" id="tests" role="tabpanel"
-                                        aria-labelledby="tests-tab">
+                                    <div class="tab-pane fade" id="tests" role="tabpanel" aria-labelledby="tests-tab">
                                         <div class="row">
                                             <div class="col">
-                                                    <a class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="{{ route('test.create_by', ['id' => $patient->id])}}"><i class="fa fa-pen"></i>
-                                                        {{ __('sentence.Add Test') }}</a>
+                                                <a class="btn btn-primary btn-sm my-4 float-right"
+                                                    href="{{ route('test.create_by', ['id' => $patient->id]) }}"><i
+                                                        class="fa fa-pen"></i>
+                                                    {{ __('sentence.Add Test') }}</a>
                                             </div>
                                         </div>
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <tr>
+                                                <td align="center"><b>Id</b></td>
+                                                <td align="center"><b> Nom Diagnostic</b> </td>
+                                                <td align="center"><b>Description</b> </td>
+                                                <td align="center"><b> Utilisation </b></td>
+                                                <td align="center"><b> Action</b> </td>
+                                            </tr>
                                             @forelse($tests as $test)
                                                 <tr>
                                                     <td>{{ $test->id }}</td>
@@ -297,7 +304,8 @@
                                                 <tr>
                                                     <td colspan="5" class="text-center"><img
                                                             src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br>
-                                                        <b class="text-muted">pas de diagnostic trouvé</b></td>
+                                                        <b class="text-muted">pas de diagnostic trouvé</b>
+                                                    </td>
                                                 </tr>
                                             @endforelse
                                         </table>
@@ -314,7 +322,7 @@
                                             <div class="col">
                                                 @can('create prescription')
                                                     <a class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="{{ route('prescription.create') }}"><i class="fa fa-pen"></i>
+                                                        href="{{ route('prescription.create_by', ['id' => $patient->id]) }}"><i class="fa fa-pen"></i>
                                                         {{ __('sentence.Create Prescription') }}</a>
                                                 @endcan
                                             </div>
@@ -468,7 +476,7 @@
                                             <div class="col">
                                                 @can('create invoice')
                                                     <a type="button" class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="{{ route('billing.create') }}"><i class="fa fa-plus"></i>
+                                                        href="{{ route('billing.create_by', ['id' => $patient->id]) }}"><i class="fa fa-plus"></i>
                                                         {{ __('sentence.Create Invoice') }}</a>
                                                 @endcan
                                             </div>

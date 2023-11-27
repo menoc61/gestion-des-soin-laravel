@@ -258,16 +258,23 @@
 
                                     
 
-                                    <div class="tab-pane fade" id="tests" role="tabpanel"
-                                        aria-labelledby="tests-tab">
+                                    <div class="tab-pane fade" id="tests" role="tabpanel" aria-labelledby="tests-tab">
                                         <div class="row">
                                             <div class="col">
-                                                    <a class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="<?php echo e(route('test.create_by', ['id' => $patient->id])); ?>"><i class="fa fa-pen"></i>
-                                                        <?php echo e(__('sentence.Add Test')); ?></a>
+                                                <a class="btn btn-primary btn-sm my-4 float-right"
+                                                    href="<?php echo e(route('test.create_by', ['id' => $patient->id])); ?>"><i
+                                                        class="fa fa-pen"></i>
+                                                    <?php echo e(__('sentence.Add Test')); ?></a>
                                             </div>
                                         </div>
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <tr>
+                                                <td align="center"><b>Id</b></td>
+                                                <td align="center"><b> Nom Diagnostic</b> </td>
+                                                <td align="center"><b>Description</b> </td>
+                                                <td align="center"><b> Utilisation </b></td>
+                                                <td align="center"><b> Action</b> </td>
+                                            </tr>
                                             <?php $__empty_1 = true; $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                                 <tr>
                                                     <td><?php echo e($test->id); ?></td>
@@ -298,7 +305,8 @@
                                                 <tr>
                                                     <td colspan="5" class="text-center"><img
                                                             src="<?php echo e(asset('img/not-found.svg')); ?>" width="200" /> <br><br>
-                                                        <b class="text-muted">pas de diagnostic trouvé</b></td>
+                                                        <b class="text-muted">pas de diagnostic trouvé</b>
+                                                    </td>
                                                 </tr>
                                             <?php endif; ?>
                                         </table>
@@ -315,7 +323,7 @@
                                             <div class="col">
                                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create prescription')): ?>
                                                     <a class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="<?php echo e(route('prescription.create')); ?>"><i class="fa fa-pen"></i>
+                                                        href="<?php echo e(route('prescription.create_by', ['id' => $patient->id])); ?>"><i class="fa fa-pen"></i>
                                                         <?php echo e(__('sentence.Create Prescription')); ?></a>
                                                 <?php endif; ?>
                                             </div>
@@ -475,7 +483,7 @@
                                             <div class="col">
                                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create invoice')): ?>
                                                     <a type="button" class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="<?php echo e(route('billing.create')); ?>"><i class="fa fa-plus"></i>
+                                                        href="<?php echo e(route('billing.create_by', ['id' => $patient->id])); ?>"><i class="fa fa-plus"></i>
                                                         <?php echo e(__('sentence.Create Invoice')); ?></a>
                                                 <?php endif; ?>
                                             </div>
