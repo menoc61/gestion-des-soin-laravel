@@ -21,6 +21,15 @@
                 <div class="card-body">
                     <form method="post" action="{{ route('test.store_id', ['id' => $userId])}}">
                         <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-3 col-form-label">{{ __('sentence.Patient Name') }}<font
+                                    color="red">*</font></label>
+                                    <div class="col-sm-9 input-group">
+                                        <input type="hidden" class="form-control" value="{{ $userId }}"  name="patient_id" readonly>
+                                        <input type="text" class="form-control" value="{{ $userName }}" readonly>
+                                        {{ csrf_field() }}
+                                    </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label">{{ __('sentence.Test Name') }}<font
                                     color="red">*</font></label>
                                     <div class="col-sm-9 input-group">
@@ -32,9 +41,6 @@
                                                     {{ $patient->id }}</option>
                                             @endforeach
                                         </select> --}}
-
-                                        <input type="text" class="form-control" value="{{ $userId }}"  name="patient_id" readonly>
-
                                         <input type="text" class="form-control" id="test_name" name="test_name" >
                                         {{ csrf_field() }}
                                     </div>

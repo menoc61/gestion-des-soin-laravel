@@ -82,6 +82,8 @@ Route::get('/prescription/view/{id}', 'PrescriptionController@view')->where('id'
 Route::get('/prescription/pdf/{id}', 'PrescriptionController@pdf')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|print prescription']);
 Route::get('/prescription/delete/{id}', 'PrescriptionController@destroy')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|delete prescription']);
 Route::get('/prescription/user/{id}', 'PrescriptionController@view_for_user')->where('id', '[0-9]+')->name('prescription.view_for_user')->middleware(['role_or_permission:Admin|view patient']);
+Route::get('/prescription/create_by/{id}','PrescriptionController@create_By_Id')->where('id', '[0-9]+')->name('prescription.create_by');
+Route::post('/prescription/create_by/{id}', 'PrescriptionController@store')->name('prescription.store_id');
 
 Route::get('/prescription/edit/{id}', 'PrescriptionController@edit')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|edit prescription']);
 Route::post('/prescription/update', 'PrescriptionController@update')->name('prescription.update');
@@ -95,6 +97,8 @@ Route::get('/billing/pdf/{id}', 'BillingController@pdf')->where('id', '[0-9]+')-
 Route::get('/billing/delete/{id}', 'BillingController@destroy')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|delete invoice']);
 Route::get('/billing/edit/{id}', 'BillingController@edit')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|edit invoice']);
 Route::post('/billing/update', 'BillingController@update')->name('billing.update');
+Route::get('/billing/create_by/{id}','BillingController@create_By_Id')->where('id', '[0-9]+')->name('billing.create_by');
+Route::post('/billing/create_by/{id}', 'BillingController@store')->name('billing.store_id');
 
 // Settings
 /* Doctorino Settings */
