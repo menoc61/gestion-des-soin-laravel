@@ -21,47 +21,47 @@
             {{-- carte contenant le nombre de rendez-vous qu'aura lieu un jour  --}}
 
             <!-- Earnings (Monthly) Card Example -->
-            {{-- <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    {{ __('sentence.New Appointments') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments_today->count() }}
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-calendar-check fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
-
-
-            {{-- carte contenant le nommbre total de rendez-vous --}}
-
-            <!-- Earnings (Annual) Card Example -->
-            {{-- <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-bottom-dark shadow h-100 py-2 card-po1">
-                    <div  class="card-body shadow-lg card-po bg-dark col-md-6">
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-success shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-success col-md-9">
                         <div class="col-auto">
-                            <center><i class="fas fa-calendar fa-2x text-gray-300"></i></center>
+                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    {{ __('sentence.New Appointments') }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments_today->count() }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {{-- carte contenant le nommbre total de rendez-vous --}}
+
+            <!-- Earnings (Annual) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-success shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-success col-md-9">
+                        <div class="col-auto">
+                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                        </div>
+                    </div>
+                    <div class="card-body card-po1">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     {{ __('sentence.Total Appointments') }}</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
 
 
             <!-- Tasks Card Example -->
@@ -221,41 +221,52 @@
 
     @role('Praticien')
         <div class="row top">
+            {{-- carte contenant le nombre de rendez-vous qu'aura lieu un jour  --}}
+
             <!-- Earnings (Monthly) Card Example -->
-            {{-- <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-success shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-success col-md-9">
+                        <div class="col-auto">
+                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                        </div>
+                    </div>
+                    <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     {{ __('sentence.New Appointments') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments_today->count() }}
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-calendar-check fa-2x text-gray-300"></i>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments_today->count() }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
+            {{-- carte contenant le nommbre total de rendez-vous --}}
+
             <!-- Earnings (Annual) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
+            <div class="col-xl-3 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-success shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-success col-md-9">
+                        <div class="col-auto">
+                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                        </div>
+                    </div>
+                    <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     {{ __('sentence.Total Appointments') }}</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments }}</div>
                             </div>
-                            <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
+
 
             <!-- Tasks Card Example -->
             <div class="col-xl-3 col-md-6 mb-4 taille marge">
@@ -325,7 +336,7 @@
 
     <!-- Afficher les rendez-vous du jour au niveau de la page d'accueil -->
 
-    {{-- @role('Admin|Praticien')
+    @role('Admin|Praticien')
 
 <div class="row">
    <div class="col">
@@ -444,7 +455,7 @@
          </div>
       </div>
    </div>
-</div> --}}
+</div>
 @endsection
 
 @section('header')
