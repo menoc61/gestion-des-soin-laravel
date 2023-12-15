@@ -542,7 +542,7 @@
                                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view invoice')): ?>
                                                             <a href="<?php echo e(url('billing/view/' . $invoice->id)); ?>"
                                                                 class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                    class="fa fa-eye"></i></a>
+                                                                    class="fas fa-print"></i></a>
                                                         <?php endif; ?>
                                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit invoice')): ?>
                                                             <a href="<?php echo e(url('billing/edit/' . $invoice->id)); ?>"
@@ -554,6 +554,10 @@
                                                                 class="btn btn-outline-danger btn-circle btn-sm"><i
                                                                     class="fas fa-trash"></i></a>
                                                         <?php endif; ?>
+                                                        <a href="<?php echo e(url('payment/create/' . $invoice->id)); ?>"
+                                                            class="btn btn-outline-secondary btn-circle btn-sm"><i
+                                                                class="fas fa-fw fa-dollar-sign"></i></a>
+
                                                     </td>
                                                 </tr>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

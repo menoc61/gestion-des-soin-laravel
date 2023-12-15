@@ -206,6 +206,7 @@ return [
     'Already Paid' => 'Montant Payé',
     'Due Balance' => 'Reste à Payer',
     'Payment Method' => 'Méthode de Paiement',
+    'Pay Invoice' => 'Payer la facture',
     // Patient
     'Full Name' => 'Nom complet',
     'Profil' => 'Photo de Profil',
@@ -253,4 +254,5 @@ return [
     'Add a product' => 'Ajoute un produit',
     'View Test Detail' => 'Detail du Diagnostic',
     'New User' => 'Nouveau',
+    'role id does not exist' => 'ID du role ne devrais pas exister',
 ];
