@@ -10,8 +10,8 @@
     </div>
 
     <form method="post" action="{{ route('billing.store_id', ['id' => $userId]) }}">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
+        <div class="justify-content-center">
+            <div class="col-md-6 ">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Invoice Details') }}</h6>
@@ -36,6 +36,7 @@
                                         class='fa fa-plus'></i> {{ __('sentence.Add Item') }}</a>
                             </div>
                         </fieldset>
+
                         {{-- <div class="d-flex justify-content-between ">
                     <span class="">Montant sans Taxe : <b id="total_without_tax_income">0 </b> {{ App\Setting::get_option('currency') }}</span><br>
                     <span class="">TVA : <b>{{ App\Setting::get_option('vat') }} %</b> </span><br>
