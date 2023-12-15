@@ -322,7 +322,8 @@
                                             <div class="col">
                                                 @can('create prescription')
                                                     <a class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="{{ route('prescription.create_by', ['id' => $patient->id]) }}"><i class="fa fa-pen"></i>
+                                                        href="{{ route('prescription.create_by', ['id' => $patient->id]) }}"><i
+                                                            class="fa fa-pen"></i>
                                                         {{ __('sentence.Create Prescription') }}</a>
                                                 @endcan
                                             </div>
@@ -332,6 +333,7 @@
                                                 <td align="center">{{ __('sentence.Reference') }}</td>
                                                 <td class="text-center">{{ __('sentence.Content') }}</td>
                                                 <td align="center">{{ __('sentence.Created at') }}</td>
+                                                <td align="center">{{ __('sentence.follow') }}</td>
                                                 <td align="center">{{ __('sentence.Actions') }}</td>
                                             </tr>
                                             @forelse($prescriptions as $prescription)
@@ -347,6 +349,11 @@
                                                     </td>
                                                     <td align="center"><label
                                                             class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
+                                                    </td>
+                                                    <td align="center">
+                                                        <a href="{{ url('test/view/' . $test->id) }}" class="btn btn-outline-primary btn-circle btn-sm">
+                                                            <i class="fa fa-id-card"></i>
+                                                        </a>
                                                     </td>
                                                     <td align="center">
                                                         @can('view prescription')
@@ -476,7 +483,8 @@
                                             <div class="col">
                                                 @can('create invoice')
                                                     <a type="button" class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="{{ route('billing.create_by', ['id' => $patient->id]) }}"><i class="fa fa-plus"></i>
+                                                        href="{{ route('billing.create_by', ['id' => $patient->id]) }}"><i
+                                                            class="fa fa-plus"></i>
                                                         {{ __('sentence.Create Invoice') }}</a>
                                                 @endcan
                                             </div>

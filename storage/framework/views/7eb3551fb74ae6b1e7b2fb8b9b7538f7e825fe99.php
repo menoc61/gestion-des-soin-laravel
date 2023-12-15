@@ -90,78 +90,109 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            // Initialiser le menu déroulant Select2
-            $('#patient-select').select2();
+            $('.multiselect-search').select2();
 
-            // Filtrer les options des tests en fonction du patient sélectionné
-            $('#patient-select').change(function() {
-                var selectedPatientId = $(this).val();
-                var $testSelect = $('#test-select');
+            // Get references to the patient and test select elements
+            const patientSelect = $('#PatientID');
+            const testSelect = $('#test');
 
-                // Vider les options du menu déroulant des tests
-                $testSelect.empty();
+            // Store the original test options
+            const originalTestOptions = testSelect.html();
 
-                // Parcourir toutes les options des tests
-                $('#test-select option').each(function() {
-                    var testPatientId = $(this).data('patient-id');
+            // Function to update test options based on the selected patient
+            function updateTestOptions() {
+                const selectedPatientName = patientSelect.find('option:selected').text();
 
-                    // Vérifier si le test est associé au patient sélectionné ou s'il est disponible pour tous les patients (patient_id = null)
-                    if (testPatientId == selectedPatientId || testPatientId === null) {
-                        // Ajouter l'option au menu déroulant des tests
-                        $testSelect.append($(this));
+                // Clear and restore original test options
+                testSelect.empty().html(originalTestOptions);
+
+                // Filter and show test options based on the selected patient
+                testSelect.find('option').each(function() {
+                    const optionText = $(this).text();
+                    if (optionText.includes(selectedPatientName)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
                     }
                 });
 
-                // Réinitialiser le menu déroulant Select2 pour mettre à jour les options affichées
-                $testSelect.val('').trigger('change');
+                // Trigger the Select2 plugin to update the dropdown
+                testSelect.trigger('change');
+            }
+
+            // Attach a change event listener to the patient select element
+            patientSelect.on('change', function() {
+                updateTestOptions();
             });
         });
     </script>
 
     <script type="text/template" id="drugs_labels">
-   <section class="field-group">
-                         <div class="row">
-                             <div class="col-md-2">
-                                 <div class="form-group-custom">
-                                     <input type="text" class="form-control" name="type[]" id="task_{?}" placeholder="<?php echo e(__('sentence.Type')); ?>" class="ui-autocomplete-input" autocomplete="off">
-                                     <label class="control-label"></label><i class="bar"></i>
-                                 </div>
-                             </div>
-                             <div class="col-md-6">
-                                 <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
-                                   <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
-                                   <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                       <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
-                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                 </select>
-                             </div>
+        <section class="field-group">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group-custom">
+                                            <input type="text" class="form-control"
+                                            name="type[]" id="task_{?}" placeholder="<?php echo e(__('sentence.Type')); ?>"
+                                            class="ui-autocomplete-input" style="
+                                                                                color: #28a745;
+                                                                                background-color: transparent;
+                                                                                border-color: #28a745;"
+                                            value="new" autocomplete="off" disabled>
+                                            <label class="control-label"></label><i class="bar"></i>
+                                        </div>
+                                    </div>
 
-                             
-                         </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
+                                            <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
+                                            <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </select>
+                                        <div id="genericNames"></div>
+                                    </div>
+                                </div>
 
-                         
-                         <div class="row">
-                             <div class="col-md-9">
-                                 <div class="form-group-custom">
-                                     <input type="text" id="drug_advice" name="drug_advice[]" class="form-control" placeholder="<?php echo e(__('sentence.Advice_Comment')); ?>">
-                                 </div>
-                             </div>
-                              <div class="col-md-3">
-                                    <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-times-circle"></i> <?php echo e(__('sentence.Remove')); ?></a>
-                               </div>
-                               <div class="col-12">
-                                    <hr color="#a1f1d4">
-                              </div>
-                         </div>
-                 </section>
-</script>
+                                <div class="row">
+
+                                    <div class="col-md-2">
+                                        <div class="form-group-custom">
+                                            <input type="number" id="dose" name="dose[]" class="form-control" placeholder="<?php echo e(__('sentence.Dose')); ?>">
+                                            <label class="control-label"></label><i class="bar"></i>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group-custom">
+                                            <input type="date" id="duration" name="duration[]" class="form-control" placeholder="<?php echo e(__('sentence.Duration')); ?>">
+                                            <small id="startDate" class="form-text text-muted">Definir la period du suivi</small>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="form-group-custom">
+                                            <input type="text" id="drug_advice" name="drug_advice[]" class="form-control" placeholder="<?php echo e(__('sentence.Advice_Comment')); ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                            <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-times-circle"></i> <?php echo e(__('sentence.Remove')); ?></a>
+                                    </div>
+                                    <div class="col-12">
+                                            <hr color="#a1f1d4">
+                                    </div>
+                                </div>
+            </section>
+    </script>
     <script type="text/template" id="test_labels">
                          <div class="field-group row">
                              <div class="col-md-4">
                                  <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
                                    <option value=""><?php echo e(__('sentence.Select Test')); ?>...</option>
                                    <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($test->id); ?>" data-patient-id="<?php echo e($test->patient_id); ?>"><?php echo e($test->name); ?></option>
+                                       <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?></option>
                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                  </select>
                              </div>
@@ -183,7 +214,29 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('header'); ?>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/bootstrap-multiselect.css')); ?>">
+    <script type="text/javascript" src="<?php echo e(asset('js/bootstrap-multiselect.js')); ?>"></script>
+    <script type="text/javascript">
+        $('#trade_name').multiselect();
+    </script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <script>
+        $(function() {
+            $('input[name="datetimes"]').daterangepicker({
+                timePicker: true,
+                startDate: moment().startOf('hour'),
+                endDate: moment().startOf('hour').add(32, 'hour'),
+                locale: {
+                    format: 'M/DD hh:mm A'
+                }
+            });
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\user\Desktop\gestion des soins\v1.0\resources\views/prescription/create.blade.php ENDPATH**/ ?>
