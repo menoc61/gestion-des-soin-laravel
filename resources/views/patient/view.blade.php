@@ -533,7 +533,7 @@
                                                         @can('view invoice')
                                                             <a href="{{ url('billing/view/' . $invoice->id) }}"
                                                                 class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                    class="fa fa-eye"></i></a>
+                                                                    class="fas fa-print"></i></a>
                                                         @endcan
                                                         @can('edit invoice')
                                                             <a href="{{ url('billing/edit/' . $invoice->id) }}"
@@ -545,6 +545,10 @@
                                                                 class="btn btn-outline-danger btn-circle btn-sm"><i
                                                                     class="fas fa-trash"></i></a>
                                                         @endcan
+                                                        <a href="{{ url('payment/create/' . $invoice->id) }}"
+                                                            class="btn btn-outline-secondary btn-circle btn-sm"><i
+                                                                class="fas fa-fw fa-dollar-sign"></i></a>
+
                                                     </td>
                                                 </tr>
                                             @empty
