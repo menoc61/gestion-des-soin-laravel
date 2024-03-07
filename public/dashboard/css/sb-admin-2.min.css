@@ -49,6 +49,20 @@
     box-sizing: border-box
 }
 
+.chart{
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: #f8f9fc;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
+}
+
+.chart1{
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: #157954;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
+}
+
 html {
     font-family: sans-serif;
     line-height: 1.15;
@@ -59,7 +73,6 @@ html {
 .custom-colors {
     background-color: var(--green);
   }
-
 
 .card-po{
     position: absolute;

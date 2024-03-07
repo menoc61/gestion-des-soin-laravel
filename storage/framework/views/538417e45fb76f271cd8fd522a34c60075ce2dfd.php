@@ -121,7 +121,11 @@
                                     <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents"
                                         role="tab" aria-controls="documents" aria-selected="false">Fichier Médical</a>
                                 </li>
-                                
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="appointements-tab" data-toggle="tab" href="#appointements"
+                                        role="tab" aria-controls="appointements"
+                                        aria-selected="false"><?php echo e(__('sentence.Appointment')); ?></a>
+                                </li>
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="tests-tab" data-toggle="tab" href="#tests" role="tab"
                                         aria-controls="tests" aria-selected="false"><?php echo e(__('sentence.Test')); ?></a>
@@ -538,7 +542,7 @@
                                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view invoice')): ?>
                                                             <a href="<?php echo e(url('billing/view/' . $invoice->id)); ?>"
                                                                 class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                    class="fa fa-eye"></i></a>
+                                                                    class="fas fa-print"></i></a>
                                                         <?php endif; ?>
                                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit invoice')): ?>
                                                             <a href="<?php echo e(url('billing/edit/' . $invoice->id)); ?>"
@@ -550,6 +554,10 @@
                                                                 class="btn btn-outline-danger btn-circle btn-sm"><i
                                                                     class="fas fa-trash"></i></a>
                                                         <?php endif; ?>
+                                                        <a href="<?php echo e(url('payment/create/' . $invoice->id)); ?>"
+                                                            class="btn btn-outline-secondary btn-circle btn-sm"><i
+                                                                class="fas fa-fw fa-dollar-sign"></i></a>
+
                                                     </td>
                                                 </tr>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
