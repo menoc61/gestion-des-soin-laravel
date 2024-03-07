@@ -18,7 +18,6 @@ class CreateBillingItemsTable extends Migration
             $table->foreignId('billing_id')
                   ->constrained()
                   ->onDelete('cascade');
-
             $table->string('invoice_title');
             $table->string('invoice_amount');
             $table->timestamps();

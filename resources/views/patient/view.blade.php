@@ -121,11 +121,11 @@
                                     <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents"
                                         role="tab" aria-controls="documents" aria-selected="false">Fichier Médical</a>
                                 </li>
-                                {{-- <li class="nav-item" role="presentation">
+                                <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="appointements-tab" data-toggle="tab" href="#appointements"
                                         role="tab" aria-controls="appointements"
-                                        aria-selected="false">{{ __('sentence.Appointments') }}</a>
-                                </li> --}}
+                                        aria-selected="false">{{ __('sentence.Appointment') }}</a>
+                                </li>
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="tests-tab" data-toggle="tab" href="#tests" role="tab"
                                         aria-controls="tests" aria-selected="false">{{ __('sentence.Test') }}</a>
@@ -322,7 +322,8 @@
                                             <div class="col">
                                                 @can('create prescription')
                                                     <a class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="{{ route('prescription.create_by', ['id' => $patient->id]) }}"><i class="fa fa-pen"></i>
+                                                        href="{{ route('prescription.create_by', ['id' => $patient->id]) }}"><i
+                                                            class="fa fa-pen"></i>
                                                         {{ __('sentence.Create Prescription') }}</a>
                                                 @endcan
                                             </div>
@@ -332,6 +333,7 @@
                                                 <td align="center">{{ __('sentence.Reference') }}</td>
                                                 <td class="text-center">{{ __('sentence.Content') }}</td>
                                                 <td align="center">{{ __('sentence.Created at') }}</td>
+                                                <td align="center">{{ __('sentence.follow') }}</td>
                                                 <td align="center">{{ __('sentence.Actions') }}</td>
                                             </tr>
                                             @forelse($prescriptions as $prescription)
@@ -347,6 +349,11 @@
                                                     </td>
                                                     <td align="center"><label
                                                             class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
+                                                    </td>
+                                                    <td align="center">
+                                                        <a href="{{ url('test/view/' . $test->id) }}" class="btn btn-outline-primary btn-circle btn-sm">
+                                                            <i class="fa fa-id-card"></i>
+                                                        </a>
                                                     </td>
                                                     <td align="center">
                                                         @can('view prescription')
@@ -476,7 +483,8 @@
                                             <div class="col">
                                                 @can('create invoice')
                                                     <a type="button" class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="{{ route('billing.create_by', ['id' => $patient->id]) }}"><i class="fa fa-plus"></i>
+                                                        href="{{ route('billing.create_by', ['id' => $patient->id]) }}"><i
+                                                            class="fa fa-plus"></i>
                                                         {{ __('sentence.Create Invoice') }}</a>
                                                 @endcan
                                             </div>
@@ -525,7 +533,7 @@
                                                         @can('view invoice')
                                                             <a href="{{ url('billing/view/' . $invoice->id) }}"
                                                                 class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                    class="fa fa-eye"></i></a>
+                                                                    class="fas fa-print"></i></a>
                                                         @endcan
                                                         @can('edit invoice')
                                                             <a href="{{ url('billing/edit/' . $invoice->id) }}"
@@ -537,6 +545,10 @@
                                                                 class="btn btn-outline-danger btn-circle btn-sm"><i
                                                                     class="fas fa-trash"></i></a>
                                                         @endcan
+                                                        <a href="{{ url('payment/create/' . $invoice->id) }}"
+                                                            class="btn btn-outline-secondary btn-circle btn-sm"><i
+                                                                class="fas fa-fw fa-dollar-sign"></i></a>
+
                                                     </td>
                                                 </tr>
                                             @empty
