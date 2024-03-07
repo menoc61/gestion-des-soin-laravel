@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    env_file:
+      - .env  # Dev environment variables
+    volumes:
+      - .:/var/www/html  # Mount the current directory into the container for live code changes
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE_DEV}
+      MYSQL_USER: ${DB_USERNAME_DEV}
+      MYSQL_PASSWORD: ${DB_PASSWORD_DEV}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD_DEV}
