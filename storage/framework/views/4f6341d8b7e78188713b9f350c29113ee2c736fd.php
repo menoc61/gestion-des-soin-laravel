@@ -12,19 +12,51 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow mb-4">
-                    
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.Invoice Details')); ?></h6>
+                    </div>
                     <div class="card-body">
+                        <fieldset class="billing_labels">
+                            <div class="repeatable">
+                                <?php $__currentLoopData = $billing_items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $billing_item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="field-group row">
+                                        <div class="col">
+                                            <div class="form-group-custom">
+                                                <input type="text" id="strength" name="invoice_title[]"
+                                                    class="form-control" placeholder="<?php echo e(__('sentence.Invoice Title')); ?>"
+                                                    value="<?php echo e($billing_item->invoice_title); ?>" required>
+                                                <input type="hidden" name="billing_item_id[]"
+                                                    value="<?php echo e($billing_item->id); ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <input type="number" class="form-control"
+                                                    placeholder="<?php echo e(__('sentence.Amount')); ?>" aria-label="Amount"
+                                                    aria-describedby="basic-addon1" name="invoice_amount[]"
+                                                    value="<?php echo e($billing_item->invoice_amount); ?>" required readonly>
 
-                        <input type="text" class="billing_labels" value="<?php echo e($billing->due_amount); ?>" >
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"
+                                                        id="basic-addon1"><?php echo e(App\Setting::get_option('currency')); ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i
+                                                    class="fa fa-times-circle"></i> <?php echo e(__('sentence.Remove')); ?></a>
+                                        </div>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                            
+                        </fieldset>
+                        
 
                         
-                        <div class="d-flex justify-content-between ">
-                    
-               </div>
                     </div>
                 </div>
             </div>
-
 
             <div class="col-md-6">
                 <div class="card shadow mb-4">
@@ -33,15 +65,11 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="drug"><?php echo e(__('sentence.Select Patient')); ?></label>
-                            <input type="hidden" class="form-control" name="patient_id"  value="<?php echo e($users->id); ?>" readonly>
-                            <input type="text" class="form-control" value="<?php echo e($users->name); ?>" readonly>
-                            <?php echo e(csrf_field()); ?>
-
-                        </div>
-                        <div class="form-group">
-                            <label for="drug"><?php echo e(__('sentence.Select Patient')); ?></label>
-                            <input type="text" class="form-control" name="billing_id" value="<?php echo e($billingId); ?>" readonly>
+                            <label for="PatientID"><?php echo e(__('sentence.Patient')); ?> :</label>
+                            <option value="<?php echo e($billing->user_id); ?>"><?php echo e($billing->User->name); ?> -
+                                <?php echo e(\Carbon\Carbon::parse($billing->User->Patient->birthday)->age); ?> Years</option>
+                            <input type="hidden" name="patient_id" value="<?php echo e($billing->user_id); ?>">
+                            <input type="hidden" name="billing_id" value="<?php echo e($billing->id); ?>">
                             <?php echo e(csrf_field()); ?>
 
                         </div>
@@ -49,18 +77,19 @@
                             <label for="PaymentMode"><?php echo e(__('sentence.Payment Mode')); ?></label>
                             <select class="form-control" name="payment_mode" id="PaymentMode">
                                 <option value="Cash"><?php echo e(__('sentence.Cash')); ?></option>
-                                <option value="Mobile Transaction"><?php echo e(__('sentence.Mobile Transaction')); ?></option>
+                                <option value="Cheque"><?php echo e(__('sentence.Cheque')); ?></option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="DueAmount"><?php echo e(__('sentence.Due Balance')); ?></label>
-                            <input class="form-control" type="number" name="reste_montant" value="<?php echo e($billing->due_amount); ?>" id="DueAmount" readonly>
-                        </div>
-
-                        <div class="form-group">
                             <label for="DepositedAmount"><?php echo e(__('sentence.Already Paid')); ?></label>
-                            <input class="form-control" type="number" name="montant_versé" id="DepositedAmount">
+                            <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount"
+                                value="<?php echo e($billing->deposited_amount); ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="DueAmount"><?php echo e(__('sentence.Due Balance')); ?></label>
+                            <input class="form-control" type="number" name="due_amount" id="DueAmount">
                         </div>
 
 
@@ -69,7 +98,7 @@
                         
 
                         <div class="form-group">
-                            <input type="submit" value="<?php echo e(__('sentence.Pay Invoice')); ?>"
+                            <input type="submit" value="<?php echo e(__('sentence.Update Invoice')); ?>"
                                 class="btn btn-success btn-block" align="center">
                         </div>
                     </div>
@@ -84,7 +113,7 @@
    <div class="field-group row">
     <div class="col">
        <div class="form-group-custom">
-          <input type="text" id="strength" name="invoice_title[]"  class="form-control" placeholder="<?php echo e(__('sentence.Invoice Title')); ?>" onchange="updateInvoiceTitle()" required>
+          <input type="text" id="strength" name="invoice_title[]"  class="form-control" placeholder="<?php echo e(__('sentence.Invoice Title')); ?>"  required>
        </div>
     </div>
     <div class="col">

@@ -15,9 +15,8 @@
          <div class="col-8">
             <h6 class="m-0 font-weight-bold text-primary w-75 p-2"><?php echo e(__('sentence.All Prescriptions')); ?></h6>
          </div>
-         <div class="col-4">
-            <a href="<?php echo e(route('prescription.create')); ?>" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i> <?php echo e(__('sentence.New Prescription')); ?></a>
-         </div>
+         
+         
       </div>
    </div>
    <div class="card-body">

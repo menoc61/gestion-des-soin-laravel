@@ -280,31 +280,63 @@
                                                 <td align="center"><b> Action</b> </td>
                                             </tr>
                                             <?php $__empty_1 = true; $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                                <tr>
-                                                    <td><?php echo e($test->id); ?></td>
-                                                    <td><?php echo e($test->test_name); ?></td>
-                                                    <td> <?php echo e($test->comment); ?> </td>
-                                                    <td align="center"><?php echo e(__('sentence.In Prescription')); ?> :
-                                                        <?php echo e($test->Prescription->count()); ?> <?php echo e(__('sentence.time use')); ?></td>
-                                                    <td class="text-center">
+                                                <?php if(Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by): ?>
+                                                    <tr>
+                                                        <td><?php echo e($test->id); ?></td>
+                                                        <td><?php echo e($test->test_name); ?></td>
+                                                        <td> <?php echo e($test->comment); ?> </td>
+                                                        <td align="center"><?php echo e(__('sentence.In Prescription')); ?> :
+                                                            <?php echo e($test->Prescription->count()); ?> <?php echo e(__('sentence.time use')); ?>
 
-                                                        <a href="<?php echo e(url('test/view/' . $test->id)); ?>"
-                                                            class="btn btn-outline-primary btn-circle btn-sm"><i
-                                                                class="fa fa-eye"></i></a>
+                                                        </td>
+                                                        <td class="text-center">
 
-                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit diagnostic test')): ?>
-                                                            <a href="<?php echo e(url('test/edit/' . $test->id)); ?>"
-                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                    class="fa fa-pen"></i></a>
-                                                        <?php endif; ?>
-                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete diagnostic test')): ?>
-                                                            <a class="btn btn-outline-danger btn-circle btn-sm"
-                                                                data-toggle="modal" data-target="#DeleteModal"
-                                                                data-link="<?php echo e(url('test/delete/' . $test->id)); ?>"><i
-                                                                    class="fa fa-trash"></i></a>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                </tr>
+                                                            <a href="<?php echo e(url('test/view/' . $test->id)); ?>"
+                                                                class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                    class="fa fa-eye"></i></a>
+
+                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit diagnostic test')): ?>
+                                                                <a href="<?php echo e(url('test/edit/' . $test->id)); ?>"
+                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                        class="fa fa-pen"></i></a>
+                                                            <?php endif; ?>
+                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete diagnostic test')): ?>
+                                                                <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                    data-toggle="modal" data-target="#DeleteModal"
+                                                                    data-link="<?php echo e(url('test/delete/' . $test->id)); ?>"><i
+                                                                        class="fa fa-trash"></i></a>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php elseif(Auth::user()->role_id == 1): ?>
+                                                    <tr>
+                                                        <td><?php echo e($test->id); ?></td>
+                                                        <td><?php echo e($test->test_name); ?></td>
+                                                        <td> <?php echo e($test->comment); ?> </td>
+                                                        <td align="center"><?php echo e(__('sentence.In Prescription')); ?> :
+                                                            <?php echo e($test->Prescription->count()); ?> <?php echo e(__('sentence.time use')); ?>
+
+                                                        </td>
+                                                        <td class="text-center">
+
+                                                            <a href="<?php echo e(url('test/view/' . $test->id)); ?>"
+                                                                class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                    class="fa fa-eye"></i></a>
+
+                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit diagnostic test')): ?>
+                                                                <a href="<?php echo e(url('test/edit/' . $test->id)); ?>"
+                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                        class="fa fa-pen"></i></a>
+                                                            <?php endif; ?>
+                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete diagnostic test')): ?>
+                                                                <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                    data-toggle="modal" data-target="#DeleteModal"
+                                                                    data-link="<?php echo e(url('test/delete/' . $test->id)); ?>"><i
+                                                                        class="fa fa-trash"></i></a>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endif; ?>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                 <tr>
                                                     <td colspan="5" class="text-center"><img
@@ -327,7 +359,8 @@
                                             <div class="col">
                                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create prescription')): ?>
                                                     <a class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="<?php echo e(route('prescription.create_by', ['id' => $patient->id])); ?>"><i class="fa fa-pen"></i>
+                                                        href="<?php echo e(route('prescription.create_by', ['id' => $patient->id])); ?>"><i
+                                                            class="fa fa-pen"></i>
                                                         <?php echo e(__('sentence.Create Prescription')); ?></a>
                                                 <?php endif; ?>
                                             </div>
@@ -340,37 +373,71 @@
                                                 <td align="center"><?php echo e(__('sentence.Actions')); ?></td>
                                             </tr>
                                             <?php $__empty_1 = true; $__currentLoopData = $prescriptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prescription): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                                <tr>
-                                                    <td align="center"><?php echo e($prescription->reference); ?> </td>
-                                                    <td class="text-center">
-                                                        <label class="badge badge-primary-soft">
-                                                            <?php echo e(count($prescription->Drug)); ?> Soins
-                                                        </label>
-                                                        <label class="badge badge-primary-soft">
-                                                            <?php echo e(count($prescription->Test)); ?> Soin
-                                                        </label>
-                                                    </td>
-                                                    <td align="center"><label
-                                                            class="badge badge-primary-soft"><?php echo e($prescription->created_at); ?></label>
-                                                    </td>
-                                                    <td align="center">
-                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view prescription')): ?>
-                                                            <a href="<?php echo e(url('prescription/view/' . $prescription->id)); ?>"
-                                                                class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                    class="fa fa-eye"></i></a>
-                                                        <?php endif; ?>
-                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit prescription')): ?>
-                                                            <a href="<?php echo e(url('prescription/edit/' . $prescription->id)); ?>"
-                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                    class="fas fa-pen"></i></a>
-                                                        <?php endif; ?>
-                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete prescription')): ?>
-                                                            <a href="<?php echo e(url('prescription/delete/' . $prescription->id)); ?>"
-                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                    class="fas fa-trash"></i></a>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                </tr>
+                                                <?php if(Auth::user()->role_id == 2 && Auth::user()->id == $prescription->doctor_id): ?>
+                                                    <tr>
+                                                        <td align="center"><?php echo e($prescription->reference); ?> </td>
+                                                        <td class="text-center">
+                                                            <label class="badge badge-primary-soft">
+                                                                <?php echo e(count($prescription->Drug)); ?> Soins
+                                                            </label>
+                                                            <label class="badge badge-primary-soft">
+                                                                <?php echo e(count($prescription->Test)); ?> Soin
+                                                            </label>
+                                                        </td>
+                                                        <td align="center"><label
+                                                                class="badge badge-primary-soft"><?php echo e($prescription->created_at); ?></label>
+                                                        </td>
+                                                        <td align="center">
+                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view prescription')): ?>
+                                                                <a href="<?php echo e(url('prescription/view/' . $prescription->id)); ?>"
+                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                        class="fa fa-eye"></i></a>
+                                                            <?php endif; ?>
+                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit prescription')): ?>
+                                                                <a href="<?php echo e(url('prescription/edit/' . $prescription->id)); ?>"
+                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                        class="fas fa-pen"></i></a>
+                                                            <?php endif; ?>
+                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete prescription')): ?>
+                                                                <a href="<?php echo e(url('prescription/delete/' . $prescription->id)); ?>"
+                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                        class="fas fa-trash"></i></a>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php elseif(Auth::user()->role_id == 1): ?>
+                                                    <tr>
+                                                        <td align="center"><?php echo e($prescription->reference); ?> </td>
+                                                        <td class="text-center">
+                                                            <label class="badge badge-primary-soft">
+                                                                <?php echo e(count($prescription->Drug)); ?> Soins
+                                                            </label>
+                                                            <label class="badge badge-primary-soft">
+                                                                <?php echo e(count($prescription->Test)); ?> Soin
+                                                            </label>
+                                                        </td>
+                                                        <td align="center"><label
+                                                                class="badge badge-primary-soft"><?php echo e($prescription->created_at); ?></label>
+                                                        </td>
+                                                        <td align="center">
+                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view prescription')): ?>
+                                                                <a href="<?php echo e(url('prescription/view/' . $prescription->id)); ?>"
+                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                        class="fa fa-eye"></i></a>
+                                                            <?php endif; ?>
+                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit prescription')): ?>
+                                                                <a href="<?php echo e(url('prescription/edit/' . $prescription->id)); ?>"
+                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                        class="fas fa-pen"></i></a>
+                                                            <?php endif; ?>
+                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete prescription')): ?>
+                                                                <a href="<?php echo e(url('prescription/delete/' . $prescription->id)); ?>"
+                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                        class="fas fa-trash"></i></a>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endif; ?>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                 <tr>
                                                     <td colspan="4" align="center"> <img
@@ -433,8 +500,8 @@
                                                 </div>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                 <div class="col text-center">
-                                                    <img src="<?php echo e(asset('img/not-found.svg')); ?>" width="200" /> <br><br> <b
-                                                        class="text-muted"> <?php echo e(__('sentence.No document available')); ?> </b>
+                                                    <img src="<?php echo e(asset('img/not-found.svg')); ?>" width="200" /> <br><br>
+                                                    <b class="text-muted"> <?php echo e(__('sentence.No document available')); ?> </b>
                                                 </div>
                                             <?php endif; ?>
 
@@ -487,7 +554,8 @@
                                             <div class="col">
                                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create invoice')): ?>
                                                     <a type="button" class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="<?php echo e(route('billing.create_by', ['id' => $patient->id])); ?>"><i class="fa fa-plus"></i>
+                                                        href="<?php echo e(route('billing.create_by', ['id' => $patient->id])); ?>"><i
+                                                            class="fa fa-plus"></i>
                                                         <?php echo e(__('sentence.Create Invoice')); ?></a>
                                                 <?php endif; ?>
                                             </div>

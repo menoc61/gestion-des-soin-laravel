@@ -15,10 +15,8 @@
                     <h6 class="m-0 font-weight-bold text-primary w-75 p-2"><?php echo e(__('sentence.All Tests')); ?></h6>
                 </div>
                 <div class="col-4">
-                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create diagnostic test')): ?>
-                        <a href="<?php echo e(route('test.create')); ?>" class="btn btn-primary btn-sm float-right"><i
-                                class="fa fa-plus"></i> <?php echo e(__('sentence.Add Test')); ?></a>
-                    <?php endif; ?>
+                    
+                    
                 </div>
             </div>
         </div>

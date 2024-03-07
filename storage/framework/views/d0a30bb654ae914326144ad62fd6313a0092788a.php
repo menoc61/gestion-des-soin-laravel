@@ -92,34 +92,41 @@
 
                 
 
-                <?php if(Auth::user()->can('create appointment') || Auth::user()->can('view all appointments') || Auth::user()->can('delete appointment')): ?>
-               <!-- Divider -->
-               <hr class="sidebar-divider">
-               <!-- Heading -->
-               <div class="sidebar-heading">
-                  <?php echo e(__('sentence.Appointment')); ?>
+                <?php if(Auth::user()->can('create appointment') ||
+                        Auth::user()->can('view all appointments') ||
+                        Auth::user()->can('delete appointment')): ?>
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+                    <!-- Heading -->
+                    <div class="sidebar-heading">
+                        <?php echo e(__('sentence.Appointment')); ?>
 
-               </div>
-               <!-- Nav Item - Pages Collapse Menu -->
-               <li class="nav-item">
-                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAppointment" aria-expanded="true" aria-controls="collapseAppointment">
-                  <i class="fas fa-fw fa-calendar-plus"></i>
-                  <span><?php echo e(__('sentence.Appointment')); ?></span>
-                  </a>
-                  <div id="collapseAppointment" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                     <div class="bg-white py-2 collapse-inner rounded">
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create appointment')): ?>
-                        <a class="collapse-item" href="<?php echo e(route('appointment.create')); ?>"><?php echo e(__('sentence.New Appointment')); ?></a>
-                        <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view all appointments')): ?>
-                        <a class="collapse-item" href="<?php echo e(route('appointment.pending')); ?>"><?php echo e(__('sentence.Upcoming Appointments')); ?></a>
+                    </div>
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                            data-target="#collapseAppointment" aria-expanded="true" aria-controls="collapseAppointment">
+                            <i class="fas fa-fw fa-calendar-plus"></i>
+                            <span><?php echo e(__('sentence.Appointment')); ?></span>
+                        </a>
+                        <div id="collapseAppointment" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create appointment')): ?>
+                                    <a class="collapse-item"
+                                        href="<?php echo e(route('appointment.create')); ?>"><?php echo e(__('sentence.New Appointment')); ?></a>
+                                <?php endif; ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view all appointments')): ?>
+                                    <a class="collapse-item"
+                                        href="<?php echo e(route('appointment.pending')); ?>"><?php echo e(__('sentence.Upcoming Appointments')); ?></a>
 
-                        <a class="collapse-item" href="<?php echo e(route('appointment.all')); ?>"><?php echo e(__('sentence.All Appointments')); ?></a>
-                        <?php endif; ?>
-                     </div>
-                  </div>
-               </li>
-               <?php endif; ?>
+                                    <a class="collapse-item"
+                                        href="<?php echo e(route('appointment.all')); ?>"><?php echo e(__('sentence.All Appointments')); ?></a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </li>
+                <?php endif; ?>
 
 
                 
@@ -172,9 +179,12 @@
                         <div id="collapseTests" class="collapse" aria-labelledby="headingPages"
                             data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create diagnostic test')): ?>
-                                    <a class="collapse-item"
-                                        href="<?php echo e(route('test.create')); ?>"><?php echo e(__('sentence.Add Test')); ?></a>
+                                <?php if(Auth::user()->role_id == 1): ?>
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create diagnostic test')): ?>
+                                        <a class="collapse-item"
+                                            href="<?php echo e(route('test.create')); ?>"><?php echo e(__('sentence.Add Test')); ?></a>
+                                    <?php endif; ?>
+                                <?php else: ?>
                                 <?php endif; ?>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view all diagnostic tests')): ?>
                                     <a class="collapse-item"
@@ -199,9 +209,12 @@
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                             data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create prescription')): ?>
-                                    <a class="collapse-item"
-                                        href="<?php echo e(route('prescription.create')); ?>"><?php echo e(__('sentence.New Prescription')); ?></a>
+                                <?php if(Auth::user()->role_id == 1): ?>
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create prescription')): ?>
+                                        <a class="collapse-item"
+                                            href="<?php echo e(route('prescription.create')); ?>"><?php echo e(__('sentence.New Prescription')); ?></a>
+                                    <?php endif; ?>
+                                <?php else: ?>
                                 <?php endif; ?>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view all prescriptions')): ?>
                                     <a class="collapse-item"
@@ -237,9 +250,12 @@
                         <div id="collapseBilling" class="collapse" aria-labelledby="headingUtilities"
                             data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create invoice')): ?>
-                                    <a class="collapse-item"
-                                        href="<?php echo e(route('billing.create')); ?>"><?php echo e(__('sentence.Create Invoice')); ?></a>
+                                <?php if(Auth::user()->role_id == 1): ?>
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create invoice')): ?>
+                                        <a class="collapse-item"
+                                            href="<?php echo e(route('billing.create')); ?>"><?php echo e(__('sentence.Create Invoice')); ?></a>
+                                    <?php endif; ?>
+                                <?php else: ?>
                                 <?php endif; ?>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view all invoices')): ?>
                                     <a class="collapse-item"
@@ -254,7 +270,7 @@
 
                 
 
-                <?php if(Auth::user()->can('manage roles')): ?>
+                <?php if(Auth::user()->can('manage roles') && Auth::user()->role_id == 1): ?>
                     <!-- Divider -->
                     <hr class="sidebar-divider">
                     <!-- Heading -->

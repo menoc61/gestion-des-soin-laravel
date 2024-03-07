@@ -11,7 +11,7 @@
 
     <form method="post" action="{{ route('billing.store_id', ['id' => $userId]) }}">
         <div class="justify-content-center">
-            <div class="col-md-6 ">
+            <div class="col-md-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Invoice Details') }}</h6>
@@ -22,7 +22,7 @@
                         {{-- <div class="col-md-4">
                             <select class="form-control multiselect-search" name="reference[]" id="prescription" tabindex="-1" aria-hidden="true" required>
                               <option value="">{{ __('sentence.Select Test') }}...</option>
-                              @foreach($prescriptions as $prescription)
+                              @foreach ($prescriptions as $prescription)
                                   <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
                               @endforeach
                             </select>
@@ -41,7 +41,7 @@
                     <span class="">Montant sans Taxe : <b id="total_without_tax_income">0 </b> {{ App\Setting::get_option('currency') }}</span><br>
                     <span class="">TVA : <b>{{ App\Setting::get_option('vat') }} %</b> </span><br>
                     <span class="">Montant Total : <b id="total_income">0 </b> {{ App\Setting::get_option('currency') }}</span>
-               </div> --}}
+                    </div> --}}
                     </div>
                 </div>
             </div>
@@ -53,7 +53,8 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="drug">{{ __('sentence.Select Patient') }}</label>
-                            <input type="hidden" class="form-control" value="{{ $userId }}"  name="patient_id" readonly>
+                            <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id"
+                                readonly>
                             <input type="text" class="form-control" value="{{ $userName }}" readonly>
                             {{ csrf_field() }}
                         </div>
@@ -105,7 +106,11 @@
         <select class="form-control multiselect-search" name="invoice_title[]" id="prescription" tabindex="-1" aria-hidden="true" required>
             <option value="">{{ __('sentence.Select Test') }}...</option>
             @foreach($prescriptions as $prescription)
-                <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
+                @if (Auth::user()->role_id == 2 && Auth::user()->id == $prescription->doctor_id )
+                    <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
+                @elseif (Auth::user()->role_id == 1)
+                    <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
+                @endif
             @endforeach
           </select>
           {{-- <input type="text" id="strength" name="invoice_title[]"  class="form-control" placeholder="{{ __('sentence.Invoice Title') }}" onchange="updateInvoiceTitle()" required> --}}
@@ -195,4 +200,4 @@
 
         }, 1000);
     </script>
-    @endsection
+@endsection
