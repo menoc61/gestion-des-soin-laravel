@@ -112,7 +112,7 @@
 
         <div class="row top">
 
-            {{-- <!-- Earnings (Monthly) Card Example -->
+             <!-- Earnings (Monthly) Card Example -->
               <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
@@ -196,7 +196,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
 
             <div class="col-md-7 ">
                 <div class="chart mb-4">
@@ -204,12 +204,12 @@
                         <div class="mt-5"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
                 </div>
             </div>
-            {{-- <div class="col-md-4 ">
+             <div class="col-md-4 ">
                 <div class=" chart1 mb-4">
                     <p class="text-center" ><b >CHIFFRE D'AFFAIRE PAR MOIS</b></p>
                     <div class="mt-5"><canvas id="myBarChart" width="100%" height="40%"></canvas></div>
                 </div>
-            </div> --}}
+            </div>
 
         </div>
 
