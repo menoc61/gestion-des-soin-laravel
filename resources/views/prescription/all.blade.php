@@ -16,9 +16,10 @@
          <div class="col-8">
             <h6 class="m-0 font-weight-bold text-primary w-75 p-2">{{ __('sentence.All Prescriptions') }}</h6>
          </div>
-         <div class="col-4">
+         {{-- bouton permettant d'ajouter une prescription depuis la liste de tous les prescriptions --}}
+         {{-- <div class="col-4">
             <a href="{{ route('prescription.create') }}" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i> {{ __('sentence.New Prescription') }}</a>
-         </div>
+         </div> --}}
       </div>
    </div>
    <div class="card-body">

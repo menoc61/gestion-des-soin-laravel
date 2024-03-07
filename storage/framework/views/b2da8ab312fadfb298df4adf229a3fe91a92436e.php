@@ -10,7 +10,7 @@
 
     <form method="post" action="<?php echo e(route('billing.store_id', ['id' => $userId])); ?>">
         <div class="justify-content-center">
-            <div class="col-md-6 ">
+            <div class="col-md-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.Invoice Details')); ?></h6>
@@ -41,7 +41,8 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="drug"><?php echo e(__('sentence.Select Patient')); ?></label>
-                            <input type="hidden" class="form-control" value="<?php echo e($userId); ?>"  name="patient_id" readonly>
+                            <input type="hidden" class="form-control" value="<?php echo e($userId); ?>" name="patient_id"
+                                readonly>
                             <input type="text" class="form-control" value="<?php echo e($userName); ?>" readonly>
                             <?php echo e(csrf_field()); ?>
 
@@ -87,7 +88,11 @@
         <select class="form-control multiselect-search" name="invoice_title[]" id="prescription" tabindex="-1" aria-hidden="true" required>
             <option value=""><?php echo e(__('sentence.Select Test')); ?>...</option>
             <?php $__currentLoopData = $prescriptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prescription): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <option value="<?php echo e($prescription->id); ?>"><?php echo e($prescription->reference); ?></option>
+                <?php if(Auth::user()->role_id == 2 && Auth::user()->id == $prescription->doctor_id ): ?>
+                    <option value="<?php echo e($prescription->id); ?>"><?php echo e($prescription->reference); ?></option>
+                <?php elseif(Auth::user()->role_id == 1): ?>
+                    <option value="<?php echo e($prescription->id); ?>"><?php echo e($prescription->reference); ?></option>
+                <?php endif; ?>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </select>
           
@@ -177,6 +182,6 @@
 
         }, 1000);
     </script>
-    <?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\HS\gestion-des-soin-laravel\resources\views/billing/create_By_user.blade.php ENDPATH**/ ?>

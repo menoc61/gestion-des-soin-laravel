@@ -10,6 +10,7 @@ use App\Test;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\PDF;
+use Illuminate\Support\Facades\Auth;
 
 class PrescriptionController extends Controller
 {
@@ -111,12 +112,18 @@ class PrescriptionController extends Controller
             $sortColumn = $defaultSortColumn;
         }
 
+        $user = Auth::user();
+        $doctorId = $user->id;
+
         // Perform a join with the 'users' table to get the patient names
         $prescriptions = Prescription::select('prescriptions.*', 'users.name as patient_name')
-            ->join('users', 'prescriptions.user_id', '=', 'users.id')
-            ->orderBy($sortColumn, $sortOrder)
-            ->paginate(25);
-
+        ->join('users', 'prescriptions.user_id', '=', 'users.id')
+        ->when($user->role_id !== 1, function ($query) use ($doctorId) {
+            // Add a condition to filter prescriptions for non-admin users
+            $query->where('prescriptions.doctor_id', $doctorId);
+        })
+        ->orderBy($sortColumn, $sortOrder)
+        ->paginate(25);
         return view('prescription.all', ['prescriptions' => $prescriptions]);
     }
 

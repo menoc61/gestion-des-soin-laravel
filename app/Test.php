@@ -16,6 +16,10 @@ class Test extends Model
         return $this->hasOne('App\User','id', 'user_id');
     }
 
+    public function praticien_Test(){
+        return $this->hasOne('App\User','id', 'created_by');
+    }
+
 
         public function Prescription(){
                 return $this->hasMany('App\Prescription_test');

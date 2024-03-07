@@ -13,29 +13,60 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow mb-4">
-                    {{-- <div class="card-header py-3">
+                    <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Invoice Details') }}</h6>
-                    </div> --}}
+                    </div>
                     <div class="card-body">
+                        <fieldset class="billing_labels">
+                            <div class="repeatable">
+                                @foreach ($billing_items as $billing_item)
+                                    <div class="field-group row">
+                                        <div class="col">
+                                            <div class="form-group-custom">
+                                                <input type="text" id="strength" name="invoice_title[]"
+                                                    class="form-control" placeholder="{{ __('sentence.Invoice Title') }}"
+                                                    value="{{ $billing_item->invoice_title }}" required>
+                                                <input type="hidden" name="billing_item_id[]"
+                                                    value="{{ $billing_item->id }}">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <input type="number" class="form-control"
+                                                    placeholder="{{ __('sentence.Amount') }}" aria-label="Amount"
+                                                    aria-describedby="basic-addon1" name="invoice_amount[]"
+                                                    value="{{ $billing_item->invoice_amount }}" required readonly>
 
-                        <input type="text" class="billing_labels" value="{{$billing->due_amount}}" >
-
-                        {{-- <fieldset class="billing_labels">
-                            <div class="repeatable"></div>
-                            <div class="form-group">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"
+                                                        id="basic-addon1">{{ App\Setting::get_option('currency') }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i
+                                                    class="fa fa-times-circle"></i> {{ __('sentence.Remove') }}</a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            {{-- <div class="form-group">
                                 <a type="button" class="btn btn-primary btn-sm add text-white" align="center"><i
                                         class='fa fa-plus'></i> {{ __('sentence.Add Item') }}</a>
-                            </div>
-                        </fieldset> --}}
-                        <div class="d-flex justify-content-between ">
-                    {{-- <span class="">Montant sans Taxe : <b id="total_without_tax_income">0 </b> {{ App\Setting::get_option('currency') }}</span><br>
-                    <span class="">TVA : <b>{{ App\Setting::get_option('vat') }} %</b> </span><br>
-                    <span class="">Montant Total : <b id="total_income">0 </b> {{ App\Setting::get_option('currency') }}</span> --}}
-               </div>
+                            </div> --}}
+                        </fieldset>
+                        {{-- information concernant la TVA, le prix avec TVA et prix sans TVA --}}
+
+                        {{-- <div class="d-flex justify-content-between ">
+                            <span class="">Montant sans Taxe : <b id="total_without_tax_income">0 </b>
+                                {{ App\Setting::get_option('currency') }}</span><br>
+                            <span class="">TVA : <b>{{ App\Setting::get_option('vat') }} %</b> </span><br>
+                            <span class="">Montant Total : <b id="total_income">0 </b>
+                                {{ App\Setting::get_option('currency') }}</span>
+                        </div> --}}
                     </div>
                 </div>
             </div>
-
 
             <div class="col-md-6">
                 <div class="card shadow mb-4">
@@ -44,32 +75,30 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="drug">{{ __('sentence.Select Patient') }}</label>
-                            <input type="hidden" class="form-control" name="patient_id"  value="{{ $users->id}}" readonly>
-                            <input type="text" class="form-control" value="{{ $users->name}}" readonly>
-                            {{ csrf_field() }}
-                        </div>
-                        <div class="form-group">
-                            <label for="drug">{{ __('sentence.Select Patient') }}</label>
-                            <input type="text" class="form-control" name="billing_id" value="{{ $billingId}}" readonly>
+                            <label for="PatientID">{{ __('sentence.Patient') }} :</label>
+                            <option value="{{ $billing->user_id }}">{{ $billing->User->name }} -
+                                {{ \Carbon\Carbon::parse($billing->User->Patient->birthday)->age }} Years</option>
+                            <input type="hidden" name="patient_id" value="{{ $billing->user_id }}">
+                            <input type="hidden" name="billing_id" value="{{ $billing->id }}">
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group">
                             <label for="PaymentMode">{{ __('sentence.Payment Mode') }}</label>
                             <select class="form-control" name="payment_mode" id="PaymentMode">
                                 <option value="Cash">{{ __('sentence.Cash') }}</option>
-                                <option value="Mobile Transaction">{{ __('sentence.Mobile Transaction') }}</option>
+                                <option value="Cheque">{{ __('sentence.Cheque') }}</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="DueAmount">{{ __('sentence.Due Balance') }}</label>
-                            <input class="form-control" type="number" name="reste_montant" value="{{$billing->due_amount}}" id="DueAmount" readonly>
+                            <label for="DepositedAmount">{{ __('sentence.Already Paid') }}</label>
+                            <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount"
+                                value="{{ $billing->deposited_amount }}">
                         </div>
 
                         <div class="form-group">
-                            <label for="DepositedAmount">{{ __('sentence.Already Paid') }}</label>
-                            <input class="form-control" type="number" name="montant_versé" id="DepositedAmount">
+                            <label for="DueAmount">{{ __('sentence.Due Balance') }}</label>
+                            <input class="form-control" type="number" name="due_amount" id="DueAmount">
                         </div>
 
 
@@ -78,6 +107,7 @@
                         {{-- <div class="form-group">
                   <label for="PaymentMode">{{ __('sentence.Payment Status') }}</label>
                   <select class="form-control" name="payment_status">
+                     <option value="{{ $billing->payment_status }}">{{ $billing->payment_status }}</option>
                      <option value="Paid">{{ __('sentence.Paid') }}</option>
                      <option value="Partially Paid">{{ __('sentence.Partially Paid') }}</option>
                      <option value="Unpaid">{{ __('sentence.Unpaid') }}</option>
@@ -85,7 +115,7 @@
                </div> --}}
 
                         <div class="form-group">
-                            <input type="submit" value="{{ __('sentence.Pay Invoice') }}"
+                            <input type="submit" value="{{ __('sentence.Update Invoice') }}"
                                 class="btn btn-success btn-block" align="center">
                         </div>
                     </div>
@@ -100,7 +130,7 @@
    <div class="field-group row">
     <div class="col">
        <div class="form-group-custom">
-          <input type="text" id="strength" name="invoice_title[]"  class="form-control" placeholder="{{ __('sentence.Invoice Title') }}" onchange="updateInvoiceTitle()" required>
+          <input type="text" id="strength" name="invoice_title[]"  class="form-control" placeholder="{{ __('sentence.Invoice Title') }}"  required>
        </div>
     </div>
     <div class="col">

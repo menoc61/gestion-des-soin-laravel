@@ -241,6 +241,7 @@ class BillingController extends Controller
 
     public function destroy($id)
     {
+
         Billing::destroy($id);
 
         return \Redirect::route('billing.all')->with('success', 'Invoice Deleted Successfully!');

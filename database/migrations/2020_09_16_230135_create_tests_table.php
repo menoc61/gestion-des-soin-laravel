@@ -17,9 +17,12 @@ class CreateTestsTable extends Migration
             $table->id();
 
             $table->foreignId('user_id')
-                  ->constrained()
-                  ->onDelete('cascade');
-
+                ->constrained()
+                ->onDelete('cascade');
+            $table->foreignId('created_by')
+                ->nullable()
+                ->constrained('users')
+                ->onDelete('set null');
             $table->string('test_name');
             $table->json('diagnostic_type');
             $table->mediumText('comment')->nullable();
