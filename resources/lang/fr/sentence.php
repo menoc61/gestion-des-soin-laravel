@@ -13,7 +13,6 @@ return [
   'Prescription' => 'Traitement',
   'Admin' => 'Admin',
   'Doctor' => 'Praticien',
-  'New Prescription' => 'Nouveau Traitement',
 
   'New Prescription' => 'Nouveau Traitement',
   'All Prescriptions' => 'Tous les Traitements',
@@ -23,7 +22,8 @@ return [
   'Dose' => 'Dose',
   'Select Drug' => 'Selectionner un Soin',
   'Advice_Comment' => 'Description/Commentaire',
-  'follow' => 'suivre le traitement',
+  'follow' => 'Suivre le Traitement',
+  'follow on statistics' => 'Statistique du Suivi',
   'Select Test' => 'Selectionner un Diagnostic',
   'Description' => 'Description',
   'View Prescription' => 'Voir Traitement',

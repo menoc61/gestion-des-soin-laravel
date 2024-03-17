@@ -351,7 +351,7 @@
                                                             class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
                                                     </td>
                                                     <td align="center">
-                                                        <a href="{{ url('test/view/' . $test->id) }}" class="btn btn-outline-primary btn-circle btn-sm">
+                                                        <a href="{{ url('prescription/follow/' . $prescription->id) }}" class="btn btn-outline-primary btn-circle btn-sm">
                                                             <i class="fa fa-id-card"></i>
                                                         </a>
                                                     </td>
