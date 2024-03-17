@@ -1,36 +1,36 @@
-@extends('layouts.master')
+<?php $__env->startSection('title'); ?>
+    <?php echo e(__('sentence.Edit Prescription')); ?>
 
-@section('title')
-    {{ __('sentence.Edit Prescription') }}
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="mb-3">
         <button class="btn btn-primary" onclick="history.back()">Retour</button>
     </div>
 
-    <form method="post" action="{{ route('prescription.update') }}">
+    <form method="post" action="<?php echo e(route('prescription.update')); ?>">
 
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Patient informations') }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.Patient informations')); ?></h6>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="PatientID">{{ __('sentence.Patient') }} :</label>
-                            <option value="{{ $prescription->user_id }}">{{ $prescription->User->name }} -
-                                {{ \Carbon\Carbon::parse($prescription->User->Patient->birthday)->age }} Years</option>
-                            <input type="hidden" name="patient_id" value="{{ $prescription->user_id }}">
-                            <input type="hidden" name="prescription_id" value="{{ $prescription->id }}">
-                            {{ csrf_field() }}
+                            <label for="PatientID"><?php echo e(__('sentence.Patient')); ?> :</label>
+                            <option value="<?php echo e($prescription->user_id); ?>"><?php echo e($prescription->User->name); ?> -
+                                <?php echo e(\Carbon\Carbon::parse($prescription->User->Patient->birthday)->age); ?> Years</option>
+                            <input type="hidden" name="patient_id" value="<?php echo e($prescription->user_id); ?>">
+                            <input type="hidden" name="prescription_id" value="<?php echo e($prescription->id); ?>">
+                            <?php echo e(csrf_field()); ?>
+
                         </div>
                         <div class="form-group text-center">
-                            <img src="{{ asset('img/patient-icon.png') }}" class="img-profile rounded-circle img-fluid">
+                            <img src="<?php echo e(asset('img/patient-icon.png')); ?>" class="img-profile rounded-circle img-fluid">
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="{{ __('sentence.Edit Prescription') }}"
+                            <input type="submit" value="<?php echo e(__('sentence.Edit Prescription')); ?>"
                                 class="btn btn-success btn-block" align="center">
                         </div>
                     </div>
@@ -39,38 +39,35 @@
             <div class="col-md-8">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.Drugs list')); ?></h6>
                     </div>
                     <div class="card-body">
                         <fieldset class="drugs_labels">
                             <div class="repeatable">
-                                @foreach ($prescription_drugs as $prescription_drug)
+                                <?php $__currentLoopData = $prescription_drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prescription_drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <section class="field-group">
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <div class="form-group-custom">
                                                     <input type="text" class="form-control" name="type[]" id="task_{?}"
-                                                        placeholder="{{ __('sentence.Type') }}"
+                                                        placeholder="<?php echo e(__('sentence.Type')); ?>"
                                                         class="ui-autocomplete-input" autocomplete="off"
-                                                        value="{{ $prescription_drug->type }}">
+                                                        value="<?php echo e($prescription_drug->type); ?>">
                                                     <label class="control-label"></label><i class="bar"></i>
                                                     <input type="hidden" name="prescription_drug_id[]"
-                                                        value="{{ $prescription_drug->id }}">
+                                                        value="<?php echo e($prescription_drug->id); ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <select class="form-control multiselect-drug" name="trade_name[]"
                                                     id="drug" tabindex="-1" aria-hidden="true" required>
-                                                    @if (@empty($drugs))
-                                                        <option value="">selectionner un soin</option>
-                                                    @else
-                                                        <option value="{{ $prescription_drug->drug_id }}">
-                                                            {{ $prescription_drug->Drug->trade_name }}</option>
-                                                        @foreach ($drugs as $drug)
-                                                            <option value="{{ $drug->id }}">{{ $drug->trade_name }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
+                                                    <option value="<?php echo e($prescription_drug->drug_id); ?>">
+                                                        <?php echo e($prescription_drug->Drug->trade_name); ?></option>
+                                                    <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?>
+
+                                                        </option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
                                             </div>
 
@@ -78,7 +75,7 @@
                                                 <div class="form-group-custom">
                                                     <input type="text" id="strength" name="strength[]"
                                                         class="form-control" placeholder="Mg/Ml"
-                                                        value="{{ $prescription_drug->strength }}">
+                                                        value="<?php echo e($prescription_drug->strength); ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -88,8 +85,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group-custom">
                                                     <input type="text" id="dose" name="dose[]" class="form-control"
-                                                        placeholder="{{ __('sentence.Dose') }}"
-                                                        value="{{ $prescription_drug->dose }}">
+                                                        placeholder="<?php echo e(__('sentence.Dose')); ?>"
+                                                        value="<?php echo e($prescription_drug->dose); ?>">
                                                     <label class="control-label"></label><i class="bar"></i>
 
                                                 </div>
@@ -97,8 +94,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group-custom">
                                                     <input type="text" id="duration" name="duration[]"
-                                                        class="form-control" placeholder="{{ __('sentence.Duration') }}"
-                                                        value="{{ $prescription_drug->duration }}">
+                                                        class="form-control" placeholder="<?php echo e(__('sentence.Duration')); ?>"
+                                                        value="<?php echo e($prescription_drug->duration); ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -107,74 +104,74 @@
                                                 <div class="form-group-custom">
                                                     <input type="text" id="drug_advice" name="drug_advice[]"
                                                         class="form-control"
-                                                        placeholder="{{ __('sentence.Advice_Comment') }}"
-                                                        value="{{ $prescription_drug->drug_advice }}">
+                                                        placeholder="<?php echo e(__('sentence.Advice_Comment')); ?>"
+                                                        value="<?php echo e($prescription_drug->drug_advice); ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i
                                                         class="fa fa-trash font-size-12"></i>
-                                                    {{ __('sentence.Remove') }}</a>
+                                                    <?php echo e(__('sentence.Remove')); ?></a>
                                             </div>
                                             <div class="col-12">
                                                 <hr color="red">
                                             </div>
                                         </div>
                                     </section>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
                             <div class="form-group">
                                 <a type="button" class="btn btn-sm btn-primary add text-white" align="center"><i
-                                        class='fa fa-plus'></i> {{ __('sentence.Add Drug') }}</a>
+                                        class='fa fa-plus'></i> <?php echo e(__('sentence.Add Drug')); ?></a>
                             </div>
                         </fieldset>
                     </div>
                 </div>
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Tests list') }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.Tests list')); ?></h6>
                     </div>
                     <div class="card-body">
                         <fieldset class="test_labels">
                             <div class="repeatable">
-                                @foreach ($prescription_tests as $prescription_test)
+                                <?php $__currentLoopData = $prescription_tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prescription_test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="field-group row">
 
                                         <div class="col-md-4">
                                             <select class="form-control multiselect-doctorino" name="test_name[]"
                                                 id="test" tabindex="-1" aria-hidden="true" required>
-                                                <option value="{{ $prescription_test->test_id }}">
-                                                    {{ $prescription_test->Test->test_name }} </option>
-                                                @foreach ($tests as $test)
-                                                    <option value="{{ $test->id }}">{{ $test->test_name }} </option>
-                                                @endforeach
+                                                <option value="<?php echo e($prescription_test->test_id); ?>">
+                                                    <?php echo e($prescription_test->Test->test_name); ?> </option>
+                                                <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?> </option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group-custom">
                                                 <input type="text" id="strength" name="description[]"
-                                                    class="form-control" placeholder="{{ __('sentence.Description') }}">
+                                                    class="form-control" placeholder="<?php echo e(__('sentence.Description')); ?>">
                                                 <input type="hidden" name="prescription_test_id[]"
-                                                    value="{{ $prescription_test->id }}">
+                                                    value="<?php echo e($prescription_test->id); ?>">
 
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <a type="button" class="btn btn-danger delete text-white btn-sm"
                                                 align="center"><i class="fa fa-trash font-size-12"></i>
-                                                {{ __('sentence.Remove') }}</a>
+                                                <?php echo e(__('sentence.Remove')); ?></a>
 
                                         </div>
                                         <div class="col-12">
                                             <hr color="#a1f1d4">
                                         </div>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
                             <div class="form-group">
                                 <a type="button" class="btn btn-sm btn-primary add text-white" align="center"><i
-                                        class='fa fa-plus'></i> {{ __('sentence.Add Test') }}</a>
+                                        class='fa fa-plus'></i> <?php echo e(__('sentence.Add Test')); ?></a>
                             </div>
                         </fieldset>
                     </div>
@@ -182,9 +179,9 @@
             </div>
         </div>
     </form>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('footer')
+<?php $__env->startSection('footer'); ?>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script type="text/javascript">
@@ -206,7 +203,7 @@
                                 <div class="col-md-2">
                                     <div class="form-group-custom">
                                         <input type="text" class="form-control"
-                                        name="type[]" id="task_{?}" placeholder="{{ __('sentence.Type') }}"
+                                        name="type[]" id="task_{?}" placeholder="<?php echo e(__('sentence.Type')); ?>"
                                         class="ui-autocomplete-input" style="
                                                                             color: #28a745;
                                                                             background-color: transparent;
@@ -218,13 +215,10 @@
                              </div>
                              <div class="col-md-6">
                                  <select class="form-control multiselect-drug" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
-                                    @if (@empty($drugs))
-                                    <option value="">{{ __('sentence.Select Drug') }}...</option>
-                                @else
-                                    @foreach($drugs as $drug)
-                                        <option value="{{ $drug->id }}">{{ $drug->trade_name }}</option>
-                                    @endforeach
-                                @endif
+                                   <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
+                                   <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                       <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
+                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                  </select>
                              </div>
 
@@ -239,25 +233,25 @@
 
                              <div class="col-md-6">
                                  <div class="form-group-custom">
-                                     <input type="text" id="dose" name="dose[]" class="form-control" placeholder="{{ __('sentence.Dose') }}">
+                                     <input type="text" id="dose" name="dose[]" class="form-control" placeholder="<?php echo e(__('sentence.Dose')); ?>">
                                      <label class="control-label"></label><i class="bar"></i>
 
                                  </div>
                              </div>
                              <div class="col-md-6">
                                  <div class="form-group-custom">
-                                     <input type="text" id="duration" name="duration[]" class="form-control" placeholder="{{ __('sentence.Duration') }}">
+                                     <input type="text" id="duration" name="duration[]" class="form-control" placeholder="<?php echo e(__('sentence.Duration')); ?>">
                                  </div>
                              </div>
                          </div>
                          <div class="row">
                              <div class="col-md-9">
                                  <div class="form-group-custom">
-                                     <input type="text" id="drug_advice" name="drug_advice[]" class="form-control" placeholder="{{ __('sentence.Advice_Comment') }}">
+                                     <input type="text" id="drug_advice" name="drug_advice[]" class="form-control" placeholder="<?php echo e(__('sentence.Advice_Comment')); ?>">
                                  </div>
                              </div>
                               <div class="col-md-3">
-                                    <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-trash  font-size-12"></i> {{ __('sentence.Remove') }}</a>
+                                    <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-trash  font-size-12"></i> <?php echo e(__('sentence.Remove')); ?></a>
                                </div>
                                <div class="col-12">
                                     <hr color="#a1f1d4">
@@ -272,23 +266,20 @@
 
                              <div class="col-md-4">
                                  <select class="form-control multiselect-doctorino" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
-                                    @if (@empty($tests))
-                                     <option value="">{{ __('sentence.Select Test') }}...</option>
-                                   @else
-                                    @foreach($tests as $test)
-                                        <option value="{{ $test->id }}">{{ $test->test_name }}</option>
-                                    @endforeach
-                                   @endif
+                                   <option value=""><?php echo e(__('sentence.Select Test')); ?>...</option>
+                                   <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                       <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?></option>
+                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                  </select>
                              </div>
 
                              <div class="col-md-4">
                                  <div class="form-group-custom">
-                                     <input type="text" id="strength" name="description[]"  class="form-control" placeholder="{{ __('sentence.Description') }}">
+                                     <input type="text" id="strength" name="description[]"  class="form-control" placeholder="<?php echo e(__('sentence.Description')); ?>">
                                  </div>
                              </div>
                              <div class="col-md-3">
-                                 <a type="button" class="btn btn-danger delete text-white btn-sm" align="center"><i class='fa fa-trash  font-size-12'></i> {{ __('sentence.Remove') }}</a>
+                                 <a type="button" class="btn btn-danger delete text-white btn-sm" align="center"><i class='fa fa-trash  font-size-12'></i> <?php echo e(__('sentence.Remove')); ?></a>
 
                               </div>
                               <div class="col-12">
@@ -296,8 +287,10 @@
                               </div>
                          </div>
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('header')
+<?php $__env->startSection('header'); ?>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\gille\workspace\gestion-des-soin-laravel\resources\views/prescription/edit.blade.php ENDPATH**/ ?>

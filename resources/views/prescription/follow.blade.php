@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    {{ __('sentence.New Prescription') }}
+    {{ __('sentence.follow') }}
 @endsection
 
 @section('content')
@@ -14,47 +14,15 @@
             <div class="col-md-4">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Patient informations') }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.follow') }}</h6>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="PatientID">{{ __('sentence.Patient') }} :</label>
-                            <select class="form-control multiselect-search" name="patient_id" id="PatientID" required>
-                                @if (@empty($patients))
-                                <option >{{ __('sentence.Select Patient') }}</option>
-                            @else
-                                @foreach($patients as $patient)
-                                    <option value="{{ $patient->id }}">{{ $patient->name }} (ID : {{ $patient->id }})</option>
-                                @endforeach
-                            @endif
-                            </select>
-                            {{ csrf_field() }}
-                        </div>
-                        <div class="form-group">
-                            <label for="DoctorID">{{ __('sentence.Doctors') }} :</label>
-                            <select class="form-control multiselect-search" name="Doctor_id" id="DoctorID" required>
-                                @if (@empty($praticiens))
-                                    <option>{{ __('sentence.Select Doctor') }}</option>
-                                @else
-                                    @foreach ($praticiens as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                            {{ csrf_field() }}
-                        </div>
-                        <div class="form-group text-center ">
-                            <img src="{{ asset('img/patient-icon.png') }}"
-                                class="img-profile rounded-circle img-fluid w-50 h-50">
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="{{ __('sentence.Create Prescription') }}"
-                                class="btn btn-success btn-block" align="center">
-                        </div>
+                        statistics
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
+                {{-- drug list --}}
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
@@ -69,20 +37,7 @@
                         </fieldset>
                     </div>
                 </div>
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Tests list') }}</h6>
-                    </div>
-                    <div class="card-body">
-                        <fieldset class="test_labels">
-                            <div class="repeatable"></div>
-                            <div class="form-group">
-                                <a type="button" class="btn btn-sm btn-primary add text-white" align="center"><i
-                                        class='fa fa-plus'></i> {{ __('sentence.Add Test') }}</a>
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
+                {{-- drug list end --}}
             </div>
         </div>
     </form>
@@ -197,34 +152,6 @@
                                 </div>
             </section>
     </script>
-    <script type="text/template" id="test_labels">
-                         <div class="field-group row">
-                             <div class="col-md-4">
-                                 <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
-                                    @if (@empty($tests))
-                                        <option value="">{{ __('sentence.Select Test') }}...</option>
-                                    @else
-                                        @foreach($tests as $test)
-                                            <option value="{{ $test->id }}">{{ $test->test_name }}</option>
-                                        @endforeach
-                                    @endif
-                                 </select>
-                             </div>
-
-                             <div class="col-md-4">
-                                 <div class="form-group-custom">
-                                     <input type="text" id="strength" name="description[]"  class="form-control" placeholder="{{ __('sentence.Description') }}">
-                                 </div>
-                             </div>
-                             <div class="col-md-3">
-                                 <a type="button" class="btn btn-danger delete text-white btn-sm" align="center"><i class='fa fa-plus'></i> {{ __('sentence.Remove') }}</a>
-
-                              </div>
-                              <div class="col-12">
-                                    <hr color="#a1f1d4">
-                              </div>
-                         </div>
-</script>
 @endsection
 
 @section('header')

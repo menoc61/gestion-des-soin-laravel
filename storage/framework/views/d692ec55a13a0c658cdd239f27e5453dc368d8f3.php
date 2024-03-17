@@ -1,94 +1,76 @@
-@extends('layouts.master')
 
-@section('title')
-    {{ __('sentence.Create Invoice') }}
-@endsection
 
-@section('content')
+<?php $__env->startSection('title'); ?>
+    <?php echo e(__('sentence.Create Invoice')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="mb-3">
         <button class="btn btn-primary" onclick="history.back()">Retour</button>
     </div>
 
-    <form method="post" action="{{ route('billing.store_id', ['id' => $userId]) }}">
-        <div class="justify-content-center">
-            <div class="col-md-6 ">
+    <form method="post" action="<?php echo e(route('billing.store')); ?>">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Invoice Details') }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.Invoice Details')); ?></h6>
                     </div>
                     <div class="card-body">
-
-
-                        {{-- <div class="col-md-4">
-                            <select class="form-control multiselect-search" name="reference[]" id="prescription" tabindex="-1" aria-hidden="true" required>
-                              <option value="">{{ __('sentence.Select Test') }}...</option>
-                              @foreach ($prescriptions as $prescription)
-                                  <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
-                              @endforeach
-                            </select>
-                        </div> --}}
-
-
                         <fieldset class="billing_labels">
                             <div class="repeatable"></div>
                             <div class="form-group">
                                 <a type="button" class="btn btn-primary btn-sm add text-white" align="center"><i
-                                        class='fa fa-plus'></i> {{ __('sentence.Add Item') }}</a>
+                                        class='fa fa-plus'></i> <?php echo e(__('sentence.Add Item')); ?></a>
                             </div>
                         </fieldset>
-
-                        {{-- <div class="d-flex justify-content-between ">
-                    <span class="">Montant sans Taxe : <b id="total_without_tax_income">0 </b> {{ App\Setting::get_option('currency') }}</span><br>
-                    <span class="">TVA : <b>{{ App\Setting::get_option('vat') }} %</b> </span><br>
-                    <span class="">Montant Total : <b id="total_income">0 </b> {{ App\Setting::get_option('currency') }}</span>
-               </div> --}}
+                        
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Informations') }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.Informations')); ?></h6>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="drug">{{ __('sentence.Select Patient') }}</label>
-                            <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id"
-                                readonly>
-                            <input type="text" class="form-control" value="{{ $userName }}" readonly>
-                            {{ csrf_field() }}
+                            <label for="drug"><?php echo e(__('sentence.Select Patient')); ?></label>
+                            <select class="form-control select2 select2-hidden-accessible" id="drug" tabindex="-1"
+                                name="patient_id" aria-hidden="true">
+                                <option></option>
+                                <?php $__currentLoopData = $patients; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $patient): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($patient->id); ?>"><?php echo e($patient->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <?php echo e(csrf_field()); ?>
+
                         </div>
                         <div class="form-group">
-                            <label for="PaymentMode">{{ __('sentence.Payment Mode') }}</label>
+                            <label for="PaymentMode"><?php echo e(__('sentence.Payment Mode')); ?></label>
                             <select class="form-control" name="payment_mode" id="PaymentMode">
-                                <option value="Cash">{{ __('sentence.Cash') }}</option>
-                                <option value="Mobile Transaction">{{ __('sentence.Mobile Transaction') }}</option>
+                                <option value="Cash"><?php echo e(__('sentence.Cash')); ?></option>
+                                <option value="Mobile Transaction"><?php echo e(__('sentence.Mobile Transaction')); ?></option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="DepositedAmount">{{ __('sentence.Already Paid') }}</label>
+                            <label for="DepositedAmount"><?php echo e(__('sentence.Already Paid')); ?></label>
                             <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount">
                         </div>
 
                         <div class="form-group">
-                            <label for="DueAmount">{{ __('sentence.Due Balance') }}</label>
+                            <label for="DueAmount"><?php echo e(__('sentence.Due Balance')); ?></label>
                             <input class="form-control" type="number" name="due_amount" id="DueAmount">
                         </div>
 
-                        {{-- choix du statut de paiement --}}
+                        
 
-                        {{-- <div class="form-group">
-                  <label for="PaymentMode">{{ __('sentence.Payment Status') }}</label>
-                  <select class="form-control" name="payment_status">
-                     <option value="Paid">{{ __('sentence.Paid') }}</option>
-                     <option value="Partially Paid">{{ __('sentence.Partially Paid') }}</option>
-                     <option value="Unpaid">{{ __('sentence.Unpaid') }}</option>
-                  </select>
-               </div> --}}
+                        
 
                         <div class="form-group">
-                            <input type="submit" value="{{ __('sentence.Create Invoice') }}"
+                            <input type="submit" value="<?php echo e(__('sentence.Create Invoice')); ?>"
                                 class="btn btn-success btn-block" align="center">
                         </div>
                     </div>
@@ -96,36 +78,27 @@
             </div>
         </div>
     </form>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('footer')
+<?php $__env->startSection('footer'); ?>
     <script type="text/template" id="billing_labels">
    <div class="field-group row">
     <div class="col">
        <div class="form-group-custom">
-        <select class="form-control multiselect-search" name="invoice_title[]" id="prescription" tabindex="-1" aria-hidden="true" required>
-            @if (@empty($prescriptions))
-                <option value="">{{ __('sentence.Select Test') }}...</option>
-            @else
-                @foreach($prescriptions as $prescription)
-                    <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
-                @endforeach
-            @endif
-          </select>
-          {{-- <input type="text" id="strength" name="invoice_title[]"  class="form-control" placeholder="{{ __('sentence.Invoice Title') }}" onchange="updateInvoiceTitle()" required> --}}
+          <input type="text" id="strength" name="invoice_title[]"  class="form-control" placeholder="<?php echo e(__('sentence.Invoice Title')); ?>" onchange="updateInvoiceTitle()" required>
        </div>
     </div>
     <div class="col">
        <div class="input-group mb-3">
-        <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}" aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" required>
+        <input type="number" class="form-control" placeholder="<?php echo e(__('sentence.Amount')); ?>" aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" required>
 
           <div class="input-group-append">
-             <span class="input-group-text" id="basic-addon1">{{ App\Setting::get_option('currency') }}</span>
+             <span class="input-group-text" id="basic-addon1"><?php echo e(App\Setting::get_option('currency')); ?></span>
           </div>
        </div>
     </div>
     <div class="col-md-3">
-       <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-times-circle"></i> {{ __('sentence.Remove') }}</a>
+       <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-times-circle"></i> <?php echo e(__('sentence.Remove')); ?></a>
     </div>
    </div>
 </script>
@@ -137,7 +110,7 @@
                 var totalPoints = 0;
                 var DepositedAmount = parseFloat($('#DepositedAmount').val());
                 var DueAmount = 0;
-                //   var vat = {{ App\Setting::get_option('vat') }};
+                //   var vat = <?php echo e(App\Setting::get_option('vat')); ?>;
 
                 $(this).find('input[aria-label="Amount"]').each(function() {
                     if ($(this).val() !== '') {
@@ -199,4 +172,6 @@
 
         }, 1000);
     </script>
-@endsection
+    <?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\gille\workspace\gestion-des-soin-laravel\resources\views/billing/create.blade.php ENDPATH**/ ?>

@@ -9,7 +9,6 @@ use App\Prescription_test;
 use App\Test;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\PDF;
 
 class PrescriptionController extends Controller
 {
@@ -24,6 +23,7 @@ class PrescriptionController extends Controller
         $patients = User::where('role_id', '3')->get();
         $praticiens = User::where('role_id', '2')->get();
         $tests = Test::all();
+
         return view('prescription.create', compact('drugs', 'patients', 'praticiens', 'tests'));
     }
 
@@ -38,7 +38,20 @@ class PrescriptionController extends Controller
         $patients = User::where('role_id', '3')->get();
         $praticiens = User::where('role_id', '2')->get();
         $tests = Test::where('user_id', $id)->get();
+
         return view('prescription.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
+    }
+
+    public function follow($prescriptionId)
+    {
+        // Fetch the related prescription model
+        $prescription = Prescription::findOrFail($prescriptionId);
+
+        // Perform the necessary business logic for following a prescription
+        // ...
+
+        // Optionally, you can pass the $prescription object to the view
+        return view('prescription.follow', ['prescription' => $prescription]);
     }
 
     public function store(Request $request)
@@ -53,7 +66,7 @@ class PrescriptionController extends Controller
 
         $prescription->user_id = $request->patient_id;
         $prescription->doctor_id = $request->Doctor_id;
-        $prescription->reference = 'p' . rand(10000, 99999);
+        $prescription->reference = 'p'.rand(10000, 99999);
 
         $prescription->save();
 
@@ -64,13 +77,13 @@ class PrescriptionController extends Controller
                 if ($request->trade_name[$x] != null) {
                     $add_drug = new Prescription_drug();
 
-                    $add_drug->type = $request->input('type.' . $x) ?? null;
-                    $add_drug->strength = $request->input('strength.' . $x) ?? null;
-                    $add_drug->dose = $request->input('dose.' . $x) ?? null;
-                    $add_drug->duration = $request->input('duration.' . $x) ?? null;
-                    $add_drug->drug_advice = $request->input('drug_advice.' . $x) ?? null;
+                    $add_drug->type = $request->input('type.'.$x) ?? null;
+                    $add_drug->strength = $request->input('strength.'.$x) ?? null;
+                    $add_drug->dose = $request->input('dose.'.$x) ?? null;
+                    $add_drug->duration = $request->input('duration.'.$x) ?? null;
+                    $add_drug->drug_advice = $request->input('drug_advice.'.$x) ?? null;
                     $add_drug->prescription_id = $prescription->id;
-                    $add_drug->drug_id = $request->input('trade_name.' . $x) ?? null;
+                    $add_drug->drug_id = $request->input('trade_name.'.$x) ?? null;
 
                     $add_drug->save();
                 }
@@ -140,7 +153,7 @@ class PrescriptionController extends Controller
         $pdf->setOption('viewport-size', '1024x768');
 
         // download PDF file with download method
-        return $pdf->download($prescription->User->name . '_pdf.pdf');
+        return $pdf->download($prescription->User->name.'_pdf.pdf');
     }
 
     public function edit($id)
@@ -279,6 +292,7 @@ class PrescriptionController extends Controller
         $User = User::findOrfail($id);
 
         $prescriptions = Prescription::where('user_id', $id)->paginate(25);
+
         return view('prescription.view_for_user', ['prescriptions' => $prescriptions]);
     }
 }

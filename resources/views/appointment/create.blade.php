@@ -18,10 +18,13 @@
                   <div class="form-group">
                      <label for="patient_name">{{ __('sentence.Patient') }} @can('add patient') - <a href="{{ route('patient.create') }}" class="text-muted">{{ __('sentence.New Patient') }}</a> @endcan</label>
                      <select class="form-control patient_name multiselect-doctorino"  id="patient_name">
-                        <option value="0">{{ __('sentence.Select Patient') }}</option>
-                        @foreach($patients as $patient)
-                        <option value="{{ $patient->id }}">{{ $patient->name }} (ID : {{ $patient->id }})</option>
-                        @endforeach
+                        @if (@empty($patients))
+                            <option >{{ __('sentence.Select Patient') }}</option>
+                        @else
+                            @foreach($patients as $patient)
+                                <option value="{{ $patient->id }}">{{ $patient->name }} (ID : {{ $patient->id }})</option>
+                            @endforeach
+                        @endif
                      </select>
                   </div>
                   <div class="form-group">
@@ -43,7 +46,7 @@
                   </div>
                </div>
                <div class="col-md-8 col-sm-12">
-                  <label for="date">{{ __('sentence.Available Times') }}</label> 
+                  <label for="date">{{ __('sentence.Available Times') }}</label>
                   <hr>
                   <div class="row mb-2 myorders"></div>
                   <div class="alert alert-danger text-center" role="alert" id="help-block">
