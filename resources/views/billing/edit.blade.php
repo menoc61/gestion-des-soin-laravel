@@ -34,7 +34,7 @@
                                                 <input type="number" class="form-control"
                                                     placeholder="{{ __('sentence.Amount') }}" aria-label="Amount"
                                                     aria-describedby="basic-addon1" name="invoice_amount[]"
-                                                    value="{{ $billing_item->invoice_amount }}" required>
+                                                    value="{{ $billing_item->invoice_amount }}" min="0" required>
 
                                                 <div class="input-group-append">
                                                     <span class="input-group-text"
@@ -134,7 +134,7 @@
     </div>
     <div class="col">
        <div class="input-group mb-3">
-        <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}" aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" required>
+        <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}" aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" min="0" required>
 
           <div class="input-group-append">
              <span class="input-group-text" id="basic-addon1">{{ App\Setting::get_option('currency') }}</span>

@@ -164,7 +164,7 @@
 
                                     <div class="col-md-2">
                                         <div class="form-group-custom">
-                                            <input type="number" id="dose" name="dose[]" class="form-control" placeholder="{{ __('sentence.Dose') }}">
+                                            <input type="number" min="0" id="dose" name="dose[]" class="form-control" placeholder="{{ __('sentence.Dose') }}">
                                             <label class="control-label"></label><i class="bar"></i>
 
                                         </div>

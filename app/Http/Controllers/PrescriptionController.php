@@ -206,23 +206,23 @@ class PrescriptionController extends Controller
                 if (isset($request->prescription_drug_id[$x])) {
                     Prescription_drug::where('id', $request->prescription_drug_id[$x])
                         ->update([
-                            'type' => $request->type[$x],
-                            'strength' => $request->strength[$x],
-                            'dose' => $request->dose[$x],
-                            'duration' => $request->duration[$x],
-                            'drug_advice' => $request->drug_advice[$x],
-                            'drug_id' => $request->trade_name[$x],
+                            'type' => isset($request->type[$x]) ? $request->type[$x] : null,
+                            'strength' => isset($request->strength[$x]) ? $request->strength[$x] : null,
+                            'dose' => isset($request->dose[$x]) ? $request->dose[$x] : null,
+                            'duration' => isset($request->duration[$x]) ? $request->duration[$x] : null,
+                            'drug_advice' => isset($request->drug_advice[$x]) ? $request->drug_advice[$x] : null,
+                            'drug_id' => isset($request->trade_name[$x]) ? $request->trade_name[$x] : null,
                         ]);
                 } else {
                     $add_drug = new Prescription_drug();
 
-                    $add_drug->type = $request->type[$x];
-                    $add_drug->strength = $request->strength[$x];
-                    $add_drug->dose = $request->dose[$x];
-                    $add_drug->duration = $request->duration[$x];
-                    $add_drug->drug_advice = $request->drug_advice[$x];
-                    $add_drug->prescription_id = $request->prescription_id;
-                    $add_drug->drug_id = $request->trade_name[$x];
+                    $add_drug->type = $request->type[$x] ?? null;
+                    $add_drug->strength = $request->strength[$x] ?? null;
+                    $add_drug->dose = $request->dose[$x] ?? null;
+                    $add_drug->duration = $request->duration[$x] ?? null;
+                    $add_drug->drug_advice = $request->drug_advice[$x] ?? null;
+                    $add_drug->prescription_id = $request->prescription_id ?? null;
+                    $add_drug->drug_id = $request->trade_name[$x] ?? null;
 
                     $add_drug->save();
                 }

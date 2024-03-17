@@ -197,7 +197,7 @@
                     </div>
                 </div>
             </div>
-
+{{-- graph section --}}
             <div class="col-md-5 ">
                 <div class="chart mb-4">
                         <div class="mt-5"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
@@ -208,7 +208,7 @@
                     <div class="mt-5"><canvas id="myBarChart" width="100%" height="40%"></canvas></div>
                 </div>
             </div>
-
+{{-- graph section end --}}
         </div>
     @endrole
 
@@ -487,5 +487,4 @@
     </script>
     <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
     <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
-    {{-- <script src="{{ asset('public') }}/assets/demo/chart-pie-demo.js"></script> --}}
 @endsection
