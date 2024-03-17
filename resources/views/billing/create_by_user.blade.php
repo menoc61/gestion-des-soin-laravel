@@ -117,7 +117,7 @@
     </div>
     <div class="col">
        <div class="input-group mb-3">
-        <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}" aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" required>
+        <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}" aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" required min="0">
 
           <div class="input-group-append">
              <span class="input-group-text" id="basic-addon1">{{ App\Setting::get_option('currency') }}</span>

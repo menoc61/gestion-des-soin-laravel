@@ -134,7 +134,7 @@
                                                                             color: #28a745;
                                                                             background-color: transparent;
                                                                             border-color: #28a745;"
-                                        value="new" autocomplete="off" disabled>
+                                        value="new" autocomplete="off" @readonly(true)>
                                         <label class="control-label"></label><i class="bar"></i>
                                     </div>
                                 </div>
@@ -163,14 +163,14 @@
 
                                 <div class="col-md-2">
                                     <div class="form-group-custom">
-                                        <input type="number" id="dose" name="dose[]" class="form-control" placeholder="{{ __('sentence.Dose') }}">
+                                        <input type="number" min="0" id="dose" name="dose[]" class="form-control"  placeholder="{{ __('sentence.Dose') }}" @required(true)>
                                         <label class="control-label"></label><i class="bar"></i>
 
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group-custom">
-                                        <input type="date" id="duration" name="duration[]" class="form-control" placeholder="{{ __('sentence.Duration') }}">
+                                        <input type="date" id="duration" name="duration[]" class="form-control" placeholder="{{ __('sentence.Duration') }}" @readonly(true)>
                                     </div>
                                 </div>
                             </div>

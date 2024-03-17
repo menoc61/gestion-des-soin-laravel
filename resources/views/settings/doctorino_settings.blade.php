@@ -67,7 +67,7 @@
                <div class="form-group row">
                   <label for="Currency" class="col-sm-3 col-form-label">{{ __('sentence.VAT') }}</label>
                   <div class="col-sm-9">
-                     <input type="number" class="form-control" id="Currency" name="vat" value="{{ App\Setting::get_option('vat') }}" required>
+                     <input type="number" min="0" class="form-control" id="Currency" name="vat" value="{{ App\Setting::get_option('vat') }}" required>
                   </div>
                </div>
                <div class="form-group row">

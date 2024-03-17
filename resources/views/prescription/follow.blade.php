@@ -17,7 +17,11 @@
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.follow') }}</h6>
                     </div>
                     <div class="card-body">
-                        statistics
+                        <div class="col-md-5 ">
+                            <div class=" chart-statistic mb-4">
+                                <div class="mt-5"><canvas id="myDoughnutChart" width="100%" height="40%"></canvas></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -119,7 +123,7 @@
 
                                     <div class="col-md-2">
                                         <div class="form-group-custom">
-                                            <input type="number" id="dose" name="dose[]" class="form-control" placeholder="{{ __('sentence.Dose') }}">
+                                            <input type="number" min="0" id="dose" name="dose[]" class="form-control" placeholder="{{ __('sentence.Dose') }}">
                                             <label class="control-label"></label><i class="bar"></i>
 
                                         </div>
@@ -165,6 +169,14 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="/dashboard/vendor/chart.js/Chart.bundle.js"></script>
+    <script type="text/javascript">
+        var _ydata = JSON.parse('{!! json_encode($months) !!}');
+        var _xdata = JSON.parse('{!! json_encode($totalAmounts) !!}');
+    </script>
+    <script src="{{ asset('assets/demo/chart-doughnut-demo.js') }}"></script>
 
     <script>
         $(function() {
