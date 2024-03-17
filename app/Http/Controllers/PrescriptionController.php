@@ -30,9 +30,8 @@ class PrescriptionController extends Controller
     public function create_By_Id($id)
     {
         $user = User::find($id);
-        // Vérifiez si l'utilisateur existe
         if (!$user) {
-            // Gérez le cas où l'utilisateur n'est pas trouvé
+            return redirect()->back()->with('error', 'The user does not exist');
         }
         $drugs = Drug::all();
         $patients = User::where('role_id', '3')->get();
@@ -42,16 +41,13 @@ class PrescriptionController extends Controller
         return view('prescription.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
     }
 
-    public function follow($prescriptionId)
+    public function follow($id)
     {
-        // Fetch the related prescription model
-        $prescription = Prescription::findOrFail($prescriptionId);
+        $prescription = Prescription::findOrfail($id);
+        $prescription_drugs = Prescription_drug::where('prescription_id', $id)->get();
+        $drugs = Drug::all();
 
-        // Perform the necessary business logic for following a prescription
-        // ...
-
-        // Optionally, you can pass the $prescription object to the view
-        return view('prescription.follow', ['prescription' => $prescription]);
+        return view('prescription.follow', ['prescription' => $prescription, 'prescription_drugs' => $prescription_drugs, 'drugs' => $drugs]);
     }
 
     public function store(Request $request)

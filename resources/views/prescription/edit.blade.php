@@ -100,7 +100,7 @@
                                                 <div class="form-group-custom">
                                                     <input type="date" id="duration" name="duration[]"
                                                         class="form-control" placeholder="{{ __('sentence.Duration') }}"
-                                                        value="{{ $prescription_drug->duration }}"@required(true) >
+                                                        value="{{ $prescription_drug->duration }}"@required(true)>
                                                 </div>
                                             </div>
                                         </div>
