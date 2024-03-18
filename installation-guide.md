@@ -1,6 +1,6 @@
 # Local Installation with Manual Development Setup
 
-**You can know get the automatic installation script from [auto-installation-guide.md](./auto-installation-guide.md)** 
+> **You can know get the automatic installation script from [auto-installation-guide.md](./auto-installation-guide.md)** 
 
 ## Table of Contents
 0. [Configure database](#step-0-configure-database)
