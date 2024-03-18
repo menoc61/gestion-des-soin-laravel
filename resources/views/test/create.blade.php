@@ -26,11 +26,14 @@
                             <div class="col-sm-9 input-group">
                                 <select class="input-group-text" name="patient_id" id="PatientID" required
                                     aria-placeholder="{{ __('sentence.Select Patient') }}" onchange="updateTestName()">
-                                    <option @readonly(true)>{{ __('sentence.Select Patient') }}</option>
-                                    @foreach ($patients as $patient)
-                                        <option value="{{ $patient->id }}" data-name="{{ $patient->name }}">
-                                            {{ $patient->name }}</option>
-                                    @endforeach
+                                    @if (@empty($patients))
+                                        <option @readonly(true)>{{ __('sentence.Select Patient') }}</option>
+                                    @else
+                                        @foreach ($patients as $patient)
+                                            <option value="{{ $patient->id }}" data-name="{{ $patient->name }}">
+                                                {{ $patient->name }}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                                 <input type="text" class="form-control" id="test_name" name="test_name" readonly>
                                 {{ csrf_field() }}

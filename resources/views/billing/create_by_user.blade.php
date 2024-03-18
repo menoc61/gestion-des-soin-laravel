@@ -22,7 +22,7 @@
                         {{-- <div class="col-md-4">
                             <select class="form-control multiselect-search" name="reference[]" id="prescription" tabindex="-1" aria-hidden="true" required>
                               <option value="">{{ __('sentence.Select Test') }}...</option>
-                              @foreach($prescriptions as $prescription)
+                              @foreach ($prescriptions as $prescription)
                                   <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
                               @endforeach
                             </select>
@@ -53,7 +53,8 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="drug">{{ __('sentence.Select Patient') }}</label>
-                            <input type="hidden" class="form-control" value="{{ $userId }}"  name="patient_id" readonly>
+                            <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id"
+                                readonly>
                             <input type="text" class="form-control" value="{{ $userName }}" readonly>
                             {{ csrf_field() }}
                         </div>
@@ -103,17 +104,20 @@
     <div class="col">
        <div class="form-group-custom">
         <select class="form-control multiselect-search" name="invoice_title[]" id="prescription" tabindex="-1" aria-hidden="true" required>
-            <option value="">{{ __('sentence.Select Test') }}...</option>
-            @foreach($prescriptions as $prescription)
-                <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
-            @endforeach
+            @if (@empty($prescriptions))
+                <option value="">{{ __('sentence.Select Test') }}...</option>
+            @else
+                @foreach($prescriptions as $prescription)
+                    <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
+                @endforeach
+            @endif
           </select>
           {{-- <input type="text" id="strength" name="invoice_title[]"  class="form-control" placeholder="{{ __('sentence.Invoice Title') }}" onchange="updateInvoiceTitle()" required> --}}
        </div>
     </div>
     <div class="col">
        <div class="input-group mb-3">
-        <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}" aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" required>
+        <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}" aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" required min="0">
 
           <div class="input-group-append">
              <span class="input-group-text" id="basic-addon1">{{ App\Setting::get_option('currency') }}</span>
@@ -195,4 +199,4 @@
 
         }, 1000);
     </script>
-    @endsection
+@endsection
