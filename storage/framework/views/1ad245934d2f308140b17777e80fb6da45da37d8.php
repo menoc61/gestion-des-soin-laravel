@@ -24,6 +24,12 @@
 
                         </div>
                         <div class="form-group">
+                            <label ><?php echo e(__('sentence.Prescription dosage')); ?> :</label>
+                            <input type="number" class="form-control" name="dosage">
+                            <?php echo e(csrf_field()); ?>
+
+                        </div>
+                        <div class="form-group">
                             <label for="PatientID"><?php echo e(__('sentence.Patient')); ?> :</label>
                             <input type="hidden" class="form-control" value="<?php echo e($userId); ?>" name="patient_id"
                                 readonly>
@@ -33,10 +39,14 @@
                         </div>
                         <div class="form-group">
                             <label for="DoctorID"><?php echo e(__('sentence.Doctors')); ?> :</label>
+
                             <input type="hidden" value="<?php echo e(Auth::user()->id); ?>" class="form-control" name="Doctor_id"
                                 readonly>
                             <input type="text" class="form-control" value="<?php echo e(Auth::user()->name); ?>" readonly>
                             
+
+                            
+
                             <?php echo e(csrf_field()); ?>
 
                         </div>
@@ -138,17 +148,20 @@
                                                                             color: #28a745;
                                                                             background-color: transparent;
                                                                             border-color: #28a745;"
-                                        value="new" autocomplete="off" disabled>
+                                        value="new" autocomplete="off" @readonly(true)>
                                         <label class="control-label"></label><i class="bar"></i>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
-                                        <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
-                                        <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if(@empty($drugs)): ?>
+                                            <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
+                                        <?php else: ?>
+                                            <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php endif; ?>
                                     </select>
                                     <div id="genericNames"></div>
                                 </div>
@@ -160,14 +173,14 @@
 
                                 <div class="col-md-2">
                                     <div class="form-group-custom">
-                                        <input type="number" id="dose" name="dose[]" class="form-control" placeholder="<?php echo e(__('sentence.Dose')); ?>">
+                                        <input type="number" min="0" id="dose" name="dose[]" class="form-control"  placeholder="<?php echo e(__('sentence.Dose')); ?>" @required(true)>
                                         <label class="control-label"></label><i class="bar"></i>
 
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group-custom">
-                                        <input type="date" id="duration" name="duration[]" class="form-control" placeholder="<?php echo e(__('sentence.Duration')); ?>">
+                                        <input type="date" id="duration" name="duration[]" class="form-control" placeholder="<?php echo e(__('sentence.Duration')); ?>" @readonly(true)>
                                     </div>
                                 </div>
                             </div>
@@ -190,14 +203,18 @@
                          <div class="field-group row">
                              <div class="col-md-4">
                                  <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
-                                   <option value=""><?php echo e(__('sentence.Select Test')); ?>...</option>
-                                   <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                   <?php if(Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by): ?>
+                                   <?php if(@empty($tests)): ?>
+                                    <option value=""><?php echo e(__('sentence.Select Test')); ?>...</option>
+                                   <?php else: ?>
+                                    <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if(Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by): ?>
                                         <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?></option>
-                                       <?php elseif(Auth::user()->role_id == 1): ?>
-                                       <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?></option>
-                                       <?php endif; ?>
-                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php elseif(Auth::user()->role_id == 1): ?>
+                                    <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?></option>
+                                    <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                   <?php endif; ?>
+
                                  </select>
                              </div>
 

@@ -9,11 +9,9 @@ use App\Prescription_test;
 use App\Test;
 use App\User;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use App\Http\Controllers\PDF;
 use Illuminate\Support\Facades\Auth;
-=======
->>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
+
 
 class PrescriptionController extends Controller
 {
@@ -41,14 +39,10 @@ class PrescriptionController extends Controller
         $drugs = Drug::all();
         $patients = User::where('role_id', '3')->get();
         $praticiens = User::where('role_id', '2')->get();
-<<<<<<< HEAD
         // $tests = Test::where('user_id', $id)->get();
         $tests = Test::where('user_id', $id)
              ->whereDoesntHave('Prescription') // Prescription correspond a la fonction définie dans le model test
              ->get();
-=======
-        $tests = Test::where('user_id', $id)->get();
->>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
 
         return view('prescription.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
     }
@@ -74,15 +68,15 @@ class PrescriptionController extends Controller
         $prescription = new Prescription();
 
         $prescription->user_id = $request->patient_id;
-<<<<<<< HEAD
         $prescription->doctor_id = Auth::user()->id;
         $prescription->reference = 'p' . rand(10000, 99999);
         $prescription->nom = $request->nom;
-=======
+        $prescription->dosage = $request->dosage;
+
         $prescription->doctor_id = $request->Doctor_id;
         $prescription->reference = 'p'.rand(10000, 99999);
 
->>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
+
         $prescription->save();
 
         if (isset($request->trade_name)) {

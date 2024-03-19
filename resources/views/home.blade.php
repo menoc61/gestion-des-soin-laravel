@@ -108,9 +108,7 @@
 
         </div>
 
-
         <div class="row top">
-
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
@@ -200,32 +198,24 @@
                     </div>
                 </div>
             </div>
-{{-- graph section --}}
-            <div class="col-md-5 ">
+
+        </div>
+
+        {{-- graph section --}}
+        <div class="row d-flex justify-content-between">
+            <div class="col-md-6 ">
                 <div class="chart mb-4">
-<<<<<<< HEAD
-                    <p class="text-center"><b>CHIFFRE D'AFFAIRE PAR MOIS</b></p>
                     <div class="mt-5"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
                 </div>
             </div>
-            {{-- <div class="col-md-4 ">
-=======
-                        <div class="mt-5"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
-                </div>
-            </div>
-             <div class="col-md-5 ">
->>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
+             <div class="col-md-6 ">
                 <div class=" chart1 mb-4">
                     <div class="mt-5"><canvas id="myBarChart" width="100%" height="40%"></canvas></div>
                 </div>
-<<<<<<< HEAD
-            </div> --}}
-
-=======
             </div>
-{{-- graph section end --}}
->>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
         </div>
+
+{{-- graph section end --}}
     @endrole
 
     @role('Praticien')
@@ -468,7 +458,7 @@
 
     <!-- Afficher les rendez-vous du jour au niveau de la page d'accueil -->
 
-    {{-- @role('Admin|Praticien')
+    @role('Admin|Praticien')
         <div class="row">
             <div class="col">
                 <div class="card shadow mb-4">
@@ -570,7 +560,7 @@
                 </div>
             </div>
         </div>
-    @endrole --}}
+    @endrole
 
 
     <!-- EDIT Appointment Modal-->
