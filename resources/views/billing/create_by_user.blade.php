@@ -102,6 +102,7 @@
    <div class="field-group row">
     <div class="col">
        <div class="form-group-custom">
+<<<<<<< HEAD
         <select class="form-control multiselect-search" name="nom[]" id="prescription" tabindex="-1" aria-hidden="true" required>
             <option value="">{{ __('sentence.Prescription List') }}...</option>
             @foreach($prescriptions as $prescription)
@@ -111,13 +112,23 @@
                     <option value="{{ $prescription->id }}">{{ $prescription->nom }}</option>
                 @endif
             @endforeach
+=======
+        <select class="form-control multiselect-search" name="invoice_title[]" id="prescription" tabindex="-1" aria-hidden="true" required>
+            @if (@empty($prescriptions))
+                <option value="">{{ __('sentence.Select Test') }}...</option>
+            @else
+                @foreach($prescriptions as $prescription)
+                    <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
+                @endforeach
+            @endif
+>>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
           </select>
           {{-- <input type="text" id="strength" name="nom[]"  class="form-control" placeholder="{{ __('sentence.Invoice Title') }}" onchange="updateInvoiceTitle()" required> --}}
        </div>
     </div>
     <div class="col">
        <div class="input-group mb-3">
-        <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}" aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" required>
+        <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}" aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" required min="0">
 
           <div class="input-group-append">
              <span class="input-group-text" id="basic-addon1">{{ App\Setting::get_option('currency') }}</span>

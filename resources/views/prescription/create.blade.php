@@ -25,20 +25,33 @@
                         <div class="form-group">
                             <label for="PatientID">{{ __('sentence.Patient') }} :</label>
                             <select class="form-control multiselect-search" name="patient_id" id="PatientID" required>
-                                <option>{{ __('sentence.Select Patient') }}</option>
-                                @foreach ($patients as $patient)
-                                    <option value="{{ $patient->id }}">{{ $patient->name }}</option>
+                                @if (@empty($patients))
+                                <option >{{ __('sentence.Select Patient') }}</option>
+                            @else
+                                @foreach($patients as $patient)
+                                    <option value="{{ $patient->id }}">{{ $patient->name }} (ID : {{ $patient->id }})</option>
                                 @endforeach
+                            @endif
                             </select>
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group">
                             <label for="DoctorID">{{ __('sentence.Doctors') }} :</label>
                             <select class="form-control multiselect-search" name="Doctor_id" id="DoctorID" required>
+<<<<<<< HEAD
                                 <option>{{ __('sentence.Select Doctor') }}</option>
                                 @foreach ($praticiens as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
+=======
+                                @if (@empty($praticiens))
+                                    <option>{{ __('sentence.Select Doctor') }}</option>
+                                @else
+                                    @foreach ($praticiens as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                @endif
+>>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
                             </select>
                             {{ csrf_field() }}
                         </div>
@@ -140,17 +153,20 @@
                                                                                 color: #28a745;
                                                                                 background-color: transparent;
                                                                                 border-color: #28a745;"
-                                            value="new" autocomplete="off" disabled>
+                                            value="new" autocomplete="off" @readonly(true)>
                                             <label class="control-label"></label><i class="bar"></i>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
-                                            <option value="">{{ __('sentence.Select Drug') }}...</option>
-                                            @foreach($drugs as $drug)
-                                                <option value="{{ $drug->id }}">{{ $drug->trade_name }}</option>
-                                            @endforeach
+                                        <select class="form-control multiselect-drug" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
+                                            @if (@empty($drugs))
+                                                <option value="" disabled selected>{{ __('sentence.Select Drug') }}...</option>
+                                            @else
+                                                @foreach($drugs as $drug)
+                                                    <option value="{{ $drug->id }}">{{ $drug->trade_name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                         <div id="genericNames"></div>
                                     </div>
@@ -160,7 +176,7 @@
 
                                     <div class="col-md-2">
                                         <div class="form-group-custom">
-                                            <input type="number" id="dose" name="dose[]" class="form-control" placeholder="{{ __('sentence.Dose') }}">
+                                            <input type="number" min="0" id="dose" name="dose[]" class="form-control" placeholder="{{ __('sentence.Dose') }}">
                                             <label class="control-label"></label><i class="bar"></i>
 
                                         </div>
@@ -197,10 +213,13 @@
                          <div class="field-group row">
                              <div class="col-md-4">
                                  <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
-                                   <option value="">{{ __('sentence.Select Test') }}...</option>
-                                   @foreach($tests as $test)
-                                       <option value="{{ $test->id }}">{{ $test->test_name }}</option>
-                                   @endforeach
+                                    @if (@empty($tests))
+                                        <option value="">{{ __('sentence.Select Test') }}...</option>
+                                    @else
+                                        @foreach($tests as $test)
+                                            <option value="{{ $test->id }}">{{ $test->test_name }}</option>
+                                        @endforeach
+                                    @endif
                                  </select>
                              </div>
 

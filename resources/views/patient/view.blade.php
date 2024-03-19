@@ -382,6 +382,7 @@
                                                             class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
                                                     </td>
                                                     <td align="center">
+<<<<<<< HEAD
                                                         @can('view prescription')
                                                             <a href="{{ url('prescription/view/' . $prescription->id) }}"
                                                                 class="btn btn-outline-success btn-circle btn-sm"><i
@@ -412,6 +413,11 @@
                                                     </td>
                                                     <td align="center"><label
                                                             class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
+=======
+                                                        <a href="{{ url('prescription/follow/' . $prescription->id) }}" class="btn btn-outline-primary btn-circle btn-sm">
+                                                            <i class="fa fa-id-card"></i>
+                                                        </a>
+>>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
                                                     </td>
                                                     <td align="center">
                                                         @can('view prescription')
