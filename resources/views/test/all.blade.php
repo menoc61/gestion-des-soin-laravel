@@ -16,10 +16,11 @@
                     <h6 class="m-0 font-weight-bold text-primary w-75 p-2">{{ __('sentence.All Tests') }}</h6>
                 </div>
                 <div class="col-4">
-                    @can('create diagnostic test')
+                    {{-- bouton permettant d'ajouter un test depuis la liste de tous les tests --}}
+                    {{-- @can('create diagnostic test')
                         <a href="{{ route('test.create') }}" class="btn btn-primary btn-sm float-right"><i
                                 class="fa fa-plus"></i> {{ __('sentence.Add Test') }}</a>
-                    @endcan
+                    @endcan --}}
                 </div>
             </div>
         </div>

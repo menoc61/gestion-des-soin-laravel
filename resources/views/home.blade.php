@@ -19,9 +19,9 @@
         <div class="row top">
 
             {{-- carte contenant le nombre de rendez-vous qu'aura lieu un jour  --}}
-
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-2 col-md-4 mb-4 taille marge">
+
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
                         <div class="col-auto">
@@ -41,9 +41,7 @@
                 </div>
             </div>
 
-
             {{-- carte contenant le nommbre total de rendez-vous --}}
-
             <!-- Earnings (Annual) Card Example -->
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-warning shadow h-100 py-2 card-po1">
@@ -63,7 +61,6 @@
                     </div>
                 </div>
             </div>
-
 
             <!-- Tasks Card Example -->
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
@@ -111,11 +108,9 @@
 
         </div>
 
-
         <div class="row top">
-
-             <!-- Earnings (Monthly) Card Example -->
-              <div class="col-xl-2 col-md-6 mb-4 taille marge">
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
                         <div class="col-auto">
@@ -153,7 +148,12 @@
                     </div>
                 </div>
             </div>
+
             <!-- Tasks Card Example -->
+            {{-- permet de redéfinir les paramètres régionaux(langue, date) en francais  --}}
+            <?php
+            setlocale(LC_TIME, 'fr_FR.UTF-8', 'fr_FR', 'fr');
+            ?>
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-secondary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-secondary col-md-9 ">
@@ -165,7 +165,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
-                                    {{ __('sentence.Payments this month') }}</div>
+                                    C.A DU MOIS DE <?php echo strftime('%B'); ?> </div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
                                         <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $total_payments_month }}
@@ -177,6 +177,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Pending Requests Card Example -->
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-danger shadow h-100 py-2 card-po1 ">
@@ -197,114 +198,54 @@
                     </div>
                 </div>
             </div>
-{{-- graph section --}}
-            <div class="col-md-5 ">
+
+        </div>
+
+        {{-- graph section --}}
+        <div class="row d-flex justify-content-between">
+            <div class="col-md-6 ">
                 <div class="chart mb-4">
-                        <div class="mt-5"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
+                    <div class="mt-5"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
                 </div>
             </div>
-             <div class="col-md-5 ">
+             <div class="col-md-6 ">
                 <div class=" chart1 mb-4">
                     <div class="mt-5"><canvas id="myBarChart" width="100%" height="40%"></canvas></div>
                 </div>
             </div>
-{{-- graph section end --}}
         </div>
+
+{{-- graph section end --}}
     @endrole
 
     @role('Praticien')
         <div class="row top">
+
             {{-- carte contenant le nombre de rendez-vous qu'aura lieu un jour  --}}
+            <!-- Earnings (Monthly) Card Example -->
+            {{-- <div class="col-xl-2 col-md-4 mb-4 taille marge">
+
+            <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
+                <div class="card-body shadow-lg card-po bg-primary col-md-9">
+                    <div class="col-auto">
+                        <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                    </div>
+                </div>
+                <div class="card-body card-po1">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                {{ __('sentence.New Appointments') }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments_today->count() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
 
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4 taille marge">
-                <div class="card border-bottom-success shadow h-100 py-2 card-po1">
-                    <div class="card-body shadow-lg card-po bg-success col-md-9">
-                        <div class="col-auto">
-                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
-                        </div>
-                    </div>
-                    <div class="card-body card-po1">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    {{ __('sentence.New Appointments') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments_today->count() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- carte contenant le nommbre total de rendez-vous --}}
-
-            <!-- Earnings (Annual) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4 taille marge">
-                <div class="card border-bottom-success shadow h-100 py-2 card-po1">
-                    <div class="card-body shadow-lg card-po bg-success col-md-9">
-                        <div class="col-auto">
-                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
-                        </div>
-                    </div>
-                    <div class="card-body card-po1">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    {{ __('sentence.Total Appointments') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Tasks Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4 taille marge">
-                <div class="card border-bottom-info shadow h-100 py-2 card-po1">
-                    <div class="card-body shadow-lg card-po bg-info col-md-9">
-                        <div class="col-auto">
-                            <center><i class="fas fa-user-plus fa-2x text-gray-300"></i></center>
-                        </div>
-                    </div>
-                    <div class="card-body card-po1">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                    {{ __('sentence.New Patients') }}</div>
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $total_patients_today }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4 taille marge">
-                <div class="card border-bottom-warning shadow h-100 py-2 card-po1">
-                    <div class="card-body shadow-lg card-po bg-warning col-md-9">
-                        <div class="col-auto">
-                            <center><i class="fas fa-users fa-2x text-gray-300"></i></center>
-                        </div>
-                    </div>
-                    <div class="card-body card-po1">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    {{ __('sentence.All Patients') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_patients }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4 taille marge">
+            <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
                         <div class="col-auto">
@@ -315,15 +256,204 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    {{ __('sentence.Total Prescriptions') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_prescriptions }}</div>
+                                    {{ __('sentence.Amount Generated') }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_amount_for_pratician }} fcfa
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            {{-- carte contenant le nommbre total de rendez-vous --}}
+            <!-- Earnings (Annual) Card Example -->
+            <div class="col-xl-2 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-warning shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-warning col-md-9">
+                        <div class="col-auto">
+                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                        </div>
+                    </div>
+                    <div class="card-body card-po1">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    {{ __('sentence.Total Appointments') }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasks Card Example -->
+            <div class="col-xl-2 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-info shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-info col-md-9">
+                        <div class="col-auto">
+                            <center><i class="fas fa-user-plus fa-2x text-gray-300"></i></center>
+                        </div>
+                    </div>
+                    <div class="card-body card-po1">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    {{ __('sentence.Tests Number') }}</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                            {{ $total_tests_for_pratician }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nombre de traitement fait par un praticien précis -->
+            <div class="col-xl-2 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-secondary shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-secondary col-md-9">
+                        <div class="col-auto">
+                            <center><i class="fas fa-users fa-2x text-gray-300"></i></center>
+                        </div>
+                    </div>
+                    <div class="card-body card-po1">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                                    {{ __('sentence.Prescription Number') }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_prescriptions_for_pratician }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     @endrole
+
+    @role('Hôte')
+        <div class="row top">
+
+            {{-- carte contenant le nombre de rendez-vous qu'aura lieu un jour  --}}
+            <!-- Earnings (Monthly) Card Example -->
+            {{-- <div class="col-xl-2 col-md-4 mb-4 taille marge">
+
+            <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
+                <div class="card-body shadow-lg card-po bg-primary col-md-9">
+                    <div class="col-auto">
+                        <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                    </div>
+                </div>
+                <div class="card-body card-po1">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                {{ __('sentence.New Appointments') }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments_today->count() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-2 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-primary col-md-9">
+                        <div class="col-auto">
+                            <center><i class="fas fa-pills fa-2x text-gray-300"></i></center>
+                        </div>
+                    </div>
+                    <div class="card-body card-po1">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    {{ __('sentence.Amount Generated') }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_amount_for_pratician }} fcfa
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- carte contenant le nommbre total de rendez-vous --}}
+            <!-- Earnings (Annual) Card Example -->
+            <div class="col-xl-2 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-warning shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-warning col-md-9">
+                        <div class="col-auto">
+                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                        </div>
+                    </div>
+                    <div class="card-body card-po1">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    {{ __('sentence.Total Appointments') }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasks Card Example -->
+            <div class="col-xl-2 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-info shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-info col-md-9">
+                        <div class="col-auto">
+                            <center><i class="fas fa-user-plus fa-2x text-gray-300"></i></center>
+                        </div>
+                    </div>
+                    <div class="card-body card-po1">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    {{ __('sentence.Tests Number') }}</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                            {{ $total_tests_for_pratician }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nombre de traitement fait par un praticien précis -->
+            <div class="col-xl-2 col-md-6 mb-4 taille marge">
+                <div class="card border-bottom-secondary shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-secondary col-md-9">
+                        <div class="col-auto">
+                            <center><i class="fas fa-users fa-2x text-gray-300"></i></center>
+                        </div>
+                    </div>
+                    <div class="card-body card-po1">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                                    {{ __('sentence.Prescription Number') }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_prescriptions_for_pratician }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    @endrole
+
 
 
     <!-- Afficher les rendez-vous du jour au niveau de la page d'accueil -->
@@ -431,8 +561,11 @@
             </div>
         </div>
     @endrole
+
+
     <!-- EDIT Appointment Modal-->
-    <div class="modal fade" id="EDITRDVModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+
+    {{-- <div class="modal fade" id="EDITRDVModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -472,7 +605,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('header')

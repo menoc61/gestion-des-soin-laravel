@@ -18,6 +18,11 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
+                            <label >{{ __('sentence.Prescription Name') }} :</label>
+                            <input type="text" class="form-control" id="Nom" name="nom">
+                            {{ csrf_field() }}
+                        </div>
+                        <div class="form-group">
                             <label for="PatientID">{{ __('sentence.Patient') }} :</label>
                             <select class="form-control multiselect-search" name="patient_id" id="PatientID" required>
                                 @if (@empty($patients))
@@ -33,6 +38,12 @@
                         <div class="form-group">
                             <label for="DoctorID">{{ __('sentence.Doctors') }} :</label>
                             <select class="form-control multiselect-search" name="Doctor_id" id="DoctorID" required>
+<<<<<<< HEAD
+                                <option>{{ __('sentence.Select Doctor') }}</option>
+                                @foreach ($praticiens as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+=======
                                 @if (@empty($praticiens))
                                     <option>{{ __('sentence.Select Doctor') }}</option>
                                 @else
@@ -40,6 +51,7 @@
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach
                                 @endif
+>>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
                             </select>
                             {{ csrf_field() }}
                         </div>

@@ -51,7 +51,7 @@
                                           @forelse ($billing_items as $key => $billing_item)
                                           <tr>
                                              <td>{{ $key+1 }}</td>
-                                             <td>{{ $billing_item->invoice_title }}</td>
+                                             <td>{{ $billing_item->nom }}</td>
                                              <td align="center">{{ $billing_item->invoice_amount }} {{ App\Setting::get_option('currency') }}</td>
                                           </tr>
                                           @empty

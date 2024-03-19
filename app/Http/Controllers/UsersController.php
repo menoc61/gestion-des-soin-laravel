@@ -74,7 +74,7 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = User::findorfail($id);
-        $roles = Role::all()->pluck('name');
+        $roles = Role::all();
 
         return view('user.edit', ['user' => $user, 'roles' => $roles]);
     }
@@ -82,7 +82,7 @@ class UsersController extends Controller
     public function edit_profile()
     {
         $user = \Auth::user();
-        $roles = Role::all()->pluck('name');
+        $roles = Role::all();
 
         return view('user.edit', ['user' => $user, 'roles' => $roles]);
     }
@@ -95,7 +95,7 @@ class UsersController extends Controller
                 'required', 'email', 'max:255',
                 Rule::unique('users')->ignore($request->user_id),
             ],
-            // 'role' => ['required'],
+            'role_id' => ['required', 'numeric'],
         ]);
 
         $user = User::findorfail($request->user_id);
@@ -103,6 +103,16 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->name = $request->name;
         $user->role_id = $request->role_id;
+
+        $role = Role::findById($request->role_id);
+
+        // If the role exists, assign it to the user
+        if ($role) {
+            $user->assignRole($role);
+        } else {
+            return \Redirect::route('user.all')->with('error', __('sentence.role id does not exist'));
+        }
+
         $user->update();
 
         $patient = new Patient();

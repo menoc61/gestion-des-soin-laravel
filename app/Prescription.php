@@ -22,4 +22,10 @@ class Prescription extends Model
     {
         return $this->belongsToMany('App\Test', 'prescription_tests');
     }
+
+    public function Items()
+    {
+        return $this->hasMany('App\Billing_item');
+    }
+
 }
