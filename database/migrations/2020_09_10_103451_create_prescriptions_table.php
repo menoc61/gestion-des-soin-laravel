@@ -23,9 +23,10 @@ class CreatePrescriptionsTable extends Migration
             $table->foreignId('doctor_id')
                   ->constrained('users')
                   ->onDelete('cascade');
+            $table->string('nom');
             $table->string('reference');
+            $table->integer('dosage')->nullable();
             $table->mediumText('advices')->nullable();
-
             $table->timestamps();
         });
     }

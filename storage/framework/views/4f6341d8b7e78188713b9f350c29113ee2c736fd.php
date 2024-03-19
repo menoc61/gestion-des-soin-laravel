@@ -5,7 +5,7 @@
 
 <?php $__env->startSection('content'); ?>
     <div class="mb-3">
-        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        <button class="btn btn-primary" onclick="goBackAndReload()">Retour</button>
     </div>
 
     <form method="post" action="<?php echo e(route('payment.store', ['id' => $billingId])); ?>">
@@ -22,9 +22,9 @@
                                     <div class="field-group row">
                                         <div class="col">
                                             <div class="form-group-custom">
-                                                <input type="text" id="strength" name="invoice_title[]"
-                                                    class="form-control" placeholder="<?php echo e(__('sentence.Invoice Title')); ?>"
-                                                    value="<?php echo e($billing_item->invoice_title); ?>" required>
+                                                <input type="text" id="strength" name="nom[]" class="form-control"
+                                                    placeholder="<?php echo e(__('sentence.Invoice Title')); ?>"
+                                                    value="<?php echo e($billing_item->prescription_id); ?>" required>
                                                 <input type="hidden" name="billing_item_id[]"
                                                     value="<?php echo e($billing_item->id); ?>">
                                             </div>
@@ -32,7 +32,7 @@
                                         <div class="col">
                                             <div class="input-group mb-3">
                                                 <input type="number" class="form-control"
-                                                    placeholder="<?php echo e(__('sentence.Amount')); ?>" aria-label="Amount"
+                                                    placeholder="<?php echo e(__('sentence.Amount')); ?>"
                                                     aria-describedby="basic-addon1" name="invoice_amount[]"
                                                     value="<?php echo e($billing_item->invoice_amount); ?>" required readonly>
 
@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 tests">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary"><?php echo e(__('sentence.Informations')); ?></h6>
@@ -83,13 +83,19 @@
 
                         <div class="form-group">
                             <label for="DepositedAmount"><?php echo e(__('sentence.Already Paid')); ?></label>
+                            <input type="number" class="form-control" aria-label="Amount"
+                                value="<?php echo e($billing->due_amount); ?>" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="DepositedAmount"><?php echo e(__('sentence.Already Paid')); ?></label>
                             <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount"
-                                value="<?php echo e($billing->deposited_amount); ?>">
+                                value="<?php echo e($billing->due_amount); ?>">
                         </div>
 
                         <div class="form-group">
                             <label for="DueAmount"><?php echo e(__('sentence.Due Balance')); ?></label>
-                            <input class="form-control" type="number" name="due_amount" id="DueAmount">
+                            <input class="form-control" type="number" name="due_amount" id="DueAmount" readonly>
                         </div>
 
 
@@ -113,7 +119,7 @@
    <div class="field-group row">
     <div class="col">
        <div class="form-group-custom">
-          <input type="text" id="strength" name="invoice_title[]"  class="form-control" placeholder="<?php echo e(__('sentence.Invoice Title')); ?>"  required>
+          <input type="text" id="strength" name="nom[]"  class="form-control" placeholder="<?php echo e(__('sentence.Invoice Title')); ?>"  required>
        </div>
     </div>
     <div class="col">
@@ -134,7 +140,7 @@
     <script type="text/javascript">
         setInterval(function() {
 
-            $('.billing_labels').each(function() {
+            $('.tests').each(function() {
                 var totalPoints = 0;
                 var DepositedAmount = parseFloat($('#DepositedAmount').val());
                 var DueAmount = 0;
@@ -177,7 +183,7 @@
         updateInvoiceTitle();
 
         setInterval(function() {
-            $('.billing_labels').each(function() {
+            $('.tests').each(function() {
                 var totalPoints = 0;
                 var DepositedAmount = parseFloat($('#DepositedAmount').val());
                 var DueAmount = 0;
@@ -199,7 +205,12 @@
             });
 
         }, 1000);
+
+
+        function goBackAndReload() {
+            window.location.replace(document.referrer);
+        }
     </script>
-    <?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\HS\gestion-des-soin-laravel\resources\views/billing/payment.blade.php ENDPATH**/ ?>

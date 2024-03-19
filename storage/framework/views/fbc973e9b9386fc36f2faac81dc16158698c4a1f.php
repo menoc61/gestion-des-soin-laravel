@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title'); ?>
     <?php echo e(__('sentence.Billing List')); ?>
 
@@ -7,7 +5,7 @@
 
 <?php $__env->startSection('content'); ?>
     <div class="mb-3">
-        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        <button class="btn btn-primary" onclick="goBackAndReload()">Retour</button>
     </div>
 
     <!-- DataTables  -->
@@ -112,9 +110,10 @@
                                     <?php endif; ?>
                                 </td>
                             </tr>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
-                               <td colspan="9" class="text-center"><img src="<?php echo e(asset('img/not-found.svg')); ?>" width="200" /> <br><br> <b class="text-muted">Aucune facture trouvé</b></td>
+                                <td colspan="9" class="text-center"><img src="<?php echo e(asset('img/not-found.svg')); ?>"
+                                        width="200" /> <br><br> <b class="text-muted">Aucune facture trouvé</b></td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -124,6 +123,13 @@
             </div>
         </div>
     </div>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('footer'); ?>
+    <script type="text/javascript">
+        function goBackAndReload() {
+            window.location.replace(document.referrer);
+        }
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\HS\gestion-des-soin-laravel\resources\views/billing/all.blade.php ENDPATH**/ ?>

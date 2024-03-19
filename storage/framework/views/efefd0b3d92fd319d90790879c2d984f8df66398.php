@@ -65,7 +65,7 @@
                                 <?php $__empty_1 = true; $__currentLoopData = $billing_items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $billing_item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                     <tr>
                                         <td><?php echo e($key + 1); ?></td>
-                                        <td><?php echo e($billing_item->invoice_title); ?></td>
+                                        <td><?php echo e($billing_item->prescription_id); ?></td>
                                         <td align="center"><?php echo e($billing_item->invoice_amount); ?>
 
                                             <?php echo e(App\Setting::get_option('currency')); ?></td>
@@ -169,7 +169,7 @@
                 <?php $__empty_1 = true; $__currentLoopData = $billing_items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $billing_item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <tr>
                         <td><?php echo e($key + 1); ?></td>
-                        <td><?php echo e($billing_item->invoice_title); ?></td>
+                        <td><?php echo e($billing_item->prescripton_id); ?></td>
                         <td align="center"><?php echo e($billing_item->invoice_amount); ?>
 
                             <?php echo e(App\Setting::get_option('currency')); ?></td>

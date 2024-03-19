@@ -38,7 +38,11 @@ class PrescriptionController extends Controller
         $drugs = Drug::all();
         $patients = User::where('role_id', '3')->get();
         $praticiens = User::where('role_id', '2')->get();
-        $tests = Test::where('user_id', $id)->get();
+        // $tests = Test::where('user_id', $id)->get();
+        $tests = Test::where('user_id', $id)
+             ->whereDoesntHave('Prescription') // Prescription correspond a la fonction définie dans le model test
+             ->get();
+
         return view('prescription.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
     }
 
@@ -47,15 +51,16 @@ class PrescriptionController extends Controller
         $validatedData = $request->validate([
             'patient_id' => ['required', 'exists:users,id'],
             'Doctor_id' => ['required', 'exists:users,id'],
+            'nom' => ['required'],
             'trade_name.*' => 'required',
         ]);
 
         $prescription = new Prescription();
 
         $prescription->user_id = $request->patient_id;
-        $prescription->doctor_id = $request->Doctor_id;
+        $prescription->doctor_id = Auth::user()->id;
         $prescription->reference = 'p' . rand(10000, 99999);
-
+        $prescription->nom = $request->nom;
         $prescription->save();
 
         if (isset($request->trade_name)) {

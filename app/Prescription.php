@@ -20,4 +20,10 @@ class Prescription extends Model
     public function Test(){
     	        return $this->belongsToMany('App\Test','prescription_tests');
     }
+
+    public function Items()
+    {
+        return $this->hasMany('App\Billing_item');
+    }
+
 }

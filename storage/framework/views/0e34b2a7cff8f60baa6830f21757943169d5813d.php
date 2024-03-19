@@ -18,6 +18,12 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
+                            <label ><?php echo e(__('sentence.Prescription Name')); ?> :</label>
+                            <input type="text" class="form-control" id="Nom" name="nom">
+                            <?php echo e(csrf_field()); ?>
+
+                        </div>
+                        <div class="form-group">
                             <label for="PatientID"><?php echo e(__('sentence.Patient')); ?> :</label>
                             <select class="form-control multiselect-search" name="patient_id" id="PatientID" required>
                                 <option><?php echo e(__('sentence.Select Patient')); ?></option>
@@ -35,7 +41,6 @@
                                 <?php $__currentLoopData = $praticiens; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
                             </select>
                             <?php echo e(csrf_field()); ?>
 
@@ -128,44 +133,64 @@
     </script>
 
     <script type="text/template" id="drugs_labels">
-   <section class="field-group">
-                         <div class="row">
-                             <div class="col-md-2">
-                                 <div class="form-group-custom">
-                                     <input type="text" class="form-control" name="type[]" id="task_{?}" placeholder="<?php echo e(__('sentence.Type')); ?>" class="ui-autocomplete-input" autocomplete="off">
-                                     <label class="control-label"></label><i class="bar"></i>
-                                 </div>
-                             </div>
+        <section class="field-group">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group-custom">
+                                            <input type="text" class="form-control"
+                                            name="type[]" id="task_{?}" placeholder="<?php echo e(__('sentence.Type')); ?>"
+                                            class="ui-autocomplete-input" style="
+                                                                                color: #28a745;
+                                                                                background-color: transparent;
+                                                                                border-color: #28a745;"
+                                            value="new" autocomplete="off" disabled>
+                                            <label class="control-label"></label><i class="bar"></i>
+                                        </div>
+                                    </div>
 
-                             <div class="col-md-6">
-                                <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
-                                    <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
-                                    <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                                <div id="genericNames"></div>
-                             </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
+                                            <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
+                                            <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </select>
+                                        <div id="genericNames"></div>
+                                    </div>
+                                </div>
 
-                             
-                         </div>
+                                <div class="row">
 
-                         
-                         <div class="row">
-                             <div class="col-md-9">
-                                 <div class="form-group-custom">
-                                     <input type="text" id="drug_advice" name="drug_advice[]" class="form-control" placeholder="<?php echo e(__('sentence.Advice_Comment')); ?>">
-                                 </div>
-                             </div>
-                              <div class="col-md-3">
-                                    <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-times-circle"></i> <?php echo e(__('sentence.Remove')); ?></a>
-                               </div>
-                               <div class="col-12">
-                                    <hr color="#a1f1d4">
-                              </div>
-                         </div>
-                 </section>
-</script>
+                                    <div class="col-md-2">
+                                        <div class="form-group-custom">
+                                            <input type="number" id="dose" name="dose[]" class="form-control" placeholder="<?php echo e(__('sentence.Dose')); ?>">
+                                            <label class="control-label"></label><i class="bar"></i>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group-custom">
+                                            <input type="date" id="duration" name="duration[]" class="form-control" placeholder="<?php echo e(__('sentence.Duration')); ?>">
+                                            <small id="startDate" class="form-text text-muted">Definir la period du suivi</small>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="form-group-custom">
+                                            <input type="text" id="drug_advice" name="drug_advice[]" class="form-control" placeholder="<?php echo e(__('sentence.Advice_Comment')); ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                            <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-times-circle"></i> <?php echo e(__('sentence.Remove')); ?></a>
+                                    </div>
+                                    <div class="col-12">
+                                            <hr color="#a1f1d4">
+                                    </div>
+                                </div>
+            </section>
+    </script>
     <script type="text/template" id="test_labels">
                          <div class="field-group row">
                              <div class="col-md-4">
@@ -191,11 +216,32 @@
                               </div>
                          </div>
 </script>
-
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('header'); ?>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/bootstrap-multiselect.css')); ?>">
+    <script type="text/javascript" src="<?php echo e(asset('js/bootstrap-multiselect.js')); ?>"></script>
+    <script type="text/javascript">
+        $('#trade_name').multiselect();
+    </script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <script>
+        $(function() {
+            $('input[name="datetimes"]').daterangepicker({
+                timePicker: true,
+                startDate: moment().startOf('hour'),
+                endDate: moment().startOf('hour').add(32, 'hour'),
+                locale: {
+                    format: 'M/DD hh:mm A'
+                }
+            });
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\HS\gestion-des-soin-laravel\resources\views/prescription/create.blade.php ENDPATH**/ ?>

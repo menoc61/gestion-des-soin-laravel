@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="mb-3">
-        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        <button class="btn btn-primary" onclick="goBackAndReload()">Retour</button>
     </div>
 
     <!-- DataTables  -->
@@ -104,9 +104,10 @@
                                     @endcan
                                 </td>
                             </tr>
-                            @empty
+                        @empty
                             <tr>
-                               <td colspan="9" class="text-center"><img src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br> <b class="text-muted">Aucune facture trouvé</b></td>
+                                <td colspan="9" class="text-center"><img src="{{ asset('img/not-found.svg') }}"
+                                        width="200" /> <br><br> <b class="text-muted">Aucune facture trouvé</b></td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -116,4 +117,11 @@
             </div>
         </div>
     </div>
+@endsection
+@section('footer')
+    <script type="text/javascript">
+        function goBackAndReload() {
+            window.location.replace(document.referrer);
+        }
+    </script>
 @endsection

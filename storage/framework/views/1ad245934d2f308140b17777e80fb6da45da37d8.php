@@ -18,21 +18,25 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
+                            <label ><?php echo e(__('sentence.Prescription Name')); ?> :</label>
+                            <input type="text" class="form-control" id="Nom" name="nom">
+                            <?php echo e(csrf_field()); ?>
+
+                        </div>
+                        <div class="form-group">
                             <label for="PatientID"><?php echo e(__('sentence.Patient')); ?> :</label>
-                            <input type="hidden" class="form-control" value="<?php echo e($userId); ?>"  name="patient_id" readonly>
+                            <input type="hidden" class="form-control" value="<?php echo e($userId); ?>" name="patient_id"
+                                readonly>
                             <input type="text" class="form-control" value="<?php echo e($userName); ?>" readonly>
                             <?php echo e(csrf_field()); ?>
 
                         </div>
                         <div class="form-group">
                             <label for="DoctorID"><?php echo e(__('sentence.Doctors')); ?> :</label>
-                            <select class="form-control multiselect-search" name="Doctor_id" id="DoctorID" required>
-                                <option><?php echo e(__('sentence.Select Doctor')); ?></option>
-                                <?php $__currentLoopData = $praticiens; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-                            </select>
+                            <input type="hidden" value="<?php echo e(Auth::user()->id); ?>" class="form-control" name="Doctor_id"
+                                readonly>
+                            <input type="text" class="form-control" value="<?php echo e(Auth::user()->name); ?>" readonly>
+                            
                             <?php echo e(csrf_field()); ?>
 
                         </div>
@@ -124,43 +128,63 @@
     </script>
 
     <script type="text/template" id="drugs_labels">
-   <section class="field-group">
-                         <div class="row">
-                             <div class="col-md-2">
-                                 <div class="form-group-custom">
-                                     <input type="text" class="form-control" name="type[]" id="task_{?}" placeholder="<?php echo e(__('sentence.Type')); ?>" class="ui-autocomplete-input" autocomplete="off">
-                                     <label class="control-label"></label><i class="bar"></i>
-                                 </div>
-                             </div>
+    <section class="field-group">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group-custom">
+                                        <input type="text" class="form-control"
+                                        name="type[]" id="task_{?}" placeholder="<?php echo e(__('sentence.Type')); ?>"
+                                        class="ui-autocomplete-input" style="
+                                                                            color: #28a745;
+                                                                            background-color: transparent;
+                                                                            border-color: #28a745;"
+                                        value="new" autocomplete="off" disabled>
+                                        <label class="control-label"></label><i class="bar"></i>
+                                    </div>
+                                </div>
 
-                             <div class="col-md-6">
-                                <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
-                                    <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
-                                    <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                                <div id="genericNames"></div>
-                             </div>
+                                <div class="col-md-6">
+                                    <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
+                                        <option value=""><?php echo e(__('sentence.Select Drug')); ?>...</option>
+                                        <?php $__currentLoopData = $drugs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drug): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($drug->id); ?>"><?php echo e($drug->trade_name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <div id="genericNames"></div>
+                                </div>
 
-                             
-                         </div>
+                                
+                            </div>
 
-                         
-                         <div class="row">
-                             <div class="col-md-9">
-                                 <div class="form-group-custom">
-                                     <input type="text" id="drug_advice" name="drug_advice[]" class="form-control" placeholder="<?php echo e(__('sentence.Advice_Comment')); ?>">
-                                 </div>
-                             </div>
-                              <div class="col-md-3">
-                                    <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-times-circle"></i> <?php echo e(__('sentence.Remove')); ?></a>
-                               </div>
-                               <div class="col-12">
-                                    <hr color="#a1f1d4">
-                              </div>
-                         </div>
-                 </section>
+                            <div class="row">
+
+                                <div class="col-md-2">
+                                    <div class="form-group-custom">
+                                        <input type="number" id="dose" name="dose[]" class="form-control" placeholder="<?php echo e(__('sentence.Dose')); ?>">
+                                        <label class="control-label"></label><i class="bar"></i>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group-custom">
+                                        <input type="date" id="duration" name="duration[]" class="form-control" placeholder="<?php echo e(__('sentence.Duration')); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="form-group-custom">
+                                        <input type="text" id="drug_advice" name="drug_advice[]" class="form-control" placeholder="<?php echo e(__('sentence.Advice_Comment')); ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                        <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-times-circle"></i> <?php echo e(__('sentence.Remove')); ?></a>
+                                </div>
+                                <div class="col-12">
+                                        <hr color="#a1f1d4">
+                                </div>
+                            </div>
+        </section>
 </script>
     <script type="text/template" id="test_labels">
                          <div class="field-group row">
@@ -168,7 +192,11 @@
                                  <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
                                    <option value=""><?php echo e(__('sentence.Select Test')); ?>...</option>
                                    <?php $__currentLoopData = $tests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                   <?php if(Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by): ?>
+                                        <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?></option>
+                                       <?php elseif(Auth::user()->role_id == 1): ?>
                                        <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?></option>
+                                       <?php endif; ?>
                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                  </select>
                              </div>
@@ -187,7 +215,6 @@
                               </div>
                          </div>
 </script>
-
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('header'); ?>
