@@ -102,26 +102,20 @@
    <div class="field-group row">
     <div class="col">
        <div class="form-group-custom">
-<<<<<<< HEAD
+
         <select class="form-control multiselect-search" name="nom[]" id="prescription" tabindex="-1" aria-hidden="true" required>
-            <option value="">{{ __('sentence.Prescription List') }}...</option>
-            @foreach($prescriptions as $prescription)
-                @if (Auth::user()->role_id == 2 && Auth::user()->id == $prescription->doctor_id )
-                    <option value="{{ $prescription->id }}">{{ $prescription->nom }}</option>
-                @elseif (Auth::user()->role_id == 1)
-                    <option value="{{ $prescription->id }}">{{ $prescription->nom }}</option>
-                @endif
-            @endforeach
-=======
-        <select class="form-control multiselect-search" name="invoice_title[]" id="prescription" tabindex="-1" aria-hidden="true" required>
             @if (@empty($prescriptions))
                 <option value="">{{ __('sentence.Select Test') }}...</option>
             @else
-                @foreach($prescriptions as $prescription)
-                    <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
-                @endforeach
+            @foreach($prescriptions as $prescription)
+            @if (Auth::user()->role_id == 2 && Auth::user()->id == $prescription->doctor_id )
+                <option value="{{ $prescription->id }}">{{ $prescription->nom }}</option>
+            @elseif (Auth::user()->role_id == 1)
+                <option value="{{ $prescription->id }}">{{ $prescription->nom }}</option>
             @endif
->>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
+        @endforeach
+            @endif
+
           </select>
           {{-- <input type="text" id="strength" name="nom[]"  class="form-control" placeholder="{{ __('sentence.Invoice Title') }}" onchange="updateInvoiceTitle()" required> --}}
        </div>

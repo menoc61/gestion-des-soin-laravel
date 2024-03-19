@@ -23,6 +23,11 @@
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group">
+                            <label >{{ __('sentence.Prescription dosage') }} :</label>
+                            <input type="number" class="form-control" name="dosage">
+                            {{ csrf_field() }}
+                        </div>
+                        <div class="form-group">
                             <label for="PatientID">{{ __('sentence.Patient') }} :</label>
                             <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id"
                                 readonly>
@@ -31,7 +36,7 @@
                         </div>
                         <div class="form-group">
                             <label for="DoctorID">{{ __('sentence.Doctors') }} :</label>
-<<<<<<< HEAD
+
                             <input type="hidden" value="{{ Auth::user()->id }}" class="form-control" name="Doctor_id"
                                 readonly>
                             <input type="text" class="form-control" value="{{ Auth::user()->name }}" readonly>
@@ -42,8 +47,8 @@
                                 @endforeach
 
                             </select> --}}
-=======
-                            <select class="form-control multiselect-search" name="Doctor_id" id="DoctorID" required>
+
+                            {{-- <select class="form-control multiselect-search" name="Doctor_id" id="DoctorID" required>
                                 @if (@empty($praticiens))
                                     <option>{{ __('sentence.Select Doctor') }}</option>
                                 @else
@@ -51,8 +56,8 @@
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach
                                 @endif
-                            </select>
->>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
+                            </select> --}}
+
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group text-center ">
@@ -212,24 +217,18 @@
                          <div class="field-group row">
                              <div class="col-md-4">
                                  <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
-<<<<<<< HEAD
-                                   <option value="">{{ __('sentence.Select Test') }}...</option>
-                                   @foreach($tests as $test)
-                                   @if (Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by)
-                                        <option value="{{ $test->id }}">{{ $test->test_name }}</option>
-                                       @elseif (Auth::user()->role_id == 1)
-                                       <option value="{{ $test->id }}">{{ $test->test_name }}</option>
-                                       @endif
-                                   @endforeach
-=======
                                    @if (@empty($tests))
                                     <option value="">{{ __('sentence.Select Test') }}...</option>
                                    @else
                                     @foreach($tests as $test)
+                                    @if (Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by)
                                         <option value="{{ $test->id }}">{{ $test->test_name }}</option>
+                                    @elseif (Auth::user()->role_id == 1)
+                                    <option value="{{ $test->id }}">{{ $test->test_name }}</option>
+                                    @endif
                                     @endforeach
                                    @endif
->>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
+
                                  </select>
                              </div>
 

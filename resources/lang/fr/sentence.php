@@ -260,5 +260,6 @@ return [
     'Tests Number' => 'Diagnostic Effectué',
     'Choice Prescription' => 'Choisir le Traitement',
     'Prescription Name' => 'Nom Traitement',
-    'Amount Generated' => 'Montant Genéré'
+    'Amount Generated' => 'Montant Genéré',
+    'Prescription dosage' => 'dosage'
 ];
