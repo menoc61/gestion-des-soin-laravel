@@ -257,5 +257,8 @@ return [
     'New User' => 'Nouveau',
     'role id does not exist' => 'ID du role ne devrais pas exister',
     'Prescription Number' => 'Traitement Effectué',
-    'Tests Number' => 'Diagnostic Effectué'
+    'Tests Number' => 'Diagnostic Effectué',
+    'Choice Prescription' => 'Choisir le Traitement',
+    'Prescription Name' => 'Nom Traitement',
+    'Amount Generated' => 'Montant Genéré'
 ];

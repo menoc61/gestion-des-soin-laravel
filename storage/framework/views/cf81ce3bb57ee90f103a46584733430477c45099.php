@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('header'); ?>
     <link rel="stylesheet" href="<?php echo e(asset('css/index.css')); ?>">
     <link rel="stylesheet" type="text/css"

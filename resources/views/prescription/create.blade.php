@@ -18,6 +18,11 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
+                            <label >{{ __('sentence.Prescription Name') }} :</label>
+                            <input type="text" class="form-control" id="Nom" name="nom">
+                            {{ csrf_field() }}
+                        </div>
+                        <div class="form-group">
                             <label for="PatientID">{{ __('sentence.Patient') }} :</label>
                             <select class="form-control multiselect-search" name="patient_id" id="PatientID" required>
                                 <option>{{ __('sentence.Select Patient') }}</option>
@@ -34,7 +39,6 @@
                                 @foreach ($praticiens as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
-
                             </select>
                             {{ csrf_field() }}
                         </div>

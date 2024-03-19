@@ -370,73 +370,74 @@
                                                 <td align="center"><?php echo e(__('sentence.Reference')); ?></td>
                                                 <td class="text-center"><?php echo e(__('sentence.Content')); ?></td>
                                                 <td align="center"><?php echo e(__('sentence.Created at')); ?></td>
+                                                <td align="center"><?php echo e(__('sentence.follow')); ?></td>
                                                 <td align="center"><?php echo e(__('sentence.Actions')); ?></td>
                                             </tr>
                                             <?php $__empty_1 = true; $__currentLoopData = $prescriptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prescription): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                                 <?php if(Auth::user()->role_id == 2 && Auth::user()->id == $prescription->doctor_id): ?>
-                                                    <tr>
-                                                        <td align="center"><?php echo e($prescription->reference); ?> </td>
-                                                        <td class="text-center">
-                                                            <label class="badge badge-primary-soft">
-                                                                <?php echo e(count($prescription->Drug)); ?> Soins
-                                                            </label>
-                                                            <label class="badge badge-primary-soft">
-                                                                <?php echo e(count($prescription->Test)); ?> Soin
-                                                            </label>
-                                                        </td>
-                                                        <td align="center"><label
-                                                                class="badge badge-primary-soft"><?php echo e($prescription->created_at); ?></label>
-                                                        </td>
-                                                        <td align="center">
-                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view prescription')): ?>
-                                                                <a href="<?php echo e(url('prescription/view/' . $prescription->id)); ?>"
-                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                        class="fa fa-eye"></i></a>
-                                                            <?php endif; ?>
-                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit prescription')): ?>
-                                                                <a href="<?php echo e(url('prescription/edit/' . $prescription->id)); ?>"
-                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                        class="fas fa-pen"></i></a>
-                                                            <?php endif; ?>
-                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete prescription')): ?>
-                                                                <a href="<?php echo e(url('prescription/delete/' . $prescription->id)); ?>"
-                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                        class="fas fa-trash"></i></a>
-                                                            <?php endif; ?>
-                                                        </td>
-                                                    </tr>
+                                                <tr>
+                                                    <td align="center"><?php echo e($prescription->reference); ?> </td>
+                                                    <td class="text-center">
+                                                        <label class="badge badge-primary-soft">
+                                                            <?php echo e(count($prescription->Drug)); ?> Soins
+                                                        </label>
+                                                        <label class="badge badge-primary-soft">
+                                                            <?php echo e(count($prescription->Test)); ?> Soin
+                                                        </label>
+                                                    </td>
+                                                    <td align="center"><label
+                                                            class="badge badge-primary-soft"><?php echo e($prescription->created_at); ?></label>
+                                                    </td>
+                                                    <td align="center">
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view prescription')): ?>
+                                                            <a href="<?php echo e(url('prescription/view/' . $prescription->id)); ?>"
+                                                                class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                    class="fa fa-eye"></i></a>
+                                                        <?php endif; ?>
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit prescription')): ?>
+                                                            <a href="<?php echo e(url('prescription/edit/' . $prescription->id)); ?>"
+                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                    class="fas fa-pen"></i></a>
+                                                        <?php endif; ?>
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete prescription')): ?>
+                                                            <a href="<?php echo e(url('prescription/delete/' . $prescription->id)); ?>"
+                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                    class="fas fa-trash"></i></a>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
                                                 <?php elseif(Auth::user()->role_id == 1): ?>
-                                                    <tr>
-                                                        <td align="center"><?php echo e($prescription->reference); ?> </td>
-                                                        <td class="text-center">
-                                                            <label class="badge badge-primary-soft">
-                                                                <?php echo e(count($prescription->Drug)); ?> Soins
-                                                            </label>
-                                                            <label class="badge badge-primary-soft">
-                                                                <?php echo e(count($prescription->Test)); ?> Soin
-                                                            </label>
-                                                        </td>
-                                                        <td align="center"><label
-                                                                class="badge badge-primary-soft"><?php echo e($prescription->created_at); ?></label>
-                                                        </td>
-                                                        <td align="center">
-                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view prescription')): ?>
-                                                                <a href="<?php echo e(url('prescription/view/' . $prescription->id)); ?>"
-                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                        class="fa fa-eye"></i></a>
-                                                            <?php endif; ?>
-                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit prescription')): ?>
-                                                                <a href="<?php echo e(url('prescription/edit/' . $prescription->id)); ?>"
-                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                        class="fas fa-pen"></i></a>
-                                                            <?php endif; ?>
-                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete prescription')): ?>
-                                                                <a href="<?php echo e(url('prescription/delete/' . $prescription->id)); ?>"
-                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                        class="fas fa-trash"></i></a>
-                                                            <?php endif; ?>
-                                                        </td>
-                                                    </tr>
+                                                <tr>
+                                                    <td align="center"><?php echo e($prescription->reference); ?> </td>
+                                                    <td class="text-center">
+                                                        <label class="badge badge-primary-soft">
+                                                            <?php echo e(count($prescription->Drug)); ?> Soins
+                                                        </label>
+                                                        <label class="badge badge-primary-soft">
+                                                            <?php echo e(count($prescription->Test)); ?> Soin
+                                                        </label>
+                                                    </td>
+                                                    <td align="center"><label
+                                                            class="badge badge-primary-soft"><?php echo e($prescription->created_at); ?></label>
+                                                    </td>
+                                                    <td align="center">
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view prescription')): ?>
+                                                            <a href="<?php echo e(url('prescription/view/' . $prescription->id)); ?>"
+                                                                class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                    class="fa fa-eye"></i></a>
+                                                        <?php endif; ?>
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit prescription')): ?>
+                                                            <a href="<?php echo e(url('prescription/edit/' . $prescription->id)); ?>"
+                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                    class="fas fa-pen"></i></a>
+                                                        <?php endif; ?>
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete prescription')): ?>
+                                                            <a href="<?php echo e(url('prescription/delete/' . $prescription->id)); ?>"
+                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                    class="fas fa-trash"></i></a>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
                                                 <?php endif; ?>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                 <tr>
@@ -525,18 +526,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 mb-4">
-                                                <div class="card bg-success text-white shadow">
-                                                    <div class="card-body">
-                                                        <?php echo e(__('sentence.Already Paid')); ?>
+                                            
 
-                                                        <div class="text-white small">
-                                                            <?php echo e(Collect($invoices)->sum('deposited_amount')); ?>
-
-                                                            <?php echo e(App\Setting::get_option('currency')); ?></div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="col-lg-4 mb-4">
                                                 <div class="card bg-danger text-white shadow">
                                                     <div class="card-body">
@@ -569,6 +560,7 @@
                                                 <th><?php echo e(__('sentence.Actions')); ?></th>
                                             </tr>
                                             <?php $__empty_1 = true; $__currentLoopData = $invoices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $invoice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                                <?php if(Auth::user()->role_id == 2 && Auth::user()->id == $invoice->created_by ): ?>
                                                 <tr>
                                                     <td><a
                                                             href="<?php echo e(url('billing/view/' . $invoice->id)); ?>"><?php echo e($invoice->reference); ?></a>
@@ -628,6 +620,67 @@
 
                                                     </td>
                                                 </tr>
+                                                <?php elseif(Auth::user()->role_id == 1): ?>
+                                                <tr>
+                                                    <td><a
+                                                            href="<?php echo e(url('billing/view/' . $invoice->id)); ?>"><?php echo e($invoice->reference); ?></a>
+                                                    </td>
+                                                    <td><label
+                                                            class="badge badge-primary-soft"><?php echo e($invoice->created_at->format('d M Y h:m:s')); ?></label>
+                                                    </td>
+                                                    <td> <?php echo e($invoice->total_with_tax); ?>
+
+                                                        <?php echo e(App\Setting::get_option('currency')); ?>
+
+                                                        <?php if($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid'): ?>
+                                                            <label class="badge badge-danger-soft"><?php echo e($invoice->due_amount); ?>
+
+                                                                <?php echo e(App\Setting::get_option('currency')); ?> </label>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if($invoice->payment_status == 'Unpaid'): ?>
+                                                            <label class="badge badge-danger-soft">
+                                                                <i class="fas fa-hourglass-start"></i>
+                                                                <?php echo e(__('sentence.Unpaid')); ?>
+
+                                                            </label>
+                                                        <?php elseif($invoice->payment_status == 'Paid'): ?>
+                                                            <label class="badge badge-success-soft">
+                                                                <i class="fas fa-check"></i> <?php echo e(__('sentence.Paid')); ?>
+
+                                                            </label>
+                                                        <?php else: ?>
+                                                            <label class="badge badge-warning-soft">
+                                                                <i class="fas fa-user-times"></i>
+                                                                <?php echo e(__('sentence.Partially Paid')); ?>
+
+                                                            </label>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view invoice')): ?>
+                                                            <a href="<?php echo e(url('billing/view/' . $invoice->id)); ?>"
+                                                                class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                    class="fas fa-print"></i></a>
+                                                        <?php endif; ?>
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit invoice')): ?>
+                                                            <a href="<?php echo e(url('billing/edit/' . $invoice->id)); ?>"
+                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                    class="fas fa-pen"></i></a>
+                                                        <?php endif; ?>
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete invoice')): ?>
+                                                            <a href="<?php echo e(url('billing/delete/' . $invoice->id)); ?>"
+                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                    class="fas fa-trash"></i></a>
+                                                        <?php endif; ?>
+                                                        <a href="<?php echo e(url('payment/create/' . $invoice->id)); ?>"
+                                                            class="btn btn-outline-secondary btn-circle btn-sm"><i
+                                                                class="fas fa-fw fa-dollar-sign"></i></a>
+
+                                                    </td>
+                                                </tr>
+                                                <?php endif; ?>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                 <tr>
                                                 </tr>
