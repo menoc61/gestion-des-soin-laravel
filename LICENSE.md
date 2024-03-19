@@ -1,6 +1,4 @@
-Custom License
-
-Copyright (c) 2023 Gilles Momeni
+Copyright (c) 2023 GILLES MOMENI and  NGALEU FAKMOU JUNIOR FRESNEL
 
 All rights reserved.
 
