@@ -6,6 +6,7 @@ use App\Test;
 use App\User;
 use App\Prescription_test;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class TestController extends Controller
@@ -80,6 +81,7 @@ class TestController extends Controller
         $test->user_id = $request->patient_id;
         $test->test_name = $request->test_name;
         $test->comment = $request->comment;
+        $test->created_by = Auth::user()->id;
         $test->diagnostic_type = json_encode($request->diagnostic_type);
 
         // skin diagnostic
@@ -133,14 +135,21 @@ class TestController extends Controller
 
     public function all()
     {
+        $user = Auth::user();
+
         $sortColumn = request()->get('sort');
         $sortOrder = request()->get('order', 'asc');
         if (!empty($sortColumn)) {
             $tests = Test::orderBy($sortColumn, $sortOrder)->paginate(25);
-        } else {
+        }
+        //cette condition nous permettra d'afficher tous les tests si l'utilisateur a le role d'admin
+        if ($user->role_id == 1) {
             $tests = Test::all();
         }
-
+        //cette condition nous permettra d'afficher pour un utilisateur connecté tous les tests qu'il a eu à créer et ce dernier doit avoir le role de praticien
+        elseif ($user->role_id == 2) {
+            $tests = Test::where('created_by', $user->id)->get();
+        }
         return view('test.all', ['tests' => $tests]);
     }
 

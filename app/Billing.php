@@ -19,8 +19,7 @@ class Billing extends Model
         return $this->hasOne('App\User', 'id', 'created_by');
     }
 
-    public function Items()
-    {
-        return $this->hasMany('App\Billing_item');
-    }
+    public function Prescription(){
+        return $this->belongsToMany('App\Prescription','Billing_item');
+}
 }

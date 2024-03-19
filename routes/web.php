@@ -99,10 +99,10 @@ Route::get('/billing/pdf/{id}', 'BillingController@pdf')->where('id', '[0-9]+')-
 Route::get('/billing/delete/{id}', 'BillingController@destroy')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|delete invoice']);
 Route::get('/billing/edit/{id}', 'BillingController@edit')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|edit invoice']);
 Route::post('/billing/update', 'BillingController@update')->name('billing.update');
-Route::get('/payment/create/{id}', 'BillingController@create_payment')->where('id', '[0-9]+')->name('billing.payment')->middleware(['role_or_permission:Admin|create invoice']);
-Route::post('/payment/create/{id}', 'BillingController@store')->name('payment.store');
 Route::get('/billing/create_by/{id}', 'BillingController@create_By_Id')->where('id', '[0-9]+')->name('billing.create_by');
 Route::post('/billing/create_by/{id}', 'BillingController@store')->name('billing.store_id');
+Route::get('/payment/create/{id}', 'BillingController@create_payment')->where('id', '[0-9]+')->name('billing.payment')->middleware(['role_or_permission:Admin|create invoice']);
+Route::post('/payment/create/', 'BillingController@update')->name('payment.store');
 
 // Settings
 /* Doctorino Settings */

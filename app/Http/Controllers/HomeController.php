@@ -9,6 +9,7 @@ use App\Appointment;
 use App\Billing;
 use App\Billing_item;
 use App;
+use App\Test;
 use Auth;
 use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
@@ -35,6 +36,7 @@ class HomeController extends Controller
     {
 
         $user = Auth::user();
+        $doctorId = $user->id;
         //$user->assignRole('admin');
         //$user->syncRoles(['assistant']);
 
@@ -87,6 +89,11 @@ $permission = Permission::create(['name' => 'delete invoice']);
 
 */
 
+        // Home concernant le Praticien
+        $total_prescriptions_for_pratician = Prescription::where('doctor_id',$doctorId)->count();
+        $total_tests_for_pratician = Test::where('created_by',$doctorId)->count();
+        $total_amount_for_pratician = Billing::where('created_by',$doctorId)->sum('total_with_tax');
+        // Home concernant l'Admin
         $total_patients = User::where('role_id', '3')->count();
         $total_patients_today = User::where('role_id', '3')->wheredate('created_at', Today())->count();
         $total_appointments = Appointment::all()->count();
@@ -139,6 +146,9 @@ $permission = Permission::create(['name' => 'delete invoice']);
             'totalAmounts'=> $totalAmounts,
             'months' => $months,
             'monthCount' => $monthCount,
+            'total_prescriptions_for_pratician' => $total_prescriptions_for_pratician,
+            'total_tests_for_pratician'=> $total_tests_for_pratician,
+            'total_amount_for_pratician' => $total_amount_for_pratician
         ]);
     }
 

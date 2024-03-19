@@ -275,31 +275,61 @@
                                                 <td align="center"><b> Action</b> </td>
                                             </tr>
                                             @forelse($tests as $test)
-                                                <tr>
-                                                    <td>{{ $test->id }}</td>
-                                                    <td>{{ $test->test_name }}</td>
-                                                    <td> {{ $test->comment }} </td>
-                                                    <td align="center">{{ __('sentence.In Prescription') }} :
-                                                        {{ $test->Prescription->count() }} {{ __('sentence.time use') }}</td>
-                                                    <td class="text-center">
+                                                @if (Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by)
+                                                    <tr>
+                                                        <td>{{ $test->id }}</td>
+                                                        <td>{{ $test->test_name }}</td>
+                                                        <td> {{ $test->comment }} </td>
+                                                        <td align="center">{{ __('sentence.In Prescription') }} :
+                                                            {{ $test->Prescription->count() }} {{ __('sentence.time use') }}
+                                                        </td>
+                                                        <td class="text-center">
 
-                                                        <a href="{{ url('test/view/' . $test->id) }}"
-                                                            class="btn btn-outline-primary btn-circle btn-sm"><i
-                                                                class="fa fa-eye"></i></a>
+                                                            <a href="{{ url('test/view/' . $test->id) }}"
+                                                                class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                    class="fa fa-eye"></i></a>
 
-                                                        @can('edit diagnostic test')
-                                                            <a href="{{ url('test/edit/' . $test->id) }}"
-                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                    class="fa fa-pen"></i></a>
-                                                        @endcan
-                                                        @can('delete diagnostic test')
-                                                            <a class="btn btn-outline-danger btn-circle btn-sm"
-                                                                data-toggle="modal" data-target="#DeleteModal"
-                                                                data-link="{{ url('test/delete/' . $test->id) }}"><i
-                                                                    class="fa fa-trash"></i></a>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
+                                                            @can('edit diagnostic test')
+                                                                <a href="{{ url('test/edit/' . $test->id) }}"
+                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                        class="fa fa-pen"></i></a>
+                                                            @endcan
+                                                            @can('delete diagnostic test')
+                                                                <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                    data-toggle="modal" data-target="#DeleteModal"
+                                                                    data-link="{{ url('test/delete/' . $test->id) }}"><i
+                                                                        class="fa fa-trash"></i></a>
+                                                            @endcan
+                                                        </td>
+                                                    </tr>
+                                                @elseif (Auth::user()->role_id == 1)
+                                                    <tr>
+                                                        <td>{{ $test->id }}</td>
+                                                        <td>{{ $test->test_name }}</td>
+                                                        <td> {{ $test->comment }} </td>
+                                                        <td align="center">{{ __('sentence.In Prescription') }} :
+                                                            {{ $test->Prescription->count() }} {{ __('sentence.time use') }}
+                                                        </td>
+                                                        <td class="text-center">
+
+                                                            <a href="{{ url('test/view/' . $test->id) }}"
+                                                                class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                    class="fa fa-eye"></i></a>
+
+                                                            @can('edit diagnostic test')
+                                                                <a href="{{ url('test/edit/' . $test->id) }}"
+                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                        class="fa fa-pen"></i></a>
+                                                            @endcan
+                                                            @can('delete diagnostic test')
+                                                                <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                    data-toggle="modal" data-target="#DeleteModal"
+                                                                    data-link="{{ url('test/delete/' . $test->id) }}"><i
+                                                                        class="fa fa-trash"></i></a>
+                                                            @endcan
+                                                        </td>
+                                                    </tr>
+                                                @endif
                                             @empty
                                                 <tr>
                                                     <td colspan="5" class="text-center"><img
@@ -337,6 +367,7 @@
                                                 <td align="center">{{ __('sentence.Actions') }}</td>
                                             </tr>
                                             @forelse($prescriptions as $prescription)
+                                                @if (Auth::user()->role_id == 2 && Auth::user()->id == $prescription->doctor_id)
                                                 <tr>
                                                     <td align="center">{{ $prescription->reference }} </td>
                                                     <td class="text-center">
@@ -344,7 +375,7 @@
                                                             {{ count($prescription->Drug) }} Soins
                                                         </label>
                                                         <label class="badge badge-primary-soft">
-                                                            {{ count($prescription->Test) }} Soin
+                                                            {{ count($prescription->Test) }} Diagnostics
                                                         </label>
                                                     </td>
                                                     <td align="center"><label
@@ -373,6 +404,44 @@
                                                         @endcan
                                                     </td>
                                                 </tr>
+                                                @elseif (Auth::user()->role_id == 1)
+                                                <tr>
+                                                    <td align="center">{{ $prescription->reference }} </td>
+                                                    <td class="text-center">
+                                                        <label class="badge badge-primary-soft">
+                                                            {{ count($prescription->Drug) }} Soins
+                                                        </label>
+                                                        <label class="badge badge-primary-soft">
+                                                            {{ count($prescription->Test) }} Diagnostics
+                                                        </label>
+                                                    </td>
+                                                    <td align="center"><label
+                                                        class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
+                                                    </td>
+                                                    <td align="center">
+                                                        <a href="{{ url('prescription/follow/' . $prescription->id) }}" class="btn btn-outline-primary btn-circle btn-sm">
+                                                            <i class="fa fa-id-card"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td align="center">
+                                                        @can('view prescription')
+                                                            <a href="{{ url('prescription/view/' . $prescription->id) }}"
+                                                                class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                    class="fa fa-eye"></i></a>
+                                                        @endcan
+                                                        @can('edit prescription')
+                                                            <a href="{{ url('prescription/edit/' . $prescription->id) }}"
+                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                    class="fas fa-pen"></i></a>
+                                                        @endcan
+                                                        @can('delete prescription')
+                                                            <a href="{{ url('prescription/delete/' . $prescription->id) }}"
+                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                    class="fas fa-trash"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                                @endif
                                             @empty
                                                 <tr>
                                                     <td colspan="4" align="center"> <img
@@ -435,8 +504,8 @@
                                                 </div>
                                             @empty
                                                 <div class="col text-center">
-                                                    <img src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br> <b
-                                                        class="text-muted"> {{ __('sentence.No document available') }} </b>
+                                                    <img src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br>
+                                                    <b class="text-muted"> {{ __('sentence.No document available') }} </b>
                                                 </div>
                                             @endforelse
 
@@ -458,7 +527,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 mb-4">
+                                            {{-- <div class="col-lg-4 mb-4">
                                                 <div class="card bg-success text-white shadow">
                                                     <div class="card-body">
                                                         {{ __('sentence.Already Paid') }}
@@ -467,7 +536,8 @@
                                                             {{ App\Setting::get_option('currency') }}</div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
+
                                             <div class="col-lg-4 mb-4">
                                                 <div class="card bg-danger text-white shadow">
                                                     <div class="card-body">
@@ -498,6 +568,7 @@
                                                 <th>{{ __('sentence.Actions') }}</th>
                                             </tr>
                                             @forelse($invoices as $invoice)
+                                                @if (Auth::user()->role_id == 2 && Auth::user()->id == $invoice->created_by )
                                                 <tr>
                                                     <td><a
                                                             href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
@@ -551,6 +622,61 @@
 
                                                     </td>
                                                 </tr>
+                                                @elseif (Auth::user()->role_id == 1)
+                                                <tr>
+                                                    <td><a
+                                                            href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
+                                                    </td>
+                                                    <td><label
+                                                            class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
+                                                    </td>
+                                                    <td> {{ $invoice->total_with_tax }}
+                                                        {{ App\Setting::get_option('currency') }}
+                                                        @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
+                                                            <label class="badge badge-danger-soft">{{ $invoice->due_amount }}
+                                                                {{ App\Setting::get_option('currency') }} </label>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($invoice->payment_status == 'Unpaid')
+                                                            <label class="badge badge-danger-soft">
+                                                                <i class="fas fa-hourglass-start"></i>
+                                                                {{ __('sentence.Unpaid') }}
+                                                            </label>
+                                                        @elseif($invoice->payment_status == 'Paid')
+                                                            <label class="badge badge-success-soft">
+                                                                <i class="fas fa-check"></i> {{ __('sentence.Paid') }}
+                                                            </label>
+                                                        @else
+                                                            <label class="badge badge-warning-soft">
+                                                                <i class="fas fa-user-times"></i>
+                                                                {{ __('sentence.Partially Paid') }}
+                                                            </label>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @can('view invoice')
+                                                            <a href="{{ url('billing/view/' . $invoice->id) }}"
+                                                                class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                    class="fas fa-print"></i></a>
+                                                        @endcan
+                                                        @can('edit invoice')
+                                                            <a href="{{ url('billing/edit/' . $invoice->id) }}"
+                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                    class="fas fa-pen"></i></a>
+                                                        @endcan
+                                                        @can('delete invoice')
+                                                            <a href="{{ url('billing/delete/' . $invoice->id) }}"
+                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                    class="fas fa-trash"></i></a>
+                                                        @endcan
+                                                        <a href="{{ url('payment/create/' . $invoice->id) }}"
+                                                            class="btn btn-outline-secondary btn-circle btn-sm"><i
+                                                                class="fas fa-fw fa-dollar-sign"></i></a>
+
+                                                    </td>
+                                                </tr>
+                                                @endif
                                             @empty
                                                 <tr>
                                                 </tr>

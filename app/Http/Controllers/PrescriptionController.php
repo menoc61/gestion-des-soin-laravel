@@ -9,6 +9,9 @@ use App\Prescription_test;
 use App\Test;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PDF;
+use Illuminate\Support\Facades\Auth;
+
 
 class PrescriptionController extends Controller
 {
@@ -36,7 +39,10 @@ class PrescriptionController extends Controller
         $drugs = Drug::all();
         $patients = User::where('role_id', '3')->get();
         $praticiens = User::where('role_id', '2')->get();
-        $tests = Test::where('user_id', $id)->get();
+        // $tests = Test::where('user_id', $id)->get();
+        $tests = Test::where('user_id', $id)
+             ->whereDoesntHave('Prescription') // Prescription correspond a la fonction définie dans le model test
+             ->get();
 
         return view('prescription.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
     }
@@ -55,14 +61,21 @@ class PrescriptionController extends Controller
         $validatedData = $request->validate([
             'patient_id' => ['required', 'exists:users,id'],
             'Doctor_id' => ['required', 'exists:users,id'],
+            'nom' => ['required'],
             'trade_name.*' => 'required',
         ]);
 
         $prescription = new Prescription();
 
         $prescription->user_id = $request->patient_id;
+        $prescription->doctor_id = Auth::user()->id;
+        $prescription->reference = 'p' . rand(10000, 99999);
+        $prescription->nom = $request->nom;
+        $prescription->dosage = $request->dosage;
+
         $prescription->doctor_id = $request->Doctor_id;
         $prescription->reference = 'p'.rand(10000, 99999);
+
 
         $prescription->save();
 
@@ -120,12 +133,18 @@ class PrescriptionController extends Controller
             $sortColumn = $defaultSortColumn;
         }
 
+        $user = Auth::user();
+        $doctorId = $user->id;
+
         // Perform a join with the 'users' table to get the patient names
         $prescriptions = Prescription::select('prescriptions.*', 'users.name as patient_name')
-            ->join('users', 'prescriptions.user_id', '=', 'users.id')
-            ->orderBy($sortColumn, $sortOrder)
-            ->paginate(25);
-
+        ->join('users', 'prescriptions.user_id', '=', 'users.id')
+        ->when($user->role_id !== 1, function ($query) use ($doctorId) {
+            // Add a condition to filter prescriptions for non-admin users
+            $query->where('prescriptions.doctor_id', $doctorId);
+        })
+        ->orderBy($sortColumn, $sortOrder)
+        ->paginate(25);
         return view('prescription.all', ['prescriptions' => $prescriptions]);
     }
 

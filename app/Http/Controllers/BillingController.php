@@ -31,9 +31,10 @@ class BillingController extends Controller
         if (!$user) {
             // Gérez le cas où l'utilisateur n'est pas trouvé
         }
-        $prescriptions = Prescription::join('users', 'prescriptions.user_id', '=', 'users.id')
-                 ->where('users.id', $id)
-                 ->get();
+        // $prescriptions = Prescription::where('prescriptions.user_id', $id)->get();
+        $prescriptions = Prescription::where('user_id', $id)
+            ->whereDoesntHave('Items') // Items correspond a la fonction définie dans le model Prescription
+            ->get();
 
         return view('billing.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('prescriptions'));
     }
@@ -42,9 +43,9 @@ class BillingController extends Controller
     {
         $billing = Billing::find($id);
         $users = User::join('billings', 'users.id', '=', 'billings.user_id')
-        ->where('billings.id', $id)
-        ->select('users.name', 'users.id')
-        ->first();
+            ->where('billings.id', $id)
+            ->select('users.name', 'users.id')
+            ->first();
         $billing_items = Billing_item::where('billing_id', $id)->get();
 
         return view('billing.payment', ['billingId' => $id], compact('billing', 'billing_items', 'users'));
@@ -56,7 +57,7 @@ class BillingController extends Controller
             'patient_id' => ['required', 'exists:users,id'],
             'payment_mode' => 'required',
             // 'payment_status' => 'required',
-            'invoice_title.*' => 'required',
+            'nom.*' => 'required',
             'invoice_amount.*' => ['required', 'numeric'],
         ]);
 
@@ -83,7 +84,7 @@ class BillingController extends Controller
         $billing->user_id = $request->patient_id;
         $billing->payment_mode = $request->payment_mode;
         $billing->payment_status = $request->payment_status;
-        $billing->reference = 'b'.rand(10000, 99999);
+        $billing->reference = 'b' . rand(10000, 99999);
         $billing->due_amount = $request->due_amount;
         $billing->deposited_amount = $request->deposited_amount;
         $billing->vat = Setting::get_option('vat');
@@ -92,20 +93,34 @@ class BillingController extends Controller
         $billing->created_by = Auth::user()->id;
         $billing->save();
 
-        if (empty($request->invoice_title)) {
+        if (empty($request->nom)) {
             return \Redirect::back()->with('danger', 'Empty Invoice Details!');
         }
 
-        $i = count($request->invoice_title);
+        // $i = count($request->invoice_title);
 
+        // for ($x = 0; $x < $i; ++$x) {
+        //     echo $request->invoice_title[$x];
+
+        //     $invoice_item = new Billing_item();
+
+        //     $invoice_item->invoice_title = $request->invoice_title[$x];
+        //     $invoice_item->invoice_amount = $request->invoice_amount[$x];
+        //     $invoice_item->billing_id = $billing->id;
+
+        //     $invoice_item->save();
+        // }
+
+        $i = count($request->nom);
         for ($x = 0; $x < $i; ++$x) {
-            echo $request->invoice_title[$x];
+            // echo $request->nom[$x];
 
             $invoice_item = new Billing_item();
 
-            $invoice_item->invoice_title = $request->invoice_title[$x];
+            $invoice_item->prescription_id = $request->nom[$x];
             $invoice_item->invoice_amount = $request->invoice_amount[$x];
             $invoice_item->billing_id = $billing->id;
+
 
             $invoice_item->save();
         }
@@ -143,7 +158,7 @@ class BillingController extends Controller
         $pdf = PDF::loadView('billing.pdf_view', ['billing' => $billing, 'billing_items' => $billing_items]);
 
         // download PDF file with download method
-        return $pdf->download($billing->User->name.'_invoice.pdf');
+        return $pdf->download($billing->User->name . '_invoice.pdf');
     }
 
     public function edit($id)
@@ -158,7 +173,7 @@ class BillingController extends Controller
     {
         // return $request;
 
-        if (empty($request->invoice_title)) {
+        if (empty($request->nom)) {
             return \Redirect::back()->with('danger', 'Empty Invoice Details!');
         }
 
@@ -187,22 +202,26 @@ class BillingController extends Controller
             }
         }
 
-        if (isset($request->invoice_title)) {
-            $i = count($request->invoice_title);
+        if (isset($request->nom)) {
+            $i = count($request->nom);
 
             for ($x = 0; $x < $i; ++$x) {
                 if (isset($request->billing_item_id[$x])) {
                     Billing_item::where('id', $request->billing_item_id[$x])
                         ->update([
-                            'invoice_title' => $request->invoice_title[$x],
+                            'prescription_id' => $request->nom[$x],
                             'invoice_amount' => $request->invoice_amount[$x],
                         ]);
                 } else {
                     $add_item_to_invoice = new Billing_item();
 
-                    $add_item_to_invoice->invoice_title = $request->invoice_title[$x];
+                    // $add_item_to_invoice->invoice_title = $request->invoice_title[$x];
+                    // $add_item_to_invoice->invoice_amount = $request->invoice_amount[$x];
+                    // $add_item_to_invoice->billing_id = $request->billing_id;
+
+                    $add_item_to_invoice->prescription_id = $request->nom[$x];
                     $add_item_to_invoice->invoice_amount = $request->invoice_amount[$x];
-                    $add_item_to_invoice->billing_id = $request->billing_id;
+                    $add_item_to_invoice->billing_id = $billing->id;
 
                     $add_item_to_invoice->save();
                 }
@@ -227,7 +246,7 @@ class BillingController extends Controller
             $billing->user_id = $request->patient_id;
             $billing->payment_mode = $request->payment_mode;
             $billing->payment_status = $request->payment_status;
-            $billing->reference = 'b'.rand(10000, 99999);
+            $billing->reference = 'b' . rand(10000, 99999);
             $billing->due_amount = $request->due_amount;
             $billing->deposited_amount = $request->deposited_amount;
             $billing->vat = Setting::get_option('vat');
@@ -241,6 +260,7 @@ class BillingController extends Controller
 
     public function destroy($id)
     {
+
         Billing::destroy($id);
 
         return \Redirect::route('billing.all')->with('success', 'Invoice Deleted Successfully!');
