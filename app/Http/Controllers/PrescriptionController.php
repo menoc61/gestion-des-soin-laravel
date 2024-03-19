@@ -9,8 +9,11 @@ use App\Prescription_test;
 use App\Test;
 use App\User;
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use App\Http\Controllers\PDF;
 use Illuminate\Support\Facades\Auth;
+=======
+>>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
 
 class PrescriptionController extends Controller
 {
@@ -25,25 +28,38 @@ class PrescriptionController extends Controller
         $patients = User::where('role_id', '3')->get();
         $praticiens = User::where('role_id', '2')->get();
         $tests = Test::all();
+
         return view('prescription.create', compact('drugs', 'patients', 'praticiens', 'tests'));
     }
 
     public function create_By_Id($id)
     {
         $user = User::find($id);
-        // Vérifiez si l'utilisateur existe
         if (!$user) {
-            // Gérez le cas où l'utilisateur n'est pas trouvé
+            return redirect()->back()->with('error', 'The user does not exist');
         }
         $drugs = Drug::all();
         $patients = User::where('role_id', '3')->get();
         $praticiens = User::where('role_id', '2')->get();
+<<<<<<< HEAD
         // $tests = Test::where('user_id', $id)->get();
         $tests = Test::where('user_id', $id)
              ->whereDoesntHave('Prescription') // Prescription correspond a la fonction définie dans le model test
              ->get();
+=======
+        $tests = Test::where('user_id', $id)->get();
+>>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
 
         return view('prescription.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
+    }
+
+    public function follow($id)
+    {
+        $prescription = Prescription::findOrfail($id);
+        $prescription_drugs = Prescription_drug::where('prescription_id', $id)->get();
+        $drugs = Drug::all();
+
+        return view('prescription.follow', ['prescription' => $prescription, 'prescription_drugs' => $prescription_drugs, 'drugs' => $drugs]);
     }
 
     public function store(Request $request)
@@ -58,9 +74,15 @@ class PrescriptionController extends Controller
         $prescription = new Prescription();
 
         $prescription->user_id = $request->patient_id;
+<<<<<<< HEAD
         $prescription->doctor_id = Auth::user()->id;
         $prescription->reference = 'p' . rand(10000, 99999);
         $prescription->nom = $request->nom;
+=======
+        $prescription->doctor_id = $request->Doctor_id;
+        $prescription->reference = 'p'.rand(10000, 99999);
+
+>>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
         $prescription->save();
 
         if (isset($request->trade_name)) {
@@ -70,13 +92,13 @@ class PrescriptionController extends Controller
                 if ($request->trade_name[$x] != null) {
                     $add_drug = new Prescription_drug();
 
-                    $add_drug->type = $request->input('type.' . $x) ?? null;
-                    $add_drug->strength = $request->input('strength.' . $x) ?? null;
-                    $add_drug->dose = $request->input('dose.' . $x) ?? null;
-                    $add_drug->duration = $request->input('duration.' . $x) ?? null;
-                    $add_drug->drug_advice = $request->input('drug_advice.' . $x) ?? null;
+                    $add_drug->type = $request->input('type.'.$x) ?? null;
+                    $add_drug->strength = $request->input('strength.'.$x) ?? null;
+                    $add_drug->dose = $request->input('dose.'.$x) ?? null;
+                    $add_drug->duration = $request->input('duration.'.$x) ?? null;
+                    $add_drug->drug_advice = $request->input('drug_advice.'.$x) ?? null;
                     $add_drug->prescription_id = $prescription->id;
-                    $add_drug->drug_id = $request->input('trade_name.' . $x) ?? null;
+                    $add_drug->drug_id = $request->input('trade_name.'.$x) ?? null;
 
                     $add_drug->save();
                 }
@@ -152,7 +174,7 @@ class PrescriptionController extends Controller
         $pdf->setOption('viewport-size', '1024x768');
 
         // download PDF file with download method
-        return $pdf->download($prescription->User->name . '_pdf.pdf');
+        return $pdf->download($prescription->User->name.'_pdf.pdf');
     }
 
     public function edit($id)
@@ -205,23 +227,23 @@ class PrescriptionController extends Controller
                 if (isset($request->prescription_drug_id[$x])) {
                     Prescription_drug::where('id', $request->prescription_drug_id[$x])
                         ->update([
-                            'type' => $request->type[$x],
-                            'strength' => $request->strength[$x],
-                            'dose' => $request->dose[$x],
-                            'duration' => $request->duration[$x],
-                            'drug_advice' => $request->drug_advice[$x],
-                            'drug_id' => $request->trade_name[$x],
+                            'type' => isset($request->type[$x]) ? $request->type[$x] : null,
+                            'strength' => isset($request->strength[$x]) ? $request->strength[$x] : null,
+                            'dose' => isset($request->dose[$x]) ? $request->dose[$x] : null,
+                            'duration' => isset($request->duration[$x]) ? $request->duration[$x] : null,
+                            'drug_advice' => isset($request->drug_advice[$x]) ? $request->drug_advice[$x] : null,
+                            'drug_id' => isset($request->trade_name[$x]) ? $request->trade_name[$x] : null,
                         ]);
                 } else {
                     $add_drug = new Prescription_drug();
 
-                    $add_drug->type = $request->type[$x];
-                    $add_drug->strength = $request->strength[$x];
-                    $add_drug->dose = $request->dose[$x];
-                    $add_drug->duration = $request->duration[$x];
-                    $add_drug->drug_advice = $request->drug_advice[$x];
-                    $add_drug->prescription_id = $request->prescription_id;
-                    $add_drug->drug_id = $request->trade_name[$x];
+                    $add_drug->type = $request->type[$x] ?? null;
+                    $add_drug->strength = $request->strength[$x] ?? null;
+                    $add_drug->dose = $request->dose[$x] ?? null;
+                    $add_drug->duration = $request->duration[$x] ?? null;
+                    $add_drug->drug_advice = $request->drug_advice[$x] ?? null;
+                    $add_drug->prescription_id = $request->prescription_id ?? null;
+                    $add_drug->drug_id = $request->trade_name[$x] ?? null;
 
                     $add_drug->save();
                 }
@@ -291,6 +313,7 @@ class PrescriptionController extends Controller
         $User = User::findOrfail($id);
 
         $prescriptions = Prescription::where('user_id', $id)->paginate(25);
+
         return view('prescription.view_for_user', ['prescriptions' => $prescriptions]);
     }
 }

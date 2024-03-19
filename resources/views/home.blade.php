@@ -200,20 +200,31 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-7 ">
+{{-- graph section --}}
+            <div class="col-md-5 ">
                 <div class="chart mb-4">
+<<<<<<< HEAD
                     <p class="text-center"><b>CHIFFRE D'AFFAIRE PAR MOIS</b></p>
                     <div class="mt-5"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
                 </div>
             </div>
             {{-- <div class="col-md-4 ">
+=======
+                        <div class="mt-5"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
+                </div>
+            </div>
+             <div class="col-md-5 ">
+>>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
                 <div class=" chart1 mb-4">
-                    <p class="text-center" ><b >CHIFFRE D'AFFAIRE PAR MOIS</b></p>
                     <div class="mt-5"><canvas id="myBarChart" width="100%" height="40%"></canvas></div>
                 </div>
+<<<<<<< HEAD
             </div> --}}
 
+=======
+            </div>
+{{-- graph section end --}}
+>>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
         </div>
     @endrole
 
@@ -460,7 +471,6 @@
     {{-- @role('Admin|Praticien')
         <div class="row">
             <div class="col">
-                <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <div class="row">
@@ -620,5 +630,4 @@
     </script>
     <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
     <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
-    {{-- <script src="{{ asset('public') }}/assets/demo/chart-pie-demo.js"></script> --}}
 @endsection
