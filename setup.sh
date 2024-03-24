@@ -28,6 +28,7 @@ initialize_globals() {
     backup_dir="BACKUP_DIR"
     default_host="localhost"
     default_port="8000"
+    is_password_set=$( [[ -n "$db_password" ]] && echo "-p$db_password" )
 }
 
 # Function to confirm continuation
@@ -75,7 +76,7 @@ echo "$(print_colored '[4]'). Restore data from a backup to the current database
 echo "$(print_colored '[5]'). Cleanup old backups"
 print_border
 
-read -p "Enter your $(print_colored 'choice']): " choice
+read -p "Enter your $(print_colored '[choice']): " choice
 echo -e "\n"
 
 case $choice in
@@ -184,7 +185,7 @@ case $choice in
         backup_file="$backup_dir/$db_database-$timestamp.sql"
 
         echo -e "$(print_colored '[Step 1]') Creating full database backup...\n"
-        mysqldump -h "$db_host" -u "$db_username" -p"$db_password" "$db_database" > "$backup_file"
+        mysqldump -h "$db_host" -u "$db_username" $is_password_set "$db_database" > "$backup_file"
         dump_exit_code=$?
 
         if [ $dump_exit_code -eq 0 ]; then
@@ -197,6 +198,10 @@ case $choice in
         ;;
 
     4)
+        echo -e "\n $(print_colored '===============-0000  VERY IMPORTANT 0000-===============') \n"
+        echo -e "\n $(print_colored '====== ENSURE DATABASE MIGRATION HAS BEEN EXECUTED ======') \n"
+        echo -e "\n $(print_colored '=========================================================') \n"
+
         initialize_globals
         # Step 1: List all backup files in the backup directory
         if [ ! -d "$backup_dir" ]; then
@@ -205,12 +210,13 @@ case $choice in
         fi
 
         # List all backup files with index
-        echo "Available backups in \033[0;32m$backup_dir\033[0m:"
+        echo "Available backups in $backup_dir:"
         backup_files=("$backup_dir"/*)
         for i in "${!backup_files[@]}"; do
             echo "$i. ${backup_files[$i]}"
         done
 
+        # Loop until a valid backup ID is provided
         while true; do
             # Ask user to select a backup
             read -p "Enter the ID of the backup you want to restore: " selected_id
@@ -225,27 +231,51 @@ case $choice in
 
         selected_backup="${backup_files[selected_id]}"
 
-        # Step 2: Restore only data of columns found in both the backup and the current database
-        echo -e "$(print_colored '[Step 2]') Restoring database from backup...\n"
-        # Retrieve the structure (schema) of the selected backup file
-        backup_schema=$(mysqldump --no-data -h "$db_host" -u "$db_username" -p"$db_password" "$db_database" < "$selected_backup" | grep -E '^CREATE TABLE')
-        # Extract column names from the schema
-        column_names=$(echo "$backup_schema" | awk -F'`' '/`/ {print $2}')
-        # Get column names of the current database
-        current_column_names=$(mysql -h "$db_host" -u "$db_username" -p"$db_password" "$db_database" -e "SHOW COLUMNS FROM your_table;" | awk '{print $1}' | sed '1d') # Replace your_table with the actual table name
-        # Restore only the data of columns found in both the backup and the current database
-        for column in $column_names; do
-            if echo "$current_column_names" | grep -q "^$column$"; then
-                echo "Restoring data for column: $column"
-                mysql -h "$db_host" -u "$db_username" -p"$db_password" "$db_database" -e "UPDATE your_table SET $column = (SELECT $column FROM backup_table WHERE your_table.primary_key = backup_table.primary_key);" # Replace your_table and backup_table with actual table names and primary_key with actual primary key column
-            fi
+        # Step 2: Check if migrations have been done
+        migrations_status=$(php artisan migrate:status --no-ansi)
+        if [[ $migrations_status == *"No"* ]]; then
+            echo "Migrations have not been executed. Executing migrations first..."
+            php artisan migrate || { echo "Error: Failed to execute migrations."; exit 1; }
+        fi
+
+        # Step 3: Restore data from backup
+        echo -e "$(print_colored '[Step 3]') Restoring database from backup...\n"
+
+        # Extract table names from the selected backup
+        backup_tables=$(grep -E "^-- Table structure for table" "$selected_backup" | awk '{print $5}' | sed 's/`//g')
+
+        # Loop through each table in the current database
+        for table in $backup_tables; do
+            # Get column names of the current table
+            current_columns=$(mysql -h "$db_host" -u "$db_username" $is_password_set "$db_database" -e "SHOW COLUMNS FROM $table;" | awk '{print $1}' | tail -n +2)
+
+            # Get column names of the backup table
+            backup_columns=$(grep -E "^-- Table structure for table \`?$table" "$selected_backup" | grep -oP '^\s*`\K[^`]+')
+
+            # Loop through each column in the current table
+            for column in $current_columns; do
+                # Check if the column exists in the backup table
+                if echo "$backup_columns" | grep -q "^$column$"; then
+                    echo "Restoring data for column '$column' in table '$table'..."
+                    # Check if the table has a primary key
+                    primary_key=$(mysql -h "$db_host" -u "$db_username" $is_password_set "$db_database" -e "SHOW KEYS FROM $table WHERE Key_name = 'PRIMARY';" | grep -oP 'Column_name: \K\w+')
+                    if [ -n "$primary_key" ]; then
+                        # Update existing rows
+                        mysql -h "$db_host" -u "$db_username" $is_password_set "$db_database" -e "UPDATE $table SET $column = (SELECT $column FROM $selected_backup.$table WHERE $table.$primary_key = $selected_backup.$table.$primary_key);"
+                    else
+                        # Insert data from backup table to current table
+                        mysql -h "$db_host" -u "$db_username" $is_password_set "$db_database" -e "INSERT INTO $table ($column) SELECT $column FROM $selected_backup.$table;"
+                    fi
+                else
+                    echo "Column '$column' not found in the backup table. It will be empty."
+                fi
+            done
         done
 
         echo -e "$(print_colored '[Success]') Database restored successfully from $selected_backup\n"
         confirm_continue
         ;;
-
-    5)
+       5)
         cleanup_backups
         ;;
     *)
