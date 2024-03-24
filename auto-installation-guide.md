@@ -13,6 +13,8 @@
 5. [Contributing](#contributing)
 6. [License](#license)
 
+> other options are available
+
 ## Prerequisites
 
 Before running the setup script, ensure you have the following dependencies installed:
