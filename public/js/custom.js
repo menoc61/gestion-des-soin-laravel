@@ -8,7 +8,7 @@ var baseURL = SITE_URL;
 
 (function($) {
 
-  
+
 
   // Toggle the side navigation
   $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
@@ -24,7 +24,7 @@ var baseURL = SITE_URL;
     if ($(window).width() < 768) {
       $('.sidebar .collapse').collapse('hide');
     };
-    
+
     // Toggle the side navigation when window is resized below 480px
     if ($(window).width() < 480 && !$(".sidebar").hasClass("toggled")) {
       $("body").addClass("sidebar-toggled");
@@ -62,7 +62,7 @@ var baseURL = SITE_URL;
     e.preventDefault();
   });
 
-  // Model to edit appointment status 
+  // Model to edit appointment status
    $('#EDITRDVModal').on('show.bs.modal', function (event) {
                       var button = $(event.relatedTarget) // Button that triggered the modal
                       var rdv_date = button.data('rdv_date') // Extract info from data-* attributes
@@ -88,11 +88,11 @@ var baseURL = SITE_URL;
                     })
 
 
-     // Model to edit appointment status 
+     // Model to edit appointment status
    $('#DeleteModal').on('show.bs.modal', function (event) {
                       var button = $(event.relatedTarget) // Button that triggered the modal
                       var link = button.data('link') // Extract info from data-* attributes
-                   
+
                       var modal = $(this)
                       modal.find('#delete_link').attr("href", link)
                     })
@@ -124,7 +124,7 @@ var baseURL = SITE_URL;
         max: 5
       });
 
-      
+
 
 
   var money = 0;
@@ -141,11 +141,11 @@ var baseURL = SITE_URL;
                 url: baseURL+'/appointment/checkslots/'+date,
                 type: 'GET',
                 cache : false,
-                success: function(array){ 
+                success: function(array){
                        var options = '';
                       $.each( array, function( key, value ) {
 
-                      if(value.available == "available"){ 
+                      if(value.available == "available"){
                         options = options + '<div class="col-sm-6 col-md-4 mb-2"><button class="btn btn-doctorino btn-block" data-toggle="modal" data-target="#RDVModalSubmit" data-rdv_date="'+ date +'" data-rdv_time_start="'+ value.start +'" data-rdv_time_end="'+ value.end +'" >'+ value.start +' - '+ value.end +'</button></div>';
 
                       }else{ var btn = 'danger';
@@ -161,10 +161,10 @@ var baseURL = SITE_URL;
 
                       $("#help-block").css("display", "none");
 
-                      if(!options){
+                      if (!options) {
                         $("#help-block").css("display", "block");
-                        $("#help-block").html("<img src='../img/rest.png'/> <br> <b>Sorry, Doctor dont work on this day</b>");
-                      }
+                        $("#help-block").html("<img src='" + baseUrl + "img/rest1.png' alt='Image'/> <br> <b>Désolé, le praticien ne travaille pas ce jour-là</b>");
+                    }
 
                       $('#RDVModalSubmit').on('show.bs.modal', function (event) {
                       var button = $(event.relatedTarget) // Button that triggered the modal
@@ -179,7 +179,7 @@ var baseURL = SITE_URL;
                       // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                       var modal = $(this)
                       if(selectedPatientID == 0){
-                        modal.find('#patient_name').html('<span class="text-danger"><b>Select Patient Before Submitting</b></span>')
+                        modal.find('#patient_name').html('<span class="text-danger"><b>Sélectionnez le patient avant de soumettre</b></span>')
 
                       }else{
                         modal.find('#patient_name').text(selectedPatientName)
@@ -203,12 +203,12 @@ var baseURL = SITE_URL;
 
                 },
 
-               
+
                  error: function(){
-                  $("#help-block").text("Sorry, An error has occurred");
+                  $("#help-block").text("Désolé, une erreur s'est produite");
                  }
             },"json");
-       } 
+       }
 
         // RDV and age date picker
          $('#rdvdate').datepicker({
@@ -228,4 +228,3 @@ var baseURL = SITE_URL;
 })(jQuery); // End of use strict
 
 
-  

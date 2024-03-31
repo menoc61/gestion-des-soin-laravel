@@ -536,7 +536,9 @@
 
     <script src="{{ asset('dashboard/js/vue.js') }}"></script>
     <script src="{{ asset('dashboard/vendor/jquery/jquery.min.js') }}"></script>
-
+    <script>
+        var baseUrl = "{{ asset('') }}";
+    </script>
     <!-- Bootstrap core JavaScript-->
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
