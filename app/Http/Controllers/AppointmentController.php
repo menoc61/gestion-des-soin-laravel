@@ -98,7 +98,7 @@ class AppointmentController extends Controller
             ]);
         }
 
-        return \Redirect::route('appointment.all')->with('success', 'Appointment Created Successfully!');
+        return back()->with('success', 'Appointment Created Successfully!');
     }
 
     public function store_id(Request $request)
@@ -172,6 +172,6 @@ class AppointmentController extends Controller
     {
         Appointment::destroy($id);
 
-        return \Redirect::route('appointment.all')->with('success', 'Appointment Deleted Successfully!');
+        return back()->with('success', 'Appointment Deleted Successfully!');
     }
 }
