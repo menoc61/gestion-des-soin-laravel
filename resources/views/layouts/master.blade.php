@@ -343,7 +343,7 @@
                     <!-- Topbar -->
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                         <!-- Sidebar Toggle (Topbar) -->
-                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        {{-- <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                             <i class="fa fa-bars"></i>
                         </button>
                         <div class="dropdown shortcut-menu mr-4">
@@ -367,18 +367,16 @@
                                     <a class="dropdown-item"
                                         href="{{ route('drug.create') }}">{{ __('sentence.Drug') }}</a>
                                 @endif
-                                {{-- Module pour créer une facture depuis la navbar --}}
-
-                                {{-- @if (Auth::user()->can('create appointment'))
+                                @if (Auth::user()->can('create appointment'))
                                     <a class="dropdown-item"
                                         href="{{ route('appointment.create') }}">{{ __('sentence.Appointment') }}</a>
-                                @endif --}}
+                                @endif
                                 @if (Auth::user()->can('create invoice'))
                                     <a class="dropdown-item"
                                         href="{{ route('billing.create') }}">{{ __('sentence.Invoice') }}</a>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                         @can('view all patients')
                             <form
@@ -406,7 +404,7 @@
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span
                                         class="mr-2 d-none d-lg-inline text-gray-900 small-600">{{ Auth::user()->name }}</span>
-                                    <img class="img-profile rounded-circle" src="{{ asset('img/favicon.png') }}">
+                                    <img class="img-profile rounded-circle" src="{{ asset('uploads/' . Auth::user()->image) }}">
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

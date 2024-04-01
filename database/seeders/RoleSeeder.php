@@ -73,7 +73,7 @@ class RoleSeeder extends Seeder
 
         $role1->givePermissionTo(Permission::all());
         $role2->givePermissionTo(Permission::all()->except(['delete invoice', 'manage settings', 'manage roles']));
-        $role3->givePermissionTo(Permission::all()->except(['delete invoice', 'manage settings', 'manage roles','create diagnostic test','delete diagnostic test']));
+        $role3->syncPermissions('view patient');
 
         $user = User::create([
             'name' => 'ADMIN',
