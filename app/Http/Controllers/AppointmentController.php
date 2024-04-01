@@ -101,6 +101,38 @@ class AppointmentController extends Controller
         return \Redirect::route('appointment.all')->with('success', 'Appointment Created Successfully!');
     }
 
+    public function store_id(Request $request)
+    {
+        $validatedData = $request->validate([
+            'rdv_time_date' => ['required'],
+            'rdv_time_start' => ['required'],
+            'rdv_time_end' => ['required'],
+            'send_sms' => ['boolean'],
+        ]);
+
+        $appointment = new Appointment();
+        $appointment->user_id = $request->patient;
+        $appointment->date = $request->rdv_time_date;
+        $appointment->time_start = $request->rdv_time_start;
+        $appointment->time_end = $request->rdv_time_end;
+        $appointment->visited = 0;
+        $appointment->reason = $request->reason;
+        $appointment->save();
+
+        if ($request->send_sms == 1) {
+            $user = User::findOrFail($request->patient);
+            $phone = $user->Patient->phone;
+
+            \Nexmo::message()->send([
+                'to' => $phone,
+                'from' => '213794616181',
+                'text' => 'You have an appointment on '.$request->rdv_time_date.' at '.$request->rdv_time_start.' at Sai i lama',
+            ]);
+        }
+
+        return back()->with('success', 'Appointment Created Successfully!');
+    }
+
     public function store_edit(Request $request)
     {
         $validatedData = $request->validate([

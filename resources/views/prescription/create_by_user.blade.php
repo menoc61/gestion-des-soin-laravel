@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group">
                             <label >{{ __('sentence.Prescription dosage') }} :</label>
-                            <input type="number" class="form-control" name="dosage">
+                            <input type="number" class="form-control" name="dosage" min="0">
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group">
@@ -185,18 +185,17 @@
 
                             <div class="row">
 
-                                <div class="col-md-2">
+                                {{-- <div class="col-md-2">
                                     <div class="form-group-custom">
                                         <input type="number" min="0" id="dose" name="dose[]" class="form-control"  placeholder="{{ __('sentence.Dose') }}" @required(true)>
                                         <label class="control-label"></label><i class="bar"></i>
-
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div> --}}
+                                {{-- <div class="col-md-6">
                                     <div class="form-group-custom">
                                         <input type="date" id="duration" name="duration[]" class="form-control" placeholder="{{ __('sentence.Duration') }}" @readonly(true)>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-md-9">

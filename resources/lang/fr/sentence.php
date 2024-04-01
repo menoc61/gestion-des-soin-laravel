@@ -261,5 +261,6 @@ return [
     'Choice Prescription' => 'Choisir le Traitement',
     'Prescription Name' => 'Nom Traitement',
     'Amount Generated' => 'Montant Genéré',
-    'Prescription dosage' => 'dosage'
+    'Prescription dosage' => 'dosage',
+    'set meetings' => 'Create des rendez-vous a suivre',
 ];

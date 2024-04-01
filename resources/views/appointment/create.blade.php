@@ -36,7 +36,7 @@
                   <div class="form-group">
                      <label for="reason">{{ __('sentence.Reason for visit') }}</label>
                      <textarea class="form-control" id="reason"></textarea>
-                     <small id="emailHelp" class="form-text text-muted">Select date to view time slots available</small>
+                     <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
                   </div>
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="sms">
