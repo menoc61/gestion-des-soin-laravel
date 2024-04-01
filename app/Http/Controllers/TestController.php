@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Test;
 use App\User;
 use App\Prescription_test;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+
 
 class TestController extends Controller
 {
