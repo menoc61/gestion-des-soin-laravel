@@ -16,11 +16,11 @@
     @endcan --}}
 
     @role('Admin')
-        <div class="row top">
+        {{-- <div class="row top"> --}}
 
             {{-- carte contenant le nombre de rendez-vous qu'aura lieu un jour  --}}
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-2 col-md-4 mb-4 taille marge">
+            {{-- <div class="col-xl-2 col-md-4 mb-4 taille marge">
 
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
@@ -39,11 +39,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </div> --}}
             {{-- carte contenant le nommbre total de rendez-vous --}}
             <!-- Earnings (Annual) Card Example -->
-            <div class="col-xl-2 col-md-6 mb-4 taille marge">
+            {{-- <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-warning shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-warning col-md-9">
                         <div class="col-auto">
@@ -60,10 +59,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </div> --}}
+            {{-- carte contenant le nommbre total de nouveau du jour --}}
             <!-- Tasks Card Example -->
-            <div class="col-xl-2 col-md-6 mb-4 taille marge">
+            {{-- <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-info shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-info col-md-9">
                         <div class="col-auto">
@@ -85,9 +84,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
+            {{-- carte contenant le nommbre total de hôtes du système --}}
             <!-- Pending Requests Card Example -->
-            <div class="col-xl-2 col-md-6 mb-4 taille marge">
+            {{-- <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-secondary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-secondary col-md-9">
                         <div class="col-auto">
@@ -104,31 +104,37 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-        </div>
+        {{-- </div> --}}
 
         <div class="row top">
-            <!-- Earnings (Monthly) Card Example -->
+            {{-- carte contenant le montant du chiffre d'affaire du mois en cour --}}
+            <!-- Tasks Card Example -->
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
-                <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
-                    <div class="card-body shadow-lg card-po bg-primary col-md-9">
+                <div class="card border-bottom-secondary shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-secondary col-md-9 ">
                         <div class="col-auto">
-                            <center><i class="fas fa-pills fa-2x text-gray-300"></i></center>
+                            <center><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    {{ __('sentence.Total Prescriptions') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_prescriptions }}</div>
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                                    {{ __('sentence.Payments this month') }} {{ date('M') }} </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $total_payments_month }}
+                                            {{ App\Setting::get_option('currency') }}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            {{-- carte contenant le nommbre total de paiements du système --}}
             <!-- Earnings (Annual) Card Example -->
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-success shadow h-100 py-2 card-po1">
@@ -148,40 +154,31 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Tasks Card Example -->
-            {{-- permet de redéfinir les paramètres régionaux(langue, date) en francais  --}}
-            <?php
-            setlocale(LC_TIME, 'fr_FR.UTF-8', 'fr_FR', 'fr');
-            ?>
+            {{-- carte contenant le nommbre de traitement du système --}}
+            <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
-                <div class="card border-bottom-secondary shadow h-100 py-2 card-po1">
-                    <div class="card-body shadow-lg card-po bg-secondary col-md-9 ">
+                <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-primary col-md-9">
                         <div class="col-auto">
-                            <center><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></center>
+                            <center><i class="fas fa-pills fa-2x text-gray-300"></i></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
-                                    C.A DU MOIS DE <?php echo strftime('%B'); ?> </div>
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $total_payments_month }}
-                                            {{ App\Setting::get_option('currency') }}</div>
-                                    </div>
-                                </div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    {{ __('sentence.Total Prescriptions') }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_prescriptions }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            {{-- carte contenant le montant du chiffre d'affaire de l'année en cour --}}
             <!-- Pending Requests Card Example -->
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
-                <div class="card border-bottom-danger shadow h-100 py-2 card-po1 ">
-                    <div class="card-body shadow-lg card-po bg-danger col-md-9  ">
+                <div class="card border-bottom-warning shadow h-100 py-2 card-po1 ">
+                    <div class="card-body shadow-lg card-po bg-warning col-md-9  ">
                         <div class="col-auto">
                             <center><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></center>
                         </div>
@@ -189,8 +186,8 @@
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                    {{ __('sentence.Payments this year') }}</div>
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    {{ __('sentence.Payments this year') }} {{ date('Y') }}</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_payments_year }}
                                     {{ App\Setting::get_option('currency') }}</div>
                             </div>
@@ -198,6 +195,7 @@
                     </div>
                 </div>
             </div>
+
 
         </div>
 

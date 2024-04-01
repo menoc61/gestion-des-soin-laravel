@@ -1,34 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Appointment;
+use App\Billing;
+use App\Document;
+use App\History;
+use App\Http\Controllers\Controller;
 use App\Patient;
+use App\Prescription;
+use App\Test;
 use App\User;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Redirect;
 use Spatie\Permission\Models\Role;
 
-class UsersController extends Controller
+class UserApiController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    public function all()
-    {
-        $sortColumn = request()->get('sort');
-        $sortOrder = request()->get('order', 'asc');
-        if (!empty($sortColumn)) {
-            $users = User::orderBy($sortColumn, $sortOrder)->paginate(25);
-        } else {
-            $users = User::paginate(25);
-        }
-
-        return view('user.all', ['users' => $users]);
-    }
 
     public function create()
     {
@@ -58,7 +46,7 @@ class UsersController extends Controller
         if ($role) {
             $user->assignRole($role);
         } else {
-            return \Redirect::route('user.all')->with('error', __('sentence.role id does not exist'));
+            return back()->with('error', __('sentence.role id does not exist'));
         }
         $user->save();
 
@@ -69,20 +57,33 @@ class UsersController extends Controller
         $patient->birthday = '00-00-0000';
         $patient->save();
 
-        return \Redirect::route('user.all')->with('success', __('sentence.User Created Successfully'));
+        return back()->with('success', __('sentence.User Created Successfully'));
+    }
+
+    public function view($id)
+    {
+        $patient = User::findOrFail($id);
+        $prescriptions = Prescription::where('user_id', $id)->orderBy('id', 'desc')->get();
+        $appointments = Appointment::where('user_id', $id)->orderBy('id', 'desc')->get();
+        $tests = Test::where('user_id', $id)->orderBy('id', 'desc')->get();
+        $documents = Document::where('user_id', $id)->orderBy('id', 'desc')->get();
+        $invoices = Billing::where('user_id', $id)->orderBy('id', 'desc')->get();
+        $historys = History::where('user_id', $id)->orderBy('id', 'desc')->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'prescriptions' => $prescriptions,
+            'appointments' => $appointments,
+            'invoices' => $invoices,
+            'documents' => $documents,
+            'historys' => $historys,
+            'tests' => $tests,
+        ]);
     }
 
     public function edit($id)
     {
         $user = User::findorfail($id);
-        $roles = Role::all();
-
-        return view('user.edit', ['user' => $user, 'roles' => $roles]);
-    }
-
-    public function edit_profile()
-    {
-        $user = \Auth::user();
         $roles = Role::all();
 
         return view('user.edit', ['user' => $user, 'roles' => $roles]);
@@ -111,7 +112,7 @@ class UsersController extends Controller
         if ($role) {
             $user->assignRole($role);
         } else {
-            return \Redirect::route('user.all')->with('error', __('sentence.role id does not exist'));
+            return back()->with('error', __('sentence.role id does not exist'));
         }
 
         $user->update();
@@ -123,41 +124,6 @@ class UsersController extends Controller
         $patient->birthday = '00-00-0000';
         $patient->update();
 
-        // if(!empty($request->role)):
-        //     $count_admins = User::role('Admin')->count();
-        //     if($count_admins == 1 && $user->hasRole('Admin') == 1 && $request->role != "Admin"){
-        //         return Redirect::route('user.all')->with('warning', __('You Cannot delete the only existant admin'));
-        //     }
-        //     $user->syncRoles($request->role);
-        // endif;
-
-        return \Redirect::route('user.all')->with('success', __('sentence.User Updated Successfully'));
+        return back()->with('success', __('sentence.User Updated Successfully'));
     }
-
-    ###########################################################################################
-
-    public function Login(Request $request){
-        try{
-            if(auth()->attempt($request->only(['email','password']))){
-                $user = auth()->user();
-                $token = $user->createToken('GS')->plainTextToken;
-
-                return response()->json([
-                    'status_code' => 200,
-                    'message' => 'utilisateur connecté',
-                    'user' => $user,
-                    'token' => $token,
-                    'type' => 'Bearer'
-                ]);
-            } else{
-                return response()->json([
-                    'message' => 'cet utilisateur n\'existe pas'
-                ]);
-            }
-        }
-        catch(Exception $e){
-            return response()->json($e);
-        }
-    }
-
 }
