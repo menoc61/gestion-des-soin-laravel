@@ -4472,8 +4472,8 @@ input[type="submit"].btn-block {
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
   color: #ffffff;
-  background-color: #f9bc0b;
-  border-color: #f9bc0b;
+  background-color: #157954;
+  border-color: #157954;
 }
 
 .nav-tabs .dropdown-menu {
@@ -11898,4 +11898,10 @@ body.sidebar-toggled footer.sticky-footer {
 td > a {
   font-weight: 600;
   font-size: 15px;
+}
+
+.gap{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }

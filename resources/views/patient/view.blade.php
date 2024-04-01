@@ -29,85 +29,129 @@
                                             class="fa fa-pen"></i></a></label></h4>
                             <hr>
 
-                            @isset($patient->Patient->birthday)
-                                <p><b>{{ __('sentence.Birthday') }} :</b> {{ $patient->Patient->birthday }}
-                                    ({{ \Carbon\Carbon::parse($patient->Patient->birthday)->age }} ANS)</p>
-                            @endisset
+                            <table class="table table-striped">
+                                <tr>
+                                    @isset($patient->Patient->birthday)
+                                        <td>
+                                            <p><b>{{ __('sentence.Birthday') }} :</b> {{ $patient->Patient->birthday }}
+                                                ({{ \Carbon\Carbon::parse($patient->Patient->birthday)->age }} ANS)</p>
+                                        </td>
+                                    @endisset
+                                </tr>
 
-                            @isset($patient->Patient->gender)
-                                <p><b>{{ __('sentence.Gender') }} :</b> {{ $patient->Patient->gender }}</p>
-                            @endisset
+                                <tr>
+                                    @isset($patient->Patient->gender)
+                                        <td>
+                                            <p><b>{{ __('sentence.Gender') }} :</b> {{ $patient->Patient->gender }}</p>
+                                        </td>
+                                    @endisset
+                                </tr>
 
-                            @isset($patient->Patient->phone)
-                                <p><b>{{ __('sentence.Phone') }} :</b> {{ $patient->Patient->phone }}</p>
-                            @endisset
+                                <tr>
+                                    @isset($patient->Patient->phone)
+                                        <td>
+                                            <p><b>{{ __('sentence.Phone') }} :</b> {{ $patient->Patient->phone }}</p>
+                                        </td>
+                                    @endisset
+                                </tr>
 
-                            @isset($patient->Patient->adress)
-                                <p><b>{{ __('sentence.Address') }} :</b> {{ $patient->Patient->adress }}</p>
-                            @endisset
+                                <tr>
+                                    @isset($patient->Patient->adress)
+                                        <td>
+                                            <p><b>{{ __('sentence.Address') }} :</b> {{ $patient->Patient->adress }}</p>
+                                        </td>
+                                    @endisset
+                                </tr>
 
-                            @isset($patient->Patient->allergie)
-                                <p><b>{{ __('sentence.Allergies') }} :</b> {{ $patient->Patient->allergie }}</p>
-                            @endisset
+                                <tr>
+                                    @isset($patient->Patient->allergie)
+                                        <td>
+                                            <p><b>{{ __('sentence.Allergies') }} :</b> {{ $patient->Patient->allergie }}</p>
+                                        </td>
+                                    @endisset
+                                </tr>
 
-                            @isset($patient->Patient->hobbie)
-                                <p><b>{{ __('sentence.Hobbies') }} :</b> {{ $patient->Patient->hobbie }}</p>
-                            @endisset
+                                <tr>
+                                    @isset($patient->Patient->hobbie)
+                                        <td>
+                                            <p><b>{{ __('sentence.Hobbies') }} :</b> {{ $patient->Patient->hobbie }}</p>
+                                        </td>
+                                    @endisset
+                                </tr>
 
-                            @isset($patient->Patient->demande)
-                                <p><b>{{ __('sentence.Special Requests') }} :</b> {{ $patient->Patient->demande }}</p>
-                            @endisset
+                                <tr>
+                                    @isset($patient->Patient->demande)
+                                        <td>
+                                            <p><b>{{ __('sentence.Special Requests') }} :</b> {{ $patient->Patient->demande }}
+                                            </p>
+                                        </td>
+                                    @endisset
+                                </tr>
+                            </table>
 
                             <hr>
 
-                            @isset($patient->Patient->morphology)
-                                <p><b>{{ __('sentence.Morphology') }} :</b>
-                                    @php
-                                        $morphologyArray = json_decode($patient->Patient->morphology);
-                                    @endphp
+                            <table class="table table-striped">
+                                <tr>
+                                    @isset($patient->Patient->morphology)
+                                        <td>
+                                            <p><b>{{ __('sentence.Morphology') }} :</b>
+                                                @php
+                                                    $morphologyArray = json_decode($patient->Patient->morphology);
+                                                @endphp
 
-                                    @if (is_array($morphologyArray))
-                                        @foreach ($morphologyArray as $item)
-                                            <label class="badge badge-warning-soft">{{ $item }}</label>
-                                        @endforeach
-                                    @else
-                                        <span>No morphology data available.</span>
-                                    @endif
-                                </p>
-                            @endisset
+                                                @if (is_array($morphologyArray))
+                                                    @foreach ($morphologyArray as $item)
+                                                        <label class="badge badge-success-soft">{{ $item }}</label>
+                                                    @endforeach
+                                                @else
+                                                    <span>No morphology data available.</span>
+                                                @endif
+                                            </p>
+                                        </td>
+                                    @endisset
+                                </tr>
 
-                            @isset($patient->Patient->alimentation)
-                                <p><b>{{ __('sentence.Alimentation') }} :</b>
-                                    @php
-                                        $alimentationArray = json_decode($patient->Patient->alimentation);
-                                    @endphp
+                                <tr>
+                                    @isset($patient->Patient->alimentation)
+                                        <td>
+                                            <p><b>{{ __('sentence.Alimentation') }} :</b>
+                                                @php
+                                                    $alimentationArray = json_decode($patient->Patient->alimentation);
+                                                @endphp
 
-                                    @if (is_array($alimentationArray))
-                                        @foreach ($alimentationArray as $item)
-                                            <label class="badge badge-warning-soft">{{ $item }}</label>
-                                        @endforeach
-                                    @else
-                                        <span>No alimentation data available.</span>
-                                    @endif
-                                </p>
-                                </p>
-                            @endisset
+                                                @if (is_array($alimentationArray))
+                                                    @foreach ($alimentationArray as $item)
+                                                        <label class="badge badge-success-soft">{{ $item }}</label>
+                                                    @endforeach
+                                                @else
+                                                    <span>No alimentation data available.</span>
+                                                @endif
+                                            </p>
+                                        </td>
+                                    @endisset
+                                </tr>
 
-                            @isset($patient->Patient->type_patient)
-                                <p><b>{{ __('sentence.Type of patient') }} :</b>
-                                    @php
-                                        $type_patientArray = json_decode($patient->Patient->type_patient);
-                                    @endphp
+                                <tr>
+                                    @isset($patient->Patient->type_patient)
+                                        <td>
+                                            <p><b>{{ __('sentence.Type of patient') }} :</b>
+                                                @php
+                                                    $type_patientArray = json_decode($patient->Patient->type_patient);
+                                                @endphp
 
-                                    @if (is_array($type_patientArray))
-                                        @foreach ($type_patientArray as $item)
-                                            <label class="badge badge-warning-soft">{{ $item }}</label>
-                                        @endforeach
-                                    @else
-                                        <span>No patient type data available.</span>
-                                    @endif
-                                </p>
-                            @endisset
+                                                @if (is_array($type_patientArray))
+                                                    @foreach ($type_patientArray as $item)
+                                                        <label class="badge badge-success-soft">{{ $item }}</label>
+                                                    @endforeach
+                                                @else
+                                                    <span>No patient type data available.</span>
+                                                @endif
+                                            </p>
+                                        </td>
+                                    @endisset
+                                </tr>
+                            </table>
 
                         </div>
                         <div class="col-md-8 col-sm-6">
@@ -266,7 +310,7 @@
                                                     {{ __('sentence.Add Test') }}</a>
                                             </div>
                                         </div>
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table " id="dataTable" width="100%" cellspacing="0">
                                             <tr>
                                                 <td align="center"><b>Id</b></td>
                                                 <td align="center"><b> Nom Diagnostic</b> </td>
@@ -277,9 +321,9 @@
                                             @forelse($tests as $test)
                                                 @if (Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by)
                                                     <tr>
-                                                        <td>{{ $test->id }}</td>
-                                                        <td>{{ $test->test_name }}</td>
-                                                        <td> {{ $test->comment }} </td>
+                                                        <td align="center">{{ $test->id }}</td>
+                                                        <td align="center">{{ $test->test_name }}</td>
+                                                        <td align="center"> {{ $test->comment }} </td>
                                                         <td align="center">{{ __('sentence.In Prescription') }} :
                                                             {{ $test->Prescription->count() }} {{ __('sentence.time use') }}
                                                         </td>
@@ -304,9 +348,9 @@
                                                     </tr>
                                                 @elseif (Auth::user()->role_id == 1)
                                                     <tr>
-                                                        <td>{{ $test->id }}</td>
-                                                        <td>{{ $test->test_name }}</td>
-                                                        <td> {{ $test->comment }} </td>
+                                                        <td align="center">{{ $test->id }}</td>
+                                                        <td align="center">{{ $test->test_name }}</td>
+                                                        <td align="center"> {{ $test->comment }} </td>
                                                         <td align="center">{{ __('sentence.In Prescription') }} :
                                                             {{ $test->Prescription->count() }} {{ __('sentence.time use') }}
                                                         </td>
@@ -368,84 +412,87 @@
                                             </tr>
                                             @forelse($prescriptions as $prescription)
                                                 @if (Auth::user()->role_id == 2 && Auth::user()->id == $prescription->doctor_id)
-                                                <tr>
-                                                    <td align="center">{{ $prescription->reference }} </td>
-                                                    <td class="text-center">
-                                                        <label class="badge badge-primary-soft">
-                                                            {{ count($prescription->Drug) }} Soins
-                                                        </label>
-                                                        <label class="badge badge-primary-soft">
-                                                            {{ count($prescription->Test) }} Diagnostics
-                                                        </label>
-                                                    </td>
-                                                    <td align="center"><label
-                                                            class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
-                                                    </td>
-                                                    <td align="center">
-                                                        <a href="{{ url('prescription/follow/' . $prescription->id) }}" class="btn btn-outline-primary btn-circle btn-sm">
-                                                            <i class="fa fa-id-card"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td align="center">
-                                                        @can('view prescription')
-                                                            <a href="{{ url('prescription/view/' . $prescription->id) }}"
-                                                                class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                    class="fa fa-eye"></i></a>
-                                                        @endcan
-                                                        @can('edit prescription')
-                                                            <a href="{{ url('prescription/edit/' . $prescription->id) }}"
-                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                    class="fas fa-pen"></i></a>
-                                                        @endcan
-                                                        @can('delete prescription')
-                                                            <a href="{{ url('prescription/delete/' . $prescription->id) }}"
-                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                    class="fas fa-trash"></i></a>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td align="center">{{ $prescription->reference }} </td>
+                                                        <td class="text-center">
+                                                            <label class="badge badge-primary-soft">
+                                                                {{ count($prescription->Drug) }} Soins
+                                                            </label>
+                                                            <label class="badge badge-primary-soft">
+                                                                {{ count($prescription->Test) }} Diagnostics
+                                                            </label>
+                                                        </td>
+                                                        <td align="center"><label
+                                                                class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
+                                                        </td>
+                                                        <td align="center">
+                                                            <a href="{{ url('prescription/follow/' . $prescription->id) }}"
+                                                                class="btn btn-outline-primary btn-circle btn-sm">
+                                                                <i class="fa fa-id-card"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td align="center">
+                                                            @can('view prescription')
+                                                                <a href="{{ url('prescription/view/' . $prescription->id) }}"
+                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                        class="fa fa-eye"></i></a>
+                                                            @endcan
+                                                            @can('edit prescription')
+                                                                <a href="{{ url('prescription/edit/' . $prescription->id) }}"
+                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                        class="fas fa-pen"></i></a>
+                                                            @endcan
+                                                            @can('delete prescription')
+                                                                <a href="{{ url('prescription/delete/' . $prescription->id) }}"
+                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                        class="fas fa-trash"></i></a>
+                                                            @endcan
+                                                        </td>
+                                                    </tr>
                                                 @elseif (Auth::user()->role_id == 1)
-                                                <tr>
-                                                    <td align="center">{{ $prescription->reference }} </td>
-                                                    <td class="text-center">
-                                                        <label class="badge badge-primary-soft">
-                                                            {{ count($prescription->Drug) }} Soins
-                                                        </label>
-                                                        <label class="badge badge-primary-soft">
-                                                            {{ count($prescription->Test) }} Diagnostics
-                                                        </label>
-                                                    </td>
-                                                    <td align="center"><label
-                                                        class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
-                                                    </td>
-                                                    <td align="center">
-                                                        <a href="{{ url('prescription/follow/' . $prescription->id) }}" class="btn btn-outline-primary btn-circle btn-sm">
-                                                            <i class="fa fa-id-card"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td align="center">
-                                                        @can('view prescription')
-                                                            <a href="{{ url('prescription/view/' . $prescription->id) }}"
-                                                                class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                    class="fa fa-eye"></i></a>
-                                                        @endcan
-                                                        @can('edit prescription')
-                                                            <a href="{{ url('prescription/edit/' . $prescription->id) }}"
-                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                    class="fas fa-pen"></i></a>
-                                                        @endcan
-                                                        @can('delete prescription')
-                                                            <a href="{{ url('prescription/delete/' . $prescription->id) }}"
-                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                    class="fas fa-trash"></i></a>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td align="center">{{ $prescription->reference }} </td>
+                                                        <td class="text-center">
+                                                            <label class="badge badge-primary-soft">
+                                                                {{ count($prescription->Drug) }} Soins
+                                                            </label>
+                                                            <label class="badge badge-primary-soft">
+                                                                {{ count($prescription->Test) }} Diagnostics
+                                                            </label>
+                                                        </td>
+                                                        <td align="center"><label
+                                                                class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
+                                                        </td>
+                                                        <td align="center">
+                                                            <a href="{{ url('prescription/follow/' . $prescription->id) }}"
+                                                                class="btn btn-outline-primary btn-circle btn-sm">
+                                                                <i class="fa fa-id-card"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td align="center">
+                                                            @can('view prescription')
+                                                                <a href="{{ url('prescription/view/' . $prescription->id) }}"
+                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                        class="fa fa-eye"></i></a>
+                                                            @endcan
+                                                            @can('edit prescription')
+                                                                <a href="{{ url('prescription/edit/' . $prescription->id) }}"
+                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                        class="fas fa-pen"></i></a>
+                                                            @endcan
+                                                            @can('delete prescription')
+                                                                <a href="{{ url('prescription/delete/' . $prescription->id) }}"
+                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                        class="fas fa-trash"></i></a>
+                                                            @endcan
+                                                        </td>
+                                                    </tr>
                                                 @endif
                                             @empty
                                                 <tr>
                                                     <td colspan="4" align="center"> <img
-                                                            src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br>
+                                                            src="{{ asset('img/not-found.svg') }}" width="200" />
+                                                        <br><br>
                                                         <b class="text-muted">
                                                             {{ __('sentence.No prescription available') }}</b>
                                                     </td>
@@ -517,8 +564,8 @@
 
                                     <div class="tab-pane fade" id="Billing" role="tabpanel" aria-labelledby="Billing-tab">
                                         <div class="row mt-4">
-                                            <div class="col-lg-4 mb-4">
-                                                <div class="card bg-primary text-white shadow">
+                                            <div class="col-lg-6 mb-4">
+                                                <div class="card bg-success text-white shadow">
                                                     <div class="card-body">
                                                         {{ __('sentence.Total With Tax') }}
                                                         <div class="text-white small">
@@ -538,7 +585,7 @@
                                                 </div>
                                             </div> --}}
 
-                                            <div class="col-lg-4 mb-4">
+                                            <div class="col-lg-6 mb-4">
                                                 <div class="card bg-danger text-white shadow">
                                                     <div class="card-body">
                                                         {{ __('sentence.Due Balance') }}
@@ -568,114 +615,116 @@
                                                 <th>{{ __('sentence.Actions') }}</th>
                                             </tr>
                                             @forelse($invoices as $invoice)
-                                                @if (Auth::user()->role_id == 2 && Auth::user()->id == $invoice->created_by )
-                                                <tr>
-                                                    <td><a
-                                                            href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
-                                                    </td>
-                                                    <td><label
-                                                            class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
-                                                    </td>
-                                                    <td> {{ $invoice->total_with_tax }}
-                                                        {{ App\Setting::get_option('currency') }}
-                                                        @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
-                                                            <label class="badge badge-danger-soft">{{ $invoice->due_amount }}
-                                                                {{ App\Setting::get_option('currency') }} </label>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @if ($invoice->payment_status == 'Unpaid')
-                                                            <label class="badge badge-danger-soft">
-                                                                <i class="fas fa-hourglass-start"></i>
-                                                                {{ __('sentence.Unpaid') }}
-                                                            </label>
-                                                        @elseif($invoice->payment_status == 'Paid')
-                                                            <label class="badge badge-success-soft">
-                                                                <i class="fas fa-check"></i> {{ __('sentence.Paid') }}
-                                                            </label>
-                                                        @else
-                                                            <label class="badge badge-warning-soft">
-                                                                <i class="fas fa-user-times"></i>
-                                                                {{ __('sentence.Partially Paid') }}
-                                                            </label>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @can('view invoice')
-                                                            <a href="{{ url('billing/view/' . $invoice->id) }}"
-                                                                class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                    class="fas fa-print"></i></a>
-                                                        @endcan
-                                                        @can('edit invoice')
-                                                            <a href="{{ url('billing/edit/' . $invoice->id) }}"
-                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                    class="fas fa-pen"></i></a>
-                                                        @endcan
-                                                        @can('delete invoice')
-                                                            <a href="{{ url('billing/delete/' . $invoice->id) }}"
-                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                    class="fas fa-trash"></i></a>
-                                                        @endcan
-                                                        <a href="{{ url('payment/create/' . $invoice->id) }}"
-                                                            class="btn btn-outline-secondary btn-circle btn-sm"><i
-                                                                class="fas fa-fw fa-dollar-sign"></i></a>
+                                                @if (Auth::user()->role_id == 2 && Auth::user()->id == $invoice->created_by)
+                                                    <tr>
+                                                        <td><a
+                                                                href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
+                                                        </td>
+                                                        <td><label
+                                                                class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
+                                                        </td>
+                                                        <td> {{ $invoice->total_with_tax }}
+                                                            {{ App\Setting::get_option('currency') }}
+                                                            @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
+                                                                <label
+                                                                    class="badge badge-danger-soft">{{ $invoice->due_amount }}
+                                                                    {{ App\Setting::get_option('currency') }} </label>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($invoice->payment_status == 'Unpaid')
+                                                                <label class="badge badge-danger-soft">
+                                                                    <i class="fas fa-hourglass-start"></i>
+                                                                    {{ __('sentence.Unpaid') }}
+                                                                </label>
+                                                            @elseif($invoice->payment_status == 'Paid')
+                                                                <label class="badge badge-success-soft">
+                                                                    <i class="fas fa-check"></i> {{ __('sentence.Paid') }}
+                                                                </label>
+                                                            @else
+                                                                <label class="badge badge-warning-soft">
+                                                                    <i class="fas fa-user-times"></i>
+                                                                    {{ __('sentence.Partially Paid') }}
+                                                                </label>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @can('view invoice')
+                                                                <a href="{{ url('billing/view/' . $invoice->id) }}"
+                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                        class="fas fa-print"></i></a>
+                                                            @endcan
+                                                            @can('edit invoice')
+                                                                <a href="{{ url('billing/edit/' . $invoice->id) }}"
+                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                        class="fas fa-pen"></i></a>
+                                                            @endcan
+                                                            @can('delete invoice')
+                                                                <a href="{{ url('billing/delete/' . $invoice->id) }}"
+                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                        class="fas fa-trash"></i></a>
+                                                            @endcan
+                                                            <a href="{{ url('payment/create/' . $invoice->id) }}"
+                                                                class="btn btn-outline-secondary btn-circle btn-sm"><i
+                                                                    class="fas fa-fw fa-dollar-sign"></i></a>
 
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                    </tr>
                                                 @elseif (Auth::user()->role_id == 1)
-                                                <tr>
-                                                    <td><a
-                                                            href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
-                                                    </td>
-                                                    <td><label
-                                                            class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
-                                                    </td>
-                                                    <td> {{ $invoice->total_with_tax }}
-                                                        {{ App\Setting::get_option('currency') }}
-                                                        @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
-                                                            <label class="badge badge-danger-soft">{{ $invoice->due_amount }}
-                                                                {{ App\Setting::get_option('currency') }} </label>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @if ($invoice->payment_status == 'Unpaid')
-                                                            <label class="badge badge-danger-soft">
-                                                                <i class="fas fa-hourglass-start"></i>
-                                                                {{ __('sentence.Unpaid') }}
-                                                            </label>
-                                                        @elseif($invoice->payment_status == 'Paid')
-                                                            <label class="badge badge-success-soft">
-                                                                <i class="fas fa-check"></i> {{ __('sentence.Paid') }}
-                                                            </label>
-                                                        @else
-                                                            <label class="badge badge-warning-soft">
-                                                                <i class="fas fa-user-times"></i>
-                                                                {{ __('sentence.Partially Paid') }}
-                                                            </label>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @can('view invoice')
-                                                            <a href="{{ url('billing/view/' . $invoice->id) }}"
-                                                                class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                    class="fas fa-print"></i></a>
-                                                        @endcan
-                                                        @can('edit invoice')
-                                                            <a href="{{ url('billing/edit/' . $invoice->id) }}"
-                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                    class="fas fa-pen"></i></a>
-                                                        @endcan
-                                                        @can('delete invoice')
-                                                            <a href="{{ url('billing/delete/' . $invoice->id) }}"
-                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                    class="fas fa-trash"></i></a>
-                                                        @endcan
-                                                        <a href="{{ url('payment/create/' . $invoice->id) }}"
-                                                            class="btn btn-outline-secondary btn-circle btn-sm"><i
-                                                                class="fas fa-fw fa-dollar-sign"></i></a>
+                                                    <tr>
+                                                        <td><a
+                                                                href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
+                                                        </td>
+                                                        <td><label
+                                                                class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
+                                                        </td>
+                                                        <td> {{ $invoice->total_with_tax }}
+                                                            {{ App\Setting::get_option('currency') }}
+                                                            @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
+                                                                <label
+                                                                    class="badge badge-danger-soft">{{ $invoice->due_amount }}
+                                                                    {{ App\Setting::get_option('currency') }} </label>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($invoice->payment_status == 'Unpaid')
+                                                                <label class="badge badge-danger-soft">
+                                                                    <i class="fas fa-hourglass-start"></i>
+                                                                    {{ __('sentence.Unpaid') }}
+                                                                </label>
+                                                            @elseif($invoice->payment_status == 'Paid')
+                                                                <label class="badge badge-success-soft">
+                                                                    <i class="fas fa-check"></i> {{ __('sentence.Paid') }}
+                                                                </label>
+                                                            @else
+                                                                <label class="badge badge-warning-soft">
+                                                                    <i class="fas fa-user-times"></i>
+                                                                    {{ __('sentence.Partially Paid') }}
+                                                                </label>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @can('view invoice')
+                                                                <a href="{{ url('billing/view/' . $invoice->id) }}"
+                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                        class="fas fa-print"></i></a>
+                                                            @endcan
+                                                            @can('edit invoice')
+                                                                <a href="{{ url('billing/edit/' . $invoice->id) }}"
+                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                        class="fas fa-pen"></i></a>
+                                                            @endcan
+                                                            @can('delete invoice')
+                                                                <a href="{{ url('billing/delete/' . $invoice->id) }}"
+                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                        class="fas fa-trash"></i></a>
+                                                            @endcan
+                                                            <a href="{{ url('payment/create/' . $invoice->id) }}"
+                                                                class="btn btn-outline-secondary btn-circle btn-sm"><i
+                                                                    class="fas fa-fw fa-dollar-sign"></i></a>
 
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                    </tr>
                                                 @endif
                                             @empty
                                                 <tr>

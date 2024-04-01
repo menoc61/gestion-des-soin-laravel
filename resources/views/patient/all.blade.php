@@ -72,8 +72,8 @@
                             </th>
                             <th class="text-center">{{ __('sentence.Due Balance') }}
                             </th>
-                            <th class="text-center">{{ __('sentence.Prescription') }}</th>
-                            <th class="text-center">{{ __('sentence.Test') }}</th>
+                            {{-- <th class="text-center">{{ __('sentence.Prescription') }}</th>
+                            <th class="text-center">{{ __('sentence.Test') }}</th> --}}
                             <th class="text-center">{{ __('sentence.Actions') }}</th>
                         </tr>
                     </thead>
@@ -136,7 +136,7 @@
                                 <td class="text-center"><label
                                         class="badge badge-primary-soft">{{ Collect($patient->Billings)->where('payment_status', 'Partially Paid')->sum('due_amount') }}
                                         {{ App\Setting::get_option('currency') }}</label></td>
-                                <td class="text-center">
+                                {{-- <td class="text-center">
                                     @can('view patient')
                                         <a href="{{ route('prescription.view_for_user', ['id' => $patient->id]) }}"
                                             class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> Voir</a>
@@ -147,16 +147,16 @@
                                         <a href="{{ route('test.view_diagnostic', ['id' => $patient->id]) }}"
                                             class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> Voir</a>
                                     @endcan
-                                </td>
+                                </td> --}}
                                 <td class="text-center">
-                                    @can('view patient')
+                                    {{-- @can('view patient')
                                         <a href="{{ route('patient.view', ['id' => $patient->id]) }}"
                                             class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a>
                                     @endcan
                                     @can('edit patient')
                                         <a href="{{ route('patient.edit', ['id' => $patient->id]) }}"
                                             class="btn btn-outline-warning btn-circle btn-sm"><i class="fa fa-pen"></i></a>
-                                    @endcan
+                                    @endcan --}}
                                     @can('delete patient')
                                         <a href="#" class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal"
                                             data-target="#DeleteModal"
