@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group">
                             <label >{{ __('sentence.Prescription dosage') }} :</label>
-                            <input type="number" class="form-control" name="dosage" min="0">
+                            <input type="number" class="form-control" name="dosage" min="1">
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group">
