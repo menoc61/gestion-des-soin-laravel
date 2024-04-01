@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Appointment;
 use App\Drug;
 use App\Prescription;
 use App\Prescription_drug;
@@ -9,9 +10,8 @@ use App\Prescription_test;
 use App\Test;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\PDF;
+// use App\Http\Controllers\PDF;
 use Illuminate\Support\Facades\Auth;
-
 
 class PrescriptionController extends Controller
 {
@@ -50,10 +50,22 @@ class PrescriptionController extends Controller
     public function follow($id)
     {
         $prescription = Prescription::findOrfail($id);
-        $prescription_drugs = Prescription_drug::where('prescription_id', $id)->get();
-        $drugs = Drug::all();
+        $currentUserAppointments = Appointment::where('user_id', $prescription->user_id)
+        ->where('reason', 'like', '%'.$prescription->reference.'%')
+        ->where('reason', 'like', '%'.$prescription->id.'%')
+        ->orderBy('id', 'DESC')
+        ->get();
+        $visitedCount = $currentUserAppointments->where('visited', 1)->count();
+        $nonVisitedCount = $currentUserAppointments->where('visited', 0)->count();
+        $appointments = Appointment::orderBy('id', 'DESC')->paginate(25);
 
-        return view('prescription.follow', ['prescription' => $prescription, 'prescription_drugs' => $prescription_drugs, 'drugs' => $drugs]);
+        return view('prescription.follow', [
+            'prescription' => $prescription,
+            'currentUserAppointments' => $currentUserAppointments,
+            'visitedCount' => $visitedCount,
+            'nonVisitedCount' => $nonVisitedCount,
+            'appointments' => $appointments,
+        ]);
     }
 
     public function store(Request $request)
@@ -69,14 +81,10 @@ class PrescriptionController extends Controller
 
         $prescription->user_id = $request->patient_id;
         $prescription->doctor_id = Auth::user()->id;
-        $prescription->reference = 'p' . rand(10000, 99999);
+        $prescription->reference = 'p'.rand(10000, 99999);
         $prescription->nom = $request->nom;
         $prescription->dosage = $request->dosage;
-
         $prescription->doctor_id = $request->Doctor_id;
-        $prescription->reference = 'p'.rand(10000, 99999);
-
-
         $prescription->save();
 
         if (isset($request->trade_name)) {
@@ -145,6 +153,7 @@ class PrescriptionController extends Controller
         })
         ->orderBy($sortColumn, $sortOrder)
         ->paginate(25);
+
         return view('prescription.all', ['prescriptions' => $prescriptions]);
     }
 
