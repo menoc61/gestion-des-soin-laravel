@@ -16,24 +16,14 @@
                 <div class="col-8">
                     <h6 class="m-0 font-weight-bold text-primary w-75 p-2">{{ __('sentence.Billing List') }}</h6>
                 </div>
-                <div class="col-2 gap">
+                <div class="col-2">
                     <div>
-
-                        <form action="{{ route('envoyer.MailnotificationAll') }}" method="POST">
+                        <form action="{{ route('envoyer.MailInvoiceNotificationAll') }}" method="POST">
                             @csrf
                             <button type="submit" class="btn btn-outline-info btn-circle btn-sm"><i
                                     class="fas fa-envelope"></i></button>
                         </form>
                         <span class="text-info">maïl</span>
-                    </div>
-                    <div>
-
-                        <form action="{{ route('envoyer.SmsnotificationAll') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-primary btn-circle btn-sm"><i
-                                    class="fas fa-comment"></i></button>
-                        </form>
-                        <span class="text-primary">sms</span>
                     </div>
                 </div>
                 <div class="col-2">

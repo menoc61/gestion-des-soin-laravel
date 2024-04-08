@@ -79,6 +79,7 @@
                                     <div class="col-md-3">
                                         <select class="form-control" id="morphology_patient" multiple="multiple"
                                             name="morphology[]">
+                                            <option value="Aucune">Aucune</option>
                                             <option value="Grand(e)">Grand(e)</option>
                                             <option value="Svelte">Svelte</option>
                                             <option value="Petit(e)">Petit(e)</option>
@@ -95,6 +96,7 @@
                                     <div class="col-md-3">
                                         <select class="form-control" id="alimentation_patient" multiple="multiple"
                                             name="alimentation[]">
+                                            <option value="Aucune">Aucune</option>
                                             <option value="Viande">Viande</option>
                                             <option value="Poisson">Poisson</option>
                                             <option value="Légumes">Légumes</option>
@@ -113,6 +115,7 @@
                                         </font></label>
                                     <div class="col-md-3">
                                         <select class="form-control" id="digestion_patient" name="digestion">
+                                            <option value="Aucun">Aucun</option>
                                             <option value="Bonne">Bonne</option>
                                             <option value="Alternée">Alternée</option>
                                             <option value="Médiocre">Médiocre</option>
@@ -125,6 +128,7 @@
                                     <div class="col-md-3">
                                         <select class="form-control" id="type_patient" multiple="multiple"
                                             name="type_patient[]">
+                                            <option value="Aucun">Aucun</option>
                                             <option value="Elancé(e)">Elancé(e)</option>
                                             <option value="Mince">Mince</option>
                                             <option value="Amazone">Amazone</option>

@@ -78,9 +78,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($patients as $patient)
+                        @forelse($patients as $key => $patient)
                             <tr>
-                                <td>{{ $patient->id }}</td>
+                                <td>{{ $key + 1 }}</td>
                                 <td><a href="{{ url('patient/view/' . $patient->id) }}"> {{ $patient->name }} </a></td>
                                 <td class="text-center"> {{ @\Carbon\Carbon::parse($patient->Patient->birthday)->age }}ans
                                 </td>

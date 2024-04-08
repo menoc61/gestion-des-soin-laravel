@@ -136,28 +136,4 @@ class UsersController extends Controller
 
     ###########################################################################################
 
-    public function Login(Request $request){
-        try{
-            if(auth()->attempt($request->only(['email','password']))){
-                $user = auth()->user();
-                $token = $user->createToken('GS')->plainTextToken;
-
-                return response()->json([
-                    'status_code' => 200,
-                    'message' => 'utilisateur connecté',
-                    'user' => $user,
-                    'token' => $token,
-                    'type' => 'Bearer'
-                ]);
-            } else{
-                return response()->json([
-                    'message' => 'cet utilisateur n\'existe pas'
-                ]);
-            }
-        }
-        catch(Exception $e){
-            return response()->json($e);
-        }
-    }
-
 }
