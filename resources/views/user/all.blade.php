@@ -58,9 +58,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($users as $key => $user)
                             <tr>
-                                <td>{{ $user->id }}</td>
+                                <td>{{  $key + 1 }}</td>
                                 <td><a href="{{ url('patient/view/' . $user->id) }}"> {{ $user->name }} </a></td>
                                 <td class="text-center"> {{ $user->email }} </td>
                                 <td class="text-center"><label
