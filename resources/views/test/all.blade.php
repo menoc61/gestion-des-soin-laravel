@@ -52,9 +52,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($tests as $test)
+                        @forelse($tests as $key => $test)
                             <tr>
-                                <td>{{ $test->id }}</td>
+                                <td>{{  $key + 1 }}</td>
                                 <td>{{ $test->test_name }}</td>
                                 <td> {{ $test->comment }} </td>
                                 <td align="center">{{ __('sentence.In Prescription') }} :

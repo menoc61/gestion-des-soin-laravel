@@ -240,9 +240,9 @@
                                                 <td align="center">{{ __('sentence.Status') }}</td>
                                                 <td align="center">{{ __('sentence.Actions') }}</td>
                                             </tr>
-                                            @forelse($appointments as $appointment)
+                                            @forelse($appointments as  $key => $appointment)
                                                 <tr>
-                                                    <td align="center">{{ $appointment->id }} </td>
+                                                    <td align="center">{{  $key + 1 }} </td>
                                                     <td align="center"><label class="badge badge-primary-soft"><i
                                                                 class="fas fa-calendar"></i>
                                                             {{ $appointment->date->format('d M Y') }} </label></td>
@@ -318,10 +318,10 @@
                                                 <td align="center"><b> Utilisation </b></td>
                                                 <td align="center"><b> Action</b> </td>
                                             </tr>
-                                            @forelse($tests as $test)
+                                            @forelse($tests as $key => $test)
                                                 @if (Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by)
                                                     <tr>
-                                                        <td align="center">{{ $test->id }}</td>
+                                                        <td align="center">{{ $ $key + 1 }}</td>
                                                         <td align="center">{{ $test->test_name }}</td>
                                                         <td align="center"> {{ $test->comment }} </td>
                                                         <td align="center">{{ __('sentence.In Prescription') }} :
@@ -348,7 +348,7 @@
                                                     </tr>
                                                 @elseif (Auth::user()->role_id == 1)
                                                     <tr>
-                                                        <td align="center">{{ $test->id }}</td>
+                                                        <td align="center">{{  $key + 1 }}</td>
                                                         <td align="center">{{ $test->test_name }}</td>
                                                         <td align="center"> {{ $test->comment }} </td>
                                                         <td align="center">{{ __('sentence.In Prescription') }} :

@@ -12,52 +12,115 @@ use App\Prescription;
 use App\Test;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
+use Throwable;
 
 class UserApiController extends Controller
 {
+    //
 
-    public function create()
+    public function RegisterUser(Request $request)
     {
-        $roles = Role::all();
+        try {
+            $validatedData = Validator::make($request->all(), [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+                'password' => ['required', 'string'],
+                'role_id' => ['numeric'],
+            ]);
 
-        return view('user.create', ['roles' => $roles]);
+            if ($validatedData->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Vous avez oublié un champ',
+                    'érreurs' => $validatedData->errors(),
+                ], 401);
+            } else {
+                $user = new User();
+                $user->password = \Hash::make($request->password);
+                $user->email = $request->email;
+                $user->name = $request->name;
+                $user->role_id = $request->role_id ?? 3;
+                $user->save();
+
+                $patient = new Patient();
+                $patient->user_id = $user->id;
+                $patient->phone = $request->phone;
+                $patient->gender = $request->gender;
+                $patient->birthday = $request->birthday ?? '00-00-0000';
+                $patient->adress = $request->adress;
+                $patient->allergie = $request->allergie ?? 'Aucune';
+                $patient->medication = $request->medication ?? 'Aucune';
+                $patient->hobbie = $request->hobbie ?? 'Aucun';
+                $patient->demande = $request->demande ?? 'Aucune';
+                $patient->type_patient = $request->type_patient ? json_encode($request->type_patient) : json_encode(['Aucun']);
+                $patient->morphology = $request->morphology ? json_encode($request->morphology) : json_encode(['Aucune']);
+                $patient->alimentation = $request->alimentation ? json_encode($request->alimentation) : json_encode(['Aucune']);
+                $patient->digestion = $request->digestion ?? 'Aucune';
+                $patient->save();
+
+                $role = Role::findById($user->role_id);
+
+                if ($role) {
+                    $user->assignRole($role);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Le rôle ID spécifié n\'existe pas',
+                    ], 404);
+                }
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Utilisateur créé avec succès',
+                    'token' => $user->createToken("api token")->plainTextToken
+                ], 200);
+            }
+        } catch (Throwable $ex) {
+            return response()->json([
+                'status' => false,
+                'message' => $ex->getMessage(),
+            ], 500);
+        }
     }
 
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role_id' => ['required', 'numeric'],
-        ]);
+    public function LoginUser(Request $request){
+        try{
+            $validatedData = Validator::make($request->all(), [
+                'email' => ['required','email'],
+                'password' => 'required'
+            ]);
+            if ($validatedData->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Erreur de Validation',
+                    'érreurs' => $validatedData->errors(),
+                ], 401);
+            }
 
-        $user = new User();
-        $user->password = \Hash::make($request->password);
-        $user->email = $request->email;
-        $user->name = $request->name;
-        $user->role_id = $request->role_id;
-
-        $role = Role::findById($request->role_id);
-
-        // If the role exists, assign it to the user
-        if ($role) {
-            $user->assignRole($role);
-        } else {
-            return back()->with('error', __('sentence.role id does not exist'));
+            if(!Auth::attempt($request->only(['email','password']))){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'cet utilisateur n\'est pas enregistré',
+                ],401);
+            } else{
+                $user = User::where('email', $request->email)->first();
+                return response()->json([
+                    'status'=>true,
+                    'message' => 'utilisateur connecté avec succès',
+                    'token' => $user->createToken("api token")->plainTextToken
+                ], 200);
+            }
         }
-        $user->save();
-
-        $patient = new Patient();
-        $patient->user_id = $user->id;
-        $patient->phone = $request->phone;
-        $patient->gender = $request->gender;
-        $patient->birthday = '00-00-0000';
-        $patient->save();
-
-        return back()->with('success', __('sentence.User Created Successfully'));
+        catch(Throwable $ex){
+            return response()->json([
+                'status' => false,
+                'message' => $ex->getMessage(),
+            ], 500);
+        }
     }
 
     public function view($id)
@@ -81,49 +144,71 @@ class UserApiController extends Controller
         ]);
     }
 
-    public function edit($id)
+    public function updateUser(Request $request, User $user)
     {
-        $user = User::findorfail($id);
-        $roles = Role::all();
+        try {
+            $user = User::findOrFail($user->id);
 
-        return view('user.edit', ['user' => $user, 'roles' => $roles]);
-    }
+            $validatedData = Validator::make($request->all(), [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+                'password' => ['required', 'string'],
+                'role_id' => ['numeric'],
+                // Ajoutez ici les règles de validation supplémentaires pour les autres champs du patient
+            ]);
 
-    public function store_edit(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required', 'email', 'max:255',
-                Rule::unique('users')->ignore($request->user_id),
-            ],
-            'role_id' => ['required', 'numeric'],
-        ]);
+            if ($validatedData->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Vous avez oublié un champ',
+                    'érreurs' => $validatedData->errors(),
+                ], 401);
+            } else {
+                $user->password = \Hash::make($request->password);
+                $user->email = $request->email;
+                $user->name = $request->name;
+                $user->role_id = $request->role_id ?? 3;
+                $user->update();
 
-        $user = User::findorfail($request->user_id);
-        $user->password = \Hash::make($request->password);
-        $user->email = $request->email;
-        $user->name = $request->name;
-        $user->role_id = $request->role_id;
+                $patient = Patient::where('user_id', $user->id)->first();
+                if ($patient) {
+                    if ($request->has('phone')) {
+                        $patient->phone = $request->phone;
+                    }
+                    if ($request->has('gender')) {
+                        $patient->gender = $request->gender;
+                    }
+                    if ($request->has('birthday')) {
+                        $patient->birthday = $request->birthday;
+                    }
+                    if ($request->has('adress')) {
+                        $patient->adress = $request->adress;
+                    }
+                    $patient->update();
+                }
 
-        $role = Role::findById($request->role_id);
+                $role = Role::findById($user->role_id);
 
-        // If the role exists, assign it to the user
-        if ($role) {
-            $user->assignRole($role);
-        } else {
-            return back()->with('error', __('sentence.role id does not exist'));
+                if ($role) {
+                    $user->assignRole($role);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Le rôle ID spécifié n\'existe pas',
+                    ], 404);
+                }
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Utilisateur modifié avec succès'
+                    // 'token' => $user->createToken("api token")->plainTextToken
+                ], 200);
+            }
+        } catch (Throwable $ex) {
+            return response()->json([
+                'status' => false,
+                'message' => $ex->getMessage(),
+            ], 500);
         }
-
-        $user->update();
-
-        $patient = new Patient();
-        $patient->user_id = $user->id;
-        $patient->phone = $request->phone;
-        $patient->gender = $request->gender;
-        $patient->birthday = '00-00-0000';
-        $patient->update();
-
-        return back()->with('success', __('sentence.User Updated Successfully'));
     }
 }
