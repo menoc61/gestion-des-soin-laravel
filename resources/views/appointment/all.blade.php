@@ -35,13 +35,13 @@
                </tr>
             </thead>
             <tbody>
-                @forelse($appointments as $appointment)
+                @forelse($appointments as $key => $appointment)
                <tr>
-                  <td class="text-center">{{ $appointment->id }}</td>
+                  <td class="text-center">{{ $key + 1 }}</td>
                   <td><a href="{{ url('patient/view/'.$appointment->user_id) }}"> {{ $appointment->User->name }} </a></td>
                   <td class="text-center"><label class="badge badge-primary-soft">{{ $appointment->reason }}</label></td>
 
-                  <td class="text-center"> 
+                  <td class="text-center">
                      <label class="badge badge-primary-soft">
                         <i class="fas fa-calendar"></i> {{ $appointment->date->format('d M Y') }}
                      </label>

@@ -44,9 +44,9 @@
                </tr>
             </thead>
             <tbody>
-               @forelse($prescriptions as $prescription)
+               @forelse($prescriptions as $key => $prescription)
                <tr>
-                  <td>{{ $prescription->id }}</td>
+                  <td>{{ $key + 1 }}</td>
                   <td><a href="{{ url('patient/view/'.$prescription->user_id) }}"> {{ $prescription->User->name }} </a></td>
                   <td class="text-center">{{ $prescription->created_at->format('d M Y H:i') }}</td>
                   <td class="text-center">
