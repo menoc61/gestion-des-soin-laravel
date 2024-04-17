@@ -298,5 +298,6 @@ return [
     'Send Password Reset Link' => 'Send Password Reset Link',
     'Reset Password' => 'Reset Password',
     'Confirm Password' => 'Confirm Password',
-    'Reset password' => 'Reset password'
+    'Reset password' => 'Reset password',
+    'Notifications Settings' => 'parametre notification',
 ];

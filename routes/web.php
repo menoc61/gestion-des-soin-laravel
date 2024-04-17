@@ -56,6 +56,14 @@ Route::post('/appointment/create_by/{id}', 'AppointmentController@store')->name(
 Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
+Route::get('/appointment/upcoming', 'AppointmentController@upcoming')->name('appointment.upcoming')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/cancelled', 'AppointmentController@cancelled')->name('appointment.cancelled')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/treated', 'AppointmentController@treated')->name('appointment.treated')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/today', 'AppointmentController@today')->name('appointment.today')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
+
 // Drugs
 Route::get('/drug/create', 'DrugController@create')->name('drug.create')->middleware(['role_or_permission:Admin|create drug']);
 Route::post('/drug/create', 'DrugController@store')->name('drug.store');
@@ -111,9 +119,9 @@ Route::post('/settings/doctorino_settings', 'SettingController@doctorino_setting
 Route::get('/settings/prescription_settings', 'SettingController@prescription_settings')->name('prescription_settings.edit');
 Route::post('/settings/prescription_settings', 'SettingController@prescription_settings_store')->name('prescription_settings.store');
 
-/* SMS Settings */
-Route::get('/settings/sms_settings', 'SettingController@sms_settings')->name('sms_settings.edit');
-Route::post('/settings/sms_settings', 'SettingController@sms_settings_store')->name('sms_settings.store');
+/* Notification setting Settings */
+Route::get('/settings/notifications_settings', 'SettingController@notifications_settings')->name('notifications_settings');
+Route::post('/settings/notifications_settings', 'SettingController@notifications_settings_store')->name('notifications_settings.store');
 
 /* Users */
 Route::get('/users/all', 'UsersController@all')->name('user.all');
