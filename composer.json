@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "infobip/infobip-api-php-client": "^5.1",
         "laravel/framework": "^8.0",
-        "laravel/sanctum": "*",
+        "laravel/sanctum": "* v2.15.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "league/csv": "^9.11",
