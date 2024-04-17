@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
 use Illuminate\Support\Facades\DB;
 
 class SettingsSeeder extends Seeder
@@ -15,24 +14,24 @@ class SettingsSeeder extends Seeder
      */
     public function run()
     {
-         DB::table('settings')->insert([
-            'option_name' => 'system_name',
-            'option_value' => 'sai i lama gestion soin',
+        DB::table('settings')->insert([
+           'option_name' => 'system_name',
+           'option_value' => 'sai i lama gestion soin',
         ]);
 
-         DB::table('settings')->insert([
-            'option_name' => 'address',
-            'option_value' => 'Etoa-Meki ',
+        DB::table('settings')->insert([
+           'option_name' => 'address',
+           'option_value' => 'Etoa-Meki ',
         ]);
 
-         DB::table('settings')->insert([
-            'option_name' => 'phone',
-            'option_value' => '+213 657 04 19 93',
+        DB::table('settings')->insert([
+           'option_name' => 'phone',
+           'option_value' => '+213 657 04 19 93',
         ]);
 
-         DB::table('settings')->insert([
-            'option_name' => 'hospital_email',
-            'option_value' => 'sai-i-lama@gmail.com',
+        DB::table('settings')->insert([
+           'option_name' => 'hospital_email',
+           'option_value' => 'sai-i-lama@gmail.com',
         ]);
 
         DB::table('settings')->insert([
@@ -110,6 +109,23 @@ class SettingsSeeder extends Seeder
         DB::table('settings')->insert([
             'option_name' => 'friday_to',
             'option_value' => '17:00',
+        ]);
+        DB::table('settings')->insert([
+            'option_name' => 'TWILIO_AUTH_SID',
+            'option_value' => '',
+        ]);
+        DB::table('settings')->insert([
+            'option_name' => 'TWILIO_AUTH_TOKEN',
+            'option_value' => '',
+        ]);
+        DB::table('settings')->insert([
+            'option_name' => 'TWILIO_WHATSAPP_FROM',
+            'option_value' => '',
+        ]);
+
+        DB::table('settings')->insert([
+            'option_name' => 'pagination',
+            'option_value' => '25',
         ]);
     }
 }

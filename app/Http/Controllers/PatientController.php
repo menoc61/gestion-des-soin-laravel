@@ -25,10 +25,11 @@ class PatientController extends Controller
         $sortColumn = request()->get('sort');
         $sortOrder = request()->get('order', 'asc');
         if (!empty($sortColumn)) {
-            $patients = User::where('role_id','3')->OrderBy($sortColumn, $sortOrder)->paginate(25);
+            $patients = User::where('role_id', '3')->OrderBy($sortColumn, $sortOrder)->paginate(25);
         } else {
-            $patients = User::where('role_id','3')->paginate(25);
+            $patients = User::where('role_id', '3')->paginate(25);
         }
+
         return view('patient.all', ['patients' => $patients]);
     }
 
@@ -101,32 +102,32 @@ class PatientController extends Controller
         return \Redirect::route('patient.all')->with('success', __('sentence.Patient Created Successfully'));
     }
 
-        public function edit($id)
-        {
-            $patient = User::findOrfail($id);
-            $user = User::findOrfail($id);
+    public function edit($id)
+    {
+        $patient = User::findOrfail($id);
+        $user = User::findOrfail($id);
 
-            return view('patient.edit', ['patient' => $patient, 'user' => $user]);
-        }
+        return view('patient.edit', ['patient' => $patient, 'user' => $user]);
+    }
 
-        public function store_edit(Request $request)
-        {
-            $validatedData = $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'email' => [
-                    'required', 'email', 'max:255',
-                    Rule::unique('users')->ignore($request->user_id),
-            ],
-            'birthday' => ['required', 'before:today'],
+    public function store_edit(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => [
+                'required', 'email', 'max:255',
+                Rule::unique('users')->ignore($request->user_id),
+        ],
+        'birthday' => ['required', 'before:today'],
 
-            'gender' => ['required',
-                        Rule::in(['Homme', 'Femme']),
-                        ],
+        'gender' => ['required',
+                    Rule::in(['Homme', 'Femme']),
+                    ],
 
-            'morphology' => ['required', 'array', Rule::in(['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
+        'morphology' => ['required', 'array', Rule::in(['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
 
-            'alimentation' => ['required', 'array',
-                     Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])],
+        'alimentation' => ['required', 'array',
+                 Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])],
 
            'type_patient' => ['required', 'array', Rule::in(['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
 
@@ -135,50 +136,50 @@ class PatientController extends Controller
            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5048',
         ]);
 
-            $user = User::find($request->user_id);
+        $user = User::find($request->user_id);
 
-            $user->email = $request->email;
-            $user->name = $request->name;
+        $user->email = $request->email;
+        $user->name = $request->name;
 
-            if ($request->hasFile('image')) {
-                // We Get the image
-                $file = $request->file('image');
-                // We Add String to Image name
-                $fileName = \Str::random(15).'-'.$file->getClientOriginalName();
-                // We Tell him the uploads path
-                $destinationPath = public_path().'/uploads/';
-                // We move the image to the destination path
-                $moved = $file->move($destinationPath, $fileName);
-                // Add fileName to database
+        if ($request->hasFile('image')) {
+            // We Get the image
+            $file = $request->file('image');
+            // We Add String to Image name
+            $fileName = \Str::random(15).'-'.$file->getClientOriginalName();
+            // We Tell him the uploads path
+            $destinationPath = public_path().'/uploads/';
+            // We move the image to the destination path
+            $moved = $file->move($destinationPath, $fileName);
+            // Add fileName to database
 
-                $fullpath = public_path().'/uploads/'.$user->image;
+            $fullpath = public_path().'/uploads/'.$user->image;
 
-                if ($moved && !empty($user->image)) {
-                    unlink($fullpath);
-                }
-
-                $user->image = $fileName;
+            if ($moved && !empty($user->image)) {
+                unlink($fullpath);
             }
 
-            $user->update();
-
-            $patient = Patient::where('user_id', '=', $request->user_id)
-                                 ->update(['birthday' => $request->birthday,
-                                            'phone' => $request->phone,
-                                            'gender' => $request->gender,
-                                            'adress' => $request->adress,
-                                            'allergie' => $request->allergie,
-                                            'medication' => $request->medication,
-                                            'hobbie' => $request->hobbie,
-                                            'demande' => $request->demande,
-                                            'type_patient' => json_encode($request->type_patient),
-                                            'morphology' => json_encode($request->morphology),
-                                            'alimentation' => json_encode($request->alimentation),
-                                            'digestion' => $request->digestion,
-                                            ]);
-
-            return \Redirect::back()->with('success', __('sentence.Patient Updated Successfully'));
+            $user->image = $fileName;
         }
+
+        $user->update();
+
+        $patient = Patient::where('user_id', '=', $request->user_id)
+                             ->update(['birthday' => $request->birthday,
+                                        'phone' => $request->phone,
+                                        'gender' => $request->gender,
+                                        'adress' => $request->adress,
+                                        'allergie' => $request->allergie,
+                                        'medication' => $request->medication,
+                                        'hobbie' => $request->hobbie,
+                                        'demande' => $request->demande,
+                                        'type_patient' => json_encode($request->type_patient),
+                                        'morphology' => json_encode($request->morphology),
+                                        'alimentation' => json_encode($request->alimentation),
+                                        'digestion' => $request->digestion,
+                                        ]);
+
+        return \Redirect::back()->with('success', __('sentence.Patient Updated Successfully'));
+    }
 
     public function view($id)
     {
@@ -215,5 +216,21 @@ class PatientController extends Controller
         $patient = User::destroy($id);
 
         return \Redirect::back()->with('success', 'Patient Deleted Successfully');
+    }
+
+    public function SendPassword($id)
+    {
+        $user = User::find($id);
+
+        $newPassword = rand(10000000, 99999999);
+
+        $user->update([
+            'password' => Hash::make($newPassword),
+        ]);
+
+        // Envoie de la notification par e-mail
+        $user->notify(new ResetPasswordNotification($newPassword));
+
+        return back()->with('success', 'Password Sent Successfully');
     }
 }
