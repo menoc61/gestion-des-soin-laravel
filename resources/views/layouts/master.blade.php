@@ -116,8 +116,9 @@
                                 @endcan
                                 @can('view all appointments')
                                     <a class="collapse-item"
+                                        href="{{ route('appointment.today') }}">{{ __('Today\'s Appointments') }}</a>
+                                    <a class="collapse-item"
                                         href="{{ route('appointment.pending') }}">{{ __('sentence.Upcoming Appointments') }}</a>
-
                                     <a class="collapse-item"
                                         href="{{ route('appointment.all') }}">{{ __('sentence.All Appointments') }}</a>
                                 @endcan
@@ -264,6 +265,48 @@
 
                 {{-- ********************* Fin Section Facturation de la sidenav ************************** --}}
 
+                @if(Auth::user()->can('manage waiting room'))
+                <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWR" aria-expanded="true" aria-controls="collapseWR">
+                    <i class="fas fa-fw fa-user-clock"></i>
+                    <span>{{ __('Waiting Room') }}</span>
+                    </a>
+                    <div id="collapseWR" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner">
+                            @can('create invoice')
+                            <a class="collapse-item" href="{{ route('wr.view') }}">{{ __('View Waiting room') }}</a>
+                            @endcan
+                            @can('view all invoices')
+                            <a class="collapse-item" href="{{ route('wr.archive.all') }}">{{ __('Archive') }}</a>
+                            @endcan
+                        </div>
+                    </div>
+                </li>
+                @endif
+
+                @if (Auth::user()->can('create notification') ||
+                Auth::user()->can('edit notification') ||
+                Auth::user()->can('view notification') ||
+                Auth::user()->can('view all notifications'))
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNotifications" aria-expanded="true" aria-controls="collapseNotifications">
+                    <i class="fas fa-fw fa-bell"></i>
+                    <span>{{ __('Notifications') }}</span>
+                    </a>
+                    <div id="collapseNotifications" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner">
+                            @can('create notification')
+                            <a class="collapse-item"
+                                href="{{ route('notification.create') }}">{{ __('Create New') }}</a>
+                            @endcan
+                            @can('view all notifications')
+                            <a class="collapse-item" href="{{ route('notification.all') }}">{{ __('Notifications') }}</a>
+                            @endcan
+                        </div>
+                    </div>
+                </li>
+                @endif
                 {{-- ********************* Debut Section Utilisateurs et rôles de la sidenav ************************** --}}
 
                 @if (Auth::user()->can('manage roles') && Auth::user()->role_id == 1)
@@ -320,7 +363,7 @@
                                 <a class="collapse-item"
                                     href="{{ route('prescription_settings.edit') }}">{{ __('sentence.Prescription Settings') }}</a>
                                 <a class="collapse-item"
-                                    href="{{ route('sms_settings.edit') }}">{{ __('sentence.SMS Gateway Setup') }}</a>
+                                href="{{ route('notifications_settings') }}">{{ __('Notifications Settings') }}</a>
                             </div>
                         </div>
                     </li>
@@ -328,12 +371,19 @@
 
                 {{-- ********************* Debut Section Paramètres de la sidenav ************************** --}}
 
-                <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
-                <!-- Sidebar Toggler (Sidebar) -->
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
+                    <!-- Divider -->
+                    <hr class="sidebar-divider d-none d-md-block">
+                    <!-- Sidebar Toggler (Sidebar) -->
+                    <div class="text-center d-none d-md-inline">
+                        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                    </div>
+					<div class="sidebar-card d-none d-lg-flex">
+						<img class="sidebar-card-illustration mb-2" src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/img/undraw_rocket.svg" alt="...">
+						<p class="text-center mb-2"><strong>Feedback section! 🥰</strong>
+                        <br> Nous vous invitons à nous aider à améliorer notre plateforme en nous signalant tout problème ou bug que vous pourriez rencontrer lors de votre utilisation.
+                        </p>
+						<a class="btn btn-primary btn-sm" href="https://github.com/menoc61/gestion-des-soin-laravel/issues/new">signialer!</a>
+					</div>
             </ul>
             <!-- End of Sidebar -->
             <!-- Content Wrapper -->

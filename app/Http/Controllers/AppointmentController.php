@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use DateTime;
+use App\User;
+use App\Patient;
 use App\Appointment;
 use App\Setting;
-use App\User;
-use Illuminate\Http\Request;
+use Redirect;
+use Nexmo;
+use Auth;
+use App\Notifications\WhatsAppNotification;
+use App\Notifications\NewAppointmentByEmailNotification;
 
 class AppointmentController extends Controller
 {
@@ -161,11 +168,48 @@ class AppointmentController extends Controller
         return view('appointment.calendar', ['appointments' => $appointments]);
     }
 
-    public function pending()
-    {
-        $appointments = Appointment::where('date', '>', Now())->orderBy('id', 'DESC')->paginate(25);
+    public function pending(){
 
-        return view('appointment.pending', ['appointments' => $appointments]);
+        if(Auth::user()->role == '3'){
+            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 0)->orderBy('date','ASC')->paginate(25);
+        }else{
+            $appointments = Appointment::where('visited', 0)->orderBy('date','ASC')->paginate(25);
+        }
+        return view('appointment.all', ['appointments' => $appointments]);
+
+    }
+
+    public function treated(){
+        if(Auth::user()->role == '3'){
+            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 1)->orderBy('date','ASC')->paginate(25);
+        }else{
+            $appointments = Appointment::where('visited', 1)->orderBy('date','ASC')->paginate(25);
+        }
+
+        return view('appointment.all', ['appointments' => $appointments]);
+
+    }
+
+    public function cancelled(){
+        if(Auth::user()->role == '3'){
+            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 2)->orderBy('date','ASC')->paginate(25);
+        }else{
+            $appointments = Appointment::where('visited', 2)->orderBy('date','ASC')->paginate(25);
+        }
+
+        return view('appointment.all', ['appointments' => $appointments]);
+
+    }
+
+    public function today(){
+        if(Auth::user()->role == '3'){
+            $appointments = Appointment::where('user_id', Auth()->id())->where('date', today())->orderBy('date','DESC')->paginate(25);
+
+        }else{
+            $appointments = Appointment::where('date', today())->orderBy('date','DESC')->paginate(25);
+        }
+        return view('appointment.all', ['appointments' => $appointments]);
+
     }
 
     public function destroy($id)
@@ -174,4 +218,33 @@ class AppointmentController extends Controller
 
         return back()->with('success', 'Appointment Deleted Successfully!');
     }
+
+    public function notify_whatsapp($id){
+
+        $appointment = Appointment::findorfail($id);
+
+        $appointment->User->Patient->notify(new WhatsAppNotification($appointment));
+        return back()->with('success', 'Patient Notified Successfully!');
+
+    }
+
+    public function notify_email($id){
+
+        $appointment = Appointment::findorfail($id);
+        $appointment->User->notify(new NewAppointmentByEmailNotification($appointment));
+        return back()->with('success', __('Patient Notified Successfully'));
+
+    }
+
+    public function getAppointments($id){
+        $userAppointments = Appointment::where('user_id', $id)->get();
+        $userAppointments = $userAppointments->map(function ($item) {
+            // Utilisez toDateString() pour formater la date au format "YYYY-MM-DD".
+            $item->date = $item->date->toDateString();
+            return $item;
+        });
+
+        return response()->json($userAppointments);
+    }
+
 }

@@ -10,13 +10,16 @@
 <div class="card shadow mb-4">
    <div class="card-header py-3">
       <div class="row">
-         <div class="col-8">
+         <div class="col-6">
             <h6 class="m-0 font-weight-bold text-primary w-75 p-2">{{ __('sentence.All Appointments') }}</h6>
          </div>
-         <div class="col-4">
+         <div class="col-6">
             @can('create appointment')
             <a href="{{ route('appointment.create') }}" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i> {{ __('sentence.New Appointment') }}</a>
             @endcan
+            <a href="{{ route('appointment.cancelled') }}" class="btn btn-danger btn-sm float-right mr-2"><i class="fas fa-user-times"></i> {{ __('Cancelled') }}</a>
+            <a href="{{ route('appointment.pending') }}" class="btn btn-warning btn-sm float-right mr-2"><i class="fas fa-user-clock"></i> {{ __('Pending') }}</a>
+            <a href="{{ route('appointment.treated') }}" class="btn btn-success btn-sm float-right mr-2"><i class="fas fa-user-check"></i> {{ __('Treated') }}</a>
          </div>
       </div>
    </div>
