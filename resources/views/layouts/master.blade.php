@@ -116,8 +116,9 @@
                                 @endcan
                                 @can('view all appointments')
                                     <a class="collapse-item"
+                                        href="{{ route('appointment.today') }}">{{ __('Today\'s Appointments') }}</a>
+                                    <a class="collapse-item"
                                         href="{{ route('appointment.pending') }}">{{ __('sentence.Upcoming Appointments') }}</a>
-
                                     <a class="collapse-item"
                                         href="{{ route('appointment.all') }}">{{ __('sentence.All Appointments') }}</a>
                                 @endcan
@@ -362,7 +363,7 @@
                                 <a class="collapse-item"
                                     href="{{ route('prescription_settings.edit') }}">{{ __('sentence.Prescription Settings') }}</a>
                                 <a class="collapse-item"
-                                    href="{{ route('sms_settings.edit') }}">{{ __('sentence.SMS Gateway Setup') }}</a>
+                                href="{{ route('notifications_settings') }}">{{ __('Notifications Settings') }}</a>
                             </div>
                         </div>
                     </li>

@@ -112,20 +112,26 @@ class SettingController extends Controller
 
 	}
 
-    public function sms_settings(){
-        return view('settings.sms_settings');
+    public function notifications_settings(){
+        return view('settings.notifications_settings');
     }
 
-    public function sms_settings_store(Request $request){
+    public function notifications_settings_store(Request $request){
 
-            Setting::update_option('NEXMO_KEY', $request->NEXMO_KEY);
-            Setting::update_option('NEXMO_SECRET', $request->NEXMO_SECRET);
+        Setting::update_option('NEXMO_KEY', $request->NEXMO_KEY);
+        Setting::update_option('NEXMO_SECRET', $request->NEXMO_SECRET);
+        Setting::update_option('TWILIO_AUTH_SID', $request->TWILIO_AUTH_SID);
+        Setting::update_option('TWILIO_AUTH_TOKEN', $request->TWILIO_AUTH_TOKEN);
+        Setting::update_option('TWILIO_WHATSAPP_FROM', $request->TWILIO_WHATSAPP_FROM);
 
 
-            $this->setEnv('NEXMO_KEY', $request->NEXMO_KEY);
-            $this->setEnv('NEXMO_SECRET', $request->NEXMO_SECRET);
+        $this->setEnv('NEXMO_KEY', $request->NEXMO_KEY);
+        $this->setEnv('NEXMO_SECRET', $request->NEXMO_SECRET);
+        $this->setEnv('TWILIO_AUTH_SID', $request->TWILIO_AUTH_SID);
+        $this->setEnv('TWILIO_AUTH_TOKEN', $request->TWILIO_AUTH_TOKEN);
+        $this->setEnv('TWILIO_WHATSAPP_FROM', $request->TWILIO_WHATSAPP_FROM);
 
-        return Redirect::route('sms_settings.edit')->with('success', __("sentence.Settings edited Successfully"));
+        return Redirect::back()->with('success', __('Settings edited Successfully'));
 
     }
 

@@ -40,7 +40,7 @@
                         <!-- Input field for CSV file upload -->
                         <div class="form-group">
                             <label for="csvFile">Sélectionner le fichier CSV :</label>
-                            <input type="file" name="csvFile" id="csvFile" accept=".csv">
+                            <input type="file" class="form-control" name="csvFile" id="csvFile"aria-describedby="file" accept=".csv">
                         </div>
                     </div>
                     <div class="modal-footer">

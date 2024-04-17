@@ -111,6 +111,15 @@ class SettingsSeeder extends Seeder
             'option_value' => '17:00',
         ]);
         DB::table('settings')->insert([
+            'option_name' => 'NEXMO_KEY',
+            'option_value' => '',
+        ]);
+
+        DB::table('settings')->insert([
+            'option_name' => 'NEXMO_SECRET',
+            'option_value' => '',
+        ]);
+        DB::table('settings')->insert([
             'option_name' => 'TWILIO_AUTH_SID',
             'option_value' => '',
         ]);
