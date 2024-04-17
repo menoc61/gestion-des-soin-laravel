@@ -67,6 +67,15 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'manage settings']);
         Permission::create(['name' => 'manage roles']);
 
+        Permission::updateOrcreate(['name' => 'view all notifications']);
+        Permission::updateOrcreate(['name' => 'create notification']);
+        Permission::updateOrcreate(['name' => 'edit notification']);
+        Permission::updateOrcreate(['name' => 'delete notification']);
+        Permission::updateOrcreate(['name' => 'edit expense']);
+        Permission::updateOrcreate(['name' => 'delete expense']);
+
+        Permission::updateOrCreate(['name' => 'manage waiting room']);
+
         $role1 = Role::create(['name' => 'Admin']);
         $role2 = Role::create(['name' => 'Praticien']);
         $role3 = Role::create(['name' => 'Hôte']);

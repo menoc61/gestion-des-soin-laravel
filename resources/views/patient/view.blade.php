@@ -15,18 +15,32 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4 col-sm-6">
-                            @empty(!$patient->image)
-                                <center><img src="{{ asset('uploads/' . $patient->image) }}"
-                                        class="img-profile rounded-circle img-fluid" width="256" height="256"
-                                        style="object-fit: cover;" alt="profil-img"></center>
-                            @else
-                                <center><img src="{{ asset('img/default-image.jpeg') }}"
-                                        class="img-profile rounded-circle img-fluid" width="256" height="256"
-                                        style="object-fit: cover;" alt="profil-img"></center>
-                            @endempty
-                            <h4 class="text-center mt-3"><b>{{ $patient->name }}</b> <label
-                                    class="badge badge-primary-soft"> <a href="{{ url('patient/edit/' . $patient->id) }}"><i
-                                            class="fa fa-pen"></i></a></label></h4>
+                            <div class="card profile">
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        @empty(!$patient->image)
+                                        <img src="{{ asset('uploads/'.$patient->image) }}" alt="profil-img" class="rounded-circle img-thumbnail avatar-xl">
+                                        @else
+                                        <img src="{{ asset('img/default-image.jpeg') }}" alt="profil-img" class="rounded-circle img-thumbnail avatar-xl">
+                                        @endempty
+                                        <div class="online-circle">
+                                            <i class="fa fa-circle text-success"></i>
+                                        </div>
+                                        <h4 class="mt-2">{{ $patient->name }}</h4>
+
+                                        <a href="{{ route('patient.SendPassword', ['id' => $patient->id]) }}" class="btn btn-doctorino btn-sm btn-round px-3"> {{ __('Send Credentials') }}</a>
+                                        <a href="{{ url('patient/edit/' . $patient->id) }}" class="btn btn-danger btn-sm btn-round px-3"> <i class="fa fa-pen"></i></a>
+                                        <ul class="list-unstyled list-inline mt-3 text-muted">
+                                            <li class="list-inline-item font-size-13 me-3">
+                                                <strong class="text-dark">{{ $appointments->count() }}</strong> {{ __('Appointments') }}
+                                            </li>
+                                            <li class="list-inline-item font-size-13">
+                                                <strong class="text-dark">{{ $invoices->count() }}</strong> {{ __('Invoices') }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                             <hr>
 
                             <table class="table table-striped">

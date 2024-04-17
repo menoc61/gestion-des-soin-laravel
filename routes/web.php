@@ -25,16 +25,13 @@ Route::get('/lang/{locale}', 'HomeController@lang');
 // Patients
 Route::get('/patient/create', 'PatientController@create')->name('patient.create')->middleware(['role_or_permission:Admin|add patient']);
 Route::post('/patient/create', 'PatientController@store')->name('patient.store');
-
 Route::get('/patient/all', 'PatientController@all')->name('patient.all')->middleware(['role_or_permission:Admin|view all patients']);
-
 Route::get('/patient/view/{id}', 'PatientController@view')->where('id', '[0-9]+')->name('patient.view')->middleware(['role_or_permission:Admin|view patient']);
 Route::get('/patient/edit/{id}', 'PatientController@edit')->where('id', '[0-9]+')->name('patient.edit')->middleware(['role_or_permission:Admin|edit patient']);
 Route::post('/patient/edit', 'PatientController@store_edit')->name('patient.store_edit');
-
 Route::get('/patient/delete/{id}', 'PatientController@destroy')->where('id', '[0-9]+')->name('patient.destroy')->middleware(['role_or_permission:Admin|delete patient']);
-
 Route::post('/patient/search', 'PatientController@search')->name('patient.search');
+Route::get('/patient/send_password/{id}', 'PatientController@SendPassword')->where('id', '[0-9]+')->name('patient.SendPassword')->middleware(['role_or_permission:Admin|add patient']);
 
 // Documents
 Route::get('/document/all', 'DocumentController@all')->name('document.all')->middleware(['role_or_permission:Admin|edit patient']);
@@ -56,6 +53,16 @@ Route::get('/appointment/delete/{id}', 'AppointmentController@destroy')->where('
 Route::post('/appointment/edit', 'AppointmentController@store_edit')->name('appointment.store_edit')->middleware(['role_or_permission:Admin|edit appointment']);
 Route::get('/appointment/create_by/{id}', 'AppointmentController@create')->name('appointment.create_by')->middleware(['role_or_permission:Admin|create appointment']);
 Route::post('/appointment/create_by/{id}', 'AppointmentController@store')->name('appointment.store_id');
+Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
+Route::get('/appointment/upcoming', 'AppointmentController@upcoming')->name('appointment.upcoming')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/cancelled', 'AppointmentController@cancelled')->name('appointment.cancelled')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/treated', 'AppointmentController@treated')->name('appointment.treated')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/today', 'AppointmentController@today')->name('appointment.today')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
 
 // Drugs
 Route::get('/drug/create', 'DrugController@create')->name('drug.create')->middleware(['role_or_permission:Admin|create drug']);
@@ -112,9 +119,9 @@ Route::post('/settings/doctorino_settings', 'SettingController@doctorino_setting
 Route::get('/settings/prescription_settings', 'SettingController@prescription_settings')->name('prescription_settings.edit');
 Route::post('/settings/prescription_settings', 'SettingController@prescription_settings_store')->name('prescription_settings.store');
 
-/* SMS Settings */
-Route::get('/settings/sms_settings', 'SettingController@sms_settings')->name('sms_settings.edit');
-Route::post('/settings/sms_settings', 'SettingController@sms_settings_store')->name('sms_settings.store');
+/* Notification setting Settings */
+Route::get('/settings/notifications_settings', 'SettingController@notifications_settings')->name('notifications_settings');
+Route::post('/settings/notifications_settings', 'SettingController@notifications_settings_store')->name('notifications_settings.store');
 
 /* Users */
 Route::get('/users/all', 'UsersController@all')->name('user.all');
@@ -136,3 +143,25 @@ Route::post('/process-csv', 'CsvController@processCsv')->name('process.csv');
 Route::get('/display-products', 'CsvController@displayProducts')->name('display.products');
 
 Route::post('/envoyer-notification', 'MailInvoiceController@envoyerNotificationAll')->name('envoyer.MailInvoiceNotificationAll');
+
+/* Waiting room */
+Route::get('/waiting_room/view', 'WaitingroomController@view')->name('wr.view')->middleware(['role_or_permission:Admin|manage waiting room']);
+Route::get('/waiting_room/archive', 'WaitingroomController@archive')->name('wr.archive')->middleware(['role_or_permission:Admin|manage waiting room']);
+Route::get('/waiting_room/ongoing/{id}', 'WaitingroomController@update_to_ongoing')->where('id', '[0-9]+')->name('wr.update.ongoing')->middleware(['role_or_permission:Admin|manage waiting room']);
+Route::get('/waiting_room/archive/{id}', 'WaitingroomController@update_to_archive')->where('id', '[0-9]+')->name('wr.update.archive')->middleware(['role_or_permission:Admin|manage waiting room']);
+Route::get('/waiting_room/delete/{id}', 'WaitingroomController@delete')->where('id', '[0-9]+')->name('wr.delete')->middleware(['role_or_permission:Admin|manage waiting room']);
+
+Route::get('/waiting_room/archive/all', 'WaitingroomController@view_archive')->name('wr.archive.all')->middleware(['role_or_permission:Admin|manage waiting room']);
+Route::post('/waiting_room/create', 'WaitingroomController@store')->name('wr.store')->middleware(['role_or_permission:Admin|manage waiting room']);
+Route::post('/waiting_room/search', 'WaitingroomController@search')->name('wr.search')->middleware(['role_or_permission:Admin|manage waiting room']);
+Route::post('/waiting_room/search_in_archive', 'WaitingroomController@search_in_archive')->name('wr.search_in_archive')->middleware(['role_or_permission:Admin|manage waiting room']);
+Route::post('/waiting_room/filter', 'WaitingroomController@filter')->name('wr.filter')->middleware(['role_or_permission:Admin|manage waiting room']);
+
+// Notifications
+Route::get('/notification/create', 'NotificationController@create')->name('notification.create')->middleware(['role_or_permission:Admin|view notification']);
+Route::post('/notification/create', 'NotificationController@store')->name('notification.store');
+Route::get('/notification/edit/{id}', 'NotificationController@edit')->where('id', '[0-9]+')->name('notification.edit')->middleware(['role_or_permission:Admin|edit notification']);
+Route::post('/notification/edit', 'NotificationController@store_edit')->name('notification.store_edit');
+Route::get('/notification/all', 'NotificationController@all')->name('notification.all')->middleware(['role_or_permission:Admin|view all notification']);
+Route::get('/notification/delete/{id}', 'NotificationController@destroy')->where('id', '[0-9]+')->name('notification.delete')->middleware(['role_or_permission:Admin|delete notification']);
+Route::post('/notification/delete-selected', 'NotificationController@deleteSelected')->name('notification.delete-selected')->middleware(['role_or_permission:Admin|delete notification']);
