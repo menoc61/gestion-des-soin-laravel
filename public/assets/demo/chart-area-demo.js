@@ -8,7 +8,7 @@ var myLineChart = new Chart(ctx, {
   type: "line",
   data: {
     labels: _ydata,
-    datasets: [
+    datasets:  [
       {
         label: "Montant Total",
         lineTension: 0.3,
@@ -25,6 +25,7 @@ var myLineChart = new Chart(ctx, {
     ],
   },
   options: {
+    responsive: true,
     title: {
       display: true,
       text: "CHIFFRE D'AFFAIRE PAR MOIS",
@@ -60,21 +61,6 @@ var myLineChart = new Chart(ctx, {
     },
     legend: {
       display: true,
-    },
-    tooltips: {
-      enabled: true,
-      mode: "index",
-      intersect: false,
-      callbacks: {
-        label: function (tooltipItem, data) {
-          var label = data.datasets[tooltipItem.datasetIndex].label || "";
-          if (label) {
-            label += ": ";
-          }
-          label += tooltipItem.yLabel;
-          return label;
-        },
-      },
     },
   },
 });

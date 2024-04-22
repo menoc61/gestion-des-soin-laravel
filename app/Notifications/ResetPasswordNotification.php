@@ -6,11 +6,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-
 class ResetPasswordNotification extends Notification
 {
     use Queueable;
 
+    public $newPassword;
 
     public function __construct($newPassword)
     {
@@ -27,7 +27,7 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Your credentials to '. get_option('system_name')) 
+            ->subject('Your credentials to ')
             ->line('Your password has been reset successfully.')
             ->line('Your new password is: ' . $this->newPassword)
             ->action('Log In', route('login'))
