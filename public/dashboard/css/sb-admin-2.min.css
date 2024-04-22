@@ -11905,3 +11905,7 @@ td > a {
     flex-direction: row;
     gap: 20px;
 }
+.opacity-button {
+    opacity: 0.8;
+    filter: blur(1px);
+}

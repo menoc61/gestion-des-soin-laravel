@@ -31,8 +31,8 @@
             <div class="card shadow mb-4" id="create_appointment_block">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.set meetings') }}</h6>
-                    <small id="emailHelp" class="form-text text-muted">Ce suivie as un dosage de
-                        :{{ $prescription->dosage }} </small>
+                    <small id="emailHelp" class="form-text text-muted">Ce Traitement comporte
+                        : {{ $prescription->dosage }} Séance(s) de Travail </small>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -48,17 +48,17 @@
                             <div class="form-group">
                                 <label for="rdvdate">{{ __('sentence.Date') }}</label>
                                 <input type="text" class="form-control target" readonly="readonly" id="rdvdate">
-                                <small id="emailHelp" class="form-text text-muted">Select date to view time
-                                    slotsavailable</small>
+                                <small id="emailHelp" class="form-text text-muted">Sélectionnez une date et une heure
+                                    </small>
                             </div>
                             <div class="form-group">
                                 <label for="reason">{{ __('sentence.Reason for visit') }}</label>
                                 <textarea class="form-control" id="reason" readonly
-                                    style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.5; padding: 10px;">{{ $prescription->doctor_id }}Ref[{{ $prescription->id }}-d{{ $prescription->dosage }}] ID:{{ $prescription->reference }}_{{ $prescription->nom }}
+                                    style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.5; padding: 10px;">{{$prescription->nom }}
                                 </textarea>
 
 
-                                <small id="emailHelp" class="form-text text-muted">le motif es ajouter
+                                <small id="emailHelp" class="form-text text-muted">le motif est ajouté
                                     automatiquement!</small>
                             </div>
                             <div class="form-check">
@@ -83,8 +83,8 @@
             <div class="card shadow mb-4" id="list_appointment_block">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.All Appointments') }}</h6>
-                    <small id="emailHelp" class="form-text text-muted">Ce suivie as un dosage de:<b><span
-                                id="appointmentCount" style="color: red"></span>/{{ $prescription->dosage }}</b> </small>
+                    <small id="emailHelp" class="form-text text-muted">Ce Traitement comporte déja : <b><span
+                                id="appointmentCount" style="color: red"></span>/{{ $prescription->dosage }}</b> Séance(s) de Travail </small>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -124,14 +124,25 @@
                                     </td>
                                     <td align="center">
                                         @can('edit appointment')
-                                            <a data-rdv_id="{{ $appointment->id }}"
-                                                data-rdv_date="{{ $appointment->date->format('d M Y') }}"
-                                                data-rdv_time_start="{{ $appointment->time_start }}"
-                                                data-rdv_time_end="{{ $appointment->time_end }}"
-                                                data-patient_name="{{ $appointment->User->name }}"
-                                                class="btn btn-outline-success btn-circle btn-sm" data-toggle="modal"
-                                                data-target="#EDITRDVModal"><i class="fas fa-check"></i></a>
-                                        @endcan
+                                        @php
+                                            $appointmentDate = \Carbon\Carbon::parse($appointment->date);
+                                            $appointmentTimeStart = \Carbon\Carbon::parse($appointment->time_start);
+                                            $currentDateTime = now();
+                                            $isFutureDateTime =
+                                                $appointmentDate->isFuture() ||
+                                                ($appointmentDate->isToday() && $appointmentTimeStart->isFuture());
+                                        @endphp
+
+                                        <a data-rdv_id="{{ $appointment->id }}"
+                                            data-rdv_date="{{ $appointment->date->format('d M Y') }}"
+                                            data-rdv_time_start="{{ $appointment->time_start }}"
+                                            data-rdv_time_end="{{ $appointment->time_end }}"
+                                            data-patient_name="{{ $appointment->User->name }}"
+                                            class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime ? ' disabled opacity-button' : '' }}"
+                                            data-toggle="modal" data-target="#EDITRDVModal">
+                                            <i class="fas fa-check"></i>
+                                        </a>
+                                    @endcan
                                         @can('delete appointment')
                                             <a href="{{ url('appointment/delete/' . $appointment->id) }}"
                                                 class="btn btn-outline-danger btn-circle btn-sm"><i
@@ -275,3 +286,5 @@
         });
     </script>
 @endsection
+
+

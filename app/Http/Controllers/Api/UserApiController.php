@@ -74,6 +74,7 @@ class UserApiController extends Controller
                 }
 
                 return response()->json([
+                    'user'=>$user,
                     'status' => true,
                     'message' => 'Utilisateur créé avec succès',
                     'token' => $user->createToken("api token")->plainTextToken
@@ -109,6 +110,7 @@ class UserApiController extends Controller
             } else{
                 $user = User::where('email', $request->email)->first();
                 return response()->json([
+                    'user' => $user,
                     'status'=>true,
                     'message' => 'utilisateur connecté avec succès',
                     'token' => $user->createToken("api token")->plainTextToken
