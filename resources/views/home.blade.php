@@ -18,9 +18,9 @@
     @role('Admin')
         {{-- <div class="row top"> --}}
 
-            {{-- carte contenant le nombre de rendez-vous qu'aura lieu un jour  --}}
-            <!-- Earnings (Monthly) Card Example -->
-            {{-- <div class="col-xl-2 col-md-4 mb-4 taille marge">
+        {{-- carte contenant le nombre de rendez-vous qu'aura lieu un jour  --}}
+        <!-- Earnings (Monthly) Card Example -->
+        {{-- <div class="col-xl-2 col-md-4 mb-4 taille marge">
 
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
@@ -40,9 +40,9 @@
                     </div>
                 </div>
             </div> --}}
-            {{-- carte contenant le nommbre total de rendez-vous --}}
-            <!-- Earnings (Annual) Card Example -->
-            {{-- <div class="col-xl-2 col-md-6 mb-4 taille marge">
+        {{-- carte contenant le nommbre total de rendez-vous --}}
+        <!-- Earnings (Annual) Card Example -->
+        {{-- <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-warning shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-warning col-md-9">
                         <div class="col-auto">
@@ -60,9 +60,9 @@
                     </div>
                 </div>
             </div> --}}
-            {{-- carte contenant le nommbre total de nouveau du jour --}}
-            <!-- Tasks Card Example -->
-            {{-- <div class="col-xl-2 col-md-6 mb-4 taille marge">
+        {{-- carte contenant le nommbre total de nouveau du jour --}}
+        <!-- Tasks Card Example -->
+        {{-- <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-info shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-info col-md-9">
                         <div class="col-auto">
@@ -85,9 +85,9 @@
                     </div>
                 </div>
             </div> --}}
-            {{-- carte contenant le nommbre total de hôtes du système --}}
-            <!-- Pending Requests Card Example -->
-            {{-- <div class="col-xl-2 col-md-6 mb-4 taille marge">
+        {{-- carte contenant le nommbre total de hôtes du système --}}
+        <!-- Pending Requests Card Example -->
+        {{-- <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-secondary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-secondary col-md-9">
                         <div class="col-auto">
@@ -206,14 +206,14 @@
                     <div class="mt-5"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
                 </div>
             </div>
-             <div class="col-md-6 ">
+            <div class="col-md-6 ">
                 <div class=" chart1 mb-4">
-                    <div class="mt-5"><canvas id="myBarChart" width="100%" height="40%"></canvas></div>
+                    <div class="mt-5"><canvas id="mypolarAreaChart" width="100%" height="40%"></canvas></div>
                 </div>
             </div>
         </div>
 
-{{-- graph section end --}}
+        {{-- graph section end --}}
     @endrole
 
     @role('Praticien')
@@ -529,13 +529,27 @@
                                             <td class="text-center">{{ $appointment->created_at->format('d M Y H:i') }}</td>
                                             <td align="center">
                                                 @can('edit appointment')
+                                                    @php
+                                                        $appointmentDate = \Carbon\Carbon::parse($appointment->date);
+                                                        $appointmentTimeStart = \Carbon\Carbon::parse(
+                                                            $appointment->time_start,
+                                                        );
+                                                        $currentDateTime = now();
+                                                        $isFutureDateTime =
+                                                            $appointmentDate->isFuture() ||
+                                                            ($appointmentDate->isToday() &&
+                                                                $appointmentTimeStart->isFuture());
+                                                    @endphp
+
                                                     <a data-rdv_id="{{ $appointment->id }}"
                                                         data-rdv_date="{{ $appointment->date->format('d M Y') }}"
                                                         data-rdv_time_start="{{ $appointment->time_start }}"
                                                         data-rdv_time_end="{{ $appointment->time_end }}"
                                                         data-patient_name="{{ $appointment->User->name }}"
-                                                        class="btn btn-outline-success btn-circle btn-sm" data-toggle="modal"
-                                                        data-target="#EDITRDVModal"><i class="fas fa-check"></i></a>
+                                                        class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime ? ' disabled opacity-button' : '' }}"
+                                                        data-toggle="modal" data-target="#EDITRDVModal">
+                                                        <i class="fas fa-check "></i>
+                                                    </a>
                                                 @endcan
                                                 @can('delete appointment')
                                                     <a class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal"
@@ -548,7 +562,8 @@
                                     @empty
                                         <tr>
                                             <td colspan="7" align="center"><img src="{{ asset('img/rest.png') }} " />
-                                                <br><br> <b class="text-muted">You have no appointment today</b></td>
+                                                <br><br> <b class="text-muted">You have no appointment today</b>
+                                            </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -615,7 +630,11 @@
     <script type="text/javascript">
         var _ydata = JSON.parse('{!! json_encode($months) !!}');
         var _xdata = JSON.parse('{!! json_encode($totalAmounts) !!}');
+        var visitedCount = {{ $visitedCount }};
+        var nonVisitedCount = {{ $nonVisitedCount }};
+        var allAppointment = {{ $allAppointment }}
     </script>
     <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
     <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('assets/demo/chart-polarArea-demo.js') }}"></script>
 @endsection

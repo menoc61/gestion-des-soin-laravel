@@ -8,9 +8,9 @@ $(document).ready(function() {
         type: 'doughnut',
         data: {
             labels: [
-                `Visited :${visitedCount}/${prescriptionDosage}`,
-                `Not Visited:${nonVisitedCount}/${prescriptionDosage}`,
-                `To create:${visitedCount}/${prescriptionDosage}`
+                `Visité :${visitedCount}/${prescriptionDosage}`,
+                `Pas Encore Visité:${nonVisitedCount}/${prescriptionDosage}`,
+                `À Créer:${remainingAppointments}/${prescriptionDosage}`
             ],
             datasets: [{
                 data: [visitedCount, nonVisitedCount, remainingAppointments],
