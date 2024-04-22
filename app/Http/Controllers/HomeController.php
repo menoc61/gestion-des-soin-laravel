@@ -120,6 +120,10 @@ $permission = Permission::create(['name' => 'delete invoice']);
             $totalAmounts[] = $totalAmount;
         }
 
+        $visitedCount = Appointment::all()->where('visited', 1)->count();
+        $nonVisitedCount = Appointment::all()->where('visited', 0)->count();
+        $allAppointment = Appointment::all()->count();
+
         // $total_payment_by_month = Billing_item::select('id', 'created_at')->get()->groupBy(
         //     function ($total_payment_by_month) {
         //         return Carbon::parse($total_payment_by_month->created_at)->format('F');
@@ -148,7 +152,10 @@ $permission = Permission::create(['name' => 'delete invoice']);
             'monthCount' => $monthCount,
             'total_prescriptions_for_pratician' => $total_prescriptions_for_pratician,
             'total_tests_for_pratician'=> $total_tests_for_pratician,
-            'total_amount_for_pratician' => $total_amount_for_pratician
+            'total_amount_for_pratician' => $total_amount_for_pratician,
+            'visitedCount'=>$visitedCount,
+            'nonVisitedCount'=>$nonVisitedCount,
+            'allAppointment'=>$allAppointment
         ]);
     }
 

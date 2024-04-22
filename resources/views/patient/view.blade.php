@@ -231,10 +231,10 @@
                                                 class="text-muted">Aucun Historique Trouvé</b></center>
                                     @endforelse
 
-
+                                  </div>
                                     {{-- Start Rendez-vous  --}}
 
-                                </div>
+
                                 <div class="tab-pane fade" id="appointements" role="tabpanel"
                                     aria-labelledby="appointements-tab">
                                     <div class="row">
@@ -282,15 +282,25 @@
                                                     </td>
                                                     <td align="center">
                                                         @can('edit appointment')
-                                                            <a data-rdv_id="{{ $appointment->id }}"
-                                                                data-rdv_date="{{ $appointment->date->format('d M Y') }}"
-                                                                data-rdv_time_start="{{ $appointment->time_start }}"
-                                                                data-rdv_time_end="{{ $appointment->time_end }}"
-                                                                data-patient_name="{{ $appointment->User->name }}"
-                                                                class="btn btn-outline-success btn-circle btn-sm"
-                                                                data-toggle="modal" data-target="#EDITRDVModal"><i
-                                                                    class="fas fa-check"></i></a>
-                                                        @endcan
+                                                        @php
+                                                            $appointmentDate = \Carbon\Carbon::parse($appointment->date);
+                                                            $appointmentTimeStart = \Carbon\Carbon::parse($appointment->time_start);
+                                                            $currentDateTime = now();
+                                                            $isFutureDateTime =
+                                                                $appointmentDate->isFuture() ||
+                                                                ($appointmentDate->isToday() && $appointmentTimeStart->isFuture());
+                                                        @endphp
+
+                                                        <a data-rdv_id="{{ $appointment->id }}"
+                                                            data-rdv_date="{{ $appointment->date->format('d M Y') }}"
+                                                            data-rdv_time_start="{{ $appointment->time_start }}"
+                                                            data-rdv_time_end="{{ $appointment->time_end }}"
+                                                            data-patient_name="{{ $appointment->User->name }}"
+                                                            class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime ? ' disabled opacity-button' : '' }}"
+                                                            data-toggle="modal" data-target="#EDITRDVModal">
+                                                            <i class="fas fa-check"></i>
+                                                        </a>
+                                                    @endcan
                                                         @can('delete appointment')
                                                             <a href="{{ url('appointment/delete/' . $appointment->id) }}"
                                                                 class="btn btn-outline-danger btn-circle btn-sm"><i

@@ -6,6 +6,7 @@ use App\Appointment;
 use App\Billing;
 use App\Document;
 use App\History;
+use App\Notifications\ResetPasswordNotification;
 use App\Patient;
 use App\Prescription;
 use App\Test;
@@ -225,7 +226,7 @@ class PatientController extends Controller
         $newPassword = rand(10000000, 99999999);
 
         $user->update([
-            'password' => Hash::make($newPassword),
+            'password' => \Hash::make($newPassword),
         ]);
 
         // Envoie de la notification par e-mail
