@@ -20,7 +20,16 @@ use Throwable;
 
 class UserApiController extends Controller
 {
-    //
+    public function GetUser(Request $request)
+    {
+        if ($request->user()) {
+            $user = $request->user();
+
+            return response()->json(['success' => true, 'user' => $user], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => 'User not found'], 404);
+        }
+    }
 
     public function RegisterUser(Request $request)
     {
@@ -74,13 +83,13 @@ class UserApiController extends Controller
                 }
 
                 return response()->json([
-                    'user'=>$user,
+                    'user' => $user,
                     'status' => true,
                     'message' => 'Utilisateur créé avec succès',
-                    'token' => $user->createToken("api token")->plainTextToken
+                    'token' => $user->createToken('api token')->plainTextToken,
                 ], 200);
             }
-        } catch (Throwable $ex) {
+        } catch (\Throwable $ex) {
             return response()->json([
                 'status' => false,
                 'message' => $ex->getMessage(),
@@ -88,11 +97,12 @@ class UserApiController extends Controller
         }
     }
 
-    public function LoginUser(Request $request){
-        try{
+    public function LoginUser(Request $request)
+    {
+        try {
             $validatedData = Validator::make($request->all(), [
-                'email' => ['required','email'],
-                'password' => 'required'
+                'email' => ['required', 'email'],
+                'password' => 'required',
             ]);
             if ($validatedData->fails()) {
                 return response()->json([
@@ -102,22 +112,22 @@ class UserApiController extends Controller
                 ], 401);
             }
 
-            if(!Auth::attempt($request->only(['email','password']))){
+            if (!Auth::attempt($request->only(['email', 'password']))) {
                 return response()->json([
                     'status' => false,
                     'message' => 'cet utilisateur n\'est pas enregistré',
-                ],401);
-            } else{
+                ], 401);
+            } else {
                 $user = User::where('email', $request->email)->first();
+
                 return response()->json([
                     'user' => $user,
-                    'status'=>true,
+                    'status' => true,
                     'message' => 'utilisateur connecté avec succès',
-                    'token' => $user->createToken("api token")->plainTextToken
+                    'token' => $user->createToken('api token')->plainTextToken,
                 ], 200);
             }
-        }
-        catch(Throwable $ex){
+        } catch (\Throwable $ex) {
             return response()->json([
                 'status' => false,
                 'message' => $ex->getMessage(),
@@ -202,11 +212,11 @@ class UserApiController extends Controller
 
                 return response()->json([
                     'status' => true,
-                    'message' => 'Utilisateur modifié avec succès'
+                    'message' => 'Utilisateur modifié avec succès',
                     // 'token' => $user->createToken("api token")->plainTextToken
                 ], 200);
             }
-        } catch (Throwable $ex) {
+        } catch (\Throwable $ex) {
             return response()->json([
                 'status' => false,
                 'message' => $ex->getMessage(),

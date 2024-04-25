@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\Api\UserApiController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,15 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::post('/users/register', [UserApiController::class, 'RegisterUser']);
 
 Route::post('/users/login', [UserApiController::class, 'LoginUser']);
 
-Route::prefix('v1')->as('v1.')->middleware('auth:sanctum')->group(function(){
+Route::prefix('v1')->as('v1.')->middleware('auth:sanctum')->group(function () {
+    Route::get('/users/me', [UserApiController::class, 'GetUser']);
 
     Route::get('/patient/view/{id}', [UserApiController::class, 'view'])->where('id', '[0-9]+');
 
     Route::put('/users/update/{user}', [UserApiController::class, 'updateUser'])->where('user', '[0-9]+');
 });
-
