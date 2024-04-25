@@ -219,4 +219,13 @@ class UserApiController extends Controller
             ], 500);
         }
     }
+
+    public function LogoutUser(Request $request)
+    {
+        if ($request->user()->currentAccessToken()->delete()) {
+            return response()->json(['success' => true, 'message' => 'Utilisateur deconnecté avec succès'], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => 'User not found'], 404);
+        }
+    }
 }
