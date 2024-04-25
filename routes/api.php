@@ -24,4 +24,6 @@ Route::prefix('v1')->as('v1.')->middleware('auth:sanctum')->group(function () {
     Route::get('/patient/view/{id}', [UserApiController::class, 'view'])->where('id', '[0-9]+');
 
     Route::put('/users/update/{user}', [UserApiController::class, 'updateUser'])->where('user', '[0-9]+');
+
+    Route::post('/users/logout', [UserApiController::class, 'LogoutUser']);
 });
