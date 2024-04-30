@@ -49,12 +49,12 @@
                                 <label for="rdvdate">{{ __('sentence.Date') }}</label>
                                 <input type="text" class="form-control target" readonly="readonly" id="rdvdate">
                                 <small id="emailHelp" class="form-text text-muted">Sélectionnez une date et une heure
-                                    </small>
+                                </small>
                             </div>
                             <div class="form-group">
                                 <label for="reason">{{ __('sentence.Reason for visit') }}</label>
                                 <textarea class="form-control" id="reason" readonly
-                                    style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.5; padding: 10px;">{{$prescription->nom }}
+                                    style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.5; padding: 10px;">{{ $prescription->doctor_id }}Ref[{{ $prescription->id }}-d{{ $prescription->dosage }}] ID:{{ $prescription->reference }}_{{ $prescription->nom }}
                                 </textarea>
 
 
@@ -84,7 +84,8 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.All Appointments') }}</h6>
                     <small id="emailHelp" class="form-text text-muted">Ce Traitement comporte déja : <b><span
-                                id="appointmentCount" style="color: red"></span>/{{ $prescription->dosage }}</b> Séance(s) de Travail </small>
+                                id="appointmentCount" style="color: red"></span>/{{ $prescription->dosage }}</b> Séance(s)
+                        de Travail </small>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -124,29 +125,32 @@
                                     </td>
                                     <td align="center">
                                         @can('edit appointment')
-                                        @php
-                                            $appointmentDate = \Carbon\Carbon::parse($appointment->date);
-                                            $appointmentTimeStart = \Carbon\Carbon::parse($appointment->time_start);
-                                            $currentDateTime = now();
-                                            $isFutureDateTime =
-                                                $appointmentDate->isFuture() ||
-                                                ($appointmentDate->isToday() && $appointmentTimeStart->isFuture());
-                                        @endphp
+                                            @php
+                                                $appointmentDate = \Carbon\Carbon::parse($appointment->date);
+                                                $appointmentTimeStart = \Carbon\Carbon::parse($appointment->time_start);
+                                                $currentDateTime = now();
+                                                $isFutureDateTime =
+                                                    $appointmentDate->isFuture() ||
+                                                    ($appointmentDate->isToday() && $appointmentTimeStart->isFuture());
+                                            @endphp
 
-                                        <a data-rdv_id="{{ $appointment->id }}"
-                                            data-rdv_date="{{ $appointment->date->format('d M Y') }}"
-                                            data-rdv_time_start="{{ $appointment->time_start }}"
-                                            data-rdv_time_end="{{ $appointment->time_end }}"
-                                            data-patient_name="{{ $appointment->User->name }}"
-                                            class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime ? ' disabled opacity-button' : '' }}"
-                                            data-toggle="modal" data-target="#EDITRDVModal">
-                                            <i class="fas fa-check"></i>
-                                        </a>
-                                    @endcan
+                                            <a data-rdv_id="{{ $appointment->id }}"
+                                                data-rdv_date="{{ $appointment->date->format('d M Y') }}"
+                                                data-rdv_time_start="{{ $appointment->time_start }}"
+                                                data-rdv_time_end="{{ $appointment->time_end }}"
+                                                data-patient_name="{{ $appointment->User->name }}"
+                                                class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime || $appointment->visited != 1 ? ' disabled opacity-button' : '' }}"
+                                                data-toggle="modal" data-target="#EDITRDVModal">
+                                                <i class="fas fa-check"></i>
+                                            </a>
+                                        @endcan
                                         @can('delete appointment')
-                                            <a href="{{ url('appointment/delete/' . $appointment->id) }}"
-                                                class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                    class="fas fa-trash"></i></a>
+                                            @if ($appointment->visited != 1)
+                                                <a href="{{ url('appointment/delete/' . $appointment->id) }}"
+                                                    class="btn btn-outline-danger btn-circle btn-sm">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            @endif
                                         @endcan
                                     </td>
                                 </tbody>
@@ -264,7 +268,7 @@
         });
     </script>
     <script type="text/javascript">
-    // variabbles used by chart-doughnut-demo.js for the display of the doughnut
+        // variabbles used by chart-doughnut-demo.js for the display of the doughnut
         var visitedCount = {{ $visitedCount }};
         var nonVisitedCount = {{ $nonVisitedCount }};
         var prescriptionDosage = {{ $prescription->dosage }};
@@ -286,5 +290,3 @@
         });
     </script>
 @endsection
-
-

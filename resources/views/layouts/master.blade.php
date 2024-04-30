@@ -379,7 +379,7 @@
                     </div>
 					<div class="sidebar-card d-none d-lg-flex">
 						<img class="sidebar-card-illustration mb-2" src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/img/undraw_rocket.svg" alt="...">
-						<p class="text-center mb-2"><strong>Feedback section! 🥰</strong>
+						<p class="text-center mb-2 text-white"><strong>Feedback section! 🥰</strong>
                         <br> Nous vous invitons à nous aider à améliorer notre plateforme en nous signalant tout problème ou bug que vous pourriez rencontrer lors de votre utilisation.
                         </p>
 						<a class="btn btn-primary btn-sm" href="https://github.com/menoc61/gestion-des-soin-laravel/issues/new">signialer!</a>

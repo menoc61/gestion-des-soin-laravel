@@ -51,7 +51,7 @@
                                                 <div class="form-group-custom">
                                                     <input type="text" class="form-control" name="type[]" id="task_{?}"
                                                         placeholder="{{ __('sentence.Type') }}"
-                                                        class="ui-autocomplete-input" autocomplete="off" value="pending"
+                                                        class="ui-autocomplete-input" autocomplete="off" value="UPDATED"
                                                         readonly
                                                         style="
                                                         color: orange;

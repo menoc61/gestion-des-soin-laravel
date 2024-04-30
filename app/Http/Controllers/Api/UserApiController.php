@@ -44,7 +44,7 @@ class UserApiController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Vous avez oublié un champ',
-                    'érreurs' => $validatedData->errors(),
+                    'error' => $validatedData->errors(),
                 ], 401);
             } else {
                 $user = new User();
@@ -106,7 +106,7 @@ class UserApiController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Erreur de Validation',
-                    'érreurs' => $validatedData->errors(),
+                    'error' => $validatedData->errors(),
                 ], 401);
             }
 
@@ -170,7 +170,7 @@ class UserApiController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Vous avez oublié un champ',
-                    'érreurs' => $validatedData->errors(),
+                    'error' => $validatedData->errors(),
                 ], 401);
             } else {
                 $user->password = \Hash::make($request->password);
