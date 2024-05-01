@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group">
                             <label for="PatientID">{{ __('sentence.Patient') }} :</label>
-                            <select class="form-control multiselect-search" name="patient_id" id="PatientID" required>
+                            <select class="form-control" name="patient_id" id="PatientID" required>
                                 @if (@empty($patients))
                                 <option >{{ __('sentence.Select Patient') }}</option>
                             @else
@@ -35,26 +35,22 @@
                             </select>
                             {{ csrf_field() }}
                         </div>
+
                         <div class="form-group">
                             <label for="DoctorID">{{ __('sentence.Doctors') }} :</label>
-                            <select class="form-control multiselect-search" name="Doctor_id" id="DoctorID" required>
-<<<<<<< HEAD
-                                <option>{{ __('sentence.Select Doctor') }}</option>
-                                @foreach ($praticiens as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                @endforeach
-=======
-                                @if (@empty($praticiens))
-                                    <option>{{ __('sentence.Select Doctor') }}</option>
-                                @else
-                                    @foreach ($praticiens as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                @endif
->>>>>>> 6190a01e79f7451fa92dc9de291766649b51145c
-                            </select>
+                            @if (Auth::user()->role_id === 1)
+                                    <select class="form-control " name="Doctor_id" id="DoctorID" required>
+                                        <option value="{{Auth::user()->id}}">{{Auth::user()->name}}</option>
+                                        @foreach ($praticiens as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                            @else
+                                <input type="text" class="form-control" value="{{ Auth::user()->name }}" readonly>
+                            @endif
                             {{ csrf_field() }}
                         </div>
+
                         <div class="form-group text-center ">
                             <img src="{{ asset('img/patient-icon.png') }}"
                                 class="img-profile rounded-circle img-fluid w-50 h-50">

@@ -50,6 +50,8 @@ class PrescriptionController extends Controller
     public function follow($id)
     {
         $prescription = Prescription::findOrfail($id);
+        $doctor = $prescription->doctor_id;
+        $praticiens = User::where('role_id', '2')->get();
         $currentUserAppointments = Appointment::where('user_id', $prescription->user_id)
         ->where('reason', 'like', '%'.$prescription->reference.'%')
         ->where('reason', 'like', '%'.$prescription->id.'%')
@@ -65,6 +67,8 @@ class PrescriptionController extends Controller
             'visitedCount' => $visitedCount,
             'nonVisitedCount' => $nonVisitedCount,
             'appointments' => $appointments,
+            'doctor' => $doctor,
+            'praticiens' => $praticiens,
         ]);
     }
 
@@ -80,7 +84,7 @@ class PrescriptionController extends Controller
         $prescription = new Prescription();
 
         $prescription->user_id = $request->patient_id;
-        $prescription->doctor_id = Auth::user()->id;
+        $prescription->auth = Auth::user()->id;
         $prescription->reference = 'p'.rand(10000, 99999);
         $prescription->nom = $request->nom;
         $prescription->dosage = $request->dosage;

@@ -36,28 +36,16 @@
                         </div>
                         <div class="form-group">
                             <label for="DoctorID">{{ __('sentence.Doctors') }} :</label>
-
-                            <input type="hidden" value="{{ Auth::user()->id }}" class="form-control" name="Doctor_id"
-                                readonly>
-                            <input type="text" class="form-control" value="{{ Auth::user()->name }}" readonly>
-                            {{-- <select class="form-control multiselect-search" name="Doctor_id" id="DoctorID" required>
-                                <option>{{ __('sentence.Select Doctor') }}</option>
-                                @foreach ($praticiens as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                @endforeach
-
-                            </select> --}}
-
-                            {{-- <select class="form-control multiselect-search" name="Doctor_id" id="DoctorID" required>
-                                @if (@empty($praticiens))
-                                    <option>{{ __('sentence.Select Doctor') }}</option>
-                                @else
-                                    @foreach ($praticiens as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                @endif
-                            </select> --}}
-
+                            @if (Auth::user()->role_id === 1)
+                                    <select class="form-control" name="Doctor_id" id="DoctorID" required>
+                                        <option value="{{Auth::user()->id}}">{{Auth::user()->name}}</option>
+                                        @foreach ($praticiens as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                            @else
+                                <input type="text" class="form-control" value="{{ Auth::user()->name }}" readonly>
+                            @endif
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group text-center ">
