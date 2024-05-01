@@ -37,12 +37,29 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4 col-sm-12">
+                            @if (Auth::user()->role_id != 2)
+                                <div class="form-group">
+                                    <label for="doctor_name">{{ __('sentence.Doctors') }} </label>
+                                    <select class="form-control " name="Doctor_id" id="DoctorID" required>
+                                        <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+                                        @foreach ($praticiens as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endif
+                                @php
+                                    $doctorId = $prescription->doctor_id;
+                                    $reason = 'Ref[' . $prescription->id . '-d' . $prescription->dosage . '] ID:' . $prescription->reference . '_' . $prescription->nom;
+                                @endphp
+
                             <div class="form-group">
                                 <label for="patient_name">{{ __('sentence.Patient') }} </label>
-                                <select class="form-control patient_name multiselect-doctorino" id="patient_name"
-                                    @readonly(true)>
-                                    <option value="{{ $prescription->user_id }}" selected @readonly(true)>
-                                        {{ $prescription->User->name }}</option>
+                                <select class="form-control patient_name multiselect-doctorino" id="patient_name">
+
+                                    <option value="{{ $prescription->user_id }}" selected>
+                                        {{ $prescription->User->name }}
+                                    </option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -54,12 +71,22 @@
                             <div class="form-group">
                                 <label for="reason">{{ __('sentence.Reason for visit') }}</label>
                                 <textarea class="form-control" id="reason" readonly
-                                    style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.5; padding: 10px;">{{ $prescription->doctor_id }}Ref[{{ $prescription->id }}-d{{ $prescription->dosage }}] ID:{{ $prescription->reference }}_{{ $prescription->nom }}
+                                    style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.5; padding: 10px;">
+
                                 </textarea>
 
 
-                                <small id="emailHelp" class="form-text text-muted">le motif est ajouté
-                                    automatiquement!</small>
+                                <small id="emailHelp" class="form-text text-info tooltip-hover" data-toggle="tooltip"
+                                    style="cursor: pointer;"
+                                    title="Signification des éléments:
+                                    {{ $prescription->doctor_id }}Ref : Identifiant du praticien ayant fait la prescription
+                                    {{ $prescription->id }} : Identifiant de la prescription
+                                    d{{ $prescription->dosage }} : Dosage de la prescription
+                                    {{ $prescription->reference }} : Référence de la prescription
+                                    {{ $prescription->nom }} : Nom associé à la prescription">
+                                    <i class="fa fa-info-circle"></i> le motif est ajouté automatiquement!
+                                </small>
+
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sms">
@@ -288,5 +315,24 @@
         $(document).ready(function() {
             checkAppointmentCount();
         });
+        $(document).ready(function() {
+        // Function to update the final value
+        function updateFinalValue() {
+            var selectedByAdminDoctorId = $('#DoctorID').val();
+            var doctorId = @json($doctor);
+            var reason = @json($reason);
+            var final;
+
+            if ({{ Auth::user()->role_id }} != 2) {
+                final = selectedByAdminDoctorId + reason;
+            } else {
+                final = doctorId + reason;
+            }
+
+            $('#reason').text(final);
+        }
+        $('#DoctorID').change(updateFinalValue);
+        updateFinalValue();
+    });
     </script>
 @endsection
