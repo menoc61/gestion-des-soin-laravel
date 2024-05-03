@@ -26,4 +26,8 @@ Route::prefix('v1')->as('v1.')->middleware('auth:sanctum')->group(function () {
     Route::put('/users/update/{user}', [UserApiController::class, 'updateUser'])->where('user', '[0-9]+');
 
     Route::post('/users/logout', [UserApiController::class, 'LogoutUser']);
+
+    Route::post('/createTest', [UserApiController::class, 'CreateTest']);
 });
+
+
