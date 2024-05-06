@@ -11909,3 +11909,98 @@ td > a {
     opacity: 0.8;
     filter: blur(1px);
 }
+
+.bground{
+    background-color: #EFEFEF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.slide-container{
+    max-width: 1120px;
+    width: 100%;
+    background-color: grey;
+
+}
+.slide-content{
+    margin:0 40px ;
+}
+.carte{
+    width: 320px;
+    border-radius: 25px;
+    background-color: #FFF;
+}
+.image-content,
+.card-content{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px 14px;
+}
+.image-content{
+    position: relative;
+    row-gap: 5px;
+
+}
+.overlay{
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #4070f4;
+    left: 0;
+    top: 0;
+    border-radius: 25px 25px 0 25px;
+}
+.overlay::before
+.overlay::after{
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+    height: 40px;
+    width: 40px;
+    background-color: #4070f4;
+}
+.overlay::after{
+   border-radius: 0 25px 0 0;
+    background-color: #FFF;
+}
+.card-image{
+    position: relative;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    background:#FFF;
+    padding: 3px;
+}
+.card-image .card-img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid ;
+}
+.name{
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+.description{
+    font-size: 14px;
+    color: #707070;
+    text-align: center;
+}
+.button{
+    border: none;
+    font-size: 16px;
+    color: #FFF;
+    padding: 8px 16px;
+    background-color: #4070f4;
+    border-radius: 6px;
+    margin: 14px;
+    cursor: pointer;
+    transition: all 0.3 ease;
+}
+.button:hover{
+    background: #265df2;
+}
