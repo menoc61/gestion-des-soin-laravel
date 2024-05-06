@@ -83,6 +83,20 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="fonction"
+                                class="col-sm-3 col-form-label">{{ __('sentence.SIGNES PARTICULIERS') }}</label>
+                            <div class="col-sm-9">
+                                <select id="fonction" class="form-control" multiple="multiple"
+                                    name="fonction[]">
+                                    <option value="Points noirs">Praticien Main</option>
+                                    <option value="Rosacée">Praticien Peau</option>
+                                    <option value="Rousseurs">Praticien Pied</option>
+                                    <option value="Télangiectasie">Dermatologue</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <div class="col-sm-9">
                                 <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
                             </div>

@@ -82,7 +82,8 @@ class RoleSeeder extends Seeder
 
         $role1->givePermissionTo(Permission::all());
         $role2->givePermissionTo(Permission::all()->except(['delete invoice', 'manage settings', 'manage roles']));
-        $role3->syncPermissions('view patient');
+        $role3->syncPermissions('view patient','create appointment','create diagnostic test','view invoice','print prescription','print invoice'
+        ,'add medical files','view all invoices','view all prescriptions','view all diagnostic tests','view all appointments','view prescription','create health history');
 
         $user = User::create([
             'name' => 'ADMIN',

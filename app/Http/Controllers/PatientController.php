@@ -13,6 +13,7 @@ use App\Test;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 
 class PatientController extends Controller
 {
@@ -79,6 +80,16 @@ class PatientController extends Controller
             $user->image = $fileName;
         } else {
             $user->image = '';
+        }
+        $user->role_id = 3;
+
+        $role = Role::findById(3);
+
+        // If the role exists, assign it to the user
+        if ($role) {
+            $user->assignRole($role);
+        } else {
+            return \Redirect::route('patient.all')->with('error', __('sentence.role id does not exist'));
         }
 
         $user->save();

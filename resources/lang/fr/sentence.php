@@ -267,6 +267,7 @@ return [
     'Send SMS' => 'Envoyer un SMS',
     'Cancelled'=>'Supprimer',
     'Pending'=>'En attente',
-    'Treated'=>'Visité'
+    'Treated'=>'Visité',
+    'My Account'=>'Mon Compte'
 
 ];

@@ -28,6 +28,16 @@ class AppointmentController extends Controller
         return view('appointment.create', ['patients' => $patients]);
     }
 
+    public function create_By_id($id)
+    {
+        $user = User::findOrfail($id);
+         // Vérifiez si l'utilisateur existe
+         if (!$user) {
+            // Gérez le cas où l'utilisateur n'est pas trouvé
+        }
+        return view('appointment.create_By_user', ['userId' => $id, 'userName' => $user->name]);
+    }
+
     public function checkslots($date)
     {
         return $this->getTimeSlot($date);
@@ -92,6 +102,7 @@ class AppointmentController extends Controller
         $appointment->time_end = $request->rdv_time_end;
         $appointment->visited = 0;
         $appointment->reason = $request->reason;
+        $appointment->doctor_rdv = $request->doctor_rdv;
         $appointment->save();
 
         if ($request->send_sms == 1) {
@@ -105,7 +116,12 @@ class AppointmentController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Appointment Created Successfully!');
+        if(Auth::user()->role_id == 3){
+            return back()->with('success', 'Rendez-vous crée avec succès!');
+        }
+        else{
+            return back()->with('success', 'Appointment Created Successfully!');
+        }
     }
 
     public function store_id(Request $request)
@@ -156,9 +172,11 @@ class AppointmentController extends Controller
 
     public function all()
     {
+        $user = Auth::user();
         $appointments = Appointment::orderBy('id', 'DESC')->paginate(25);
+        $Myappointments = Appointment::where('user_id', $user);
 
-        return view('appointment.all', ['appointments' => $appointments]);
+        return view('appointment.all', ['appointments' => $appointments, 'Myappointments'=>$Myappointments]);
     }
 
     public function calendar()

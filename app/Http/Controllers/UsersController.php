@@ -44,6 +44,12 @@ class UsersController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role_id' => ['required', 'numeric'],
+            'fonction' => ['required', 'array', Rule::in([
+                'Praticien Main',
+                'Praticien Peau',
+                'Praticien Pied',
+                'Dermatologue',
+            ])],
         ]);
 
         $user = new User();
@@ -51,6 +57,7 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->name = $request->name;
         $user->role_id = $request->role_id;
+        $user->fonction = json_encode($request->fonction);
 
         $role = Role::findById($request->role_id);
 
