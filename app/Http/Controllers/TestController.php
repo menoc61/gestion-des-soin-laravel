@@ -145,12 +145,12 @@ class TestController extends Controller
             $tests = Test::orderBy($sortColumn, $sortOrder)->paginate(25);
         }
         //cette condition nous permettra d'afficher tous les tests si l'utilisateur a le role d'admin
-        if ($user->role_id == 1) {
-            $tests = Test::all();
+        if ($user->role_id != 1) {
+            $tests = Test::where('created_by', $user->id)->get();
         }
         //cette condition nous permettra d'afficher pour un utilisateur connecté tous les tests qu'il a eu à créer et ce dernier doit avoir le role de praticien
-        elseif ($user->role_id == 2) {
-            $tests = Test::where('created_by', $user->id)->get();
+        else {
+            $tests = Test::all();
         }
         return view('test.all', ['tests' => $tests]);
     }

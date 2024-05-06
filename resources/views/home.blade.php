@@ -395,7 +395,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                     {{ __('sentence.Total Appointments') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $appointmentHote }}</div>
                             </div>
                         </div>
                     </div>
@@ -418,7 +418,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
                                         <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                            {{ $total_tests_for_pratician }}
+                                            {{ $diagnoseHote }}
                                         </div>
                                     </div>
                                 </div>
@@ -441,7 +441,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
                                     {{ __('sentence.Prescription Number') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_prescriptions_for_pratician }}
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $prescriptionHote }}
                                 </div>
                             </div>
                         </div>

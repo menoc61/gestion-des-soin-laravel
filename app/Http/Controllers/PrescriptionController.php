@@ -84,7 +84,7 @@ class PrescriptionController extends Controller
         $prescription = new Prescription();
 
         $prescription->user_id = $request->patient_id;
-        $prescription->auth = Auth::user()->id;
+        $prescription->doctor_id = Auth::user()->id;
         $prescription->reference = 'p'.rand(10000, 99999);
         $prescription->nom = $request->nom;
         $prescription->dosage = $request->dosage;
