@@ -224,7 +224,7 @@
                     <a class="btn btn-primary text-white"
                         onclick="event.preventDefault();
                 document.getElementById('rdv-form').submit();">{{ __('sentence.Save') }}</a>
-                    <form id="rdv-form" action="{{ route('appointment.store_id', ['id' => $prescription->id]) }}"
+                    <form id="rdv-form" action="{{ route('appointment.store', ['id' => $prescription->id]) }}"
                         method="POST" class="d-none">
                         <input type="hidden" name="patient" id="patient_input">
                         <input type="hidden" name="rdv_time_date" id="rdv_date_input">

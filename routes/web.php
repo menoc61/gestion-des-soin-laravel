@@ -51,8 +51,8 @@ Route::get('/appointment/pending', 'AppointmentController@pending')->name('appoi
 Route::get('/appointment/checkslots/{id}', 'AppointmentController@checkslots');
 Route::get('/appointment/delete/{id}', 'AppointmentController@destroy')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|delete appointment']);
 Route::post('/appointment/edit', 'AppointmentController@store_edit')->name('appointment.store_edit')->middleware(['role_or_permission:Admin|edit appointment']);
-Route::get('/appointment/create_by/{id}', 'AppointmentController@create')->name('appointment.create_by')->middleware(['role_or_permission:Admin|create appointment']);
-Route::post('/appointment/create_by/{id}', 'AppointmentController@store')->name('appointment.store_id');
+Route::get('/appointment/create_by/{id}', 'AppointmentController@create_By_id')->name('appointment.create_by')->middleware(['role_or_permission:Admin|create appointment']);
+// Route::post('/appointment/create_by/{id}', 'AppointmentController@store')->name('appointment.store_id');
 Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
