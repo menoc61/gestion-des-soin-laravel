@@ -6,101 +6,6 @@
 
 @section('content')
     <div class="row justify-content-center">
-        {{-- <div class="card col-md-12 bground ">
-            <div class="slide-container swiper mySwiper ">
-                <div class="slide-content">
-                    <div class="card-wrapper swiper-wrapper">
-                        <div class="card carte swiper-slide">
-                            <div class="image-content">
-                                <span class="overlay"></span>
-                                <div class="card-image">
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <h2 class="name">nom</h2>
-                                <p class="description">fonction</p>
-                                <button class="button">View praticien</button>
-                            </div>
-                        </div>
-                        <div class="card carte swiper-slide">
-                            <div class="image-content">
-                                <span class="overlay"></span>
-                                <div class="card-image">
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <h2 class="name">nom</h2>
-                                <p class="description">fonction</p>
-                                <button class="button">View praticien</button>
-                            </div>
-                        </div>
-                        <div class="card carte swiper-slide">
-                            <div class="image-content">
-                                <span class="overlay"></span>
-                                <div class="card-image">
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <h2 class="name">nom</h2>
-                                <p class="description">fonction</p>
-                                <button class="button">View praticien</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
-            </div>
-                            <div class="swiper-slide carte ">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h2 class="name">nom</h2>
-                        <p class="description">fonction</p>
-                        <button class="button">View praticien</button>
-                    </div>
-                </div>
-                <div class="swiper-slide carte ">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h2 class="name">nom</h2>
-                        <p class="description">fonction</p>
-                        <button class="button">View praticien</button>
-                    </div>
-                </div>
-                <div class="swiper-slide carte ">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h2 class="name">nom</h2>
-                        <p class="description">fonction</p>
-                        <button class="button">View praticien</button>
-                    </div>
-                </div>
-                <div class="swiper-slide carte ">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h2 class="name">nom</h2>
-                        <p class="description">fonction</p>
-                        <button class="button">View praticien</button>
-                    </div>
-                </div>
-        </div> --}}
 
         <div class="swiper mySwiper">
             <div class="swiper-wrapper w-25">
@@ -117,13 +22,13 @@
                             <p class="description">{{ $praticien->email }}</p>
                             <div>
                                 <button class="btn btn-outline-success">
-                                    <a href="" class="btn btn-outline-success btn-circle btn-sm"><i
-                                            class="far fa-calendar-plus"></i></a>
+                                    <i class="far fa-calendar-plus"></i>
                                     Agenda</button>
-                                <button class="btn btn-outline-primary">
-                                    <a href="" class="btn btn-outline-primary btn-circle btn-sm"> <i
-                                            class="fas fa-check"></i></a>
-                                    Choisir</button>
+                                <button class="btn btn-outline-primary"
+                                    onclick="selectPraticien({{ $praticien->id }}, '{{ $praticien->name }}')">
+                                     <i class="fas fa-check"></i>
+                                    Choisir
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -158,15 +63,15 @@
                                     {{ csrf_field() }}
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label for="praticien_name">{{ __('sentence.Patient') }}</label>
-                                    <input type="hidden" class="form-control" value="{{ $userId }}"
-                                        id="praticien_name" readonly>
-                                    <input type="text" class="form-control" value="{{ $userName }}" readonly>
-                                    {{ csrf_field() }}
-                                </div>
+                                <label for="praticien_name">{{ __('sentence.Doctor') }}</label>
+                                <input type="hidden" class="form-control" value="{{ $userId }}" id="praticien_name"
+                                    readonly>
+                                <input type="text" class="form-control" value="{{ $praticien->name }}" readonly
+                                    id="praticien_name_input">
                             </div>
+
                             <div class="form-group">
                                 <label for="rdvdate">{{ __('sentence.Date') }}</label>
                                 <input type="text" class="form-control target" readonly="readonly" id="rdvdate">
@@ -211,7 +116,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p><b>{{ __('sentence.Patient') }} :</b> <span id="create_by"></span></p>
+                    <p><b>{{ __('sentence.Doctor') }} :</b> <span id="create_by"></span></p>
                     <p><b>{{ __('sentence.Patient') }} :</b> <span id="patient"></span></p>
                     <p><b>{{ __('sentence.Date') }} :</b> <label class="badge badge-primary-soft" id="rdv_date"></label>
                     </p>
@@ -226,9 +131,8 @@
                     <a class="btn btn-primary text-white"
                         onclick="event.preventDefault();
                         document.getElementById('rdv-form').submit();">{{ __('sentence.Save') }}</a>
-                    <form id="rdv-form" action="{{ route('appointment.store', ['id' => $userId]) }}" method="POST"
-                        class="d-none">
-                        <input type="hidden" name="create_by" id="praticien_input">
+                    <form id="rdv-form" action="{{ route('appointment.store') }}" method="POST" class="d-none">
+                        <input type="hidden" name="create_by" id="praticien_name_input">
                         <input type="hidden" name="patient" id="patient_input">
                         <input type="hidden" name="rdv_time_date" id="rdv_date_input">
                         <input type="hidden" name="rdv_time_start" id="rdv_time_start_input">
@@ -286,5 +190,11 @@
                 prevEl: ".swiper-button-prev",
             },
         });
+    </script>
+    <script>
+        function selectPraticien(praticienId, praticienName) {
+            document.getElementById('praticien_name').value = praticienId;
+            document.getElementById('praticien_name_input').value = praticienName;
+        }
     </script>
 @endsection
