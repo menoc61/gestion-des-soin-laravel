@@ -31,7 +31,6 @@
                      <label for="rdvdate">{{ __('sentence.Date') }}</label>
                      <input type="text" class="form-control target" readonly="readonly" id="rdvdate">
                      <small id="emailHelp" class="form-text text-muted">Select date to view time slots available</small>
-
                   </div>
                   <div class="form-group">
                      <label for="reason">{{ __('sentence.Reason for visit') }}</label>
