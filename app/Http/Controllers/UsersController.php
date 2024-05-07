@@ -58,9 +58,22 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->role_id = $request->role_id;
         $user->fonction = json_encode($request->fonction);
-
         $role = Role::findById($request->role_id);
+        if ($request->hasFile('image')) {
+            // We Get the image
+            $file = $request->file('image');
+            // We Add String to Image name
+            $fileName = \Str::random(15).'-'.$file->getClientOriginalName();
+            // We Tell him the uploads path
+            $destinationPath = public_path().'/uploads/';
+            // We move the image to the destination path
+            $file->move($destinationPath, $fileName);
+            // Add fileName to database
 
+            $user->image = $fileName;
+        } else {
+            $user->image = '';
+        }
         // If the role exists, assign it to the user
         if ($role) {
             $user->assignRole($role);

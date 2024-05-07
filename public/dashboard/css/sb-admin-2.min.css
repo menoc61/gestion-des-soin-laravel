@@ -11909,24 +11909,7 @@ td > a {
     opacity: 0.8;
     filter: blur(1px);
 }
-
-.bground{
-    background-color: #EFEFEF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.slide-container{
-    max-width: 1120px;
-    width: 100%;
-    background-color: grey;
-
-}
-.slide-content{
-    margin:0 40px ;
-}
 .carte{
-    width: 320px;
     border-radius: 25px;
     background-color: #FFF;
 }
@@ -11940,13 +11923,12 @@ td > a {
 .image-content{
     position: relative;
     row-gap: 5px;
-
 }
 .overlay{
     position:absolute;
     height: 100%;
     width: 100%;
-    background-color: #4070f4;
+    background-color: #157954;
     left: 0;
     top: 0;
     border-radius: 25px 25px 0 25px;
@@ -11959,7 +11941,7 @@ td > a {
     bottom: -40px;
     height: 40px;
     width: 40px;
-    background-color: #4070f4;
+    background-color: #157954;
 }
 .overlay::after{
    border-radius: 0 25px 0 0;
@@ -11995,7 +11977,7 @@ td > a {
     font-size: 16px;
     color: #FFF;
     padding: 8px 16px;
-    background-color: #4070f4;
+    background-color: #157954;
     border-radius: 6px;
     margin: 14px;
     cursor: pointer;
@@ -12004,3 +11986,33 @@ td > a {
 .button:hover{
     background: #265df2;
 }
+
+.swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .bod {
+    background: #eee;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+  }
