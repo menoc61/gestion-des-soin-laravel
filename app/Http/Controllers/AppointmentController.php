@@ -30,13 +30,19 @@ class AppointmentController extends Controller
 
     public function create_By_id($id)
     {
-        $user = User::findOrfail($id);
-         // Vérifiez si l'utilisateur existe
-         if (!$user) {
+        $user = User::findOrFail($id);
+
+        if (!$user) {
             // Gérez le cas où l'utilisateur n'est pas trouvé
+            // Par exemple, renvoyez une erreur ou redirigez l'utilisateur
         }
+
         $praticiens = User::where('role_id', '!=', 3)->get();
-        return view('appointment.create_By_user', ['userId' => $id, 'userName' => $user->name, 'praticiens'=>$praticiens]);
+
+        return view('appointment.create_By_user', [
+            'userName' => $user->name,
+            'praticiens' => $praticiens
+        ])->with('userId', $id);
     }
 
     public function checkslots($date)
@@ -57,8 +63,8 @@ class AppointmentController extends Controller
     public function getTimeSlot($date)
     {
         $day = date('l', strtotime($date));
-        $day_from = strtolower($day.'_from');
-        $day_to = strtolower($day.'_to');
+        $day_from = strtolower($day . '_from');
+        $day_to = strtolower($day . '_to');
 
         $start = Setting::get_option($day_from);
         $end = Setting::get_option($day_to);
@@ -73,8 +79,8 @@ class AppointmentController extends Controller
         $time = [];
         while (strtotime($start_time) <= strtotime($end_time)) {
             $start = $start_time;
-            $end = date('H:i', strtotime('+'.$interval.' minutes', strtotime($start_time)));
-            $start_time = date('H:i', strtotime('+'.$interval.' minutes', strtotime($start_time)));
+            $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($start_time)));
+            $start_time = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($start_time)));
             ++$i;
             if (strtotime($start_time) <= strtotime($end_time)) {
                 $time[$i]['start'] = $start;
@@ -114,14 +120,13 @@ class AppointmentController extends Controller
             \Nexmo::message()->send([
                 'to' => $phone,
                 'from' => '213794616181',
-                'text' => 'You have an appointment on '.$request->rdv_time_date.' at '.$request->rdv_time_start.' at Sai i lama',
+                'text' => 'You have an appointment on ' . $request->rdv_time_date . ' at ' . $request->rdv_time_start . ' at Sai i lama',
             ]);
         }
 
-        if(Auth::user()->role_id == 3){
+        if (Auth::user()->role_id == 3) {
             return back()->with('success', 'Rendez-vous crée avec succès!');
-        }
-        else{
+        } else {
             return back()->with('success', 'Appointment Created Successfully!');
         }
     }
@@ -151,7 +156,7 @@ class AppointmentController extends Controller
             \Nexmo::message()->send([
                 'to' => $phone,
                 'from' => '213794616181',
-                'text' => 'You have an appointment on '.$request->rdv_time_date.' at '.$request->rdv_time_start.' at Sai i lama',
+                'text' => 'You have an appointment on ' . $request->rdv_time_date . ' at ' . $request->rdv_time_start . ' at Sai i lama',
             ]);
         }
 
@@ -178,7 +183,7 @@ class AppointmentController extends Controller
         $appointments = Appointment::orderBy('id', 'DESC')->paginate(25);
         $Myappointments = Appointment::where('user_id', $user);
 
-        return view('appointment.all', ['appointments' => $appointments, 'Myappointments'=>$Myappointments]);
+        return view('appointment.all', ['appointments' => $appointments, 'Myappointments' => $Myappointments]);
     }
 
     public function calendar()
@@ -188,48 +193,47 @@ class AppointmentController extends Controller
         return view('appointment.calendar', ['appointments' => $appointments]);
     }
 
-    public function pending(){
+    public function pending()
+    {
 
-        if(Auth::user()->role == '3'){
-            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 0)->orderBy('date','ASC')->paginate(25);
-        }else{
-            $appointments = Appointment::where('visited', 0)->orderBy('date','ASC')->paginate(25);
+        if (Auth::user()->role == '3') {
+            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 0)->orderBy('date', 'ASC')->paginate(25);
+        } else {
+            $appointments = Appointment::where('visited', 0)->orderBy('date', 'ASC')->paginate(25);
         }
         return view('appointment.all', ['appointments' => $appointments]);
-
     }
 
-    public function treated(){
-        if(Auth::user()->role == '3'){
-            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 1)->orderBy('date','ASC')->paginate(25);
-        }else{
-            $appointments = Appointment::where('visited', 1)->orderBy('date','ASC')->paginate(25);
+    public function treated()
+    {
+        if (Auth::user()->role == '3') {
+            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 1)->orderBy('date', 'ASC')->paginate(25);
+        } else {
+            $appointments = Appointment::where('visited', 1)->orderBy('date', 'ASC')->paginate(25);
         }
 
         return view('appointment.all', ['appointments' => $appointments]);
-
     }
 
-    public function cancelled(){
-        if(Auth::user()->role == '3'){
-            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 2)->orderBy('date','ASC')->paginate(25);
-        }else{
-            $appointments = Appointment::where('visited', 2)->orderBy('date','ASC')->paginate(25);
+    public function cancelled()
+    {
+        if (Auth::user()->role == '3') {
+            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 2)->orderBy('date', 'ASC')->paginate(25);
+        } else {
+            $appointments = Appointment::where('visited', 2)->orderBy('date', 'ASC')->paginate(25);
         }
 
         return view('appointment.all', ['appointments' => $appointments]);
-
     }
 
-    public function today(){
-        if(Auth::user()->role == '3'){
-            $appointments = Appointment::where('user_id', Auth()->id())->where('date', today())->orderBy('date','DESC')->paginate(25);
-
-        }else{
-            $appointments = Appointment::where('date', today())->orderBy('date','DESC')->paginate(25);
+    public function today()
+    {
+        if (Auth::user()->role == '3') {
+            $appointments = Appointment::where('user_id', Auth()->id())->where('date', today())->orderBy('date', 'DESC')->paginate(25);
+        } else {
+            $appointments = Appointment::where('date', today())->orderBy('date', 'DESC')->paginate(25);
         }
         return view('appointment.all', ['appointments' => $appointments]);
-
     }
 
     public function destroy($id)
@@ -239,24 +243,25 @@ class AppointmentController extends Controller
         return back()->with('success', 'Appointment Deleted Successfully!');
     }
 
-    public function notify_whatsapp($id){
+    public function notify_whatsapp($id)
+    {
 
         $appointment = Appointment::findorfail($id);
 
         $appointment->User->Patient->notify(new WhatsAppNotification($appointment));
         return back()->with('success', 'Patient Notified Successfully!');
-
     }
 
-    public function notify_email($id){
+    public function notify_email($id)
+    {
 
         $appointment = Appointment::findorfail($id);
         $appointment->User->notify(new NewAppointmentByEmailNotification($appointment));
         return back()->with('success', __('Patient Notified Successfully'));
-
     }
 
-    public function getAppointments($id){
+    public function getAppointments($id)
+    {
         $userAppointments = Appointment::where('user_id', $id)->get();
         $userAppointments = $userAppointments->map(function ($item) {
             // Utilisez toDateString() pour formater la date au format "YYYY-MM-DD".
@@ -266,5 +271,4 @@ class AppointmentController extends Controller
 
         return response()->json($userAppointments);
     }
-
 }
