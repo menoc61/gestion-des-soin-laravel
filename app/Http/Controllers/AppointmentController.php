@@ -35,7 +35,8 @@ class AppointmentController extends Controller
          if (!$user) {
             // Gérez le cas où l'utilisateur n'est pas trouvé
         }
-        return view('appointment.create_By_user', ['userId' => $id, 'userName' => $user->name]);
+        $praticiens = User::where('role_id', '!=', 3)->get();
+        return view('appointment.create_By_user', ['userId' => $id, 'userName' => $user->name, 'praticiens'=>$praticiens]);
     }
 
     public function checkslots($date)
@@ -89,6 +90,7 @@ class AppointmentController extends Controller
     {
         $validatedData = $request->validate([
             'patient' => ['required', 'exists:users,id'],
+            'create_by' => ['required', 'exists:users,id'],
             'rdv_time_date' => ['required'],
             'rdv_time_start' => ['required'],
             'rdv_time_end' => ['required'],
@@ -102,7 +104,7 @@ class AppointmentController extends Controller
         $appointment->time_end = $request->rdv_time_end;
         $appointment->visited = 0;
         $appointment->reason = $request->reason;
-        $appointment->doctor_rdv = $request->doctor_rdv;
+        $appointment->create_by = $request->create_by;
         $appointment->save();
 
         if ($request->send_sms == 1) {
