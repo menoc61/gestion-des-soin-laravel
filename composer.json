@@ -48,6 +48,9 @@
             "Database\\Seeders\\": "database/seeders/"
 
         },
+        "files": [
+            "app/Helpers/Helper.php"
+        ],
         "classmap": [
             "database/seeders",
             "database/factories"
