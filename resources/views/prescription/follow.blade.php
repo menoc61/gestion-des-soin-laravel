@@ -69,7 +69,7 @@
                                 </small>
                             </div>
                             <div class="form-group">
-                                <label for="reason">{{ __('sentence.Reason for visit') }}</label>
+                                <label for="reason">{{ __('sentence.Reason code') }}</label>
                                 <textarea class="form-control" id="reason" readonly
                                     style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.5; padding: 10px;">
 
@@ -122,6 +122,7 @@
                                 <td align="center">{{ __('sentence.Date') }}</td>
                                 <td align="center">{{ __('sentence.Time Slot') }}</td>
                                 <td align="center">{{ __('sentence.Status') }}</td>
+                                <td align="center">{{ __('sentence.Visited At') }}</td>
                                 <td align="center">{{ __('sentence.Actions') }}</td>
                             </thead>
                             @forelse($currentUserAppointments as $appointment)
@@ -150,23 +151,23 @@
                                             </label>
                                         @endif
                                     </td>
+                                    <td class="text-center">
+                                        @if ($appointment->visited == 1)
+                                            <label class="badge badge-primary-soft">
+                                                <i class="fas fa-calendar"></i>
+                                                {{ $appointment->updated_at->format('d M Y H:i') }}
+                                            </label>
+                                        @endif
+                                    </td>
                                     <td align="center">
                                         @can('edit appointment')
-                                            @php
-                                                $appointmentDate = \Carbon\Carbon::parse($appointment->date);
-                                                $appointmentTimeStart = \Carbon\Carbon::parse($appointment->time_start);
-                                                $currentDateTime = now();
-                                                $isFutureDateTime =
-                                                    $appointmentDate->isFuture() ||
-                                                    ($appointmentDate->isToday() && $appointmentTimeStart->isFuture());
-                                            @endphp
-
                                             <a data-rdv_id="{{ $appointment->id }}"
                                                 data-rdv_date="{{ $appointment->date->format('d M Y') }}"
                                                 data-rdv_time_start="{{ $appointment->time_start }}"
                                                 data-rdv_time_end="{{ $appointment->time_end }}"
                                                 data-patient_name="{{ $appointment->User->name }}"
-                                                class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime || $appointment->visited != 1 ? ' disabled opacity-button' : '' }}"
+                                                class=" btn btn-outline-success btn-circle btn-sm
+                                                {{  $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
                                                 data-toggle="modal" data-target="#EDITRDVModal">
                                                 <i class="fas fa-check"></i>
                                             </a>

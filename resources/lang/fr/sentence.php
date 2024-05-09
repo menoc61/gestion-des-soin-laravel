@@ -265,9 +265,10 @@ return [
     'set meetings' => 'Créer des rendez-vous a suivre',
     'Reason for visit' => 'Motif de la Visite',
     'Send SMS' => 'Envoyer un SMS',
-    'Cancelled'=>'Supprimer',
-    'Pending'=>'En attente',
-    'Treated'=>'Visité',
-    'My Account'=>'Mon Compte'
-
+    'Cancelled' => 'Supprimer',
+    'Pending' => 'En attente',
+    'Treated' => 'Visité',
+    'My Account' => 'Mon Compte',
+    'Reason code' => 'Code du rendez-vous',
+    'Visited At' => 'Visite le',
 ];
