@@ -279,8 +279,7 @@ return [
     'Send Credentials' => 'Envoyer un Mot de Passe',
     'Invoices' => 'Facture(s)',
     'time use'=>'Associé à',
-    'In Prescription' => 'Traitement(s)'
-
-
-
+    'In Prescription' => 'Traitement(s)',
+    'Reason code' => 'Code du rendez-vous',
+    'Visited At' => 'Visite le',
 ];

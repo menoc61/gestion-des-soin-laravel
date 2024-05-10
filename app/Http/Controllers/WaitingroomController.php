@@ -6,6 +6,7 @@ use App\Patient;
 use App\User;
 use App\Waiting_room;
 use Illuminate\Http\Request;
+use App\Helpers\Helper;
 
 class WaitingroomController extends Controller
 {

@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use DateTime;
-use App\User;
-use App\Patient;
 use App\Appointment;
-use App\Setting;
-use Redirect;
-use Nexmo;
-use Auth;
-use App\Notifications\WhatsAppNotification;
 use App\Notifications\NewAppointmentByEmailNotification;
+use App\Notifications\WhatsAppNotification;
+use App\Setting;
+use App\User;
+use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
@@ -41,7 +36,7 @@ class AppointmentController extends Controller
 
         return view('appointment.create_By_user', [
             'userName' => $user->name,
-            'praticiens' => $praticiens
+            'praticiens' => $praticiens,
         ])->with('userId', $id);
     }
 
@@ -63,8 +58,8 @@ class AppointmentController extends Controller
     public function getTimeSlot($date)
     {
         $day = date('l', strtotime($date));
-        $day_from = strtolower($day . '_from');
-        $day_to = strtolower($day . '_to');
+        $day_from = strtolower($day.'_from');
+        $day_to = strtolower($day.'_to');
 
         $start = Setting::get_option($day_from);
         $end = Setting::get_option($day_to);
@@ -79,8 +74,8 @@ class AppointmentController extends Controller
         $time = [];
         while (strtotime($start_time) <= strtotime($end_time)) {
             $start = $start_time;
-            $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($start_time)));
-            $start_time = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($start_time)));
+            $end = date('H:i', strtotime('+'.$interval.' minutes', strtotime($start_time)));
+            $start_time = date('H:i', strtotime('+'.$interval.' minutes', strtotime($start_time)));
             ++$i;
             if (strtotime($start_time) <= strtotime($end_time)) {
                 $time[$i]['start'] = $start;
@@ -96,7 +91,6 @@ class AppointmentController extends Controller
     {
         $validatedData = $request->validate([
             'patient' => ['required', 'exists:users,id'],
-            'create_by' => ['required', 'exists:users,id'],
             'rdv_time_date' => ['required'],
             'rdv_time_start' => ['required'],
             'rdv_time_end' => ['required'],
@@ -110,7 +104,6 @@ class AppointmentController extends Controller
         $appointment->time_end = $request->rdv_time_end;
         $appointment->visited = 0;
         $appointment->reason = $request->reason;
-        $appointment->create_by = $request->create_by;
         $appointment->save();
 
         if ($request->send_sms == 1) {
@@ -120,11 +113,11 @@ class AppointmentController extends Controller
             \Nexmo::message()->send([
                 'to' => $phone,
                 'from' => '213794616181',
-                'text' => 'You have an appointment on ' . $request->rdv_time_date . ' at ' . $request->rdv_time_start . ' at Sai i lama',
+                'text' => 'You have an appointment on '.$request->rdv_time_date.' at '.$request->rdv_time_start.' at Sai i lama',
             ]);
         }
 
-        if (Auth::user()->role_id == 3) {
+        if (\Auth::user()->role_id == 3) {
             return back()->with('success', 'Rendez-vous crée avec succès!');
         } else {
             return back()->with('success', 'Appointment Created Successfully!');
@@ -156,7 +149,7 @@ class AppointmentController extends Controller
             \Nexmo::message()->send([
                 'to' => $phone,
                 'from' => '213794616181',
-                'text' => 'You have an appointment on ' . $request->rdv_time_date . ' at ' . $request->rdv_time_start . ' at Sai i lama',
+                'text' => 'You have an appointment on '.$request->rdv_time_date.' at '.$request->rdv_time_start.' at Sai i lama',
             ]);
         }
 
@@ -179,7 +172,7 @@ class AppointmentController extends Controller
 
     public function all()
     {
-        $user = Auth::user();
+        $user = \Auth::user();
         $appointments = Appointment::orderBy('id', 'DESC')->paginate(25);
         $Myappointments = Appointment::where('user_id', $user);
 
@@ -195,18 +188,18 @@ class AppointmentController extends Controller
 
     public function pending()
     {
-
-        if (Auth::user()->role == '3') {
+        if (\Auth::user()->role == '3') {
             $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 0)->orderBy('date', 'ASC')->paginate(25);
         } else {
             $appointments = Appointment::where('visited', 0)->orderBy('date', 'ASC')->paginate(25);
         }
+
         return view('appointment.all', ['appointments' => $appointments]);
     }
 
     public function treated()
     {
-        if (Auth::user()->role == '3') {
+        if (\Auth::user()->role == '3') {
             $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 1)->orderBy('date', 'ASC')->paginate(25);
         } else {
             $appointments = Appointment::where('visited', 1)->orderBy('date', 'ASC')->paginate(25);
@@ -217,7 +210,7 @@ class AppointmentController extends Controller
 
     public function cancelled()
     {
-        if (Auth::user()->role == '3') {
+        if (\Auth::user()->role == '3') {
             $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 2)->orderBy('date', 'ASC')->paginate(25);
         } else {
             $appointments = Appointment::where('visited', 2)->orderBy('date', 'ASC')->paginate(25);
@@ -228,11 +221,12 @@ class AppointmentController extends Controller
 
     public function today()
     {
-        if (Auth::user()->role == '3') {
+        if (\Auth::user()->role == '3') {
             $appointments = Appointment::where('user_id', Auth()->id())->where('date', today())->orderBy('date', 'DESC')->paginate(25);
         } else {
             $appointments = Appointment::where('date', today())->orderBy('date', 'DESC')->paginate(25);
         }
+
         return view('appointment.all', ['appointments' => $appointments]);
     }
 
@@ -245,18 +239,18 @@ class AppointmentController extends Controller
 
     public function notify_whatsapp($id)
     {
-
         $appointment = Appointment::findorfail($id);
 
         $appointment->User->Patient->notify(new WhatsAppNotification($appointment));
+
         return back()->with('success', 'Patient Notified Successfully!');
     }
 
     public function notify_email($id)
     {
-
         $appointment = Appointment::findorfail($id);
         $appointment->User->notify(new NewAppointmentByEmailNotification($appointment));
+
         return back()->with('success', __('Patient Notified Successfully'));
     }
 
@@ -266,6 +260,7 @@ class AppointmentController extends Controller
         $userAppointments = $userAppointments->map(function ($item) {
             // Utilisez toDateString() pour formater la date au format "YYYY-MM-DD".
             $item->date = $item->date->toDateString();
+
             return $item;
         });
 
