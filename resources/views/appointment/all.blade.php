@@ -32,7 +32,7 @@
                 <div class="col">
                     @can('create appointment')
                         <a type="button" class="btn btn-primary btn-sm my-4 float-right"
-                        href="{{ route('appointment.create_by', ['id' => Auth::user()->id]) }}"><i class="fa fa-plus"></i>
+                            href="{{ route('appointment.create_by', ['id' => Auth::user()->id]) }}"><i class="fa fa-plus"></i>
                             {{ __('sentence.New Appointment') }}</a>
                     @endcan
                 </div>
@@ -118,6 +118,7 @@
                                 <th class="text-center">{{ __('sentence.Schedule Info') }}</th>
                                 <th class="text-center">{{ __('sentence.Status') }}</th>
                                 <th class="text-center">{{ __('sentence.Created at') }}</th>
+                                <th class="text-center">{{ __('sentence.Visited At') }}</th>
                                 <th class="text-center">{{ __('sentence.Actions') }}</th>
                             </tr>
                         </thead>
@@ -155,26 +156,26 @@
                                         @endif
                                     </td>
                                     <td class="text-center">{{ $appointment->created_at->format('d M Y H:i') }}</td>
+                                    <td class="text-center">
+                                        @if ($appointment->visited == 1)
+                                            <label class="badge badge-primary-soft">
+                                                <i class="fas fa-calendar"></i>
+                                                {{ $appointment->updated_at->format('d M Y H:i') }}
+                                            </label>
+                                        @endif
+                                    </td>
                                     <td align="center">
                                         @can('edit appointment')
-                                            @php
-                                                $appointmentDate = \Carbon\Carbon::parse($appointment->date);
-                                                $appointmentTimeStart = \Carbon\Carbon::parse($appointment->time_start);
-                                                $currentDateTime = now();
-                                                $isFutureDateTime =
-                                                    $appointmentDate->isFuture() ||
-                                                    ($appointmentDate->isToday() && $appointmentTimeStart->isFuture());
-                                            @endphp
-
-                                            <a data-rdv_id="{{ $appointment->id }}"
-                                                data-rdv_date="{{ $appointment->date->format('d M Y') }}"
-                                                data-rdv_time_start="{{ $appointment->time_start }}"
-                                                data-rdv_time_end="{{ $appointment->time_end }}"
-                                                data-patient_name="{{ $appointment->User->name }}"
-                                                class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime || $appointment->visited != 1 ? ' disabled opacity-button' : '' }}"
-                                                data-toggle="modal" data-target="#EDITRDVModal">
-                                                <i class="fas fa-check "></i>
-                                            </a>
+                                        <a data-rdv_id="{{ $appointment->id }}"
+                                            data-rdv_date="{{ $appointment->date->format('d M Y') }}"
+                                            data-rdv_time_start="{{ $appointment->time_start }}"
+                                            data-rdv_time_end="{{ $appointment->time_end }}"
+                                            data-patient_name="{{ $appointment->User->name }}"
+                                            class=" btn btn-outline-success btn-circle btn-sm
+                                            {{  $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
+                                            data-toggle="modal" data-target="#EDITRDVModal">
+                                            <i class="fas fa-check"></i>
+                                        </a>
                                         @endcan
                                         @can('delete appointment')
                                             @if ($appointment->visited != 1)
@@ -189,7 +190,8 @@
                             @empty
                                 <tr>
                                     <td colspan="7" align="center"><img src="{{ asset('img/rest.png') }} " />
-                                        <br><br> <b class="text-muted">Vous n'avez pas de Rendez-Vous</b></td>
+                                        <br><br> <b class="text-muted">Vous n'avez pas de Rendez-Vous</b>
+                                    </td>
                                 </tr>
                             @endforelse
                         </tbody>
