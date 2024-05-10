@@ -26,12 +26,12 @@
                         <span class="text-info">maïl</span>
                     </div>
                 </div>
-                <div class="col-2">
+                {{-- <div class="col-2">
                     @can('create invoice')
                         <a href="{{ route('billing.create') }}" class="btn btn-primary btn-sm float-right"><i
                                 class="fa fa-plus"></i> {{ __('sentence.Create Invoice') }}</a>
                     @endcan
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="card-body">
