@@ -12016,3 +12016,17 @@ td > a {
     margin: 0;
     padding: 0;
   }
+
+  .custom-card-parent {
+    height: 400px; /* ou toute autre valeur de hauteur souhaitée */
+}
+.highlighted-date {
+    background-color: red !important;
+    color: white !important;
+}
+.compte{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

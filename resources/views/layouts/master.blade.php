@@ -69,19 +69,10 @@
                         {{ __('sentence.Patients') }}
                     </div>
                     <!-- Nav Item - Pages Collapse Menu -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse"
-                            data-target="#collapsePatient" aria-expanded="true" aria-controls="collapseTwo">
-                            <i class="fas fa-fw fa-user-injured"></i>
-                            <span>{{ __('sentence.Patients') }}</span>
-                        </a>
-                        <div id="collapsePatient" class="collapse" aria-labelledby="headingTwo"
-                            data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item"
-                                    href="{{ url('patient/view/' . Auth::user()->id) }}">{{ __('sentence.My Account') }}</a>
-                            </div>
-                        </div>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url('patient/view/' . Auth::user()->id) }}"><i
+                                class="fas fa-fw fa-user-injured"></i><span>{{ __('sentence.My Account') }}</span></a>
                     </li>
                 @endif
 
@@ -123,37 +114,41 @@
                 @if (Auth::user()->can('create appointment') ||
                         Auth::user()->can('view all appointments') ||
                         Auth::user()->can('delete appointment'))
-                    <!-- Divider -->
-                    <hr class="sidebar-divider">
-                    <!-- Heading -->
-                    <div class="sidebar-heading">
-                        {{ __('sentence.Appointment') }}
-                    </div>
-                    <!-- Nav Item - Pages Collapse Menu -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse"
-                            data-target="#collapseAppointment" aria-expanded="true" aria-controls="collapseAppointment">
-                            <i class="fas fa-fw fa-calendar-plus"></i>
-                            <span>{{ __('sentence.Appointment') }}</span>
-                        </a>
-                        <div id="collapseAppointment" class="collapse" aria-labelledby="headingTwo"
-                            data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                @can('create appointment')
-                                    <a class="collapse-item"
-                                        href="{{ route('appointment.create') }}">{{ __('sentence.New Appointment') }}</a>
-                                @endcan
-                                @can('view all appointments')
-                                    <a class="collapse-item"
-                                        href="{{ route('appointment.today') }}">{{ __('Today\'s Appointments') }}</a>
-                                    <a class="collapse-item"
-                                        href="{{ route('appointment.pending') }}">{{ __('sentence.Upcoming Appointments') }}</a>
-                                    <a class="collapse-item"
-                                        href="{{ route('appointment.all') }}">{{ __('sentence.All Appointments') }}</a>
-                                @endcan
-                            </div>
+                    @if (Auth::user()->role_id != 3)
+                        <!-- Divider -->
+                        <hr class="sidebar-divider">
+                        <!-- Heading -->
+                        <div class="sidebar-heading">
+                            {{ __('sentence.Appointment') }}
                         </div>
-                    </li>
+                        <!-- Nav Item - Pages Collapse Menu -->
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                                data-target="#collapseAppointment" aria-expanded="true"
+                                aria-controls="collapseAppointment">
+                                <i class="fas fa-fw fa-calendar-plus"></i>
+                                <span>{{ __('sentence.Appointment') }}</span>
+                            </a>
+                            <div id="collapseAppointment" class="collapse" aria-labelledby="headingTwo"
+                                data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    @can('create appointment')
+                                        <a class="collapse-item"
+                                            href="{{ route('appointment.create') }}">{{ __('sentence.New Appointment') }}</a>
+                                    @endcan
+                                    @can('view all appointments')
+                                        <a class="collapse-item"
+                                            href="{{ route('appointment.today') }}">{{ __('sentence.Today\'s Appointments') }}</a>
+                                        <a class="collapse-item"
+                                            href="{{ route('appointment.pending') }}">{{ __('sentence.Upcoming Appointments') }}</a>
+                                        <a class="collapse-item"
+                                            href="{{ route('appointment.all') }}">{{ __('sentence.All Appointments') }}</a>
+                                    @endcan
+                                </div>
+                            </div>
+                        </li>
+                    @else
+                    @endif
                 @endif
                 {{-- ************************** Fin Code concernant le Module Rendez-Vous sur la Sidenav **************************** --}}
 
@@ -174,56 +169,56 @@
                         Auth::user()->can('edit invoice') ||
                         Auth::user()->can('view invoice') ||
                         Auth::user()->can('view all invoices'))
-                    <!-- Divider -->
-                    <hr class="sidebar-divider">
-                    <!-- Heading -->
-                    <div class="sidebar-heading">
-                        {{ __('sentence.Information') }}
-                    </div>
+                    @if (Auth::user()->role_id != 3)
+                        <!-- Divider -->
+                        <hr class="sidebar-divider">
+                        <!-- Heading -->
+                        <div class="sidebar-heading">
+                            {{ __('sentence.Information') }}
+                        </div>
 
-                    <!-- Nav Item - Pages Collapse Menu -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
-                            aria-expanded="true" aria-controls="collapsePages">
-                            <i class="fas fa-fw fa-pills"></i>
-                            <span>{{ __('sentence.information') }}</span>
-                        </a>
-                        <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
-                            data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                {{-- @can('create drug')
+                        <!-- Nav Item - Pages Collapse Menu -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
+                                aria-expanded="true" aria-controls="collapsePages">
+                                <i class="fas fa-fw fa-pills"></i>
+                                <span>{{ __('sentence.information') }}</span>
+                            </a>
+                            <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
+                                data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    {{-- @can('create drug')
                                     <a class="collapse-item"
                                         href="{{ route('drug.create') }}">{{ __('sentence.Add Drug') }}</a>
                                 @endcan --}}
-                                @can('view all drugs')
-                                    <a class="collapse-item"
-                                        href="{{ route('drug.all') }}">{{ __('sentence.List Drugs') }}</a>
-                                @endcan
-                                @can('view all diagnostic tests')
-                                    <a class="collapse-item"
-                                        href="{{ route('test.all') }}">{{ __('sentence.List Tests') }}</a>
-                                @endcan
-                                @can('view all prescriptions')
-                                    <a class="collapse-item"
-                                        href="{{ route('prescription.all') }}">{{ __('sentence.List Prescriptions') }}</a>
-                                @endcan
-                                @can('view all invoices')
-                                    <a class="collapse-item"
-                                        href="{{ route('billing.all') }}">{{ __('sentence.Payment History') }}</a>
-                                @endcan
+                                    @can('view all drugs')
+                                        <a class="collapse-item"
+                                            href="{{ route('drug.all') }}">{{ __('sentence.List Drugs') }}</a>
+                                    @endcan
+                                    @can('view all diagnostic tests')
+                                        <a class="collapse-item"
+                                            href="{{ route('test.all') }}">{{ __('sentence.List Tests') }}</a>
+                                    @endcan
+                                    @can('view all prescriptions')
+                                        <a class="collapse-item"
+                                            href="{{ route('prescription.all') }}">{{ __('sentence.List Prescriptions') }}</a>
+                                    @endcan
+                                    @can('view all invoices')
+                                        <a class="collapse-item"
+                                            href="{{ route('billing.all') }}">{{ __('sentence.Payment History') }}</a>
+                                    @endcan
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    @else
+                    @endif
                 @endif
                 {{-- **************************** Fin Section Information de la sidenav *************************************** --}}
 
 
 
                 {{-- **************************** Debut Section Facturation de la sidenav ************************************** --}}
-                {{-- @if (Auth::user()->can('create invoice') ||
-                        Auth::user()->can('edit invoice') ||
-                        Auth::user()->can('view invoice') ||
-                        Auth::user()->can('view all invoices'))
+                {{-- @if (Auth::user()->can('create invoice') || Auth::user()->can('edit invoice') || Auth::user()->can('view invoice') || Auth::user()->can('view all invoices'))
                     <!-- Divider -->
                     <hr class="sidebar-divider">
                     <!-- Heading -->
@@ -260,7 +255,7 @@
 
                 {{-- ********************* Fin Section Facturation de la sidenav ************************** --}}
 
-                @if (Auth::user()->can('manage waiting room'))
+                {{-- @if (Auth::user()->can('manage waiting room'))
                     <!-- Nav Item - Utilities Collapse Menu -->
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="#" data-toggle="collapse"
@@ -282,7 +277,7 @@
                             </div>
                         </div>
                     </li>
-                @endif
+                @endif --}}
 
                 @if (Auth::user()->can('create notification') ||
                         Auth::user()->can('edit notification') ||
@@ -293,18 +288,18 @@
                             data-target="#collapseNotifications" aria-expanded="true"
                             aria-controls="collapseNotifications">
                             <i class="fas fa-fw fa-bell"></i>
-                            <span>{{ __('Notifications') }}</span>
+                            <span>{{ __('sentence.Notifications') }}</span>
                         </a>
                         <div id="collapseNotifications" class="collapse" aria-labelledby="headingUtilities"
                             data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner">
                                 @can('create notification')
                                     <a class="collapse-item"
-                                        href="{{ route('notification.create') }}">{{ __('Create New') }}</a>
+                                        href="{{ route('notification.create') }}">{{ __('sentence.Create New notification') }}</a>
                                 @endcan
                                 @can('view all notifications')
                                     <a class="collapse-item"
-                                        href="{{ route('notification.all') }}">{{ __('Notifications') }}</a>
+                                        href="{{ route('notification.all') }}">{{ __('sentence.All Notifications') }}</a>
                                 @endcan
                             </div>
                         </div>
@@ -456,6 +451,18 @@
                                 </div>
                             </form>
                         @endcan
+
+                        @if (Auth::user()->role_id == 1)
+                            <div class="col-md-6">
+                                <a href="http://localhost:3000" class="btn btn-primary" target="_blank"
+                                    target="_self" rel="noopener"><i class="fa fa-user"></i> <span>Gestion Du
+                                        Personnel</span></a>
+                                <a href="http://localhost:3001" class="btn btn-secondary" target="_blank"
+                                    target="_self" rel="noopener"><i class="fa fa-globe"></i> <span>Gestion De
+                                        Stock</span></a>
+                            </div>
+                        @else
+                        @endif
 
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">

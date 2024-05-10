@@ -130,7 +130,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    {{ __('sentence.Total Appointments today') }} {{$nameday}}</div>
+                                    {{ __('sentence.Total Appointments today') }}</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments_today->count() }}
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    {{ __('sentence.Total Payments today') }} {{$nameday}}</div>
+                                    {{ __('sentence.Total Payments today') }}</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_payments_days }}</div>
                             </div>
                         </div>
@@ -471,7 +471,7 @@
                                 <h6 class="m-0 font-weight-bold text-primary w-75 p-2">{{ __('sentence.New Appointments') }} -
                                     {{ Today()->format('d M Y') }}</h6>
                             </div>
-                            <div class="col-4">
+                            {{-- <div class="col-4">
                                 @can('view all appointments')
                                     <a href="{{ route('appointment.all') }}" class="btn btn-primary btn-sm float-right"><i
                                             class="fas fa-calendar"></i> {{ __('sentence.All Appointments') }}</a>
@@ -482,7 +482,7 @@
                                         {{ __('sentence.New Appointment') }}</a>
                                 @endcan
 
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="card-body">

@@ -58,8 +58,8 @@ class AppointmentController extends Controller
     public function getTimeSlot($date)
     {
         $day = date('l', strtotime($date));
-        $day_from = strtolower($day.'_from');
-        $day_to = strtolower($day.'_to');
+        $day_from = strtolower($day . '_from');
+        $day_to = strtolower($day . '_to');
 
         $start = Setting::get_option($day_from);
         $end = Setting::get_option($day_to);
@@ -74,8 +74,8 @@ class AppointmentController extends Controller
         $time = [];
         while (strtotime($start_time) <= strtotime($end_time)) {
             $start = $start_time;
-            $end = date('H:i', strtotime('+'.$interval.' minutes', strtotime($start_time)));
-            $start_time = date('H:i', strtotime('+'.$interval.' minutes', strtotime($start_time)));
+            $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($start_time)));
+            $start_time = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($start_time)));
             ++$i;
             if (strtotime($start_time) <= strtotime($end_time)) {
                 $time[$i]['start'] = $start;
@@ -113,7 +113,7 @@ class AppointmentController extends Controller
             \Nexmo::message()->send([
                 'to' => $phone,
                 'from' => '213794616181',
-                'text' => 'You have an appointment on '.$request->rdv_time_date.' at '.$request->rdv_time_start.' at Sai i lama',
+                'text' => 'You have an appointment on ' . $request->rdv_time_date . ' at ' . $request->rdv_time_start . ' at Sai i lama',
             ]);
         }
 
@@ -149,7 +149,7 @@ class AppointmentController extends Controller
             \Nexmo::message()->send([
                 'to' => $phone,
                 'from' => '213794616181',
-                'text' => 'You have an appointment on '.$request->rdv_time_date.' at '.$request->rdv_time_start.' at Sai i lama',
+                'text' => 'You have an appointment on ' . $request->rdv_time_date . ' at ' . $request->rdv_time_start . ' at Sai i lama',
             ]);
         }
 
