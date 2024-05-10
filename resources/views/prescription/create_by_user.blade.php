@@ -44,6 +44,7 @@
                                         @endforeach
                                     </select>
                             @else
+                                <input type="hidden" name="Doctor_id" class="form-control" value="{{ Auth::user()->id }}" readonly>
                                 <input type="text" class="form-control" value="{{ Auth::user()->name }}" readonly>
                             @endif
                             {{ csrf_field() }}

@@ -32,7 +32,7 @@
                             <div class="repeatable"></div>
                             <div class="form-group">
                                 <a type="button" class="btn btn-primary btn-sm add text-white" align="center"><i
-                                        class='fa fa-plus'></i> {{ __('sentence.Add Item') }}</a>
+                                        class='fa fa-plus'></i> {{ __('sentence.Add Prescription Item') }}</a>
                             </div>
                         </fieldset>
 

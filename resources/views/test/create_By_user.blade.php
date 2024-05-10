@@ -661,7 +661,7 @@
             includeSelectAllOption: true,
             enableFiltering: true,
             enableResetButton: true,
-            nonSelectedText: 'sélectionnez un option',
+            nonSelectedText: 'sélectionnez une option',
             filterPlaceholder: 'Recherche un Hôte...',
             buttonContainer: '<div class="btn-group w-100" />'
         });
@@ -671,7 +671,7 @@
             enableFiltering: true,
             enableResetButton: true,
             enableCollapsibleOptGroups: true,
-            nonSelectedText: 'sélectionnez un option',
+            nonSelectedText: 'sélectionnez une option',
             filterPlaceholder: 'Rechercher une option...',
             buttonContainer: '<div class="btn-group w-100" />'
         });
