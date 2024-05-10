@@ -2,25 +2,24 @@ Chart.defaults.global.defaultFontFamily =
   '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = "#292b2c";
 
-// Area Chart Example
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: "line",
   data: {
-    labels: _ydata,
-    datasets:  [
+    labels: _ydata, // Dates de création (created_at)
+    datasets: [
       {
         label: "Montant Total",
         lineTension: 0.3,
-        borderColor: " #157954",
+        borderColor: "#157954",
         pointRadius: 5,
-        pointBackgroundColor: " #157954",
+        pointBackgroundColor: "#157954",
         pointBorderColor: "rgba(255,255,255,0.8)",
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: " #157954",
+        pointHoverBackgroundColor: "#157954",
         pointHitRadius: 50,
         pointBorderWidth: 2,
-        data: _xdata,
+        data: _xdata, // Montants associés
       },
     ],
   },
@@ -36,14 +35,15 @@ var myLineChart = new Chart(ctx, {
     scales: {
       xAxes: [
         {
+          type: "time",
           time: {
-            unit: "date",
+            unit: "day",
           },
           gridLines: {
             display: false,
           },
           ticks: {
-            maxTicksLimit: 7,
+            maxTicksLimit: 2,
           },
         },
       ],
@@ -51,7 +51,7 @@ var myLineChart = new Chart(ctx, {
         {
           ticks: {
             min: 0,
-            maxTicksLimit: 7,
+            maxTicksLimit: 3,
           },
           gridLines: {
             color: "rgba(0, 0, 0, 0.05)",
