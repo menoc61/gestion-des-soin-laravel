@@ -265,12 +265,12 @@ return [
     'set meetings' => 'Créer des rendez-vous à suivre',
     'Reason for visit' => 'Motif de la Visite',
     'Send SMS' => 'Envoyer un SMS',
-    'Cancelled' => 'Supprimer',
+    'Cancelled' => 'Annuler',
     'Pending' => 'En attente',
     'Treated' => 'Visité',
     'My Account' => 'Mon Compte',
-    'Total Payments today' => 'C.A DU',
-    'Total Appointments today' => 'RDV DU',
+    'Total Payments today' => 'C.A DU JOUR',
+    'Total Appointments today' => 'RDV DU JOUR',
     'Information' => 'INFORMATIONS',
     'information' => 'Informations',
     'List Drugs' => 'Liste Soins',
@@ -282,4 +282,11 @@ return [
     'In Prescription' => 'Traitement(s)',
     'Reason code' => 'Code du rendez-vous',
     'Visited At' => 'Visite le',
+    'Today\'s Appointments' => 'Rendez-Vous du Jour',
+    'Upcoming Appointments' => 'Rendez-Vous en Attentes',
+    'Create New notification' => 'Ajouter une Notification',
+    'All Notifications' => 'Liste Notifications',
+    'Add Prescription Item' => 'Choisir Un Traitement',
+    'Schedule Info' => 'Periode de la Visite'
+
 ];
