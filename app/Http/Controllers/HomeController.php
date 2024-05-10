@@ -90,9 +90,9 @@ $permission = Permission::create(['name' => 'delete invoice']);
 */
 
         // Home concernant le Praticien
-        $total_prescriptions_for_pratician = Prescription::where('doctor_id',$doctorId)->count();
-        $total_tests_for_pratician = Test::where('created_by',$doctorId)->count();
-        $total_amount_for_pratician = Billing::where('created_by',$doctorId)->sum('total_with_tax');
+        $total_prescriptions_for_pratician = Prescription::where('doctor_id', $doctorId)->count();
+        $total_tests_for_pratician = Test::where('created_by', $doctorId)->count();
+        $total_amount_for_pratician = Billing::where('created_by', $doctorId)->sum('total_with_tax');
         // Home concernant l'Admin
         $total_patients = User::where('role_id', '3')->count();
         $total_patients_today = User::where('role_id', '3')->wheredate('created_at', Today())->count();
@@ -100,22 +100,22 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $total_appointments_today = Appointment::wheredate('date', Today())->get();
         $total_prescriptions = Prescription::all()->count();
         $total_payments = Billing::all()->count();
-        $total_payments = Billing::all()->count();
+        $total_payments_days = Billing_item::wheredate('created_at', Today())->sum('invoice_amount');
         $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
         $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
         $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
 
-        $total_payment_by_month = Billing_item::select('id', 'created_at','invoice_amount')->get()->groupBy(
-            function ($total_payment_by_month) {
-                return Carbon::parse($total_payment_by_month->created_at)->format('F Y');
-            }
-        );
-        $months = [];
-        $monthCount = [];
+        $total_payment_by_day = Billing_item::select('created_at', 'invoice_amount')
+            ->get()
+            ->groupBy(function ($item) {
+                return Carbon::parse($item->created_at)->format('Y-m-d');
+            });
+        $days = [];
+        $dayCount = [];
         $totalAmounts = [];
-        foreach ($total_payment_by_month as $month => $values) {
-            $months[] = $month;
-            $monthCount[] = count($values);
+        foreach ($total_payment_by_day as $day => $values) {
+            $days[] = $day;
+            $dayCount[] = count($values);
             $totalAmount = $values->sum('invoice_amount');
             $totalAmounts[] = $totalAmount;
         }
@@ -124,9 +124,9 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $nonVisitedCount = Appointment::all()->where('visited', 0)->count();
         $allAppointment = Appointment::all()->count();
 
-        $appointmentHote = Appointment::where('user_id',$user)->count();
-        $diagnoseHote = Test::where('user_id',$user)->count();
-        $prescriptionHote = Prescription::where('user_id',$user)->count();
+        $appointmentHote = Appointment::where('user_id', $user)->count();
+        $diagnoseHote = Test::where('user_id', $user)->count();
+        $prescriptionHote = Prescription::where('user_id', $user)->count();
 
         // $total_payment_by_month = Billing_item::select('id', 'created_at')->get()->groupBy(
         //     function ($total_payment_by_month) {
@@ -140,6 +140,12 @@ $permission = Permission::create(['name' => 'delete invoice']);
         //     $monthCount[] = count($values);
         // }
 
+        // Obtention du premier jour du mois actuel
+        $defaultStartDate = Carbon::now()->startOfMonth()->toDateString();
+
+        // Obtention du dernier jour du mois actuel
+        $defaultEndDate = Carbon::now()->endOfMonth()->toDateString();
+        $nameday = Carbon::now()->formatLocalized('%A');
 
         return view('home', [
             'total_patients' => $total_patients,
@@ -150,20 +156,23 @@ $permission = Permission::create(['name' => 'delete invoice']);
             'total_payments' => $total_payments,
             'total_payments_month' => $total_payments_month,
             'total_payments_year' => $total_payments_year,
-            'total_payment_by_month' => $total_payment_by_month,
-            'totalAmounts'=> $totalAmounts,
-            'months' => $months,
-            'monthCount' => $monthCount,
+            'total_payment_by_day' => $total_payment_by_day,
+            'totalAmounts' => $totalAmounts,
+            'days' => $days,
+            'dayCount' => $dayCount,
             'total_prescriptions_for_pratician' => $total_prescriptions_for_pratician,
-            'total_tests_for_pratician'=> $total_tests_for_pratician,
+            'total_tests_for_pratician' => $total_tests_for_pratician,
             'total_amount_for_pratician' => $total_amount_for_pratician,
-            'visitedCount'=>$visitedCount,
-            'nonVisitedCount'=>$nonVisitedCount,
-            'allAppointment'=>$allAppointment,
-
-            'appointmentHote'=>$appointmentHote,
-            'diagnoseHote'=>$diagnoseHote,
-            'prescriptionHote'=>$prescriptionHote
+            'visitedCount' => $visitedCount,
+            'nonVisitedCount' => $nonVisitedCount,
+            'allAppointment' => $allAppointment,
+            'total_payments_days' => $total_payments_days,
+            'appointmentHote' => $appointmentHote,
+            'diagnoseHote' => $diagnoseHote,
+            'prescriptionHote' => $prescriptionHote,
+            'defaultStartDate' => $defaultStartDate,
+            'defaultEndDate' => $defaultEndDate,
+            'nameday' => $nameday,
         ]);
     }
 

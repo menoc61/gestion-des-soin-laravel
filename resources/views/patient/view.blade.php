@@ -32,17 +32,17 @@
 
                                         <a href="{{ route('patient.SendPassword', ['id' => $patient->id]) }}"
                                             class="btn btn-doctorino btn-sm btn-round px-3">
-                                            {{ __('Send Credentials') }}</a>
+                                            {{ __('sentence.Send Credentials') }}</a>
                                         <a href="{{ url('patient/edit/' . $patient->id) }}"
                                             class="btn btn-danger btn-sm btn-round px-3"> <i class="fa fa-pen"></i></a>
                                         <ul class="list-unstyled list-inline mt-3 text-muted">
                                             <li class="list-inline-item font-size-13 me-3">
                                                 <strong class="text-dark">{{ $appointments->count() }}</strong>
-                                                {{ __('Appointments') }}
+                                                {{ __('sentence.Appointment') }}
                                             </li>
                                             <li class="list-inline-item font-size-13">
                                                 <strong class="text-dark">{{ $invoices->count() }}</strong>
-                                                {{ __('Invoices') }}
+                                                {{ __('sentence.Invoices') }}
                                             </li>
                                         </ul>
                                     </div>
@@ -204,7 +204,7 @@
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab"
                                         aria-controls="Billing"Alert
-                                        aria-selected="false">{{ __('sentence.Payment History') }}</a>
+                                        aria-selected="false">{{ __('sentence.Billings') }}</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
@@ -482,8 +482,8 @@
                                                         <td align="center">{{ $key + 1 }}</td>
                                                         <td align="center">{{ $test->test_name }}</td>
                                                         <td align="center"> {{ $test->comment }} </td>
-                                                        <td align="center">{{ __('sentence.In Prescription') }} :
-                                                            {{ $test->Prescription->count() }} {{ __('sentence.time use') }}
+                                                        <td align="center">{{ __('sentence.time use') }} :
+                                                            {{ $test->Prescription->count() }} {{ __('sentence.In Prescription') }}
                                                         </td>
                                                         <td class="text-center">
 
@@ -509,8 +509,8 @@
                                                         <td align="center">{{ $key + 1 }}</td>
                                                         <td align="center">{{ $test->test_name }}</td>
                                                         <td align="center"> {{ $test->comment }} </td>
-                                                        <td align="center">{{ __('sentence.In Prescription') }} :
-                                                            {{ $test->Prescription->count() }} {{ __('sentence.time use') }}
+                                                        <td align="center">{{ __('sentence.time use') }} :
+                                                            {{ $test->Prescription->count() }} {{ __('sentence.In Prescription') }}
                                                         </td>
                                                         <td class="text-center">
 
