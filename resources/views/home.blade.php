@@ -16,30 +16,37 @@
     @endcan --}}
 
     @role('Admin')
+        <div>
+            <input type="date" onchange="StartDateFilter(this)" value={{ $defaultStartDate }}>
+            <input type="date" onchange="EndDateFilter(this)" value={{ $defaultEndDate }}>
+        </div>
         {{-- <div class="row top"> --}}
 
         {{-- carte contenant le nombre de rendez-vous qu'aura lieu un jour  --}}
         <!-- Earnings (Monthly) Card Example -->
-        {{-- <div class="col-xl-2 col-md-4 mb-4 taille marge">
-
-                <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
-                    <div class="card-body shadow-lg card-po bg-primary col-md-9">
-                        <div class="col-auto">
-                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
-                        </div>
+        {{-- <div class="col-xl-2 col-md-6 mb-4 taille marge">
+            <div class="card border-bottom-secondary shadow h-100 py-2 card-po1">
+                <div class="card-body shadow-lg card-po bg-secondary col-md-9 ">
+                    <div class="col-auto">
+                        <center><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></center>
                     </div>
-                    <div class="card-body card-po1">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    {{ __('sentence.New Appointments') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments_today->count() }}
+                </div>
+                <div class="card-body card-po1">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                                {{ __('sentence.Payments this month') }} {{ date('M') }} </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $total_payments_month }}
+                                        {{ App\Setting::get_option('currency') }}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
+        </div> --}}
         {{-- carte contenant le nommbre total de rendez-vous --}}
         <!-- Earnings (Annual) Card Example -->
         {{-- <div class="col-xl-2 col-md-6 mb-4 taille marge">
@@ -111,23 +118,20 @@
         <div class="row top">
             {{-- carte contenant le montant du chiffre d'affaire du mois en cour --}}
             <!-- Tasks Card Example -->
-            <div class="col-xl-2 col-md-6 mb-4 taille marge">
-                <div class="card border-bottom-secondary shadow h-100 py-2 card-po1">
-                    <div class="card-body shadow-lg card-po bg-secondary col-md-9 ">
+            <div class="col-xl-2 col-md-4 mb-4 taille marge">
+
+                <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
+                    <div class="card-body shadow-lg card-po bg-primary col-md-9">
                         <div class="col-auto">
-                            <center><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></center>
+                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
-                                    {{ __('sentence.Payments this month') }} {{ date('M') }} </div>
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $total_payments_month }}
-                                            {{ App\Setting::get_option('currency') }}</div>
-                                    </div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    {{ __('sentence.Total Appointments today') }} {{$nameday}}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_appointments_today->count() }}
                                 </div>
                             </div>
                         </div>
@@ -137,6 +141,7 @@
             {{-- carte contenant le nommbre total de paiements du système --}}
             <!-- Earnings (Annual) Card Example -->
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
+
                 <div class="card border-bottom-success shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-success col-md-9">
                         <div class="col-auto">
@@ -147,8 +152,8 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    {{ __('sentence.Total Payments') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_payments }}</div>
+                                    {{ __('sentence.Total Payments today') }} {{$nameday}}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_payments_days }}</div>
                             </div>
                         </div>
                     </div>
@@ -201,16 +206,16 @@
 
         {{-- graph section --}}
         <div class="row d-flex justify-content-between">
-            <div class="col-md-6 ">
+            <div class="col-md-12 ">
                 <div class="chart mb-4">
-                    <div class="mt-5"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
+                    <div class="mt-5"><canvas id="myAreaChart" width="100%" height="25%"></canvas></div>
                 </div>
             </div>
-            <div class="col-md-6 ">
+            {{-- <div class="col-md-6 ">
                 <div class=" chart1 mb-4">
                     <div class="mt-5"><canvas id="mypolarAreaChart" width="100%" height="40%"></canvas></div>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         {{-- graph section end --}}
@@ -628,12 +633,55 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="/dashboard/vendor/chart.js/Chart.bundle.js"></script>
     <script type="text/javascript">
-        var _ydata = JSON.parse('{!! json_encode($months) !!}');
+        var _ydata = JSON.parse('{!! json_encode($days) !!}');
         var _xdata = JSON.parse('{!! json_encode($totalAmounts) !!}');
         var visitedCount = {{ $visitedCount }};
         var nonVisitedCount = {{ $nonVisitedCount }};
         var allAppointment = {{ $allAppointment }}
     </script>
+
+    <script>
+        var startDate = null;
+        var endDate = null;
+
+        function StartDateFilter(input) {
+            startDate = input.value;
+            updateChart();
+        }
+
+        function EndDateFilter(input) {
+            endDate = input.value;
+            updateChart();
+        }
+
+        function updateChart() {
+            var filteredLabels = [];
+            var filteredData = [];
+
+            for (var i = 0; i < _ydata.length; i++) {
+                var currentDate = _ydata[i];
+                var currentAmount = _xdata[i];
+
+                if (isDateInRange(currentDate)) {
+                    filteredLabels.push(currentDate);
+                    filteredData.push(currentAmount);
+                }
+            }
+
+            myLineChart.data.labels = filteredLabels;
+            myLineChart.data.datasets[0].data = filteredData;
+            myLineChart.update();
+        }
+
+        function isDateInRange(date) {
+            if (!startDate || !endDate) {
+                return true;
+            }
+
+            return date >= startDate && date <= endDate;
+        }
+    </script>
+
     <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
     <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('assets/demo/chart-polarArea-demo.js') }}"></script>
