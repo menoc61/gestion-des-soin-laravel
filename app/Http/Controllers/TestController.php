@@ -208,7 +208,8 @@ class TestController extends Controller
         ]);
 
         $test = Test::find($request->test_id);
-
+        // dd($test);
+        if($test){
         $test->test_name = $request->test_name;
         $test->comment = $request->comment;
         $test->diagnostic_type = json_encode($request->diagnostic_type);
@@ -257,9 +258,14 @@ class TestController extends Controller
         $test->douleur_talon_pieds = $request->douleur_talon_pieds;
         $test->spInput_pieds = $request->spInput_pieds;
 
-        $test->save();
-
+        $test->update();
         return \Redirect::route('test.all')->with('success', __('sentence.Test Edited Successfully'));
+        }
+        else {
+            // Gérer le cas où le médicament n'est pas trouvé
+            return \Redirect::route('test.all')->with('error', __('sentence.Test Not Found'));
+        }
+
     }
 
     public function destroy($id)

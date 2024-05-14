@@ -166,16 +166,16 @@
                                     </td>
                                     <td align="center">
                                         @can('edit appointment')
-                                        <a data-rdv_id="{{ $appointment->id }}"
-                                            data-rdv_date="{{ $appointment->date->format('d M Y') }}"
-                                            data-rdv_time_start="{{ $appointment->time_start }}"
-                                            data-rdv_time_end="{{ $appointment->time_end }}"
-                                            data-patient_name="{{ $appointment->User->name }}"
-                                            class=" btn btn-outline-success btn-circle btn-sm
-                                            {{  $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
-                                            data-toggle="modal" data-target="#EDITRDVModal">
-                                            <i class="fas fa-check"></i>
-                                        </a>
+                                            <a data-rdv_id="{{ $appointment->id }}"
+                                                data-rdv_date="{{ $appointment->date->format('d M Y') }}"
+                                                data-rdv_time_start="{{ $appointment->time_start }}"
+                                                data-rdv_time_end="{{ $appointment->time_end }}"
+                                                data-patient_name="{{ $appointment->User->name }}"
+                                                class=" btn btn-outline-success btn-circle btn-sm
+                                            {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
+                                                data-toggle="modal" data-target="#EDITRDVModal">
+                                                <i class="fas fa-check"></i>
+                                            </a>
                                         @endcan
                                         @can('delete appointment')
                                             @if ($appointment->visited != 1)

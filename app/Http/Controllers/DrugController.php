@@ -83,14 +83,21 @@ class DrugController extends Controller
         ]);
 
         $drug = Drug::find($request->drug_id);
+        // dd($drug);
 
-        $drug->trade_name = $request->trade_name;
-        $drug->generic_name = json_encode($request->generic_name);
+        if ($drug) {
+            $drug->trade_name = $request->trade_name;
+            $drug->generic_name = json_encode($request->generic_name);
 
-        $drug->save();
+            $drug->update();
 
-        return \Redirect::route('drug.all')->with('success', __('sentence.Drug Edited Successfully'));
+            return \Redirect::route('drug.all')->with('success', __('sentence.Drug Edited Successfully'));
+        } else {
+            // Gérer le cas où le médicament n'est pas trouvé
+            return \Redirect::route('drug.all')->with('error', __('sentence.Drug Not Found'));
+        }
     }
+
 
     public function destroy($id)
     {

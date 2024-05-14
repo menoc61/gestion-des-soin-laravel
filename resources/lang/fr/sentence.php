@@ -278,7 +278,7 @@ return [
     'List Prescriptions' => 'Liste Traitements',
     'Send Credentials' => 'Envoyer un Mot de Passe',
     'Invoices' => 'Facture(s)',
-    'time use'=>'Associé à',
+    'time use'=>'Utilisé Pour',
     'In Prescription' => 'Traitement(s)',
     'Reason code' => 'Code du rendez-vous',
     'Visited At' => 'Visite le',
@@ -287,6 +287,7 @@ return [
     'Create New notification' => 'Ajouter une Notification',
     'All Notifications' => 'Liste Notifications',
     'Add Prescription Item' => 'Choisir Un Traitement',
-    'Schedule Info' => 'Periode de la Visite'
+    'Schedule Info' => 'Periode de la Visite',
+    'Total Use'=> 'Nombres d\'utilisations'
 
 ];
