@@ -160,7 +160,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="6">No data available.</td>
+                                <td colspan="6">Aucune donnée disponible.</td>
                             </tr>
                         @endif
                     </tbody>

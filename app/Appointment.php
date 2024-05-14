@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Appointment extends Model
+class Appointment extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
 	protected $table = 'appointments';
 
 	public $dates = [ 'date'];

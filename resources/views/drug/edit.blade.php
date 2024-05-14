@@ -17,36 +17,48 @@
                     </h6>
                 </div>
                 <div class="card-body">
+
                     <form method="post" action="{{ route('drug.store_edit') }}">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">{{ __('sentence.Trade Name') }}<font color="red">*</font></label>
-                            <input type="text" class="form-control" name="trade_name" id="TradeName"
-                                aria-describedby="TradeName" value="{{ $drug->trade_name }}">
+                            <label for="exampleInputEmail1">{{ __('sentence.Trade Name') }}<font color="red">*</font>
+                            </label>
+                            <input type="hidden" value="{{ $drug->id }}" name="drug_id">
+                            <input type="text" class="form-control" value="{{ $drug->trade_name }}" name="trade_name" id="TradeName"
+                                aria-describedby="TradeName">
                             {{ csrf_field() }}
                         </div>
+
                         <div class="form-group">
-                            <label for="exampleInputPassword1">{{ __('sentence.Generic Name') }}<font color="red">*</font></label>
+                            <label for="exampleInputPassword1">{{ __('sentence.Generic Name') }}<font color="red">*
+                                </font></label>
                             <select name="generic_name[]" multiple id="GenericName" class="form-control">
                                 @foreach ($products as $product)
                                     <option value="{{ $product['name'] }}">{{ $product['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Note</label>
+                            <label for="exampleInputPassword1">{{ __('sentence.Note') }}</label>
                             <input type="text" class="form-control" name="note" id="Note"
-                                placeholder="aucun description...">
+                                placeholder="Description...">
                         </div>
-                        <button type="submit" class="btn btn-primary">{{ __('sentence.Save') }}</button>
+                        <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <link rel="stylesheet" type="text/css"
-        href="{{ asset('css/bootstrap-multiselect.css') }}">
-    <script type="text/javascript"
-        src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
+@endsection
+
+@section('footer')
+    <style>
+        .sortable-icon {
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
+    <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#GenericName').multiselect({
@@ -56,4 +68,25 @@
             buttonContainer: '<div class="btn-group w-100" />'
         });
     </script>
+    {{-- <script>
+        // JavaScript to handle sorting
+        $(document).ready(function() {
+            $(".sortable-icon").click(function() {
+                // Get the index of the clicked th within its parent tr
+                const column = $(this).closest('th').index();
+                const order = $(this).hasClass('fa-sort-up') ? 1 : -1;
+
+                const sortedRows = [...document.querySelectorAll('tbody tr')];
+                sortedRows.sort((a, b) => {
+                    const aValue = a.querySelectorAll('td')[column].textContent.trim();
+                    const bValue = b.querySelectorAll('td')[column].textContent.trim();
+                    return order * (aValue.localeCompare(bValue));
+                });
+
+                const tableBody = document.querySelector('tbody');
+                tableBody.innerHTML = '';
+                sortedRows.forEach(row => tableBody.appendChild(row));
+            });
+        });
+    </script> --}}
 @endsection
