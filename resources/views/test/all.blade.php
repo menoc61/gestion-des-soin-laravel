@@ -64,10 +64,10 @@
                                         <a href="{{ url('test/view/' . $test->id) }}"
                                         class="btn btn-outline-primary btn-circle btn-sm"><i class="fa fa-eye"></i></a>
 
-                                    @can('edit diagnostic test')
+                                    {{-- @can('edit diagnostic test')
                                         <a href="{{ url('test/edit/' . $test->id) }}"
                                             class="btn btn-outline-warning btn-circle btn-sm"><i class="fa fa-pen"></i></a>
-                                    @endcan
+                                    @endcan --}}
                                     @can('delete diagnostic test')
                                         <a class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal"
                                             data-target="#DeleteModal" data-link="{{ url('test/delete/' . $test->id) }}"><i
