@@ -103,10 +103,10 @@
                                         <a href="{{ url('billing/view/' . $invoice->id) }}"
                                             class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a>
                                     @endcan
-                                    @can('edit invoice')
+                                    {{-- @can('edit invoice')
                                         <a href="{{ url('billing/edit/' . $invoice->id) }}"
                                             class="btn btn-outline-warning btn-circle btn-sm"><i class="fas fa-pen"></i></a>
-                                    @endcan
+                                    @endcan --}}
                                     @can('delete invoice')
                                         <a data-toggle="modal" data-target="#DeleteModal"
                                             data-link="{{ url('billing/delete/' . $invoice->id) }}"

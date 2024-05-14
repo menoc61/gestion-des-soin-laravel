@@ -25,13 +25,10 @@
                                         <h2 class="name">{{ $praticien->name }}</h2>
                                         <p class="description">{{ $praticien->email }}</p>
                                         <div class="d-flex justify-content-center">
-                                            <input onclick="selectPraticien({{ $praticien->id }}, '{{ $praticien->name }}')" type="button" class="form-control agenda w-50"
-                                                readonly="readonly" id="agenda_{{ $praticien->id }}" value="choisir" readonly="readonly">
-                                            {{-- <button class="btn btn-outline-primary"
-                                                onclick="selectPraticien({{ $praticien->id }}, '{{ $praticien->name }}')">
-                                                <i class="fas fa-check"></i>
-                                                Choisir
-                                            </button> --}}
+                                            <input onclick="selectPraticien({{ $praticien->id }}, '{{ $praticien->name }}')"
+                                                type="button" class="form-control target " readonly="readonly"
+                                                id="rdvdate_{{ $praticien->id }}" value="choisir"
+                                                data-id="{{ $praticien->id }}">
                                         </div>
                                     </div>
                                 </div>
@@ -63,10 +60,11 @@
                             <div class="form-group">
                                 <div class="form-group">
                                     <label for="patient_name">{{ __('sentence.Patient') }}</label>
-                                    <input type="hidden" class="form-control" value="{{ $userId }}"
-                                        id="patient_name" readonly>
-                                    <input type="text" class="form-control" value="{{ $userName }}"
-                                        id="patient_name" readonly>
+                                    <select class="form-control patient_name multiselect-doctorino" id="patient_name">
+                                        <option value="{{ $userId }}" selected>
+                                            {{ $userName }}
+                                        </option>
+                                    </select>
                                     {{ csrf_field() }}
                                 </div>
                             </div>
@@ -81,8 +79,7 @@
 
                             <div class="form-group">
                                 <label for="rdvdate">{{ __('sentence.Date') }}</label>
-                                <input type="text" class="form-control target agenda-input" readonly="readonly"
-                                    id="rdvdate">
+                                <input type="text" class="form-control target" readonly="readonly" id="rdvdate">
                                 <small id="emailHelp" class="form-text text-muted">Select date to view time slots
                                     available</small>
                             </div>
@@ -125,7 +122,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p><b>{{ __('sentence.Doctor') }} :</b> <span id="praticien_name_input"></span></p>
                     <p><b>{{ __('sentence.Patient') }} :</b> <span id="patient_name"></span></p>
                     <p><b>{{ __('sentence.Date') }} :</b> <label class="badge badge-primary-soft" id="rdv_date"></label>
                     </p>
@@ -141,7 +137,6 @@
                         onclick="event.preventDefault();
                         document.getElementById('rdv-form').submit();">{{ __('sentence.Save') }}</a>
                     <form id="rdv-form" action="{{ route('appointment.store') }}" method="POST" class="d-none">
-                        <input type="hidden" name="create_by" id="praticien_name_input_form">
                         <input type="hidden" name="patient" id="patient_input">
                         <input type="hidden" name="rdv_time_date" id="rdv_date_input">
                         <input type="hidden" name="rdv_time_start" id="rdv_time_start_input">
@@ -172,27 +167,28 @@
     <script type="text/javascript">
         // In your Javascript (external .js resource or <script> tag)
         $(document).ready(function() {
-            $(".agenda").datepicker({
-                uiLibrary: "bootstrap4",
-                format: "yyyy-mm-dd",
-                todayHighlight: true,
-                minDate: function() {
-                    var date = new Date();
-                    date.setDate(date.getDate());
-                    return new Date(
-                        date.getFullYear(),
-                        date.getMonth(),
-                        date.getDate()
-                    );
-                },
-            }).on("changeDate", function(e) {
-                var selectedInputId = $(this).attr("id");
+            $(".agenda")
+                .datepicker({
+                    uiLibrary: "bootstrap4",
+                    format: "yyyy-mm-dd",
+                    todayHighlight: true,
+                    minDate: function() {
+                        var date = new Date();
+                        date.setDate(date.getDate());
+                        return new Date(
+                            date.getFullYear(),
+                            date.getMonth(),
+                            date.getDate()
+                        );
+                    }
+                })
+                .on("changeDate", function(e) {
+                    var selectedInputId = $(this).attr("id");
 
-                $(".agenda").not("#" + selectedInputId).val(
-                    ""); // Réinitialiser les autres champs d'entrée
-
-            });
-
+                    $(".agenda")
+                        .not("#" + selectedInputId)
+                        .val(""); // Réinitialiser les autres champs d'entrée
+                });
 
             $('.multiselect-doctorino').select2();
         });
@@ -227,30 +223,27 @@
     </script>
     <script>
         function selectPraticien(praticienId, praticienName) {
+            var reasonTextarea = document.getElementById('reason');
+            var reasonText = reasonTextarea.value;
+
+            // Rechercher l'ID précédent et le supprimer du texte
+            var regex = new RegExp('\\b\\d+\\b', 'g');
+            reasonText = reasonText.replace(regex, '');
+
+            // Retirer les espaces en trop du texte
+            reasonText = reasonText.trim();
+
+            // Ajouter l'ID du praticien sélectionné au texte
+            if (reasonText.length > 0) {
+                reasonText += ' ';
+            }
+            reasonText += praticienId;
+
+            // Mettre à jour les champs et le texte
             document.getElementById('praticien_name').value = praticienId;
             document.getElementById('praticien_name_input').value = praticienName;
-            document.getElementById('praticien_name_input_form').value = praticienId;
+            reasonTextarea.value = reasonText;
         }
     </script>
-    {{-- <script>
-        // Initialiser le Datepicker
-        $(document).ready(function() {
-            $('#rdvdate').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true
-            });
-        });
-
-        // Action lorsque le bouton "Agenda" est cliqué
-        $('#agendaBtn').click(function() {
-            // Ouvrir le Datepicker
-            $('#rdvdate').datepicker('show');
-        });
-
-        // Mettre à jour le champ "rdvdate" lorsque la date est sélectionnée
-        $('#rdvdate').on('changeDate', function(e) {
-            $('#rdvdate').val(e.format());
-        });
-    </script> --}}
+    <script></script>
 @endsection

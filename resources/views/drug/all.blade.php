@@ -16,12 +16,12 @@
                 <div class="col-8">
                     <h6 class="m-0 font-weight-bold text-primary w-75 p-2">{{ __('sentence.All Drugs') }}</h6>
                 </div>
-                <div class="col-4">
+                {{-- <div class="col-4">
                     @can('create drug')
                         <a href="{{ route('drug.create') }}" class="btn btn-primary btn-sm float-right"><i
                                 class="fa fa-plus"></i> {{ __('sentence.Add Drug') }}</a>
                     @endcan
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="card-body">
@@ -58,15 +58,17 @@
 
                                     @if (is_array($product))
                                         @foreach ($product as $products)
-                                        <label class="badge badge-primary-soft">{{ $products }}</label>
+                                            <label class="badge badge-primary-soft">{{ $products }}</label>
                                         @endforeach
                                     @else
                                         {{ $product }}
                                     @endif
 
                                 </td>
-                                <td align="center">{{ __('sentence.In Prescription') }} :
-                                    {{ $drug->Prescription->count() }} {{ __('sentence.time use') }}</td>
+                                <td align="center">{{ __('sentence.time use') }} :
+                                    <label class="badge badge-primary-soft">{{ $drug->Prescription->count() }}</label>
+                                    {{ __('sentence.In Prescription') }}
+                                </td>
                                 <td class="text-center">
                                     @can('edit drug')
                                         <a href="{{ url('drug/edit/' . $drug->id) }}"
@@ -79,7 +81,7 @@
                                     @endcan
                                 </td>
                             </tr>
-                            @empty
+                        @empty
                             <tr>
                                 <td colspan="5" align="center"><img src="{{ asset('img/rest.png') }} " /> <br><br> <b
                                         class="text-muted">Aucun soin trouvé</b>
