@@ -6,109 +6,172 @@
 
 @section('content')
     <div class="row justify-content-center">
-
-        <div class="col-md-10 my-4">
-            <div class="card shadow custom-card-parent d-flex justify-content-center align-items-center">
-                <div class="card w-75 shadow d-flex justify-content-center align-items-center">
-                    <div class="swiper mySwiper">
-                        <div class="swiper-wrapper w-25">
-                            @forelse ($praticiens as $praticien)
-                                <div class="swiper-slide">
-                                    <div class="image-content">
-                                        <span class="overlay"></span>
-                                        <div class="card-image">
-                                            <img class="card-img" src="{{ asset('img/patient-icon.png') }}"
-                                                alt="profil-img">
+        @if (Auth::user()->role_id != 2)
+            <div class="col-md-10 my-4">
+                <div class="card shadow custom-card-parent d-flex justify-content-center align-items-center">
+                    <div class="card w-75 shadow d-flex justify-content-center align-items-center">
+                        <div class="swiper mySwiper">
+                            <div class="swiper-wrapper w-25">
+                                @forelse ($praticiens as $praticien)
+                                    <div class="swiper-slide">
+                                        <div class="image-content">
+                                            <span class="overlay"></span>
+                                            <div class="card-image">
+                                                <img class="card-img" src="{{ asset('img/patient-icon.png') }}"
+                                                    alt="profil-img">
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <h2 class="name">{{ $praticien->name }}</h2>
+                                            <p class="description">{{ $praticien->email }}</p>
+                                            <div class="d-flex justify-content-center">
+                                                <input
+                                                    onclick="selectPraticien({{ $praticien->id }}, '{{ $praticien->name }}')"
+                                                    type="button" class="form-control target " readonly="readonly"
+                                                    id="rdvdate_{{ $praticien->id }}" value="choisir"
+                                                    data-id="{{ $praticien->id }}">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="card-content">
-                                        <h2 class="name">{{ $praticien->name }}</h2>
-                                        <p class="description">{{ $praticien->email }}</p>
-                                        <div class="d-flex justify-content-center">
-                                            <input onclick="selectPraticien({{ $praticien->id }}, '{{ $praticien->name }}')"
-                                                type="button" class="form-control target " readonly="readonly"
-                                                id="rdvdate_{{ $praticien->id }}" value="choisir"
-                                                data-id="{{ $praticien->id }}">
-                                        </div>
+                                @empty
+                                    <div class="text-center">
+                                        <img src="{{ asset('img/not-found.svg') }}" width="200" />
+                                        <br><br>
+                                        <b class="text-muted">pas de praticien trouvé</b>
                                     </div>
-                                </div>
-                            @empty
-                                <div class="text-center">
-                                    <img src="{{ asset('img/not-found.svg') }}" width="200" />
-                                    <br><br>
-                                    <b class="text-muted">pas de praticien trouvé</b>
-                                </div>
-                            @endforelse
+                                @endforelse
+                            </div>
                         </div>
                     </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
             </div>
-        </div>
 
-
-        <div class="col-md-10 my-4">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.New Appointment') }}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12">
-                            <div class="form-group">
+            <div class="col-md-10 my-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.New Appointment') }}</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label for="patient_name">{{ __('sentence.Patient') }}</label>
-                                    <select class="form-control patient_name multiselect-doctorino" id="patient_name">
-                                        <option value="{{ $userId }}" selected>
-                                            {{ $userName }}
-                                        </option>
-                                    </select>
-                                    {{ csrf_field() }}
+                                    <div class="form-group">
+                                        <label for="patient_name">{{ __('sentence.Patient') }}</label>
+                                        <select class="form-control patient_name multiselect-doctorino" id="patient_name">
+                                            <option value="{{ $userId }}" selected>
+                                                {{ $userName }}
+                                            </option>
+                                        </select>
+                                        {{ csrf_field() }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="praticien_id">{{ __('sentence.Doctor') }}</label>
+                                    <input type="hidden" class="form-control" value="{{ $praticien->id }}"
+                                        id="praticien_id" readonly>
+                                    <input type="text" class="form-control" value="{{ $praticien->name }}" readonly
+                                        id="praticien_name_input">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="rdvdate">{{ __('sentence.Date') }}</label>
+                                    <input type="text" class="form-control target" readonly="readonly" id="rdvdate">
+                                    <small id="emailHelp" class="form-text text-muted">Select date to view time slots
+                                        available</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reason">{{ __('sentence.Reason for visit') }}</label>
+                                    <textarea class="form-control" id="reason"></textarea>
+                                    <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="sms">
+                                    <label class="form-check-label" for="sms">
+                                        {{ __('sentence.Send SMS') }}
+                                    </label>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label for="praticien_name">{{ __('sentence.Doctor') }}</label>
-                                <input type="hidden" class="form-control" value="{{ $praticien->id }}" id="praticien_name"
-                                    readonly>
-                                <input type="text" class="form-control" value="{{ $praticien->name }}" readonly
-                                    id="praticien_name_input">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="rdvdate">{{ __('sentence.Date') }}</label>
-                                <input type="text" class="form-control target" readonly="readonly" id="rdvdate">
-                                <small id="emailHelp" class="form-text text-muted">Select date to view time slots
-                                    available</small>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reason">{{ __('sentence.Reason for visit') }}</label>
-                                <textarea class="form-control" id="reason"></textarea>
-                                <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sms">
-                                <label class="form-check-label" for="sms">
-                                    {{ __('sentence.Send SMS') }}
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <label for="date">{{ __('sentence.Available Times') }}</label>
-                            <hr>
-                            <div class="row mb-2 myorders"></div>
-                            <div class="alert alert-danger text-center" role="alert" id="help-block">
-                                <img src="{{ asset('img/calendar.png') }}"><br>
-                                <b>{{ __('sentence.No date selected') }}</b>
+                            <div class="col-md-8 col-sm-12">
+                                <label for="date">{{ __('sentence.Available Times') }}</label>
+                                <hr>
+                                <div class="row mb-2 myorders"></div>
+                                <div class="alert alert-danger text-center" role="alert" id="help-block">
+                                    <img src="{{ asset('img/calendar.png') }}"><br>
+                                    <b>{{ __('sentence.No date selected') }}</b>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @else
+            <div class="col-md-10 my-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.New Appointment') }}</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="patient_name">{{ __('sentence.Patient') }}</label>
+                                        <select class="form-control patient_name multiselect-doctorino" id="patient_name">
+                                            <option value="{{ $userId }}" selected>
+                                                {{ $userName }}
+                                            </option>
+                                        </select>
+                                        {{ csrf_field() }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="praticien_name">{{ __('sentence.Doctor') }}</label>
+                                    <input type="hidden" class="form-control" value="{{ Auth::user()->id }}"
+                                        id="praticien_name" readonly>
+                                    <input type="text" class="form-control" value="{{ Auth::user()->name }}" readonly
+                                        id="praticien_name_input">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="rdvdate">{{ __('sentence.Date') }}</label>
+                                    <input type="text" class="form-control target" readonly="readonly"
+                                        id="rdvdate">
+                                    <small id="emailHelp" class="form-text text-muted">Select date to view time slots
+                                        available</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reason">{{ __('sentence.Reason for visit') }}</label>
+                                    <textarea class="form-control" id="reason"></textarea>
+                                    <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="sms">
+                                    <label class="form-check-label" for="sms">
+                                        {{ __('sentence.Send SMS') }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-sm-12">
+                                <label for="date">{{ __('sentence.Available Times') }}</label>
+                                <hr>
+                                <div class="row mb-2 myorders"></div>
+                                <div class="alert alert-danger text-center" role="alert" id="help-block">
+                                    <img src="{{ asset('img/calendar.png') }}"><br>
+                                    <b>{{ __('sentence.No date selected') }}</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
     <!-- Appointment Modal-->
     <div class="modal fade" id="RDVModalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -240,10 +303,9 @@
             reasonText += praticienId;
 
             // Mettre à jour les champs et le texte
-            document.getElementById('praticien_name').value = praticienId;
+            document.getElementById('praticien_id').value = praticienId;
             document.getElementById('praticien_name_input').value = praticienName;
             reasonTextarea.value = reasonText;
         }
     </script>
-    <script></script>
 @endsection

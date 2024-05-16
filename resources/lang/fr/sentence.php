@@ -288,6 +288,10 @@ return [
     'All Notifications' => 'Liste Notifications',
     'Add Prescription Item' => 'Choisir Un Traitement',
     'Schedule Info' => 'Periode de la Visite',
-    'Total Use'=> 'Nombres d\'utilisations'
+    'Total Use'=> 'Nombres d\'utilisations',
+    'Psycho' => 'Psychothérapie',
+    'No Psycho Available' => 'Aucune Psychothérapie Trouvée',
+    'Create Psycho' => 'Créer une Psychothérapie',
+    'follow psycho' => 'Suivre une Psychothérapie'
 
 ];

@@ -127,18 +127,19 @@ var baseURL = SITE_URL;
 
 
 
-  var money = 0;
+  var selectedDate = 0;
+  var praticienId;
 
       $('.target').on('change', function () {
-          money = document.getElementById("rdvdate").value;
-          AddAppointment(money);
-
+            selectedDate = document.getElementById("rdvdate").value;
+            praticienId = document.getElementById("praticien_id").value;
+          AddAppointment(selectedDate, praticienId);
       });
 
-          function AddAppointment(date){
+          function AddAppointment(date, docId){
 
             $.ajax({
-                url: baseURL+'/appointment/checkslots/'+date,
+                url: baseURL+'/appointment/checkslots/'+docId+ '/' + date,
                 type: 'GET',
                 cache : false,
                 success: function(array){

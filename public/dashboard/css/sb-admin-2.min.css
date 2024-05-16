@@ -629,7 +629,7 @@ mark {
   background-color: #fff;
   border: 1px solid #dddfeb;
   border-radius: 0.35rem;
-  max-width: 100%;
+  max-width: 70%;
   height: auto;
 }
 
@@ -12029,4 +12029,18 @@ td > a {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+.table-align-center td {
+    vertical-align: top;
+    text-align: left;
+}
+
+.table-align-center p {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.table-align-center label {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
 }

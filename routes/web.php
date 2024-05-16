@@ -95,6 +95,7 @@ Route::get('prescription/follow/{id}', 'PrescriptionController@follow')->name('p
 Route::get('/prescription/edit/{id}', 'PrescriptionController@edit')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|edit prescription']);
 Route::post('/prescription/update', 'PrescriptionController@update')->name('prescription.update');
 Route::get('/prescription/create_by/{id}', 'PrescriptionController@create_By_Id')->where('id', '[0-9]+')->name('prescription.create_by');
+Route::get('/prescription/psychotherapi/{id}', 'PrescriptionController@create_Psychotherapie_By_Id')->where('id', '[0-9]+')->name('prescription.psycho_by');
 Route::post('/prescription/create_by/{id}', 'PrescriptionController@store')->name('prescription.store_id');
 
 // Billing

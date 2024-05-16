@@ -124,9 +124,9 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $nonVisitedCount = Appointment::all()->where('visited', 0)->count();
         $allAppointment = Appointment::all()->count();
 
-        $appointmentHote = Appointment::where('user_id', $user)->count();
-        $diagnoseHote = Test::where('user_id', $user)->count();
-        $prescriptionHote = Prescription::where('user_id', $user)->count();
+        $appointmentHote = Appointment::where('user_id', $user->id)->count();
+        $diagnoseHote = Test::where('user_id', $user->id)->count();
+        $prescriptionHote = Prescription::where('user_id', $user->id)->count();
 
         // $total_payment_by_month = Billing_item::select('id', 'created_at')->get()->groupBy(
         //     function ($total_payment_by_month) {
