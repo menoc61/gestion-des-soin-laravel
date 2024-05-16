@@ -7,6 +7,7 @@ use App\Notifications\NewAppointmentByEmailNotification;
 use App\Notifications\WhatsAppNotification;
 use App\Setting;
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -33,10 +34,12 @@ class AppointmentController extends Controller
         }
 
         $praticiens = User::where('role_id', '!=', 3)->get();
+        $user_auth = Auth::user();
 
         return view('appointment.create_By_user', [
             'userName' => $user->name,
             'praticiens' => $praticiens,
+            'user_auth' => $user_auth,
         ])->with('userId', $id);
     }
 

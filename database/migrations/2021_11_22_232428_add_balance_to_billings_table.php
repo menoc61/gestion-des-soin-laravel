@@ -14,11 +14,11 @@ class AddBalanceToBillingsTable extends Migration
     public function up()
     {
         Schema::table('billings', function (Blueprint $table) {
-            $table->string('due_amount')->nullable();
-            $table->string('deposited_amount')->nullable();
+            $table->decimal('due_amount')->nullable();
+            $table->decimal('deposited_amount')->nullable();
             $table->string('vat')->nullable();
-            $table->string('total_without_tax')->nullable();
-            $table->string('total_with_tax')->nullable();
+            $table->decimal('total_without_tax')->nullable();
+            $table->decimal('total_with_tax')->nullable();
         });
     }
 
@@ -30,7 +30,7 @@ class AddBalanceToBillingsTable extends Migration
     public function down()
     {
         Schema::table('billings', function (Blueprint $table) {
-            
+
             $table->string('due_amount')->nullable();
             $table->string('deposited_amount')->nullable();
             $table->string('vat')->nullable();
