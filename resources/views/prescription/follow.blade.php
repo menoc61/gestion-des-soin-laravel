@@ -184,7 +184,7 @@
                                 </tbody>
                             @empty
                                 <tr>
-                                    <td colspan="5" align="center">
+                                    <td colspan="6" align="center">
                                         <img src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br>
                                         <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
                                     </td>

@@ -37,12 +37,14 @@
                                             class="btn btn-danger btn-sm btn-round px-3"> <i class="fa fa-pen"></i></a>
                                         <ul class="list-unstyled list-inline mt-3 text-muted">
                                             <li class="list-inline-item font-size-13 me-3">
-                                                <strong class="text-dark">{{ $appointments->count() }}</strong>
-                                                {{ __('sentence.Appointment') }}
+                                                <label class="badge badge-success-soft"><strong
+                                                        class="text-dark">{{ $appointments->count() }}</strong>
+                                                    {{ __('sentence.Appointment') }}</label>
                                             </li>
                                             <li class="list-inline-item font-size-13">
-                                                <strong class="text-dark">{{ $invoices->count() }}</strong>
-                                                {{ __('sentence.Invoices') }}
+                                                <label class="badge badge-success-soft"><strong
+                                                        class="text-dark">{{ $invoices->count() }}</strong>
+                                                    {{ __('sentence.Invoices') }}</label>
                                             </li>
                                         </ul>
                                     </div>
@@ -50,12 +52,16 @@
                             </div>
                             <hr>
 
-                            <table class="table table-striped">
+                            <table class="table table-striped table-align-center">
                                 <tr>
                                     @isset($patient->Patient->birthday)
                                         <td>
-                                            <p><b>{{ __('sentence.Birthday') }} :</b> {{ $patient->Patient->birthday }}
-                                                ({{ \Carbon\Carbon::parse($patient->Patient->birthday)->age }} ANS)</p>
+                                            <p><b>{{ __('sentence.Birthday') }} :</b></p>
+                                        </td>
+                                        <td>
+                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->birthday }}
+                                                    ({{ \Carbon\Carbon::parse($patient->Patient->birthday)->age }} ANS)</label>
+                                            </p>
                                         </td>
                                     @endisset
                                 </tr>
@@ -63,7 +69,11 @@
                                 <tr>
                                     @isset($patient->Patient->gender)
                                         <td>
-                                            <p><b>{{ __('sentence.Gender') }} :</b> {{ $patient->Patient->gender }}</p>
+                                            <p><b>{{ __('sentence.Gender') }} :</b></p>
+                                        </td>
+                                        <td>
+                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->gender }}</label>
+                                            </p>
                                         </td>
                                     @endisset
                                 </tr>
@@ -71,7 +81,11 @@
                                 <tr>
                                     @isset($patient->Patient->phone)
                                         <td>
-                                            <p><b>{{ __('sentence.Phone') }} :</b> {{ $patient->Patient->phone }}</p>
+                                            <p><b>{{ __('sentence.Phone') }} :</b></p>
+                                        </td>
+                                        <td>
+                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->phone }}</label>
+                                            </p>
                                         </td>
                                     @endisset
                                 </tr>
@@ -79,7 +93,11 @@
                                 <tr>
                                     @isset($patient->Patient->adress)
                                         <td>
-                                            <p><b>{{ __('sentence.Address') }} :</b> {{ $patient->Patient->adress }}</p>
+                                            <p><b>{{ __('sentence.Address') }} :</b></p>
+                                        </td>
+                                        <td>
+                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->adress }}</label>
+                                            </p>
                                         </td>
                                     @endisset
                                 </tr>
@@ -87,7 +105,12 @@
                                 <tr>
                                     @isset($patient->Patient->allergie)
                                         <td>
-                                            <p><b>{{ __('sentence.Allergies') }} :</b> {{ $patient->Patient->allergie }}</p>
+                                            <p><b>{{ __('sentence.Allergies') }} :</b></p>
+                                        </td>
+                                        <td>
+                                            <p><label
+                                                    class="badge badge-success-soft">{{ $patient->Patient->allergie }}</label>
+                                            </p>
                                         </td>
                                     @endisset
                                 </tr>
@@ -95,7 +118,11 @@
                                 <tr>
                                     @isset($patient->Patient->hobbie)
                                         <td>
-                                            <p><b>{{ __('sentence.Hobbies') }} :</b> {{ $patient->Patient->hobbie }}</p>
+                                            <p><b>{{ __('sentence.Hobbies') }} :</b></p>
+                                        </td>
+                                        <td>
+                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->hobbie }}</label>
+                                            </p>
                                         </td>
                                     @endisset
                                 </tr>
@@ -103,32 +130,34 @@
                                 <tr>
                                     @isset($patient->Patient->demande)
                                         <td>
-                                            <p><b>{{ __('sentence.Special Requests') }} :</b> {{ $patient->Patient->demande }}
+                                            <p><b>{{ __('sentence.Special Requests') }} :</b></p>
+                                        </td>
+                                        <td>
+                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->demande }}</label>
                                             </p>
                                         </td>
                                     @endisset
                                 </tr>
-                            </table>
-
-                            <hr>
-
-                            <table class="table table-striped">
+                                <hr>
                                 <tr>
                                     @isset($patient->Patient->morphology)
                                         <td>
                                             <p><b>{{ __('sentence.Morphology') }} :</b>
-                                                @php
-                                                    $morphologyArray = json_decode($patient->Patient->morphology);
-                                                @endphp
 
-                                                @if (is_array($morphologyArray))
-                                                    @foreach ($morphologyArray as $item)
-                                                        <label class="badge badge-success-soft">{{ $item }}</label>
-                                                    @endforeach
-                                                @else
-                                                    <span>No morphology data available.</span>
-                                                @endif
                                             </p>
+                                        </td>
+                                        <td>
+                                            @php
+                                                $morphologyArray = json_decode($patient->Patient->morphology);
+                                            @endphp
+
+                                            @if (is_array($morphologyArray))
+                                                @foreach ($morphologyArray as $item)
+                                                    <label class="badge badge-success-soft">{{ $item }}</label>
+                                                @endforeach
+                                            @else
+                                                <span>No morphology data available.</span>
+                                            @endif
                                         </td>
                                     @endisset
                                 </tr>
@@ -137,18 +166,21 @@
                                     @isset($patient->Patient->alimentation)
                                         <td>
                                             <p><b>{{ __('sentence.Alimentation') }} :</b>
-                                                @php
-                                                    $alimentationArray = json_decode($patient->Patient->alimentation);
-                                                @endphp
 
-                                                @if (is_array($alimentationArray))
-                                                    @foreach ($alimentationArray as $item)
-                                                        <label class="badge badge-success-soft">{{ $item }}</label>
-                                                    @endforeach
-                                                @else
-                                                    <span>No alimentation data available.</span>
-                                                @endif
                                             </p>
+                                        </td>
+                                        <td>
+                                            @php
+                                                $alimentationArray = json_decode($patient->Patient->alimentation);
+                                            @endphp
+
+                                            @if (is_array($alimentationArray))
+                                                @foreach ($alimentationArray as $item)
+                                                    <label class="badge badge-success-soft">{{ $item }}</label>
+                                                @endforeach
+                                            @else
+                                                <span>No alimentation data available.</span>
+                                            @endif
                                         </td>
                                     @endisset
                                 </tr>
@@ -157,18 +189,21 @@
                                     @isset($patient->Patient->type_patient)
                                         <td>
                                             <p><b>{{ __('sentence.Type of patient') }} :</b>
-                                                @php
-                                                    $type_patientArray = json_decode($patient->Patient->type_patient);
-                                                @endphp
 
-                                                @if (is_array($type_patientArray))
-                                                    @foreach ($type_patientArray as $item)
-                                                        <label class="badge badge-success-soft">{{ $item }}</label>
-                                                    @endforeach
-                                                @else
-                                                    <span>No patient type data available.</span>
-                                                @endif
                                             </p>
+                                        </td>
+                                        <td>
+                                            @php
+                                                $type_patientArray = json_decode($patient->Patient->type_patient);
+                                            @endphp
+
+                                            @if (is_array($type_patientArray))
+                                                @foreach ($type_patientArray as $item)
+                                                    <label class="badge badge-success-soft">{{ $item }}</label>
+                                                @endforeach
+                                            @else
+                                                <span>No patient type data available.</span>
+                                            @endif
                                         </td>
                                     @endisset
                                 </tr>
@@ -200,7 +235,10 @@
                                         role="tab" aria-controls="prescriptions"
                                         aria-selected="false">{{ __('sentence.Prescriptions') }}</a>
                                 </li>
-
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="Psycho-tab" data-toggle="tab" href="#Psycho" role="tab"
+                                        aria-controls="Psycho" aria-selected="false">{{ __('sentence.Psycho') }}</a>
+                                </li>
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab"
                                         aria-controls="Billing"Alert
@@ -241,7 +279,6 @@
                                 </div>
 
 
-
                                 <div class="tab-pane fade" id="appointements" role="tabpanel"
                                     aria-labelledby="appointements-tab">
 
@@ -267,7 +304,7 @@
                                                 <td align="center">{{ __('sentence.Actions') }}</td>
                                             </tr>
                                             @forelse($appointments as  $key => $appointment)
-                                                @if (Auth::user()->role_id == 3 && Auth::user()->id == $appointment->user_id)
+                                                @if (Auth::user()->role_id == 2)
                                                     <tr>
                                                         <td align="center">{{ $key + 1 }} </td>
                                                         <td align="center"><label class="badge badge-primary-soft"><i
@@ -480,7 +517,7 @@
                                                 <td align="center"><b> Action</b> </td>
                                             </tr>
                                             @forelse($tests as $key => $test)
-                                                @if (Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by)
+                                                @if (Auth::user()->role_id == 2)
                                                     <tr>
                                                         <td align="center">{{ $key + 1 }}</td>
                                                         <td align="center">{{ $test->test_name }}</td>
@@ -596,7 +633,7 @@
                                                 <td align="center">{{ __('sentence.Actions') }}</td>
                                             </tr>
                                             @forelse($prescriptions as $prescription)
-                                                @if (Auth::user()->role_id == 2 && Auth::user()->id == $prescription->doctor_id)
+                                                @if (Auth::user()->role_id == 2)
                                                     <tr>
                                                         <td align="center">{{ $prescription->reference }} </td>
                                                         <td class="text-center">
@@ -782,7 +819,6 @@
 
 
                                     {{-- ------------------------------------------------------- Start Facturation --------------------------------------------------------------------- --}}
-
                                     <div class="tab-pane fade" id="Billing" role="tabpanel" aria-labelledby="Billing-tab">
                                         <div class="row mt-4">
                                             <div class="col-lg-6 mb-4">
@@ -836,7 +872,7 @@
                                                 <th>{{ __('sentence.Actions') }}</th>
                                             </tr>
                                             @forelse($invoices as $invoice)
-                                                @if (Auth::user()->role_id == 2 && Auth::user()->id == $invoice->created_by)
+                                                @if (Auth::user()->role_id == 2)
                                                     <tr>
                                                         <td><a
                                                                 href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
@@ -998,9 +1034,80 @@
                                             @endforelse
                                         </table>
                                     </div>
-
                                     {{-- ------------------------------------------------------- End Facturation ----------------------------------------------------------------------- --}}
 
+
+
+                                    {{-- ------------------------------------------------------- Start Psychothérapie --------------------------------------------------------------------- --}}
+                                    <div class="tab-pane fade" id="Psycho" role="tabpanel" aria-labelledby="Psycho-tab">
+                                        <div class="row">
+                                            <div class="col">
+                                                @can('create prescription')
+                                                    <a class="btn btn-primary btn-sm my-4 float-right"
+                                                        href="{{ route('prescription.psycho_by', ['id' => $patient->id]) }}"><i
+                                                            class="fa fa-pen"></i>
+                                                        {{ __('sentence.Create Psycho') }}</a>
+                                                @endcan
+                                            </div>
+                                        </div>
+                                        <table class="table">
+                                            <tr>
+                                                <td align="center">{{ __('sentence.Reference') }}</td>
+                                                <td class="text-center">{{ __('sentence.Content') }}</td>
+                                                <td align="center">{{ __('sentence.Created at') }}</td>
+                                                <td align="center">{{ __('sentence.follow psycho') }}</td>
+                                                <td align="center">{{ __('sentence.Actions') }}</td>
+                                            </tr>
+                                            @forelse($prescriptions as $prescription)
+                                                <tr>
+                                                    <td align="center">{{ $prescription->reference }} </td>
+                                                    <td class="text-center">
+                                                        <label class="badge badge-primary-soft">
+                                                            {{ count($prescription->Drug) }} Soins
+                                                        </label>
+                                                        <label class="badge badge-primary-soft">
+                                                            {{ count($prescription->Test) }} Diagnostics
+                                                        </label>
+                                                    </td>
+                                                    <td align="center"><label
+                                                            class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
+                                                    </td>
+                                                    <td align="center">
+                                                        <a href="{{ url('prescription/follow/' . $prescription->id) }}"
+                                                            class="btn btn-outline-primary btn-circle btn-sm">
+                                                            <i class="fa fa-id-card"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td align="center">
+                                                        @can('view prescription')
+                                                            <a href="{{ url('prescription/view/' . $prescription->id) }}"
+                                                                class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                    class="fa fa-eye"></i></a>
+                                                        @endcan
+                                                        @can('edit prescription')
+                                                            <a href="{{ url('prescription/edit/' . $prescription->id) }}"
+                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                    class="fas fa-pen"></i></a>
+                                                        @endcan
+                                                        @can('delete prescription')
+                                                            <a href="{{ url('prescription/delete/' . $prescription->id) }}"
+                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                    class="fas fa-trash"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                                <br>
+                                            @empty
+                                                <tr>
+                                                </tr>
+                                                <td colspan="6" align="center"><img
+                                                        src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br> <b
+                                                        class="text-muted">{{ __('sentence.No Psycho Available') }}</b>
+                                                </td>
+                                            @endforelse
+                                        </table>
+                                    </div>
+                                    {{-- ------------------------------------------------------- End Psychothérapie ----------------------------------------------------------------------- --}}
 
                                 </div>
 
