@@ -47,6 +47,23 @@ class PrescriptionController extends Controller
         return view('prescription.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
     }
 
+    public function create_Psychotherapie_By_Id($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return redirect()->back()->with('error', 'The user does not exist');
+        }
+        $drugs = Drug::all();
+        $patients = User::where('role_id', '3')->get();
+        $praticiens = User::where('role_id', '2')->get();
+        // $tests = Test::where('user_id', $id)->get();
+        $tests = Test::where('user_id', $id)
+             ->whereDoesntHave('Prescription') // Prescription correspond a la fonction définie dans le model test
+             ->get();
+
+        return view('prescription.createpsychothérapie', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
+    }
+
     public function follow($id)
     {
         $prescription = Prescription::findOrfail($id);

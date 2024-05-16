@@ -46,10 +46,13 @@ class DrugController extends Controller
             'generic_name' => ['required', 'array'],
         ]);
 
-        $drug = Drug::updateOrCreate(
-            ['trade_name' => $request->trade_name, 'generic_name' => json_encode($request->generic_name)],
-            ['note' => $request->note]
-        );
+        $drug = new Drug();
+
+        $drug->trade_name = $request->trade_name;
+        $drug->generic_name = json_encode($request->generic_name);
+        $drug->note = $request->note;
+
+        $drug->save();
 
         return \Redirect::route('drug.all')->with('success', __('sentence.Drug added Successfully'));
     }
