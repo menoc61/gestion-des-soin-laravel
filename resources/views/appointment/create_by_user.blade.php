@@ -5,6 +5,18 @@
 @endsection
 
 @section('content')
+    <div class="">
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="card col-md-10">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.Take Appointment') }} Pour {{ $userName }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row justify-content-center">
         @if (Auth::user()->role_id != 2)
             <div class="col-md-10 my-4">
@@ -261,23 +273,15 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
-            effect: 'coverflow',
-            coverflowEffect: {
-                rotate: 0,
-                stretch: 0,
-                depth: 110,
-                modifier: 2.5,
-                scale: 1,
-                slideShadows: true,
-            },
             slidesPerView: 3,
             centeredSlides: true,
+            spaceBetween: 30,
             loop: true,
             shadowOffset: 200, // Ajustez la valeur de l'ombre selon vos besoins
-            // pagination: {
-            //     el: ".swiper-pagination",
-            //     clickable: true,
-            // },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
             navigation: {
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",

@@ -8,32 +8,42 @@
 @endsection
 
 @section('content')
-    <div class="mb-3">
-        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    <div class="">
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="card col-md-10">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.Test') }} De {{$userName}}</h2>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-10">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Add Test') }}</h6>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{ route('test.store_id', ['id' => $userId])}}">
+                    <form method="post" action="{{ route('test.store_id', ['id' => $userId]) }}">
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-3 col-form-label">{{ __('sentence.Patient Name') }}<font
-                                    color="red">*</font></label>
-                                    <div class="col-sm-9 input-group">
-                                        <input type="hidden" class="form-control" value="{{ $userId }}"  name="patient_id" readonly>
-                                        <input type="text" class="form-control" value="{{ $userName }}" readonly>
-                                        {{ csrf_field() }}
-                                    </div>
+                            {{-- <label for="inputEmail3" class="col-sm-3 col-form-label">{{ __('sentence.Patient Name') }}<font
+                                    color="red">*</font></label> --}}
+                            <div class="col-sm-9 input-group">
+                                <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id"
+                                    readonly>
+                                {{-- <input type="text" class="form-control" value="{{ $userName }}" readonly> --}}
+                                {{ csrf_field() }}
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label">{{ __('sentence.Test Name') }}<font
                                     color="red">*</font></label>
-                                    <div class="col-sm-9 input-group">
-                                        {{-- <select class="input-group-text" name="patient_id" id="PatientID" required
+                            <div class="col-sm-9 input-group">
+                                {{-- <select class="input-group-text" name="patient_id" id="PatientID" required
                                             aria-placeholder="{{ __('sentence.Select Patient') }}" onchange="updateTestName()">
                                             <option @readonly(true)>{{ __('sentence.Select Patient') }}</option>
                                             @foreach ($patients as $patient)
@@ -41,9 +51,10 @@
                                                     {{ $patient->id }}</option>
                                             @endforeach
                                         </select> --}}
-                                        <input type="text" class="form-control" id="test_name" name="test_name" >
-                                        {{ csrf_field() }}
-                                    </div>
+                                <input type="text" class="form-control" id="inputPassword2" value="{{ $userName }}"
+                                    name="test_name" readonly>
+                                {{ csrf_field() }}
+                            </div>
                         </div>
 
                         <div class="form-group row">
@@ -79,7 +90,8 @@
                                         <label for="SEBUM"
                                             class="col-sm-3 col-form-label">{{ __('sentence.SEBUM') }}</label>
                                         <div class="col-sm-9">
-                                            <select id="sebum" class="form-control" multiple="multiple" name="sebum_grp[]">
+                                            <select id="sebum" class="form-control" multiple="multiple"
+                                                name="sebum_grp[]">
                                                 <optgroup label="NORMALE">
                                                     <option value="Léger">Léger</option>
                                                     <option value="Normale">Normale</option>
@@ -651,6 +663,20 @@
             var selectedDescriptions = selectedOptions.map(option => descriptions[option]);
 
             descriptionInput.value = selectedDescriptions.join(', ');
+        });
+        var defaultInputValue = document.getElementById('inputPassword2').defaultValue;
+        var selectedOption = defaultInputValue;
+        var selectedValues = [];
+
+        document.getElementById('inputSection').addEventListener('change', function() {
+            var newSelectedOption = this.value;
+            var descriptionInput = document.getElementById('inputPassword2');
+
+            // Mettre à jour la valeur du selectedOption en fonction de la sélection de l'utilisateur
+            selectedOption = defaultInputValue + ' ' + newSelectedOption;
+
+            // Mettre à jour la valeur de l'input
+            descriptionInput.value = selectedOption;
         });
     </script>
 

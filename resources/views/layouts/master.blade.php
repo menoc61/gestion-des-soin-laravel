@@ -26,7 +26,6 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('dashboard/css/sb-admin-2.min.css') }}" rel="stylesheet" media="all">
     <link href="{{ asset('dashboard/css/gijgo.min.css') }}" rel="stylesheet" media="all">
-
     <script>
         "use strict";
         const SITE_URL = "{{ url('/') }}";
@@ -46,12 +45,18 @@
             <!-- Sidebar -->
             <ul class="navbar-nav custom-colors sidebar sidebar-dark accordion" id="accordionSidebar">
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
+                {{-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
                     <div class="sidebar-brand-icon rotate-n-15 d-none d-lg-block d-xl-none">
                         <i class="fas fa-user-md"></i>
                     </div>
-                    <div class="sidebar-brand-text mx-3"><img src="{{ asset('img/logo.png') }}" class="img-fluid"></div>
-                </a>
+                </a> --}}
+                <hr>
+                <center>
+                    <div class="sidebar-brand-text mx-3 d">
+                        <img src="{{ asset('img/sai-i-lama-logo.png') }}" class="img-fluid">
+                    </div>
+                </center>
+                <hr>
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">
                 <!-- Nav Item - Dashboard -->
