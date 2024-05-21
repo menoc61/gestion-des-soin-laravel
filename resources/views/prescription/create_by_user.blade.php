@@ -4,13 +4,23 @@
 @endsection
 
 @section('content')
-    <div class="mb-3">
-        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    <div class="">
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="card col-md-12">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-dark text-center"> {{ __('sentence.Prescrip Psycho') }}</h2>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <form method="post" action="{{ route('prescription.store_id', ['id' => $userId]) }}">
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-4">
             <div class="col-md-4">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -18,12 +28,12 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label >{{ __('sentence.Prescription Name') }} :</label>
+                            <label>{{ __('sentence.Prescription Name') }} :</label>
                             <input type="text" class="form-control" id="Nom" name="nom">
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group">
-                            <label >{{ __('sentence.Prescription dosage') }} :</label>
+                            <label>{{ __('sentence.Prescription dosage') }} :</label>
                             <input type="number" class="form-control" name="dosage" min="1">
                             {{ csrf_field() }}
                         </div>
@@ -37,14 +47,15 @@
                         <div class="form-group">
                             <label for="DoctorID">{{ __('sentence.Doctors') }} :</label>
                             @if (Auth::user()->role_id === 1)
-                                    <select class="form-control" name="Doctor_id" id="DoctorID" required>
-                                        <option value="{{Auth::user()->id}}">{{Auth::user()->name}}</option>
-                                        @foreach ($praticiens as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endforeach
-                                    </select>
+                                <select class="form-control" name="Doctor_id" id="DoctorID" required>
+                                    <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+                                    @foreach ($praticiens as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
                             @else
-                                <input type="hidden" name="Doctor_id" class="form-control" value="{{ Auth::user()->id }}" readonly>
+                                <input type="hidden" name="Doctor_id" class="form-control" value="{{ Auth::user()->id }}"
+                                    readonly>
                                 <input type="text" class="form-control" value="{{ Auth::user()->name }}" readonly>
                             @endif
                             {{ csrf_field() }}

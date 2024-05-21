@@ -26,7 +26,6 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('dashboard/css/sb-admin-2.min.css') }}" rel="stylesheet" media="all">
     <link href="{{ asset('dashboard/css/gijgo.min.css') }}" rel="stylesheet" media="all">
-
     <script>
         "use strict";
         const SITE_URL = "{{ url('/') }}";

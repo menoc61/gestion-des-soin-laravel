@@ -83,6 +83,7 @@ Route::get('/test/view/{id}', 'TestController@view_test')->where('id', '[0-9]+')
 Route::get('/test/user/{id}', 'TestController@view_diagnostic')->where('id', '[0-9]+')->name('test.view_diagnostic')->middleware(['role_or_permission:Admin|view patient']);
 Route::get('/test/create_by/{id}', 'TestController@create_By_Id')->where('id', '[0-9]+')->name('test.create_by');
 Route::post('/test/create_by/{id}', 'TestController@store')->name('test.store_id');
+Route::get('/test/psychotherapi/{id}', 'TestController@create_Psychotherapie_By_Id')->where('id', '[0-9]+')->name('test.psychotherapie');
 // Prescriptions
 Route::get('/prescription/create', 'PrescriptionController@create')->name('prescription.create')->middleware(['role_or_permission:Admin|create prescription']);
 Route::post('/prescription/create', 'PrescriptionController@store')->name('prescription.store');
@@ -95,8 +96,8 @@ Route::get('prescription/follow/{id}', 'PrescriptionController@follow')->name('p
 Route::get('/prescription/edit/{id}', 'PrescriptionController@edit')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|edit prescription']);
 Route::post('/prescription/update', 'PrescriptionController@update')->name('prescription.update');
 Route::get('/prescription/create_by/{id}', 'PrescriptionController@create_By_Id')->where('id', '[0-9]+')->name('prescription.create_by');
-Route::get('/prescription/psychotherapi/{id}', 'PrescriptionController@create_Psychotherapie_By_Id')->where('id', '[0-9]+')->name('prescription.psycho_by');
 Route::post('/prescription/create_by/{id}', 'PrescriptionController@store')->name('prescription.store_id');
+Route::get('/prescription/psychotherapi/{id}', 'PrescriptionController@create_Psychotherapie_By_Id')->where('id', '[0-9]+')->name('prescription.psycho_by');
 
 // Billing
 Route::get('/billing/create', 'BillingController@create')->name('billing.create')->middleware(['role_or_permission:Admin|create invoice']);
