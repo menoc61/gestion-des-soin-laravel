@@ -292,6 +292,15 @@ return [
     'Psycho' => 'Psychothérapie',
     'No Psycho Available' => 'Aucune Psychothérapie Trouvée',
     'Create Psycho' => 'Créer une Psychothérapie',
-    'follow psycho' => 'Suivre une Psychothérapie'
+    'follow psycho' => 'Suivre une Psychothérapie',
+    'Add Psycho' => 'Ajouter une Psychothérapie',
+    'Psycho Name' => 'Nom de la Psychothérapie',
+    'Observation' => 'Observation',
+    'Psycho list' => 'Liste des Psychothérapies',
+    'psycho dosage' => 'Nombre de séance de travail',
+    'Option Psycho' => 'Séance Psychothérapeutique',
+    'Prescrip Psycho' => 'Traitement Psychothérapeutique',
+    'Take Appointment' => 'Prendre Un Rendez-Vous',
+
 
 ];

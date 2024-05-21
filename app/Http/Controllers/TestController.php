@@ -33,11 +33,22 @@ class TestController extends Controller
         return view('test.create_By_user', ['userId' => $id, 'userName' => $user->name]);
     }
 
+    public function create_Psychotherapie_By_Id($id)
+    {
+        $user = User::find($id);
+        // Vérifiez si l'utilisateur existe
+        if (!$user) {
+            // Gérez le cas où l'utilisateur n'est pas trouvé
+        }
+        return view('test.psychoterapie', ['userId' => $id, 'userName' => $user->name]);
+    }
+
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'test_name' => 'required',
-            'diagnostic_type' => ['required', 'array', Rule::in(['DIAGNOSE PEAU', 'DIAGNOSE MAIN', 'DIAGNOSE PIED'])],
+            'diagnostic_type' => ['required', 'array', Rule::in(['DIAGNOSE PEAU', 'DIAGNOSE MAIN', 'DIAGNOSE PIED','PSYCHOTHERAPIE'])],
           // Skin diagnostic section validation rules
             // 'sebum_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Grasse', 'Acnéique'])],
             // 'hydratation_grp' => ['required_if:diagnostic_type,DIAGNOSE PEAU', 'array', Rule::in(['Léger', 'Normale', 'Sèche', 'Tiraillement'])],
@@ -132,26 +143,27 @@ class TestController extends Controller
 
         $test->save();
 
-        return \Redirect::route('test.all')->with('success', __('sentence.Test Created Successfully'));
+        return \Redirect::route('prescription.create_by', ['id' => $test->user_id])->with('success', __('sentence.Test Created Successfully'));
     }
 
     public function all()
     {
         $user = Auth::user();
+        $tests = Test::orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE')->get();
 
-        $sortColumn = request()->get('sort');
-        $sortOrder = request()->get('order', 'asc');
-        if (!empty($sortColumn)) {
-            $tests = Test::orderBy($sortColumn, $sortOrder)->paginate(25);
-        }
-        //cette condition nous permettra d'afficher tous les tests si l'utilisateur a le role d'admin
-        if ($user->role_id != 1) {
-            $tests = Test::where('created_by', $user->id)->get();
-        }
-        //cette condition nous permettra d'afficher pour un utilisateur connecté tous les tests qu'il a eu à créer et ce dernier doit avoir le role de praticien
-        else {
-            $tests = Test::all();
-        }
+        // $sortColumn = request()->get('sort');
+        // $sortOrder = request()->get('order', 'asc');
+        // if (!empty($sortColumn)) {
+        //     $tests = Test::orderBy($sortColumn, $sortOrder)->paginate(25);
+        // }
+        // //cette condition nous permettra d'afficher tous les tests si l'utilisateur a le role d'admin
+        // if ($user->role_id != 1) {
+        //     $tests = Test::where('created_by', $user->id)->get();
+        // }
+        // //cette condition nous permettra d'afficher pour un utilisateur connecté tous les tests qu'il a eu à créer et ce dernier doit avoir le role de praticien
+        // else {
+        //     $tests = Test::all();
+        // }
         return view('test.all', ['tests' => $tests]);
     }
 
