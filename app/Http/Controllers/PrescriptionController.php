@@ -25,7 +25,7 @@ class PrescriptionController extends Controller
         $drugs = Drug::all();
         $patients = User::where('role_id', '3')->get();
         $praticiens = User::where('role_id', '2')->get();
-        $tests = Test::all();
+        $tests = Test::orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE')->get();
 
         return view('prescription.create', compact('drugs', 'patients', 'praticiens', 'tests'));
     }
@@ -41,8 +41,11 @@ class PrescriptionController extends Controller
         $praticiens = User::where('role_id', '2')->get();
         // $tests = Test::where('user_id', $id)->get();
         $tests = Test::where('user_id', $id)
-             ->whereDoesntHave('Prescription') // Prescription correspond a la fonction définie dans le model test
-             ->get();
+            ->whereDoesntHave('Prescription') // Prescription correspond a la fonction définie dans le model test
+            ->where(function ($query) {
+                $query->orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE');
+            })
+            ->get();
 
         return view('prescription.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
     }
@@ -58,8 +61,11 @@ class PrescriptionController extends Controller
         $praticiens = User::where('role_id', '2')->get();
         // $tests = Test::where('user_id', $id)->get();
         $tests = Test::where('user_id', $id)
-             ->whereDoesntHave('Prescription') // Prescription correspond a la fonction définie dans le model test
-             ->get();
+            ->whereDoesntHave('Prescription') // Prescription correspond a la fonction définie dans le model test
+            ->where(function ($query) {
+                $query->whereJsonContains('diagnostic_type', 'PSYCHOTHERAPIE');
+            })
+            ->get();
 
         return view('prescription.createpsychothérapie', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
     }
@@ -70,10 +76,10 @@ class PrescriptionController extends Controller
         $doctor = $prescription->doctor_id;
         $praticiens = User::where('role_id', '2')->get();
         $currentUserAppointments = Appointment::where('user_id', $prescription->user_id)
-        ->where('reason', 'like', '%'.$prescription->reference.'%')
-        ->where('reason', 'like', '%'.$prescription->id.'%')
-        ->orderBy('id', 'DESC')
-        ->get();
+            ->where('reason', 'like', '%' . $prescription->reference . '%')
+            ->where('reason', 'like', '%' . $prescription->id . '%')
+            ->orderBy('id', 'DESC')
+            ->get();
         $visitedCount = $currentUserAppointments->where('visited', 1)->count();
         $nonVisitedCount = $currentUserAppointments->where('visited', 0)->count();
         $appointments = Appointment::orderBy('id', 'DESC')->paginate(25);
@@ -102,7 +108,7 @@ class PrescriptionController extends Controller
 
         $prescription->user_id = $request->patient_id;
         $prescription->doctor_id = Auth::user()->id;
-        $prescription->reference = 'p'.rand(10000, 99999);
+        $prescription->reference = 'p' . rand(10000, 99999);
         $prescription->nom = $request->nom;
         $prescription->dosage = $request->dosage;
         $prescription->doctor_id = $request->Doctor_id;
@@ -115,13 +121,13 @@ class PrescriptionController extends Controller
                 if ($request->trade_name[$x] != null) {
                     $add_drug = new Prescription_drug();
 
-                    $add_drug->type = $request->input('type.'.$x) ?? null;
-                    $add_drug->strength = $request->input('strength.'.$x) ?? null;
-                    $add_drug->dose = $request->input('dose.'.$x) ?? null;
-                    $add_drug->duration = $request->input('duration.'.$x) ?? null;
-                    $add_drug->drug_advice = $request->input('drug_advice.'.$x) ?? null;
+                    $add_drug->type = $request->input('type.' . $x) ?? null;
+                    $add_drug->strength = $request->input('strength.' . $x) ?? null;
+                    $add_drug->dose = $request->input('dose.' . $x) ?? null;
+                    $add_drug->duration = $request->input('duration.' . $x) ?? null;
+                    $add_drug->drug_advice = $request->input('drug_advice.' . $x) ?? null;
                     $add_drug->prescription_id = $prescription->id;
-                    $add_drug->drug_id = $request->input('trade_name.'.$x) ?? null;
+                    $add_drug->drug_id = $request->input('trade_name.' . $x) ?? null;
 
                     $add_drug->save();
                 }
@@ -142,7 +148,7 @@ class PrescriptionController extends Controller
             }
         }
 
-        return \Redirect::route('prescription.all')->with('success', 'Prescription Created Successfully!');
+        return \Redirect::route('patient.view', ['id' => $prescription->user_id])->with('success', 'Prescription Created Successfully!');
     }
 
     public function all()
@@ -167,13 +173,13 @@ class PrescriptionController extends Controller
 
         // Perform a join with the 'users' table to get the patient names
         $prescriptions = Prescription::select('prescriptions.*', 'users.name as patient_name')
-        ->join('users', 'prescriptions.user_id', '=', 'users.id')
-        ->when($user->role_id !== 1, function ($query) use ($doctorId) {
-            // Add a condition to filter prescriptions for non-admin users
-            $query->where('prescriptions.doctor_id', $doctorId);
-        })
-        ->orderBy($sortColumn, $sortOrder)
-        ->paginate(25);
+            ->join('users', 'prescriptions.user_id', '=', 'users.id')
+            ->when($user->role_id !== 1, function ($query) use ($doctorId) {
+                // Add a condition to filter prescriptions for non-admin users
+                $query->where('prescriptions.doctor_id', $doctorId);
+            })
+            ->orderBy($sortColumn, $sortOrder)
+            ->paginate(25);
 
         return view('prescription.all', ['prescriptions' => $prescriptions]);
     }
@@ -198,7 +204,7 @@ class PrescriptionController extends Controller
         $pdf->setOption('viewport-size', '1024x768');
 
         // download PDF file with download method
-        return $pdf->download($prescription->User->name.'_pdf.pdf');
+        return $pdf->download($prescription->User->name . '_pdf.pdf');
     }
 
     public function edit($id)

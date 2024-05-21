@@ -128,18 +128,16 @@ var baseURL = SITE_URL;
 
 
   var selectedDate = 0;
-  var praticienId;
 
       $('.target').on('change', function () {
             selectedDate = document.getElementById("rdvdate").value;
-            praticienId = document.getElementById("praticien_id").value;
-          AddAppointment(selectedDate, praticienId);
+          AddAppointment(selectedDate);
       });
 
-          function AddAppointment(date, docId){
+          function AddAppointment(date){
 
             $.ajax({
-                url: baseURL+'/appointment/checkslots/'+docId+ '/' + date,
+                url: baseURL+'/appointment/checkslots/' + date,
                 type: 'GET',
                 cache : false,
                 success: function(array){
@@ -203,7 +201,6 @@ var baseURL = SITE_URL;
                     })
 
                 },
-
 
                  error: function(){
                   $("#help-block").text("Désolé, une erreur s'est produite");

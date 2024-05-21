@@ -46,13 +46,16 @@ class PatientController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'birthday' => ['required', 'before:today'],
-            'gender' => ['required',
-                        Rule::in(['Homme', 'Femme']),
-                        ],
+            'gender' => [
+                'required',
+                Rule::in(['Homme', 'Femme']),
+            ],
             'morphology' => ['required', 'array', Rule::in(['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
 
-            'alimentation' => ['required', 'array',
-                Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])],
+            'alimentation' => [
+                'required', 'array',
+                Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])
+            ],
 
             'type_patient' => ['required', 'array', Rule::in(['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
 
@@ -70,9 +73,9 @@ class PatientController extends Controller
             // We Get the image
             $file = $request->file('image');
             // We Add String to Image name
-            $fileName = \Str::random(15).'-'.$file->getClientOriginalName();
+            $fileName = \Str::random(15) . '-' . $file->getClientOriginalName();
             // We Tell him the uploads path
-            $destinationPath = public_path().'/uploads/';
+            $destinationPath = public_path() . '/uploads/';
             // We move the image to the destination path
             $file->move($destinationPath, $fileName);
             // Add fileName to database
@@ -129,23 +132,26 @@ class PatientController extends Controller
             'email' => [
                 'required', 'email', 'max:255',
                 Rule::unique('users')->ignore($request->user_id),
-        ],
-        'birthday' => ['required', 'before:today'],
+            ],
+            'birthday' => ['required', 'before:today'],
 
-        'gender' => ['required',
-                    Rule::in(['Homme', 'Femme']),
-                    ],
+            'gender' => [
+                'required',
+                Rule::in(['Homme', 'Femme']),
+            ],
 
-        'morphology' => ['required', 'array', Rule::in(['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
+            'morphology' => ['required', 'array', Rule::in(['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
 
-        'alimentation' => ['required', 'array',
-                 Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])],
+            'alimentation' => [
+                'required', 'array',
+                Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])
+            ],
 
-           'type_patient' => ['required', 'array', Rule::in(['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
+            'type_patient' => ['required', 'array', Rule::in(['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
 
-           'digestion' => 'required',
+            'digestion' => 'required',
 
-           'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5048',
         ]);
 
         $user = User::find($request->user_id);
@@ -157,14 +163,14 @@ class PatientController extends Controller
             // We Get the image
             $file = $request->file('image');
             // We Add String to Image name
-            $fileName = \Str::random(15).'-'.$file->getClientOriginalName();
+            $fileName = \Str::random(15) . '-' . $file->getClientOriginalName();
             // We Tell him the uploads path
-            $destinationPath = public_path().'/uploads/';
+            $destinationPath = public_path() . '/uploads/';
             // We move the image to the destination path
             $moved = $file->move($destinationPath, $fileName);
             // Add fileName to database
 
-            $fullpath = public_path().'/uploads/'.$user->image;
+            $fullpath = public_path() . '/uploads/' . $user->image;
 
             if ($moved && !empty($user->image)) {
                 unlink($fullpath);
@@ -176,19 +182,20 @@ class PatientController extends Controller
         $user->update();
 
         $patient = Patient::where('user_id', '=', $request->user_id)
-                             ->update(['birthday' => $request->birthday,
-                                        'phone' => $request->phone,
-                                        'gender' => $request->gender,
-                                        'adress' => $request->adress,
-                                        'allergie' => $request->allergie,
-                                        'medication' => $request->medication,
-                                        'hobbie' => $request->hobbie,
-                                        'demande' => $request->demande,
-                                        'type_patient' => json_encode($request->type_patient),
-                                        'morphology' => json_encode($request->morphology),
-                                        'alimentation' => json_encode($request->alimentation),
-                                        'digestion' => $request->digestion,
-                                        ]);
+            ->update([
+                'birthday' => $request->birthday,
+                'phone' => $request->phone,
+                'gender' => $request->gender,
+                'adress' => $request->adress,
+                'allergie' => $request->allergie,
+                'medication' => $request->medication,
+                'hobbie' => $request->hobbie,
+                'demande' => $request->demande,
+                'type_patient' => json_encode($request->type_patient),
+                'morphology' => json_encode($request->morphology),
+                'alimentation' => json_encode($request->alimentation),
+                'digestion' => $request->digestion,
+            ]);
 
         return \Redirect::back()->with('success', __('sentence.Patient Updated Successfully'));
     }
@@ -196,9 +203,29 @@ class PatientController extends Controller
     public function view($id)
     {
         $patient = User::findOrfail($id);
-        $prescriptions = Prescription::where('user_id', $id)->OrderBy('id', 'Desc')->get();
+        $prescriptions = Prescription::select('prescriptions.*')
+            ->join('prescription_tests', 'prescription_tests.prescription_id', '=', 'prescriptions.id')
+            ->join('tests', 'tests.id', '=', 'prescription_tests.test_id')
+            ->where('prescriptions.user_id', $id)
+            ->where(function ($query) {
+                $query->orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE');
+            })
+            ->get();
+        $psychos = Prescription::select('prescriptions.*')
+            ->join('prescription_tests', 'prescription_tests.prescription_id', '=', 'prescriptions.id')
+            ->join('tests', 'tests.id', '=', 'prescription_tests.test_id')
+            ->where('prescriptions.user_id', $id)
+            ->where(function ($query) {
+                $query->whereJsonContains('diagnostic_type', 'PSYCHOTHERAPIE');
+            })
+            ->get();
         $appointments = Appointment::where('user_id', $id)->OrderBy('id', 'Desc')->get();
-        $tests = Test::where('user_id', $id)->OrderBy('id', 'Desc')->get();
+        $tests = Test::where('user_id', $id)
+            ->where(function ($query) {
+                $query->orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE');
+            })
+            ->orderBy('id', 'desc')
+            ->get();
         $documents = Document::where('user_id', $id)->OrderBy('id', 'Desc')->get();
         $invoices = Billing::where('user_id', $id)->OrderBy('id', 'Desc')->get();
         $historys = History::where('user_id', $id)->OrderBy('id', 'Desc')->get();
@@ -211,6 +238,7 @@ class PatientController extends Controller
             'documents' => $documents,
             'historys' => $historys,
             'tests' => $tests,
+            'psychos' => $psychos
         ]);
     }
 
@@ -218,7 +246,7 @@ class PatientController extends Controller
     {
         $term = $request->term;
 
-        $patients = User::where('name', 'LIKE', '%'.$term.'%')->OrderBy('id', 'DESC')->paginate(25);
+        $patients = User::where('name', 'LIKE', '%' . $term . '%')->OrderBy('id', 'DESC')->paginate(25);
 
         return view('patient.all', ['patients' => $patients]);
     }
