@@ -1,5 +1,7 @@
 @extends('layouts.master')
+
 @section('header')
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
 @endsection
 
@@ -681,6 +683,9 @@
     </script>
 
     <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
+    {{-- <script type="text/javascript">
+        $('#inputSection').multiselect();
+    </script> --}}
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#signes-particuliers,#signes-particuliers-ongles,#soin,#PatientID').multiselect({

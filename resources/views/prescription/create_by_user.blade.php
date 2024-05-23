@@ -11,7 +11,7 @@
         <div class="d-flex justify-content-center">
             <div class="card col-md-12">
                 <div class="card-header py-3">
-                    <h2 class="m-0 font-weight-bold text-dark text-center"> {{ __('sentence.Prescrip Psycho') }}</h2>
+                    <h2 class="m-0 font-weight-bold text-dark text-center"> {{ __('sentence.Prescription') }}</h2>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group">
-                            <label>{{ __('sentence.Prescription dosage') }} :</label>
+                            <label>{{ __('sentence.psycho dosage') }} :</label>
                             <input type="number" class="form-control" name="dosage" min="1">
                             {{ csrf_field() }}
                         </div>
@@ -77,13 +77,16 @@
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
                     </div>
                     <div class="card-body">
-                        <fieldset class="drugs_labels">
-                            <div class="repeatable"></div>
-                            <div class="form-group">
-                                <a type="button" class="btn btn-sm btn-primary add text-white" align="center"><i
-                                        class='fa fa-plus'></i> {{ __('sentence.Add Drug') }}</a>
-                            </div>
-                        </fieldset>
+                        <select class="form-control multiselect-search" name="trade_name[]" id="drug" tabindex="-1"
+                            aria-hidden="true" required>
+                            @if (@empty($drugs))
+                                <option value="">{{ __('sentence.Select Drug') }}...</option>
+                            @else
+                                @foreach ($drugs as $drug)
+                                    <option value="{{ $drug->id }}">{{ $drug->trade_name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
                     </div>
                 </div>
                 <div class="card shadow mb-4">
@@ -91,13 +94,19 @@
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Tests list') }}</h6>
                     </div>
                     <div class="card-body">
-                        <fieldset class="test_labels">
-                            <div class="repeatable"></div>
-                            <div class="form-group">
-                                <a type="button" class="btn btn-sm btn-primary add text-white" align="center"><i
-                                        class='fa fa-plus'></i> {{ __('sentence.Add Test') }}</a>
-                            </div>
-                        </fieldset>
+                        <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1"
+                            aria-hidden="true" required>
+                            @if (@empty($tests))
+                                <option value="">{{ __('sentence.Select Test') }}...</option>
+                            @else
+                                @foreach ($tests as $test)
+                                    @if (Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by)
+                                        <option value="{{ $test->id }}">{{ $test->test_name }}</option>
+                                    @elseif (Auth::user()->role_id == 1)
+                                        <option value="{{ $test->id }}">{{ $test->test_name }}</option>
+                                    @endif
+                                @endforeach
+                            @endif
                     </div>
                 </div>
             </div>
@@ -147,8 +156,8 @@
         });
     </script>
 
-    <script type="text/template" id="drugs_labels">
-    <section class="field-group">
+    {{-- <script type="text/template" id="drugs_labels">
+    <section class="field-group"> --}}
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group-custom">
@@ -212,7 +221,7 @@
                             </div>
         </section>
 </script>
-    <script type="text/template" id="test_labels">
+    {{-- <script type="text/template" id="test_labels">
                          <div class="field-group row">
                              <div class="col-md-4">
                                  <select class="form-control multiselect-search" name="test_name[]" id="test" tabindex="-1" aria-hidden="true" required>
@@ -244,7 +253,7 @@
                                     <hr color="#a1f1d4">
                               </div>
                          </div>
-</script>
+</script> --}}
 @endsection
 
 @section('header')

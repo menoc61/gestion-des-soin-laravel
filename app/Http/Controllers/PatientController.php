@@ -30,6 +30,7 @@ class PatientController extends Controller
             $patients = User::where('role_id', '3')->OrderBy($sortColumn, $sortOrder)->paginate(25);
         } else {
             $patients = User::where('role_id', '3')->paginate(25);
+
         }
 
         return view('patient.all', ['patients' => $patients]);
@@ -114,7 +115,7 @@ class PatientController extends Controller
         $patient->digestion = $request->digestion;
         $patient->save();
 
-        return \Redirect::route('patient.all')->with('success', __('sentence.Patient Created Successfully'));
+        return \Redirect::route('test.create_by', ['id' => $patient->user_id])->with('success', __('sentence.Patient Created Successfully'));
     }
 
     public function edit($id)
