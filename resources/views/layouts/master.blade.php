@@ -484,12 +484,12 @@
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="userDropdown">
 
-                                    <a class="dropdown-item"
+                                    {{-- <a class="dropdown-item"
                                         href="{{ route('patient.view', ['id' => Auth::user()->id]) }}">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.View Profile') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('user.edit_profile') }}">
+                                    </a> --}}
+                                    <a class="dropdown-item" href="{{ route('user.edit', ['id' => Auth::user()->id]) }}">
                                         <i class="fas fa-pen fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.Update Profile') }}
                                     </a>

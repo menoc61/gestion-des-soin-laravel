@@ -11,7 +11,8 @@
         <div class="d-flex justify-content-center">
             <div class="card col-md-12">
                 <div class="card-header py-3">
-                    <h2 class="m-0 font-weight-bold text-dark text-center"> {{ __('sentence.Prescrip Psycho') }} Pour {{ $userName }}</h2>
+                    <h2 class="m-0 font-weight-bold text-dark text-center"> {{ __('sentence.Prescrip Psycho') }} Pour
+                        {{ $userName }}</h2>
                 </div>
             </div>
         </div>

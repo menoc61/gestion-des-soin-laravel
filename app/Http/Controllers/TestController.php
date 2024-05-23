@@ -143,7 +143,7 @@ class TestController extends Controller
 
         $test->save();
 
-        return \Redirect::route('prescription.create_by', ['id' => $test->user_id])->with('success', __('sentence.Test Created Successfully'));
+        return \Redirect::route('appointment.create_by', ['id' => $test->user_id])->with('success', __('sentence.Test Created Successfully'));
     }
 
     public function all()

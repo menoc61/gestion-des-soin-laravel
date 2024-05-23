@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     <div class="mb-3">
         <button class="btn btn-primary" onclick="history.back()">Retour</button>
     </div>
@@ -56,14 +55,14 @@
                                 <a href="{{ route('patient.all', ['sort' => 'name', 'order' => 'desc']) }}"><i
                                         class="fas fa-sort-down"></i></a>
                             </th>
-                            <th class="text-center">{{ __('sentence.Age') }}</th>
                             <th class="text-center">{{ __('sentence.Phone') }}</th>
-                            <th class="text-center">{{ __('sentence.Address') }}</th>
+                            <th class="text-center">{{ __('sentence.Appointment') }}</th>
+                            {{-- <th class="text-center">{{ __('sentence.Address') }}</th>
                             <th class="text-center">{{ __('sentence.Allergies') }}</th>
                             <th class="text-center">{{ __('sentence.Type of patient') }}</th>
                             <th class="text-center">{{ __('sentence.Morphology') }}</th>
                             <th class="text-center">{{ __('sentence.Alimentation') }}</th>
-                            <th class="text-center">{{ __('sentence.Digestion') }}</th>
+                            <th class="text-center">{{ __('sentence.Digestion') }}</th> --}}
                             <th class="text-center">{{ __('sentence.Date') }}
                                 <a href="{{ route('patient.all', ['sort' => 'created_at', 'order' => 'asc']) }}"><i
                                         class="fas fa-sort-up"></i></a>
@@ -82,10 +81,12 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td><a href="{{ url('patient/view/' . $patient->id) }}"> {{ $patient->name }} </a></td>
-                                <td class="text-center"> {{ @\Carbon\Carbon::parse($patient->Patient->birthday)->age }}ans
-                                </td>
                                 <td class="text-center"> {{ @$patient->Patient->phone }} </td>
-                                <td class="text-center"> {{ @$patient->Patient->adress }} </td>
+                                <td class="text-center"> {{ @$patient->Patient->phone }} </td>
+                                {{-- <td class="text-center"> {{ @\Carbon\Carbon::parse($patient->Patient->birthday)->age }}ans
+                                </td> --}}
+
+                                {{-- <td class="text-center"> {{ @$patient->Patient->adress }} </td>
                                 <td class="text-center"> {{ @$patient->Patient->allergie }} </td>
                                 <td class="text-center"> @isset($patient->Patient->type_patient)
                                         @php
@@ -129,14 +130,23 @@
                                         @endif
                                     @endisset
                                 </td>
-                                <td class="text-center"> {{ @$patient->Patient->digestion }} </td>
+                                <td class="text-center"> {{ @$patient->Patient->digestion }} </td> --}}
                                 <td class="text-center"><label
                                         class="badge badge-primary-soft">{{ $patient->created_at->format('d M Y H:i') }}</label>
                                 </td>
-                                <td class="text-center"><label
-                                        class="badge badge-primary-soft">{{ Collect($patient->Billings)->where('payment_status', 'Partially Paid')->sum('due_amount') }}
-                                        {{ App\Setting::get_option('currency') }}</label></td>
-                                {{-- <td class="text-center">
+                                <td class="text-center">
+                                    @if (Collect($patient->Billings)->where('payment_status', 'Partially Paid')->sum('due_amount'))
+                                        <label
+                                            class="badge badge-warning-soft">{{ Collect($patient->Billings)->where('payment_status', 'Partially Paid')->sum('due_amount') }}
+                                            {{ App\Setting::get_option('currency') }}</label>
+                                    @elseif (Collect($patient->Billings)->where('payment_status', 'Unpaid')->sum('due_amount'))
+                                    <label
+                                            class="badge badge-danger-soft">{{ Collect($patient->Billings)->where('payment_status', 'Unpaid')->sum('due_amount') }}
+                                            {{ App\Setting::get_option('currency') }}</label>
+                                </td>
+                        @endif
+
+                        {{-- <td class="text-center">
                                     @can('view patient')
                                         <a href="{{ route('prescription.view_for_user', ['id' => $patient->id]) }}"
                                             class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> Voir</a>
@@ -148,8 +158,8 @@
                                             class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> Voir</a>
                                     @endcan
                                 </td> --}}
-                                <td class="text-center">
-                                    {{-- @can('view patient')
+                        <td class="text-center">
+                            {{-- @can('view patient')
                                         <a href="{{ route('patient.view', ['id' => $patient->id]) }}"
                                             class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a>
                                     @endcan
@@ -157,20 +167,20 @@
                                         <a href="{{ route('patient.edit', ['id' => $patient->id]) }}"
                                             class="btn btn-outline-warning btn-circle btn-sm"><i class="fa fa-pen"></i></a>
                                     @endcan --}}
-                                    @can('delete patient')
-                                        <a href="#" class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal"
-                                            data-target="#DeleteModal"
-                                            data-link="{{ route('patient.destroy', ['id' => $patient->id]) }}"><i
-                                                class="fas fa-trash"></i></a>
-                                    @endcan
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="15" align="center"><img src="{{ asset('img/rest.png') }} " /> <br><br> <b
-                                        class="text-muted">Aucun hôte trouvé</b>
-                                </td>
-                            </tr>
+                            @can('delete patient')
+                                <a href="#" class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal"
+                                    data-target="#DeleteModal"
+                                    data-link="{{ route('patient.destroy', ['id' => $patient->id]) }}"><i
+                                        class="fas fa-trash"></i></a>
+                            @endcan
+                        </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="15" align="center"><img src="{{ asset('img/rest.png') }} " /> <br><br> <b
+                                    class="text-muted">Aucun hôte trouvé</b>
+                            </td>
+                        </tr>
                         @endforelse
 
                     </tbody>

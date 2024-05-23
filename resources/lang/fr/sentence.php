@@ -297,10 +297,13 @@ return [
     'Psycho Name' => 'Nom de la Psychothérapie',
     'Observation' => 'Observation',
     'Psycho list' => 'Liste des Psychothérapies',
-    'psycho dosage' => 'Nombre de séance de travail',
+    'psycho dosage' => 'Nombre de séance de soins',
     'Option Psycho' => 'Séance Psychothérapeutique',
     'Prescrip Psycho' => 'Traitement Psychothérapeutique',
     'Take Appointment' => 'Prendre Un Rendez-Vous',
-
+    'Hour_start' => 'Heure de Début',
+    'Hour_end' => 'Heure de Fin',
+    'Choice' => 'Choisir',
+    'Choice Praticien' => 'Choisir un Praticien'
 
 ];
