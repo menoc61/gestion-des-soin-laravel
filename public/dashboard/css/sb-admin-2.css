@@ -11245,3 +11245,7 @@ body.sidebar-toggled footer.sticky-footer {
 .d{
     width: 50%;
 }
+.login{
+    background-image: url("../../img/salon.jpg");
+    background-repeat: no-repeat;
+}

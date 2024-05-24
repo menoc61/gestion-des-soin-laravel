@@ -70,4 +70,8 @@ class User extends Authenticatable implements Auditable
         return $this->hasMany('App\Test');
     }
 
+    public function Appointment(){
+        return $this->hasMany('App\Appointment');
+    }
+
 }

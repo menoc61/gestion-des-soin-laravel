@@ -22,9 +22,9 @@ class UsersController extends Controller
         $sortColumn = request()->get('sort');
         $sortOrder = request()->get('order', 'asc');
         if (!empty($sortColumn)) {
-            $users = User::orderBy($sortColumn, $sortOrder)->paginate(25);
+            $users = User::where('role_id','!=',3)->orderBy($sortColumn, $sortOrder)->paginate(25);
         } else {
-            $users = User::paginate(25);
+            $users = User::where('role_id','!=',3)->paginate(25);
         }
 
         return view('user.all', ['users' => $users]);
@@ -63,9 +63,9 @@ class UsersController extends Controller
             // We Get the image
             $file = $request->file('image');
             // We Add String to Image name
-            $fileName = \Str::random(15).'-'.$file->getClientOriginalName();
+            $fileName = \Str::random(15) . '-' . $file->getClientOriginalName();
             // We Tell him the uploads path
-            $destinationPath = public_path().'/uploads/';
+            $destinationPath = public_path() . '/uploads/';
             // We move the image to the destination path
             $file->move($destinationPath, $fileName);
             // Add fileName to database
@@ -100,60 +100,61 @@ class UsersController extends Controller
         return view('user.edit', ['user' => $user, 'roles' => $roles]);
     }
 
-    public function edit_profile()
-    {
-        $user = \Auth::user();
-        $roles = Role::all();
-
-        return view('user.edit', ['user' => $user, 'roles' => $roles]);
-    }
-
     public function store_edit(Request $request)
     {
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required', 'email', 'max:255',
-                Rule::unique('users')->ignore($request->user_id),
-            ],
+            // 'email' => [
+            //     'required', 'email', 'max:255',
+            //     Rule::unique('users')->ignore($request->user_id),
+            // ],
             'role_id' => ['required', 'numeric'],
+            'fonction' => ['required', 'array', Rule::in([
+                'Praticien Main',
+                'Praticien Peau',
+                'Praticien Pied',
+                'Dermatologue',
+            ])],
         ]);
 
-        $user = User::findorfail($request->user_id);
+        $user = User::find($request->user_id);
         $user->password = \Hash::make($request->password);
         $user->email = $request->email;
         $user->name = $request->name;
         $user->role_id = $request->role_id;
-
+        $user->fonction = json_encode($request->fonction);
         $role = Role::findById($request->role_id);
+        if ($request->hasFile('image')) {
+            // We Get the image
+            $file = $request->file('image');
+            // We Add String to Image name
+            $fileName = \Str::random(15) . '-' . $file->getClientOriginalName();
+            // We Tell him the uploads path
+            $destinationPath = public_path() . '/uploads/';
+            // We move the image to the destination path
+            $file->move($destinationPath, $fileName);
+            // Add fileName to database
 
+            $user->image = $fileName;
+        } else {
+            $user->image = '';
+        }
         // If the role exists, assign it to the user
         if ($role) {
             $user->assignRole($role);
         } else {
             return \Redirect::route('user.all')->with('error', __('sentence.role id does not exist'));
         }
-
         $user->update();
 
-        $patient = new Patient();
-        $patient->user_id = $user->id;
-        $patient->phone = $request->phone;
-        $patient->gender = $request->gender;
-        $patient->birthday = '00-00-0000';
-        $patient->update();
-
-        // if(!empty($request->role)):
-        //     $count_admins = User::role('Admin')->count();
-        //     if($count_admins == 1 && $user->hasRole('Admin') == 1 && $request->role != "Admin"){
-        //         return Redirect::route('user.all')->with('warning', __('You Cannot delete the only existant admin'));
-        //     }
-        //     $user->syncRoles($request->role);
-        // endif;
+        $patient = Patient::where('user_id', '=', $request->user_id)
+            ->update([
+                'birthday' => '00-00-0000',
+                'phone' => $request->phone,
+                'gender' => $request->gender,
+            ]);
 
         return \Redirect::route('user.all')->with('success', __('sentence.User Updated Successfully'));
     }
-
-    ###########################################################################################
 
 }

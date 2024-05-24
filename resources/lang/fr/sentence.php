@@ -6,13 +6,13 @@ return [
     'Dashboard' => 'Tableau de bord',
     'Patients' => 'Hôtes',
     'Patient' => 'Hôte',
-    'Doctors' => 'Praticiens',
+    'Praticiens' => 'Praticiens',
     'New Patient' => 'Ajouter un Hôte',
     'All Patients' => 'Tous les Hôtes',
     'Prescriptions' => 'Traitements',
     'Prescription' => 'Traitement',
     'Admin' => 'Admin',
-    'Doctor' => 'Praticien',
+    'Praticien' => 'Praticien',
 
     'New Prescription' => 'Nouveau Traitement',
     'All Prescriptions' => 'Tous les Traitements',
@@ -62,8 +62,8 @@ return [
     'Sorry, Doctor dont work on this day' => 'Désolé, le Praticien ne travaille pas ce jour-là',
     'Sorry, An error has occurred' => 'Désolé, une erreur s\'est produite',
     'Time Slot' => 'Créneau horaire',
-    'Not Yet Visited' => 'Pas encore visité',
-    'Visited' => 'Visité',
+    'Not Yet Visited' => 'Pas encore Honoré',
+    'Visited' => 'Honoré',
     'Cancelled' => 'Annulé',
     'You are about to modify an appointment' => 'Vous êtes sur le point de modifier un RDV',
     'Close' => 'Fermer',
@@ -297,10 +297,13 @@ return [
     'Psycho Name' => 'Nom de la Psychothérapie',
     'Observation' => 'Observation',
     'Psycho list' => 'Liste des Psychothérapies',
-    'psycho dosage' => 'Nombre de séance de travail',
+    'psycho dosage' => 'Nombre de séance de soins',
     'Option Psycho' => 'Séance Psychothérapeutique',
     'Prescrip Psycho' => 'Traitement Psychothérapeutique',
     'Take Appointment' => 'Prendre Un Rendez-Vous',
-
+    'Hour_start' => 'Heure de Début',
+    'Hour_end' => 'Heure de Fin',
+    'Choice' => 'Choisir',
+    'Choice Praticien' => 'Choisir un Praticien'
 
 ];
