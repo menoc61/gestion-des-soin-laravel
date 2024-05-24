@@ -61,7 +61,7 @@
                         @foreach ($users as $key => $user)
                             <tr>
                                 <td>{{  $key + 1 }}</td>
-                                <td><a href="{{ url('patient/view/' . $user->id) }}"> {{ $user->name }} </a></td>
+                                <td>{{ $user->name }}</td>
                                 <td class="text-center"> {{ $user->email }} </td>
                                 <td class="text-center"><label
                                         class="badge badge-primary-soft">{{ $user->created_at->format('d M Y H:i') }}</label>
@@ -74,8 +74,8 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ url('patient/view/' . $user->id) }}"
-                                        class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a>
+                                    {{-- <a href="{{ url('patient/view/' . $user->id) }}"
+                                        class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a> --}}
                                     <a href="{{ route('user.edit', ['id' => $user->id]) }}"
                                         class="btn btn-outline-warning btn-circle btn-sm"><i class="fa fa-pen"></i></a>
                                     <a href="#" class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal"

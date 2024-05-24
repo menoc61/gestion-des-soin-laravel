@@ -459,10 +459,10 @@
 
                         @if (Auth::user()->role_id == 1)
                             <div class="col-md-6">
-                                <a href="http://localhost:3000" class="btn btn-primary" target="_blank"
+                                <a href="http://192.168.1.176:3001" class="btn btn-primary" target="_blank"
                                     target="_self" rel="noopener"><i class="fa fa-user"></i> <span>Gestion Du
                                         Personnel</span></a>
-                                <a href="http://localhost:3001" class="btn btn-secondary" target="_blank"
+                                <a href="http://192.168.1.176:3000" class="btn btn-secondary" target="_blank"
                                     target="_self" rel="noopener"><i class="fa fa-globe"></i> <span>Gestion De
                                         Stock</span></a>
                             </div>
@@ -484,12 +484,12 @@
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="userDropdown">
 
-                                    <a class="dropdown-item"
+                                    {{-- <a class="dropdown-item"
                                         href="{{ route('patient.view', ['id' => Auth::user()->id]) }}">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.View Profile') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('user.edit_profile') }}">
+                                    </a> --}}
+                                    <a class="dropdown-item" href="{{ route('user.edit', ['id' => Auth::user()->id]) }}">
                                         <i class="fas fa-pen fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.Update Profile') }}
                                     </a>

@@ -12047,3 +12047,86 @@ td > a {
 .d{
     width: 50%;
 }
+.droite{
+    margin-left: 9%;
+}
+.login {
+    background-image: url("../../img/sai-i-lama-parallax-01.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .login::before {
+    content: "";
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+} */
+.form{
+    background: rgba(255, 255, 255, .3);
+    border-radius: 20px;
+    border-left: 3px solid rgba(255, 255, 255, .3) ;
+    border-top: 2px solid rgba(255, 255, 255, .3) ;
+    box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .3);
+}
+.input{
+    background: transparent;
+    border: none;
+    padding: 1rem;
+    color: white;
+    border-left: 1px solid rgba(255, 255, 255, .3);
+    border-top: 1px solid rgba(255, 255, 255, .3);
+    box-shadow: 4px 4px 60px rgba(0, 0, 0, .2);
+    border-radius: 50px;
+    font-weight: 500;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+    transition: all .3s;
+    margin-bottom: 2em;
+}
+::placeholder{
+    color: white;
+}
+
+input:hover,
+input[type='email']:focus,
+input[type='password']:focus
+{
+    background: rgba(255, 255, 255, .1);
+    box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, .2);
+}
+
+.drop{
+    background: rgba(255, 255, 255, .3);
+    position: absolute;
+    border-left: 1px solid rgba(255, 255, 255, .3);
+    border-top: 1px solid rgba(255, 255, 255, .3);
+    border-radius: 10px;
+    box-shadow: 10px 10px 60px -8px rgba(0, 0, 0, .2);
+}
+.drop1{
+    height: 100px;
+    width: 100px;
+    top: -20px;
+    left: -40px;
+}
+.drop2{
+    height: 100px;
+    width: 100px;
+    bottom: -30px;
+    right: -50px;
+}
+
+.drop3{
+    height: 200px;
+    width: 200px;
+    top: -70px;
+    right: -100px;
+}

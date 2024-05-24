@@ -52,7 +52,7 @@ Route::get('/appointment/checkslots/{id}', 'AppointmentController@checkslots');
 Route::get('/appointment/delete/{id}', 'AppointmentController@destroy')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|delete appointment']);
 Route::post('/appointment/edit', 'AppointmentController@store_edit')->name('appointment.store_edit')->middleware(['role_or_permission:Admin|edit appointment']);
 Route::get('/appointment/create_by/{id}', 'AppointmentController@create_By_id')->name('appointment.create_by')->middleware(['role_or_permission:Admin|create appointment']);
-// Route::post('/appointment/create_by/{id}', 'AppointmentController@store')->name('appointment.store_id');
+Route::get('/appointment/create_by/{id}/{doc_id}', 'AppointmentController@rdv_praticien')->name('appointment.rdv');
 Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
@@ -130,7 +130,7 @@ Route::get('/users/all', 'UsersController@all')->name('user.all');
 Route::get('/users/create', 'UsersController@create')->name('user.create');
 Route::post('/users/create', 'UsersController@store')->name('user.store');
 Route::get('/users/edit/{id}', 'UsersController@edit')->where('id', '[0-9]+')->name('user.edit');
-Route::get('/users/edit', 'UsersController@edit_profile')->name('user.edit_profile');
+// Route::get('/users/edit', 'UsersController@edit_profile')->name('user.edit_profile');
 Route::post('/users/edit', 'UsersController@store_edit')->name('user.store_edit');
 /* Roles */
 Route::get('/roles/all', 'RolesController@all_roles')->name('roles.all')->middleware(['role_or_permission:Admin']);
