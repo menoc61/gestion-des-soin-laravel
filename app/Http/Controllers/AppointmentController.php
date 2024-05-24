@@ -56,6 +56,7 @@ class AppointmentController extends Controller
         $user = User::findOrFail($id);
         $praticien = User::findOrFail($doc_id);
         $user_auth = Auth::user();
+        $appointmentsDoc = Appointment::where('doctor_id',$doc_id);
 
         return view('appointment.rdv', [
             'userName' => $user->name,
@@ -63,6 +64,7 @@ class AppointmentController extends Controller
             'user_auth' => $user_auth,
             'patientId' => $id, // Utilisez $id comme $patientId
             'docId' => $doc_id,
+            'appointmentsDoc' => $appointmentsDoc
         ]);
     }
 
