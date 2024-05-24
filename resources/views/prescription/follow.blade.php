@@ -35,6 +35,85 @@
                         : {{ $prescription->dosage }} Séance(s) de Travail </small>
                 </div>
                 <div class="card-body">
+                    <form method="post" action="{{ route('appointment.store') }}" enctype="multipart/form-data">
+                        <div class="row ">
+                            <div class="form-group col-md-6">
+                                <label for="patient_name">{{ __('sentence.Patient') }}</label>
+                                <select class="form-control patient_name multiselect-doctorino" name="patient"
+                                    id="patient_name">
+
+                                    <option value="{{ $prescription->user_id }}" selected>
+                                        {{ $prescription->User->name }}
+                                    </option>
+                                </select>
+                                {{ csrf_field() }}
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                @if (Auth::user()->role_id != 2)
+                                    <div class="form-group">
+                                        <label for="doctor_name">{{ __('sentence.Doctors') }} </label>
+                                        <select class="form-control " name="doctor_id" id="DoctorID" required>
+                                            <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+                                            @foreach ($praticiens as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+                                @php
+                                    $doctorId = $prescription->doctor_id;
+                                    $reason =
+                                        'Ref[' .
+                                        $prescription->id .
+                                        '-d' .
+                                        $prescription->dosage .
+                                        '] ID:' .
+                                        $prescription->reference .
+                                        '_' .
+                                        $prescription->nom;
+                                @endphp
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="rdvdate">{{ __('sentence.Date') }}</label>
+                                <input type="text" class="form-control target agenda" name="rdv_time_date"
+                                    readonly="readonly" id="rdvdate">
+                                <small id="emailHelp" class="form-text text-muted">Select date to view time slots
+                                    available</small>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
+                                <input type="time" class="form-control target" name="rdv_time_start">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
+                                <input type="time" class="form-control target" name="rdv_time_end">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="reason">{{ __('sentence.Reason for visit') }}</label>
+                                <textarea class="form-control" id="reason" name="reason"></textarea>
+                                <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="send_sms" id="sms">
+                                <label class="form-check-label" for="sms">
+                                    {{ __('sentence.Send SMS') }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                {{-- <div class="card-body">
                     <div class="row">
                         <div class="col-md-4 col-sm-12">
                             @if (Auth::user()->role_id != 2)
@@ -105,7 +184,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="card shadow mb-4" id="list_appointment_block">
                 <div class="card-header py-3">
@@ -131,7 +210,8 @@
                                     <td align="center"><label class="badge badge-primary-soft"><i
                                                 class="fas fa-calendar"></i>
                                             {{ $appointment->date->format('d M Y') }} </label></td>
-                                    <td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i>
+                                    <td align="center"><label class="badge badge-primary-soft"><i
+                                                class="fa fa-clock"></i>
                                             {{ $appointment->time_start }} -
                                             {{ $appointment->time_end }} </label></td>
                                     <td class="text-center">
@@ -167,7 +247,7 @@
                                                 data-rdv_time_end="{{ $appointment->time_end }}"
                                                 data-patient_name="{{ $appointment->User->name }}"
                                                 class=" btn btn-outline-success btn-circle btn-sm
-                                                {{  $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
+                                                {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
                                                 data-toggle="modal" data-target="#EDITRDVModal">
                                                 <i class="fas fa-check"></i>
                                             </a>
@@ -317,23 +397,23 @@
             checkAppointmentCount();
         });
         $(document).ready(function() {
-        // Function to update the final value
-        function updateFinalValue() {
-            var selectedByAdminDoctorId = $('#DoctorID').val();
-            var doctorId = @json($doctor);
-            var reason = @json($reason);
-            var final;
+            // Function to update the final value
+            function updateFinalValue() {
+                var selectedByAdminDoctorId = $('#DoctorID').val();
+                var doctorId = @json($doctor);
+                var reason = @json($reason);
+                var final;
 
-            if ({{ Auth::user()->role_id }} != 2) {
-                final = selectedByAdminDoctorId + reason;
-            } else {
-                final = doctorId + reason;
+                if ({{ Auth::user()->role_id }} != 2) {
+                    final = selectedByAdminDoctorId + reason;
+                } else {
+                    final = doctorId + reason;
+                }
+
+                $('#reason').text(final);
             }
-
-            $('#reason').text(final);
-        }
-        $('#DoctorID').change(updateFinalValue);
-        updateFinalValue();
-    });
+            $('#DoctorID').change(updateFinalValue);
+            updateFinalValue();
+        });
     </script>
 @endsection

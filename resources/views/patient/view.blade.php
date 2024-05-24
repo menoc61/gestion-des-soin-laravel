@@ -52,7 +52,7 @@
                             </div>
                             <hr>
 
-                            <table class="table table-striped table-align-center">
+                            {{-- <table class="table table-striped table-align-center">
                                 <tr>
                                     @isset($patient->Patient->birthday)
                                         <td>
@@ -207,7 +207,7 @@
                                         </td>
                                     @endisset
                                 </tr>
-                            </table>
+                            </table> --}}
 
                         </div>
                         <div class="col-md-8 col-sm-6">
@@ -218,14 +218,13 @@
                                         aria-selected="true">{{ __('sentence.Health History') }}</a>
                                 </li> --}}
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link active" id="tests-tab" data-toggle="tab" href="#tests"
-                                        role="tab" aria-controls="tests"
-                                        aria-selected="false">{{ __('sentence.Test') }}</a>
+                                    <a class="nav-link active" id="appointements-tab" data-toggle="tab"
+                                        href="#appointements" role="tab" aria-controls="appointements"
+                                        aria-selected="false">{{ __('sentence.Appointment') }}</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="appointements-tab" data-toggle="tab" href="#appointements"
-                                        role="tab" aria-controls="appointements"
-                                        aria-selected="false">{{ __('sentence.Appointment') }}</a>
+                                    <a class="nav-link " id="tests-tab" data-toggle="tab" href="#tests" role="tab"
+                                        aria-controls="tests" aria-selected="false">{{ __('sentence.Test') }}</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="prescriptions-tab" data-toggle="tab" href="#prescriptions"
@@ -282,8 +281,7 @@
 
 
                                 {{-- ---------------------------------------------------------- Start Test  ------------------------------------------------------------------------ --}}
-                                <div class="tab-pane fade show active" id="tests" role="tabpanel"
-                                    aria-labelledby="tests-tab">
+                                <div class="tab-pane fade " id="tests" role="tabpanel" aria-labelledby="tests-tab">
                                     <div class="row">
                                         <div class="col-md-6 ">
                                             <a class="btn btn-primary btn-sm my-4 float-left"
@@ -400,7 +398,7 @@
 
 
 
-                                <div class="tab-pane fade" id="appointements" role="tabpanel"
+                                <div class="tab-pane fade show active" id="appointements" role="tabpanel"
                                     aria-labelledby="appointements-tab">
 
                                     {{-- --------------------------------------------------------- Start Rendez-vous  ------------------------------------------------------------------ --}}
@@ -416,18 +414,19 @@
                                         </div>
                                         <table class="table">
                                             <tr>
-                                                <td align="center">Id</td>
+                                                {{-- <td align="center">Id</td> --}}
                                                 <td align="center">{{ __('sentence.Date') }}</td>
                                                 <td align="center">{{ __('sentence.Time Slot') }}</td>
+                                                <td align="center">{{ __('sentence.Praticien') }}</td>
                                                 <td align="center">{{ __('sentence.Status') }}</td>
-                                                <td class="text-center">{{ __('sentence.Created at') }}</td>
+                                                {{-- <td class="text-center">{{ __('sentence.Created at') }}</td> --}}
                                                 <td class="text-center">{{ __('sentence.Visited At') }}</td>
                                                 <td align="center">{{ __('sentence.Actions') }}</td>
                                             </tr>
                                             @forelse($appointments as  $key => $appointment)
                                                 @if (Auth::user()->role_id == 2)
                                                     <tr>
-                                                        <td align="center">{{ $key + 1 }} </td>
+                                                        {{-- <td align="center">{{ $key + 1 }} </td> --}}
                                                         <td align="center"><label class="badge badge-primary-soft"><i
                                                                     class="fas fa-calendar"></i>
                                                                 {{ $appointment->date->format('d M Y') }} </label></td>
@@ -486,13 +485,15 @@
                                                     </tr>
                                                 @elseif(Auth::user()->role_id == 1)
                                                     <tr>
-                                                        <td align="center">{{ $key + 1 }} </td>
+                                                        {{-- <td align="center">{{ $key + 1 }} </td> --}}
                                                         <td align="center"><label class="badge badge-primary-soft"><i
                                                                     class="fas fa-calendar"></i>
                                                                 {{ $appointment->date->format('d M Y') }} </label></td>
                                                         <td align="center"><label class="badge badge-primary-soft"><i
                                                                     class="fa fa-clock"></i> {{ $appointment->time_start }} -
                                                                 {{ $appointment->time_end }} </label></td>
+                                                        <td align="center"><label class="badge badge-primary-soft"><i
+                                                                    class="fa fa-clock"></i> {{ $appointment->Doctor->name}}  </label></td>
                                                         <td class="text-center">
                                                             @if ($appointment->visited == 0)
                                                                 <label class="badge badge-warning-soft">
@@ -510,8 +511,8 @@
                                                                 </label>
                                                             @endif
                                                         </td>
-                                                        <td class="text-center">
-                                                            {{ $appointment->created_at->format('d M Y H:i') }}</td>
+                                                        {{-- <td class="text-center">
+                                                            {{ $appointment->created_at->format('d M Y H:i') }}</td> --}}
                                                         <td class="text-center">
                                                             @if ($appointment->visited == 1)
                                                                 <label class="badge badge-primary-soft">

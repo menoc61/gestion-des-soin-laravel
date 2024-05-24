@@ -675,7 +675,7 @@
             var descriptionInput = document.getElementById('inputPassword2');
 
             // Mettre à jour la valeur du selectedOption en fonction de la sélection de l'utilisateur
-            selectedOption = defaultInputValue + ' ' + newSelectedOption;
+            selectedOption =newSelectedOption  + ' ' +defaultInputValue ;
 
             // Mettre à jour la valeur de l'input
             descriptionInput.value = selectedOption;

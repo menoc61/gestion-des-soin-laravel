@@ -148,7 +148,7 @@ class PrescriptionController extends Controller
             }
         }
 
-        return \Redirect::route('patient.view', ['id' => $prescription->user_id])->with('success', 'Prescription Created Successfully!');
+        return \Redirect::route('prescription.follow', ['id' => $prescription->id])->with('success', 'Prescription Created Successfully!');
     }
 
     public function all()
