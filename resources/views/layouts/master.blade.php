@@ -459,10 +459,10 @@
 
                         @if (Auth::user()->role_id == 1)
                             <div class="col-md-6">
-                                <a href="http://localhost:3000" class="btn btn-primary" target="_blank"
+                                <a href="http://192.168.1.176:3001" class="btn btn-primary" target="_blank"
                                     target="_self" rel="noopener"><i class="fa fa-user"></i> <span>Gestion Du
                                         Personnel</span></a>
-                                <a href="http://localhost:3001" class="btn btn-secondary" target="_blank"
+                                <a href="http://192.168.1.176:3000" class="btn btn-secondary" target="_blank"
                                     target="_self" rel="noopener"><i class="fa fa-globe"></i> <span>Gestion De
                                         Stock</span></a>
                             </div>

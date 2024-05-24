@@ -56,7 +56,7 @@
                                         class="fas fa-sort-down"></i></a>
                             </th>
                             <th class="text-center">{{ __('sentence.Phone') }}</th>
-                            <th class="text-center">{{ __('sentence.Appointment') }}</th>
+                            {{-- <th class="text-center">{{ __('sentence.Appointment') }}</th> --}}
                             {{-- <th class="text-center">{{ __('sentence.Address') }}</th>
                             <th class="text-center">{{ __('sentence.Allergies') }}</th>
                             <th class="text-center">{{ __('sentence.Type of patient') }}</th>
@@ -82,7 +82,7 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td><a href="{{ url('patient/view/' . $patient->id) }}"> {{ $patient->name }} </a></td>
                                 <td class="text-center"> {{ @$patient->Patient->phone }} </td>
-                                <td class="text-center"> {{ @$patient->Patient->phone }} </td>
+                                {{-- <td class="text-center"> {{ @$patient->Patient->phone }} </td> --}}
                                 {{-- <td class="text-center"> {{ @\Carbon\Carbon::parse($patient->Patient->birthday)->age }}ans
                                 </td> --}}
 

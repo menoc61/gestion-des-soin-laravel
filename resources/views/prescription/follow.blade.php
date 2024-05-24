@@ -52,7 +52,7 @@
                             <div class="form-group col-md-6">
                                 @if (Auth::user()->role_id != 2)
                                     <div class="form-group">
-                                        <label for="doctor_name">{{ __('sentence.Doctors') }} </label>
+                                        <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
                                         <select class="form-control " name="doctor_id" id="DoctorID" required>
                                             <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
                                             @foreach ($praticiens as $user)
