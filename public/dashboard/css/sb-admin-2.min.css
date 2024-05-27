@@ -331,6 +331,8 @@ svg {
 
 table {
   border-collapse: collapse;
+  box-shadow: 0 5px 10px #c6c8d4;
+  font-family: Mukta, sans-serif;
 }
 
 caption {
@@ -344,6 +346,8 @@ caption {
 th {
   text-align: inherit;
   text-align: -webkit-match-parent;
+  padding: 1rem 2rem;
+  text-transform: uppercase;
 }
 
 label {
@@ -12130,3 +12134,5 @@ input[type='password']:focus
     top: -70px;
     right: -100px;
 }
+
+

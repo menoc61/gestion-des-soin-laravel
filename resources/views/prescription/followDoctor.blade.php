@@ -27,7 +27,7 @@
             </div>
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} {{ $doctor->name }} </h6>
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -91,17 +91,10 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                @if (Auth::user()->role_id != 2)
-                                    <div class="form-group">
-                                        <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
-                                        <select class="form-control " name="doctor_id" id="DoctorID" required>
-                                            <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
-                                            @foreach ($praticiens as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endif
+                                <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
+                                <select class="form-control " name="doctor_id" id="DoctorID" required>
+                                    <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
+                                </select>
                                 @php
                                     $doctorId = $prescription->doctor_id;
                                     $reason =
