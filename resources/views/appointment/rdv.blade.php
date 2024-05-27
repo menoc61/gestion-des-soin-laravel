@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="praticien_id">{{ __('sentence.Doctor') }}</label>
+                                <label for="praticien_id">{{ __('sentence.Praticien') }}</label>
                                 <input type="hidden" class="form-control" name="doctor_id" value="{{ $docId }}"
                                     id="praticien_id" readonly>
                                 <input type="text" class="form-control" value="{{ $praticienName }}" readonly

@@ -88,7 +88,7 @@ class PrescriptionController extends Controller
         return view('prescription.follow', [
             'prescription' => $prescription,
             'currentUserAppointments' => $currentUserAppointments,
-            'currentDoctorAppointments' =>$currentDoctorAppointments,
+            'currentDoctorAppointments' => $currentDoctorAppointments,
             'visitedCount' => $visitedCount,
             'nonVisitedCount' => $nonVisitedCount,
             'appointments' => $appointments,
@@ -127,6 +127,7 @@ class PrescriptionController extends Controller
             'appointments' => $appointments,
             'doctor' => $doctor,
             'praticiens' => $praticiens,
+            'userId' => $userId,
         ]);
     }
 
@@ -147,6 +148,8 @@ class PrescriptionController extends Controller
         $prescription->reference = 'p' . rand(10000, 99999);
         $prescription->nom = $request->nom;
         $prescription->dosage = $request->dosage;
+        $prescription->montant_total = Collect($request->montant_drug)->sum() * $request->dosage;
+        $prescription->montant = Collect($request->montant_drug)->sum();
         $prescription->doctor_id = $request->Doctor_id;
         $prescription->save();
 
@@ -157,13 +160,22 @@ class PrescriptionController extends Controller
                 if ($request->trade_name[$x] != null) {
                     $add_drug = new Prescription_drug();
 
-                    $add_drug->type = $request->input('type.' . $x) ?? null;
                     $add_drug->strength = $request->input('strength.' . $x) ?? null;
                     $add_drug->dose = $request->input('dose.' . $x) ?? null;
                     $add_drug->duration = $request->input('duration.' . $x) ?? null;
                     $add_drug->drug_advice = $request->input('drug_advice.' . $x) ?? null;
                     $add_drug->prescription_id = $prescription->id;
                     $add_drug->drug_id = $request->input('trade_name.' . $x) ?? null;
+
+                    // Récupération de l'élément de la table "drug" correspondant à "drug_id"
+                    $drug = Drug::find($add_drug->drug_id);
+
+                    // Accéder aux propriétés de l'élément "drug" récupéré
+                    if ($drug) {
+                        $nomDuDrug = $drug->amountDrug; // Remplacez "nom" par le nom de la propriété que vous souhaitez récupérer
+                        // Utilisez la valeur récupérée selon vos besoins
+                    }
+                    $add_drug->montant_drug = $nomDuDrug;
 
                     $add_drug->save();
                 }

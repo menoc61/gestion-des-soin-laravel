@@ -25,6 +25,8 @@ class CreatePrescriptionsTable extends Migration
             $table->string('reference');
             $table->integer('dosage')->nullable();
             $table->mediumText('advices')->nullable();
+            $table->decimal('montant');
+            $table->decimal('montant_total');
             $table->timestamps();
         });
     }
