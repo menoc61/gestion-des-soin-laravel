@@ -366,7 +366,7 @@
                                         href="{{ route('drug.create') }}">{{ __('sentence.Add Drug') }}</a>
                                 @endcan
                                 <a class="collapse-item"
-                                    href="{{ route('doctorino_settings.edit') }}">{{ __('sentence.Doctorino Settings') }}</a>
+                                    href="{{ route('doctorino_settings.edit') }}">{{ __('sentence.Praticienino Settings') }}</a>
                                 <a class="collapse-item"
                                     href="{{ route('prescription_settings.edit') }}">{{ __('sentence.Prescription Settings') }}</a>
                                 <a class="collapse-item"
@@ -497,7 +497,7 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ route('doctorino_settings.edit') }}">
                                             <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            {{ __('sentence.Doctorino Settings') }}
+                                            {{ __('sentence.Praticienino Settings') }}
                                         </a>
                                     @endif
                                     <div class="dropdown-divider"></div>

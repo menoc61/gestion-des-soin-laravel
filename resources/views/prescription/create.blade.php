@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="DoctorID">{{ __('sentence.Doctors') }} :</label>
+                            <label for="DoctorID">{{ __('sentence.Praticiens') }} :</label>
                             @if (Auth::user()->role_id === 1)
                                     <select class="form-control " name="Doctor_id" id="DoctorID" required>
                                         <option value="{{Auth::user()->id}}">{{Auth::user()->name}}</option>

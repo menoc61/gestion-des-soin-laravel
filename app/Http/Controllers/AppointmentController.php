@@ -142,6 +142,7 @@ class AppointmentController extends Controller
             'rdv_time_start' => ['required'],
             'rdv_time_end' => ['required'],
             'send_sms' => ['boolean'],
+            'prescription_id' => ['required','exists:prescriptions,id']
         ]);
 
         $appointment = new Appointment();
@@ -152,6 +153,7 @@ class AppointmentController extends Controller
         $appointment->time_end = $request->rdv_time_end;
         $appointment->visited = 0;
         $appointment->reason = $request->reason;
+        $appointment->prescription_id = $request->prescription_id;
         $appointment->save();
 
         if ($request->send_sms == 1) {
@@ -170,38 +172,6 @@ class AppointmentController extends Controller
         } else {
             return back()->with('success', 'Appointment Created Successfully!');
         }
-    }
-
-    public function store_id(Request $request)
-    {
-        $validatedData = $request->validate([
-            'rdv_time_date' => ['required'],
-            'rdv_time_start' => ['required'],
-            'rdv_time_end' => ['required'],
-            'send_sms' => ['boolean'],
-        ]);
-
-        $appointment = new Appointment();
-        $appointment->user_id = $request->patient;
-        $appointment->date = $request->rdv_time_date;
-        $appointment->time_start = $request->rdv_time_start;
-        $appointment->time_end = $request->rdv_time_end;
-        $appointment->visited = 0;
-        $appointment->reason = $request->reason;
-        $appointment->save();
-
-        if ($request->send_sms == 1) {
-            $user = User::findOrFail($request->patient);
-            $phone = $user->Patient->phone;
-
-            \Nexmo::message()->send([
-                'to' => $phone,
-                'from' => '213794616181',
-                'text' => 'You have an appointment on ' . $request->rdv_time_date . ' at ' . $request->rdv_time_start . ' at Sai i lama',
-            ]);
-        }
-
-        return back()->with('success', 'Appointment Created Successfully!');
     }
 
     public function store_edit(Request $request)
@@ -319,7 +289,6 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::findOrfail($id);
         $prescription = Prescription::findOrfail($pres_id);
-        $doctor = $appointment->doctor_id;
 
         $currentUserAppointments = Appointment::where('id', $appointment->id)
             ->where('reason', 'like', '%' . $prescription->reference . '%')
@@ -327,6 +296,6 @@ class AppointmentController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
 
-        return response()->json($currentUserAppointments);
+        return view('appointment.detailAppointment', ['currentUserAppointments' => $currentUserAppointments, 'appointment'=>$appointment]);
     }
 }

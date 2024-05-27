@@ -85,6 +85,12 @@
                             <input type="text" class="form-control" name="note" id="Note"
                                 placeholder="Description...">
                         </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">{{ __('sentence.Amount') }}</label>
+                            <input type="text" class="form-control" name="amountDrug"
+                                placeholder="Montant...">
+                        </div>
                         <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
                     </form>
                 </div>

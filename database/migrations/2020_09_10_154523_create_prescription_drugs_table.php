@@ -24,12 +24,12 @@ class CreatePrescriptionDrugsTable extends Migration
                   ->constrained()
                   ->onDelete('cascade');
 
-            $table->string('type')->nullable();
+            $table->decimal('montant_drug')->nullable();
             $table->string('strength')->nullable();
             $table->string('dose')->nullable();
             $table->string('duration')->nullable();
             $table->mediumText('drug_advice')->nullable();
-            
+
             $table->timestamps();
         });
     }

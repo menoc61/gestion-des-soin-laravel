@@ -43,6 +43,7 @@
                             </th>
                             <th>{{ __('sentence.Generic Name') }}</th>
                             <th class="text-center">{{ __('sentence.Total Use') }}</th>
+                            <th class="text-center">{{ __('sentence.Amount') }}</th>
                             <th class="text-center">{{ __('sentence.Actions') }}</th>
                         </tr>
                     </thead>
@@ -69,6 +70,7 @@
                                     <label class="badge badge-primary-soft">{{ $drug->Prescription->count() }}</label>
                                     {{ __('sentence.In Prescription') }}
                                 </td>
+                                <td align="center"><label class="badge badge-primary-soft">{{ $drug->amountDrug }} fcfa</label></td>
                                 <td class="text-center">
                                     @can('edit drug')
                                         <a href="{{ url('drug/edit/' . $drug->id) }}"

@@ -47,9 +47,9 @@ class DrugController extends Controller
         ]);
 
         $drug = new Drug();
-
         $drug->trade_name = $request->trade_name;
         $drug->generic_name = json_encode($request->generic_name);
+        $drug->amountDrug = $request->amountDrug;
         $drug->note = $request->note;
 
         $drug->save();
@@ -90,6 +90,7 @@ class DrugController extends Controller
 
         if ($drug) {
             $drug->trade_name = $request->trade_name;
+            $drug->amountDrug = $request->amountDrug;
             $drug->generic_name = json_encode($request->generic_name);
 
             $drug->update();
