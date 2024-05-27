@@ -486,9 +486,11 @@
                                                 @elseif(Auth::user()->role_id == 1)
                                                     <tr>
                                                         {{-- <td align="center">{{ $key + 1 }} </td> --}}
-                                                        <td align="center"><label class="badge badge-primary-soft"><i
+                                                        <td align="center">
+                                                            <label class="badge badge-primary-soft"><i
                                                                     class="fas fa-calendar"></i>
-                                                                {{ $appointment->date->format('d M Y') }} </label></td>
+                                                                {{ $appointment->date->format('d M Y') }} </label>
+                                                        </td>
                                                         <td align="center"><label class="badge badge-primary-soft"><i
                                                                     class="fa fa-clock"></i> {{ $appointment->time_start }} -
                                                                 {{ $appointment->time_end }} </label></td>
@@ -523,9 +525,13 @@
                                                             @endif
                                                         </td>
                                                         <td align="center">
-                                                            <a href="javascript:void(0)" id="show-rdv"
-                                                                class=" btn btn-outline-primary btn-circle btn-sm"
-                                                                data-url="{{ route('rdvDetail.view', $appointment->id) }}">
+                                                            <a class="btn btn-outline-primary btn-circle btn-sm view-details-btn"
+                                                                data-date="{{ $appointment->date->format('d M Y') }}"
+                                                                data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
+                                                                data-doctor="{{ $appointment->Doctor->name }}"
+                                                                data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
+                                                                >
+                                                                <i class="fas fa-eye"></i>
                                                             </a>
                                                             @can('edit appointment')
                                                                 <a data-rdv_id="{{ $appointment->id }}"
@@ -576,6 +582,9 @@
                                                             @endif
                                                         </td>
                                                         <td align="center">
+                                                            <a>
+
+                                                            </a>
                                                             @can('edit appointment')
                                                                 @php
                                                                     $appointmentDate = \Carbon\Carbon::parse(
@@ -1271,6 +1280,30 @@
             </div>
         </div>
 
+        <!--Show Modal RDV Contain-->
+        <div class="modal fade" id="viewDetailsModal" tabindex="-1" role="dialog" aria-labelledby="viewDetailsModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewDetailsModalLabel">Détail du Rendez vous</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Date:</strong> <span id="appointmentDate"></span></p>
+                        <p><strong>Heure:</strong> <span id="appointmentTime"></span></p>
+                        <p><strong>Praticien:</strong> <span id="appointmentDoctor"></span></p>
+                        <p><strong>Traitement:</strong> <span id="appointmentPrescription"></span></p>
+                        {{-- <p><strong>Traitement:</strong> <span id="appointmentPrescriptiondrug"></span></p> --}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     @endsection
 
@@ -1279,4 +1312,25 @@
     @endsection
     @section('footer')
         <script type="text/javascript" src="{{ asset('dashboard/js/lightbox.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.view-details-btn').on('click', function() {
+                    var date = $(this).data('date');
+                    var time = $(this).data('time');
+                    var doctor = $(this).data('doctor');
+                    var prescription = $(this).data('prescription');
+                    // var drug = $(this).data('drug');
+
+                    $('#appointmentDate').text(date);
+                    $('#appointmentTime').text(time);
+                    $('#appointmentDoctor').text(doctor);
+                    $('#appointmentPrescription').text(prescription);
+                    // $('#appointmentPrescriptiondrug').text(drug);
+
+                    $('#viewDetailsModal').modal('show');
+                });
+            });
+        </script>
     @endsection

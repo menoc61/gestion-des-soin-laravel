@@ -92,7 +92,7 @@
                                 <select class="form-control" name="role_id" id="roleID">
                                     {{-- <option value="Unknown">{{ __('sentence.Select Role') }}</option>
                                     <option value="admin">{{ __('sentence.Admin') }}</option>
-                                    <option value="praticien">{{ __('sentence.Doctor') }}</option> --}}
+                                    <option value="praticien">{{ __('sentence.Praticien') }}</option> --}}
 
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">

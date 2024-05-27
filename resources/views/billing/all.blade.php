@@ -46,7 +46,7 @@
                                         class="fas fa-sort-down"></i></a>
                             </th>
                             <th>{{ __('sentence.Patients') }} </th>
-                            <th>{{ __('sentence.Doctors') }} </th>
+                            <th>{{ __('sentence.Praticiens') }} </th>
                             <th>{{ __('sentence.Date') }}
                                 <a href="{{ route('billing.all', ['sort' => 'created_at', 'order' => 'asc']) }}"><i
                                         class="fas fa-sort-up"></i></a>

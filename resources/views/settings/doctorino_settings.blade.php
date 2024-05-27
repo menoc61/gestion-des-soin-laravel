@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-{{ __('sentence.Doctorino Settings') }}
+{{ __('sentence.Praticienino Settings') }}
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
    <div class="col-md-8">
       <div class="card shadow mb-4">
          <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Doctorino Settings') }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Praticienino Settings') }}</h6>
          </div>
          <div class="card-body">
             <form method="post" action="{{ route('doctorino_settings.store') }}" enctype="multipart/form-data">
