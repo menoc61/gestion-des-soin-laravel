@@ -22,4 +22,8 @@ class Appointment extends Model implements Auditable
     {
         return $this->hasOne('App\User', 'id', 'doctor_id');
     }
+    public function Prescription()
+    {
+        return $this->hasOne('App\Prescription', 'id', 'prescription_id');
+    }
 }

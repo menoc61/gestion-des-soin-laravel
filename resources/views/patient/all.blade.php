@@ -39,10 +39,10 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="">
-                <table class="table">
+            <div class="table-responsive">
+                <table class="table table-bordered">
                     <tr>
-                        <th>{{ __('sentence.Patient Name') }}
+                        <th class="text-center">{{ __('sentence.Patient Name') }}
                             <a href="{{ route('patient.all', ['sort' => 'name', 'order' => 'asc']) }}"><i
                                     class="fas fa-sort-up"></i></a>
                             <a href="{{ route('patient.all', ['sort' => 'name', 'order' => 'desc']) }}"><i
@@ -61,7 +61,7 @@
                     </tr>
                     @forelse($patients as $key => $patient)
                         <tr>
-                            <td><a href="{{ url('patient/view/' . $patient->id) }}"> {{ $patient->name }} </a></td>
+                            <td class="text-center"><a href="{{ url('patient/view/' . $patient->id) }}"> {{ $patient->name }} </a></td>
                             <td class="text-center"> {{ @$patient->Patient->phone }} </td>
                             <td class="text-center"><label
                                     class="badge badge-primary-soft">{{ $patient->created_at->format('d M Y H:i') }}</label>
