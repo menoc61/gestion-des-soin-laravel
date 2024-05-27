@@ -52,6 +52,7 @@ Route::get('/appointment/checkslots/{id}', 'AppointmentController@checkslots');
 Route::get('/appointment/delete/{id}', 'AppointmentController@destroy')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|delete appointment']);
 Route::post('/appointment/edit', 'AppointmentController@store_edit')->name('appointment.store_edit')->middleware(['role_or_permission:Admin|edit appointment']);
 Route::get('/appointment/create_by/{id}', 'AppointmentController@create_By_id')->name('appointment.create_by')->middleware(['role_or_permission:Admin|create appointment']);
+Route::get('/appointment/create_by_praticien/{pres_id}/{id}', 'AppointmentController@rdv_praticien_By_id')->name('appointment.create_by_praticien');
 Route::get('/appointment/create_by/{id}/{doc_id}', 'AppointmentController@rdv_praticien')->name('appointment.rdv');
 Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
@@ -63,6 +64,7 @@ Route::get('/appointment/today', 'AppointmentController@today')->name('appointme
 Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
+Route::get('/appointment/{id}', 'AppointmentController@DetailAppointment')->name('rdvDetail.view');
 
 // Drugs
 Route::get('/drug/create', 'DrugController@create')->name('drug.create')->middleware(['role_or_permission:Admin|create drug']);
@@ -97,6 +99,7 @@ Route::get('/prescription/edit/{id}', 'PrescriptionController@edit')->where('id'
 Route::post('/prescription/update', 'PrescriptionController@update')->name('prescription.update');
 Route::get('/prescription/create_by/{id}', 'PrescriptionController@create_By_Id')->where('id', '[0-9]+')->name('prescription.create_by');
 Route::post('/prescription/create_by/{id}', 'PrescriptionController@store')->name('prescription.store_id');
+Route::get('/prescription/praticien/{id}/{user_id}/{doc_id}', 'PrescriptionController@followId')->name('prescription.doctorrdv');
 Route::get('/prescription/psychotherapi/{id}', 'PrescriptionController@create_Psychotherapie_By_Id')->where('id', '[0-9]+')->name('prescription.psycho_by');
 
 // Billing

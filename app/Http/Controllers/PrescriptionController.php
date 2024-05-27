@@ -80,6 +80,7 @@ class PrescriptionController extends Controller
             ->where('reason', 'like', '%' . $prescription->id . '%')
             ->orderBy('id', 'DESC')
             ->get();
+        $currentDoctorAppointments = Appointment::where('doctor_id', $doctor)->get();
         $visitedCount = $currentUserAppointments->where('visited', 1)->count();
         $nonVisitedCount = $currentUserAppointments->where('visited', 0)->count();
         $appointments = Appointment::orderBy('id', 'DESC')->paginate(25);
@@ -87,6 +88,7 @@ class PrescriptionController extends Controller
         return view('prescription.follow', [
             'prescription' => $prescription,
             'currentUserAppointments' => $currentUserAppointments,
+            'currentDoctorAppointments' =>$currentDoctorAppointments,
             'visitedCount' => $visitedCount,
             'nonVisitedCount' => $nonVisitedCount,
             'appointments' => $appointments,
@@ -94,6 +96,40 @@ class PrescriptionController extends Controller
             'praticiens' => $praticiens,
         ]);
     }
+
+    public function followId($id, $user_id, $doc_id)
+    {
+        $prescription = Prescription::findOrFail($id);
+        $userId = User::findOrFail($user_id);
+        $doctor = User::findOrFail($doc_id); // Assurez-vous d'extraire l'objet User correctement
+
+        $patient = Prescription::where('user_id', $userId->id)->get();
+        $praticiens = Prescription::where('doctor_id', $doctor->id)->get();
+
+        $currentUserAppointments = Appointment::where('user_id', $prescription->user_id)
+            ->where('reason', 'like', '%' . $prescription->reference . '%')
+            ->where('reason', 'like', '%' . $prescription->id . '%')
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        $currentDoctorAppointments = Appointment::where('doctor_id', $doctor->id)->wheredate('date', '>=', Today())->get(); // Utilisez l'ID du docteur ici
+
+        $visitedCount = $currentUserAppointments->where('visited', 1)->count();
+        $nonVisitedCount = $currentUserAppointments->where('visited', 0)->count();
+        $appointments = Appointment::orderBy('id', 'DESC')->paginate(25);
+
+        return view('prescription.followDoctor', [
+            'prescription' => $prescription,
+            'currentUserAppointments' => $currentUserAppointments,
+            'currentDoctorAppointments' => $currentDoctorAppointments,
+            'visitedCount' => $visitedCount,
+            'nonVisitedCount' => $nonVisitedCount,
+            'appointments' => $appointments,
+            'doctor' => $doctor,
+            'praticiens' => $praticiens,
+        ]);
+    }
+
 
     public function store(Request $request)
     {
@@ -148,7 +184,7 @@ class PrescriptionController extends Controller
             }
         }
 
-        return \Redirect::route('prescription.follow', ['id' => $prescription->id])->with('success', 'Prescription Created Successfully!');
+        return \Redirect::route('prescription.doctorrdv', ['id' => $prescription->id, 'user_id' => $prescription->user_id,  'doc_id' => $prescription->doctor_id])->with('success', 'Prescription Created Successfully!');
     }
 
     public function all()
