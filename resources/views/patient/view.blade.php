@@ -493,7 +493,8 @@
                                                                     class="fa fa-clock"></i> {{ $appointment->time_start }} -
                                                                 {{ $appointment->time_end }} </label></td>
                                                         <td align="center"><label class="badge badge-primary-soft"><i
-                                                                    class="fa fa-clock"></i> {{ $appointment->Doctor->name}}  </label></td>
+                                                                    class="fa fa-user-injured"></i>
+                                                                {{ $appointment->Doctor->name }} </label></td>
                                                         <td class="text-center">
                                                             @if ($appointment->visited == 0)
                                                                 <label class="badge badge-warning-soft">
@@ -522,6 +523,10 @@
                                                             @endif
                                                         </td>
                                                         <td align="center">
+                                                            <a href="javascript:void(0)" id="show-rdv"
+                                                                class=" btn btn-outline-primary btn-circle btn-sm"
+                                                                data-url="{{ route('rdvDetail.view', $appointment->id) }}">
+                                                            </a>
                                                             @can('edit appointment')
                                                                 <a data-rdv_id="{{ $appointment->id }}"
                                                                     data-rdv_date="{{ $appointment->date->format('d M Y') }}"
@@ -695,8 +700,9 @@
                                                         <td align="center"><label
                                                                 class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
                                                         </td>
+                                                        {{-- href="{{ url('prescription/follow/' . $prescription->id) }}" --}}
                                                         <td align="center">
-                                                            <a href="{{ url('prescription/follow/' . $prescription->id) }}"
+                                                            <a href="{{ route('appointment.create_by_praticien', ['pres_id' => $prescription->id, 'id' => $patient->id]) }}"
                                                                 class="btn btn-outline-primary btn-circle btn-sm">
                                                                 <i class="fa fa-id-card"></i>
                                                             </a>
@@ -1244,6 +1250,28 @@
             </div>
         </div>
         </div>
+
+        {{-- Detail RDV Modal --}}
+        <div class="modal fade" id="RdvDetailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Understood</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     @endsection
 
     @section('header')

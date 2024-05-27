@@ -304,6 +304,7 @@ return [
     'Hour_start' => 'Heure de Début',
     'Hour_end' => 'Heure de Fin',
     'Choice' => 'Choisir',
-    'Choice Praticien' => 'Choisir un Praticien'
+    'Choice Praticien' => 'Choisir un Praticien',
+    'Agenda praticien' => 'Agenda du Praticien :'
 
 ];

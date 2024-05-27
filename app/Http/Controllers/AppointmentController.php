@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Appointment;
 use App\Notifications\NewAppointmentByEmailNotification;
 use App\Notifications\WhatsAppNotification;
+use App\Prescription;
 use App\Setting;
 use App\User;
 use Auth;
@@ -51,12 +52,29 @@ class AppointmentController extends Controller
         ]);
     }
 
+    public function rdv_praticien_By_id($pres_id, $id)
+    {
+        $user = User::findOrFail($id);
+        $prescription = Prescription::findOrFail($pres_id);
+        $praticiens = User::where('role_id', '!=', 3)->get();
+        $user_auth = Auth::user();
+
+
+        return view('appointment.rdvPraticien', [
+            'userName' => $user->name,
+            'praticiens' => $praticiens,
+            'user_auth' => $user_auth,
+            'userId' => $id,
+            'prescription' => $prescription
+        ]);
+    }
+
     public function rdv_praticien ($id, $doc_id)
     {
         $user = User::findOrFail($id);
         $praticien = User::findOrFail($doc_id);
         $user_auth = Auth::user();
-        $appointmentsDoc = Appointment::where('doctor_id',$doc_id);
+        $appointmentsDoc = Appointment::where('doctor_id', $doc_id)->get();
 
         return view('appointment.rdv', [
             'userName' => $user->name,
@@ -295,5 +313,20 @@ class AppointmentController extends Controller
         });
 
         return response()->json($userAppointments);
+    }
+
+    public function DetailAppointment($id, $pres_id)
+    {
+        $appointment = Appointment::findOrfail($id);
+        $prescription = Prescription::findOrfail($pres_id);
+        $doctor = $appointment->doctor_id;
+
+        $currentUserAppointments = Appointment::where('id', $appointment->id)
+            ->where('reason', 'like', '%' . $prescription->reference . '%')
+            ->where('reason', 'like', '%' . $prescription->id . '%')
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        return response()->json($currentUserAppointments);
     }
 }

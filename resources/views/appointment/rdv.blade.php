@@ -40,11 +40,9 @@
 
                             <div class="form-group col-md-6">
                                 <label for="praticien_id">{{ __('sentence.Doctor') }}</label>
-                                <input type="hidden" class="form-control" name="doctor_id"
-                                    value="{{$docId}}" id="praticien_id"
-                                    readonly>
-                                <input type="text" class="form-control"
-                                    value="{{$praticienName}}" readonly
+                                <input type="hidden" class="form-control" name="doctor_id" value="{{ $docId }}"
+                                    id="praticien_id" readonly>
+                                <input type="text" class="form-control" value="{{ $praticienName }}" readonly
                                     id="praticien_name_input">
                             </div>
 
@@ -86,9 +84,46 @@
                         </div>
                     </form>
                 </div>
-
+            </div>
+            <div class="card">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} {{ $praticienName }}</h6>
+                </div>
                 <div class="card-body">
-
+                    <table class="table">
+                        <tr>
+                            <td align="center">{{ __('sentence.Date') }}</td>
+                            <td align="center">{{ __('sentence.Time Slot') }}</td>
+                            <td align="center">{{ __('sentence.Created at') }}</td>
+                        </tr>
+                        @forelse($appointmentsDoc as $appointment)
+                            <tr>
+                                <td align="center">
+                                    <label class="badge badge-primary-soft">
+                                        <i class="fas fa-calendar"></i>
+                                        {{ $appointment->date->format('d M Y') }}
+                                    </label>
+                                </td>
+                                <td align="center">
+                                    <label class="badge badge-primary-soft">
+                                        <i class="fa fa-clock"></i>
+                                        {{ $appointment->time_start }} - {{ $appointment->time_end }}
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    {{ $appointment->created_at->format('d M Y H:i') }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" align="center">
+                                    <img src="{{ asset('img/not-found.svg') }}" width="200" />
+                                    <br><br>
+                                    <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </table>
                 </div>
             </div>
         </div>
@@ -126,7 +161,6 @@
 
             $('.multiselect-doctorino').select2();
         });
-
     </script>
     <script src="{{ asset('dashboard/js/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/demo/swipper.js') }}"></script>
