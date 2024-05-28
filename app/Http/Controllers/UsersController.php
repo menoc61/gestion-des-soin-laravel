@@ -157,4 +157,12 @@ class UsersController extends Controller
         return \Redirect::route('user.all')->with('success', __('sentence.User Updated Successfully'));
     }
 
+    public function searchfonction(Request $request){
+        $term = $request->term;
+
+        $praticiens = User::where('name', 'LIKE', '%' . $term . '%')->OrderBy('id', 'DESC')->paginate(10);
+
+        return view('appointment.rdvPraticien', ['praticiens' => $praticiens]);
+    }
+
 }

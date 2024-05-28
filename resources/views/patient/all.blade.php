@@ -95,7 +95,6 @@
                     @endforelse
                 </table>
                 <span class="float-right mt-3">{{ $patients->links() }}</span>
-
             </div>
         </div>
     </div>
