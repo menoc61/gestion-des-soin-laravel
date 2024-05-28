@@ -32,25 +32,18 @@ class AppointmentController extends Controller
         $praticiens = User::where('role_id', '!=', 3)->get();
         $user_auth = Auth::user();
 
-        $datesByPraticien = [];
-        foreach ($praticiens as $praticien) {
-            $dates = Appointment::where('doctor_id', $praticien->id)
-                ->pluck('date')
-                ->map(function ($date) {
-                    return Carbon::parse($date)->format('Y-m-d');
-                })
-                ->toArray();
-            $datesByPraticien[$praticien->id] = $dates;
-        }
+        // $appointmentsDoc = Appointment::where('doctor_id', $doc_id)->get();
 
         return view('appointment.create_By_user', [
             'userName' => $user->name,
             'praticiens' => $praticiens,
             'user_auth' => $user_auth,
             'userId' => $id,
-            'datesByPraticien' => $datesByPraticien,
+            // 'appointmentsDoc' => $appointmentsDoc
         ]);
     }
+
+
 
     public function rdv_praticien_By_id($pres_id, $id)
     {
@@ -85,6 +78,8 @@ class AppointmentController extends Controller
             'appointmentsDoc' => $appointmentsDoc
         ]);
     }
+
+
 
     // public function checkslots($date)
     // {
@@ -142,7 +137,6 @@ class AppointmentController extends Controller
             'rdv_time_start' => ['required'],
             'rdv_time_end' => ['required'],
             'send_sms' => ['boolean'],
-            'prescription_id' => ['required','exists:prescriptions,id']
         ]);
 
         $appointment = new Appointment();
