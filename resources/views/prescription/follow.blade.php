@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card shadow mb-4">
+            {{-- <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }}</h6>
                 </div>
@@ -65,7 +65,7 @@
                         @endforelse
                     </table>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <div class="col-md-8">
@@ -76,7 +76,8 @@
                         : {{ $prescription->dosage }} Séance(s) de Travail </small>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{ route('appointment.store') }}" enctype="multipart/form-data">
+                    <form method="post" id="myForm" action="{{ route('appointment.store') }}"
+                        enctype="multipart/form-data">
                         <div class="row ">
                             <div class="form-group col-md-6">
                                 <label for="patient_name">{{ __('sentence.Patient') }}</label>
@@ -150,6 +151,32 @@
                         <div class="form-group row">
                             <div class="col-sm-9">
                                 <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
+                            </div>
+                        </div>
+
+                        <!--Show Modal Redirect-->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Detail Du RDV</h5>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Contenu de la modal...</p>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <a class="btn btn-primary"
+                                            href="{{ route('prescription.follow', ['id' => $prescription->id]) }}"> OK
+                                        </a>
+
+                                        <a class="btn btn-secondary"
+                                            href="{{ route('patient.view', ['id' => $prescription->user_id]) }}">Accueil</a>
+
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">OK</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -288,6 +315,7 @@
             </div>
         </div>
     </div>
+
     <!--EDIT Appointment Modal-->
     <div class="modal fade" id="EDITRDVModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -330,20 +358,28 @@
             </div>
         </div>
     </div>
+
 @endsection
+
+
 @section('header')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
+
+
 @section('footer')
+
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="/dashboard/vendor/chart.js/Chart.bundle.js"></script>
     <script src="{{ asset('assets/demo/chart-doughnut-demo.js') }}"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('.multiselect-doctorino').select2();
         });
     </script>
+
     <script type="text/javascript">
         // variabbles used by chart-doughnut-demo.js for the display of the doughnut
         var visitedCount = {{ $visitedCount }};
@@ -383,6 +419,30 @@
             }
             $('#DoctorID').change(updateFinalValue);
             updateFinalValue();
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#myForm').on('submit', function(event) {
+                event.preventDefault(); // Empêche la soumission du formulaire
+                var form = this;
+
+                $.ajax({
+                    type: $(form).attr('method'),
+                    url: $(form).attr('action'),
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        $('#myModal').modal('show'); // Affiche la modal en cas de succès
+                    },
+                    error: function(response) {
+                        // Gestion des erreurs si nécessaire
+                    }
+                });
+            });
         });
     </script>
 @endsection

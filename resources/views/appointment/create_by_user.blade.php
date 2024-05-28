@@ -12,75 +12,127 @@
         <div class="d-flex justify-content-center">
             <div class="card col-md-10">
                 <div class="card-header py-3">
-                    <h2 class="text-center">{{ __('sentence.Choice Praticien') }} Pour
-                        <span class="m-0 font-weight-bold text-primary text-center">{{ $userName }}</span>
-                    </h2>
+                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.Take Appointment') }} Pour
+                        {{ $userName }}</h2>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-3 my-4 droite card">
-            <form class="d-none d-sm-inline-block form-inline my-2 navbar-search w-100">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small"
-                        placeholder="Rechercher Une Spécialité..." aria-label="Search" aria-describedby="basic-addon2"
-                        name="term">
-                    @csrf
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <div class="row justify-content-center">
-        @if (Auth::user()->role_id != 2)
-            <div class="col-md-10 my-4">
-                <div class="card shadow custom-card-parent d-flex justify-content-center align-items-center">
-                    <div class="card w-75 shadow d-flex justify-content-center align-items-center">
-                        <div class="swiper mySwiper">
-                            <div class="swiper-wrapper w-25">
-                                @forelse ($praticiens as $praticien)
-                                    <div class="swiper-slide">
-                                        <div class="image-content">
-                                            <span class="overlay"></span>
-                                            <div class="card-image">
-                                                <img class="card-img" src="{{ asset('img/patient-icon.png') }}"
-                                                    alt="profil-img">
-                                            </div>
-                                        </div>
-                                        <div class="card-content">
-                                            <h2 class="name">{{ $praticien->name }}</h2>
-                                            <p class="description">{{ $praticien->email }}</p>
-                                            <div class="form-group row">
-                                                <div class="col-sm-9">
-                                                    <a href="{{ route('appointment.rdv', ['id' => $userId, 'doc_id' => $praticien->id]) }}"
-                                                        class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>
-                                                        {{ __('sentence.Choice') }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
+        <div class="col-md-10 my-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.New Appointment') }}</h6>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{{ route('appointment.store') }}" enctype="multipart/form-data">
+                        <div class="row ">
+                            <div class="form-group col-md-6">
+                                <label for="patient_name">{{ __('sentence.Patient') }}</label>
+                                <select class="form-control patient_name multiselect-doctorino" name="patient"
+                                    id="patient_name">
+                                    <option value="{{ $userId }}" selected>
+                                        {{ $userName }}
+                                    </option>
+                                </select>
+                                {{ csrf_field() }}
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                @if (Auth::user()->role_id != 2)
+                                    <div class="form-group">
+                                        <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
+                                        <select class="form-control " name="doctor_id" id="DoctorID" required>
+                                            {{-- <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option> --}}
+                                            @foreach ($praticiens as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                @empty
-                                    <div class="text-center">
-                                        <img src="{{ asset('img/not-found.svg') }}" width="200" />
-                                        <br><br>
-                                        <b class="text-muted">pas de praticien trouvé</b>
-                                @endforelse
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="rdvdate">{{ __('sentence.Date') }}</label>
+                                <input type="text" class="form-control target agenda" name="rdv_time_date"
+                                    readonly="readonly" id="rdvdate">
+                                <small id="emailHelp" class="form-text text-muted">Select date to view time slots
+                                    available</small>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
+                                <input type="time" class="form-control target" name="rdv_time_start">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
+                                <input type="time" class="form-control target" name="rdv_time_end">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="reason">{{ __('sentence.Reason for visit') }}</label>
+                                <textarea class="form-control" id="reason" name="reason"></textarea>
+                                <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="send_sms" id="sms">
+                                <label class="form-check-label" for="sms">
+                                    {{ __('sentence.Send SMS') }}
+                                </label>
                             </div>
                         </div>
-                    </div>
+                        <div class="form-group row">
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
             </div>
-        @endif
+            <div class="card">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} {{ $user->name }}</h6>
+                </div>
+                {{-- <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <td align="center">{{ __('sentence.Date') }}</td>
+                            <td align="center">{{ __('sentence.Time Slot') }}</td>
+                            <td align="center">{{ __('sentence.Created at') }}</td>
+                        </tr>
+                        @forelse($appointmentsDoc as $appointment)
+                            <tr>
+                                <td align="center">
+                                    <label class="badge badge-primary-soft">
+                                        <i class="fas fa-calendar"></i>
+                                        {{ $appointment->date->format('d M Y') }}
+                                    </label>
+                                </td>
+                                <td align="center">
+                                    <label class="badge badge-primary-soft">
+                                        <i class="fa fa-clock"></i>
+                                        {{ $appointment->time_start }} - {{ $appointment->time_end }}
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    {{ $appointment->created_at->format('d M Y H:i') }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" align="center">
+                                    <img src="{{ asset('img/not-found.svg') }}" width="200" />
+                                    <br><br>
+                                    <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </table>
+                </div> --}}
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -115,54 +167,10 @@
 
             $('.multiselect-doctorino').select2();
         });
-
-        var datesByPraticien = @json($datesByPraticien);
-
-        function selectPraticien(praticienId, praticienName) {
-            var reasonTextarea = document.getElementById('reason');
-            var reasonText = reasonTextarea.value;
-
-            // Rechercher l'ID précédent et le supprimer du texte
-            var regex = new RegExp('\\b\\d+\\b', 'g');
-            reasonText = reasonText.replace(regex, '');
-
-            // Retirer les espaces en trop du texte
-            reasonText = reasonText.trim();
-
-            // Ajouter l'ID du praticien sélectionné au texte
-            if (reasonText.length > 0) {
-                reasonText += ' ';
-            }
-            reasonText += praticienId;
-
-            // Mettre à jour les champs et le texte
-            document.getElementById('praticien_id').value = praticienId;
-            document.getElementById('praticien_name_input').value = praticienName;
-            reasonTextarea.value = reasonText;
-
-            // Mettre à jour le datepicker avec les dates du praticien sélectionné
-            var dates = datesByPraticien[praticienId] || [];
-            $(".agenda").datepicker('setDatesDisabled', dates);
-        }
     </script>
     <script src="{{ asset('dashboard/js/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/demo/swipper.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        var swiper = new Swiper(".mySwiper", {
-            slidesPerView: 3,
-            centeredSlides: true,
-            spaceBetween: 30,
-            loop: true,
-            shadowOffset: 200,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-        });
-    </script>
+
+
 @endsection

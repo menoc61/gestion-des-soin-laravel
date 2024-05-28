@@ -135,6 +135,7 @@ Route::post('/users/create', 'UsersController@store')->name('user.store');
 Route::get('/users/edit/{id}', 'UsersController@edit')->where('id', '[0-9]+')->name('user.edit');
 // Route::get('/users/edit', 'UsersController@edit_profile')->name('user.edit_profile');
 Route::post('/users/edit', 'UsersController@store_edit')->name('user.store_edit');
+Route::post('/users/fonction/search', 'UsersController@searchfonction')->name('user.search');
 /* Roles */
 Route::get('/roles/all', 'RolesController@all_roles')->name('roles.all')->middleware(['role_or_permission:Admin']);
 Route::get('/role/create', 'RolesController@create')->name('role.create')->middleware(['role_or_permission:Admin']);
