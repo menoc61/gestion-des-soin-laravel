@@ -27,9 +27,9 @@ class PatientController extends Controller
         $sortColumn = request()->get('sort');
         $sortOrder = request()->get('order', 'asc');
         if (!empty($sortColumn)) {
-            $patients = User::where('role_id', '3')->OrderBy($sortColumn, $sortOrder)->paginate(25);
+            $patients = User::where('role_id', '3')->OrderBy($sortColumn, $sortOrder)->paginate(10);
         } else {
-            $patients = User::where('role_id', '3')->paginate(25);
+            $patients = User::where('role_id', '3')->paginate(10);
 
         }
 
@@ -210,8 +210,7 @@ class PatientController extends Controller
             ->where('prescriptions.user_id', $id)
             ->where(function ($query) {
                 $query->orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE');
-            })
-            ->get();
+            })->paginate(10);
         $psychos = Prescription::select('prescriptions.*')
             ->join('prescription_tests', 'prescription_tests.prescription_id', '=', 'prescriptions.id')
             ->join('tests', 'tests.id', '=', 'prescription_tests.test_id')
@@ -219,17 +218,17 @@ class PatientController extends Controller
             ->where(function ($query) {
                 $query->whereJsonContains('diagnostic_type', 'PSYCHOTHERAPIE');
             })
-            ->get();
-        $appointments = Appointment::where('user_id', $id)->OrderBy('id', 'Desc')->get();
+            ->paginate(10);
+        $appointments = Appointment::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(10);
         $tests = Test::where('user_id', $id)
             ->where(function ($query) {
                 $query->orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE');
             })
             ->orderBy('id', 'desc')
-            ->get();
-        $documents = Document::where('user_id', $id)->OrderBy('id', 'Desc')->get();
-        $invoices = Billing::where('user_id', $id)->OrderBy('id', 'Desc')->get();
-        $historys = History::where('user_id', $id)->OrderBy('id', 'Desc')->get();
+            ->paginate(10);
+        $documents = Document::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(10);
+        $invoices = Billing::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(10);
+        $historys = History::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(10);
 
         return view('patient.view', [
             'patient' => $patient,

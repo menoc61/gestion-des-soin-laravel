@@ -295,104 +295,110 @@
                                                     class="fa fa-pen"></i>
                                                 {{ __('sentence.Add Test') }}</a>
                                         </div>
+
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover " id="dataTable"
+                                                width="100%" cellspacing="0">
+                                                <tr>
+                                                    <td align="center"><b>Id</b></td>
+                                                    <td align="center"><b> Nom Diagnose</b> </td>
+                                                    <td align="center"><b>Description</b> </td>
+                                                    <td align="center"><b> Utilisation </b></td>
+                                                    <td align="center"><b> Action</b> </td>
+                                                </tr>
+                                                @forelse($tests as $key => $test)
+                                                    @if (Auth::user()->role_id == 2)
+                                                        <tr>
+                                                            <td align="center">{{ $key + 1 }}</td>
+                                                            <td align="center">{{ $test->test_name }}</td>
+                                                            <td align="center"> {{ $test->comment }} </td>
+                                                            <td align="center">{{ __('sentence.time use') }} :
+                                                                {{ $test->Prescription->count() }}
+                                                                {{ __('sentence.In Prescription') }}
+                                                            </td>
+                                                            <td class="text-center">
+
+                                                                <a href="{{ url('test/view/' . $test->id) }}"
+                                                                    class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                        class="fa fa-eye"></i></a>
+
+                                                                @can('edit diagnostic test')
+                                                                    <a href="{{ url('test/edit/' . $test->id) }}"
+                                                                        class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                            class="fa fa-pen"></i></a>
+                                                                @endcan
+                                                                @can('delete diagnostic test')
+                                                                    <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                        data-toggle="modal" data-target="#DeleteModal"
+                                                                        data-link="{{ url('test/delete/' . $test->id) }}"><i
+                                                                            class="fa fa-trash"></i></a>
+                                                                @endcan
+                                                            </td>
+                                                        </tr>
+                                                    @elseif (Auth::user()->role_id == 1)
+                                                        <tr>
+                                                            <td align="center">{{ $key + 1 }}</td>
+                                                            <td align="center">{{ $test->test_name }}</td>
+                                                            <td align="center"> {{ $test->comment }} </td>
+                                                            <td align="center">{{ __('sentence.time use') }} :
+                                                                {{ $test->Prescription->count() }}
+                                                                {{ __('sentence.In Prescription') }}
+                                                            </td>
+                                                            <td class="text-center">
+
+                                                                <a href="{{ url('test/view/' . $test->id) }}"
+                                                                    class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                        class="fa fa-eye"></i></a>
+
+                                                                @can('edit diagnostic test')
+                                                                    <a href="{{ url('test/edit/' . $test->id) }}"
+                                                                        class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                            class="fa fa-pen"></i></a>
+                                                                @endcan
+                                                                @can('delete diagnostic test')
+                                                                    <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                        data-toggle="modal" data-target="#DeleteModal"
+                                                                        data-link="{{ url('test/delete/' . $test->id) }}"><i
+                                                                            class="fa fa-trash"></i></a>
+                                                                @endcan
+                                                            </td>
+                                                        </tr>
+                                                    @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $test->user_id)
+                                                        <tr>
+                                                            <td align="center">{{ $key + 1 }}</td>
+                                                            <td align="center">{{ $test->test_name }}</td>
+                                                            <td align="center"> {{ $test->comment }} </td>
+                                                            <td align="center">{{ __('sentence.In Prescription') }} :
+                                                                {{ $test->Prescription->count() }}
+                                                                {{ __('sentence.time use') }}
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <a href="{{ url('test/view/' . $test->id) }}"
+                                                                    class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                        class="fa fa-eye"></i></a>
+
+                                                                @can('create appointment')
+                                                                    <a href="{{ route('appointment.create_by', ['id' => $patient->id]) }}"
+                                                                        class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                            class="far fa-calendar-plus"></i></a>
+                                                                @endcan
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="5" class="text-center"><img
+                                                                src="{{ asset('img/not-found.svg') }}" width="200" />
+                                                            <br><br>
+                                                            <b class="text-muted">pas de diagnostic trouvé</b>
+                                                        </td>
+                                                    </tr>
+                                                @endforelse
+                                            </table>
+                                            <span class="float-right mt-3">{{ $tests->links() }}</span>
+                                        </div>
                                     </div>
-                                    <table class="table " id="dataTable" width="100%" cellspacing="0">
-                                        <tr>
-                                            <td align="center"><b>Id</b></td>
-                                            <td align="center"><b> Nom Diagnostic</b> </td>
-                                            <td align="center"><b>Description</b> </td>
-                                            <td align="center"><b> Utilisation </b></td>
-                                            <td align="center"><b> Action</b> </td>
-                                        </tr>
-                                        @forelse($tests as $key => $test)
-                                            @if (Auth::user()->role_id == 2)
-                                                <tr>
-                                                    <td align="center">{{ $key + 1 }}</td>
-                                                    <td align="center">{{ $test->test_name }}</td>
-                                                    <td align="center"> {{ $test->comment }} </td>
-                                                    <td align="center">{{ __('sentence.time use') }} :
-                                                        {{ $test->Prescription->count() }}
-                                                        {{ __('sentence.In Prescription') }}
-                                                    </td>
-                                                    <td class="text-center">
-
-                                                        <a href="{{ url('test/view/' . $test->id) }}"
-                                                            class="btn btn-outline-primary btn-circle btn-sm"><i
-                                                                class="fa fa-eye"></i></a>
-
-                                                        @can('edit diagnostic test')
-                                                            <a href="{{ url('test/edit/' . $test->id) }}"
-                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                    class="fa fa-pen"></i></a>
-                                                        @endcan
-                                                        @can('delete diagnostic test')
-                                                            <a class="btn btn-outline-danger btn-circle btn-sm"
-                                                                data-toggle="modal" data-target="#DeleteModal"
-                                                                data-link="{{ url('test/delete/' . $test->id) }}"><i
-                                                                    class="fa fa-trash"></i></a>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
-                                            @elseif (Auth::user()->role_id == 1)
-                                                <tr>
-                                                    <td align="center">{{ $key + 1 }}</td>
-                                                    <td align="center">{{ $test->test_name }}</td>
-                                                    <td align="center"> {{ $test->comment }} </td>
-                                                    <td align="center">{{ __('sentence.time use') }} :
-                                                        {{ $test->Prescription->count() }}
-                                                        {{ __('sentence.In Prescription') }}
-                                                    </td>
-                                                    <td class="text-center">
-
-                                                        <a href="{{ url('test/view/' . $test->id) }}"
-                                                            class="btn btn-outline-primary btn-circle btn-sm"><i
-                                                                class="fa fa-eye"></i></a>
-
-                                                        @can('edit diagnostic test')
-                                                            <a href="{{ url('test/edit/' . $test->id) }}"
-                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                    class="fa fa-pen"></i></a>
-                                                        @endcan
-                                                        @can('delete diagnostic test')
-                                                            <a class="btn btn-outline-danger btn-circle btn-sm"
-                                                                data-toggle="modal" data-target="#DeleteModal"
-                                                                data-link="{{ url('test/delete/' . $test->id) }}"><i
-                                                                    class="fa fa-trash"></i></a>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
-                                            @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $test->user_id)
-                                                <tr>
-                                                    <td align="center">{{ $key + 1 }}</td>
-                                                    <td align="center">{{ $test->test_name }}</td>
-                                                    <td align="center"> {{ $test->comment }} </td>
-                                                    <td align="center">{{ __('sentence.In Prescription') }} :
-                                                        {{ $test->Prescription->count() }} {{ __('sentence.time use') }}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <a href="{{ url('test/view/' . $test->id) }}"
-                                                            class="btn btn-outline-primary btn-circle btn-sm"><i
-                                                                class="fa fa-eye"></i></a>
-
-                                                        @can('create appointment')
-                                                            <a href="{{ route('appointment.create_by', ['id' => $patient->id]) }}"
-                                                                class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                    class="far fa-calendar-plus"></i></a>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
-                                            @endif
-
-                                        @empty
-                                            <tr>
-                                                <td colspan="5" class="text-center"><img
-                                                        src="{{ asset('img/not-found.svg') }}" width="200" />
-                                                    <br><br>
-                                                    <b class="text-muted">pas de diagnostic trouvé</b>
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    </table>
                                 </div>
                                 {{-- ------------------------------------------------------------ End Test  ------------------------------------------------------------------------ --}}
 
@@ -412,223 +418,234 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <table class="table">
-                                            <tr>
-                                                {{-- <td align="center">Id</td> --}}
-                                                <td align="center">{{ __('sentence.Date') }}</td>
-                                                <td align="center">{{ __('sentence.Time Slot') }}</td>
-                                                <td align="center">{{ __('sentence.Praticien') }}</td>
-                                                <td align="center">{{ __('sentence.Status') }}</td>
-                                                {{-- <td class="text-center">{{ __('sentence.Created at') }}</td> --}}
-                                                <td class="text-center">{{ __('sentence.Visited At') }}</td>
-                                                <td align="center">{{ __('sentence.Actions') }}</td>
-                                            </tr>
-                                            @forelse($appointments as  $key => $appointment)
-                                                @if (Auth::user()->role_id == 2)
-                                                    <tr>
-                                                        {{-- <td align="center">{{ $key + 1 }} </td> --}}
-                                                        <td align="center"><label class="badge badge-primary-soft"><i
-                                                                    class="fas fa-calendar"></i>
-                                                                {{ $appointment->date->format('d M Y') }} </label></td>
-                                                        <td align="center"><label class="badge badge-primary-soft"><i
-                                                                    class="fa fa-clock"></i> {{ $appointment->time_start }} -
-                                                                {{ $appointment->time_end }} </label></td>
-                                                        <td class="text-center">
-                                                            @if ($appointment->visited == 0)
-                                                                <label class="badge badge-warning-soft">
-                                                                    <i class="fas fa-hourglass-start"></i>
-                                                                    {{ __('sentence.Not Yet Visited') }}
-                                                                </label>
-                                                            @elseif($appointment->visited == 1)
-                                                                <label class="badge badge-success-soft">
-                                                                    <i class="fas fa-check"></i> {{ __('sentence.Visited') }}
-                                                                </label>
-                                                            @else
-                                                                <label class="badge badge-danger-soft">
-                                                                    <i class="fas fa-user-times"></i>
-                                                                    {{ __('sentence.Cancelled') }}
-                                                                </label>
-                                                            @endif
-                                                        </td>
-                                                        <td class="text-center">
-                                                            {{ $appointment->created_at->format('d M Y H:i') }}</td>
-                                                        <td class="text-center">
-                                                            @if ($appointment->visited == 1)
-                                                                <label class="badge badge-primary-soft">
-                                                                    <i class="fas fa-calendar"></i>
-                                                                    {{ $appointment->updated_at->format('d M Y H:i') }}
-                                                                </label>
-                                                            @endif
-                                                        </td>
-                                                        <td align="center">
-                                                            @can('edit appointment')
-                                                                <a data-rdv_id="{{ $appointment->id }}"
-                                                                    data-rdv_date="{{ $appointment->date->format('d M Y') }}"
-                                                                    data-rdv_time_start="{{ $appointment->time_start }}"
-                                                                    data-rdv_time_end="{{ $appointment->time_end }}"
-                                                                    data-patient_name="{{ $appointment->User->name }}"
-                                                                    class=" btn btn-outline-success btn-circle btn-sm
-                                                        {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
-                                                                    data-toggle="modal" data-target="#EDITRDVModal">
-                                                                    <i class="fas fa-check"></i>
-                                                                </a>
-                                                            @endcan
-                                                            @can('delete appointment')
-                                                                @if ($appointment->visited != 1)
-                                                                    <a href="{{ url('appointment/delete/' . $appointment->id) }}"
-                                                                        class="btn btn-outline-danger btn-circle btn-sm">
-                                                                        <i class="fas fa-trash"></i>
-                                                                    </a>
-                                                                @endif
-                                                            @endcan
-                                                        </td>
-                                                    </tr>
-                                                @elseif(Auth::user()->role_id == 1)
-                                                    <tr>
-                                                        {{-- <td align="center">{{ $key + 1 }} </td> --}}
-                                                        <td align="center">
-                                                            <label class="badge badge-primary-soft"><i
-                                                                    class="fas fa-calendar"></i>
-                                                                {{ $appointment->date->format('d M Y') }} </label>
-                                                        </td>
-                                                        <td align="center"><label class="badge badge-primary-soft"><i
-                                                                    class="fa fa-clock"></i> {{ $appointment->time_start }} -
-                                                                {{ $appointment->time_end }} </label></td>
-                                                        <td align="center"><label class="badge badge-primary-soft"><i
-                                                                    class="fa fa-user-injured"></i>
-                                                                {{ $appointment->Doctor->name }} </label></td>
-                                                        <td class="text-center">
-                                                            @if ($appointment->visited == 0)
-                                                                <label class="badge badge-warning-soft">
-                                                                    <i class="fas fa-hourglass-start"></i>
-                                                                    {{ __('sentence.Not Yet Visited') }}
-                                                                </label>
-                                                            @elseif($appointment->visited == 1)
-                                                                <label class="badge badge-success-soft">
-                                                                    <i class="fas fa-check"></i> {{ __('sentence.Visited') }}
-                                                                </label>
-                                                            @else
-                                                                <label class="badge badge-danger-soft">
-                                                                    <i class="fas fa-user-times"></i>
-                                                                    {{ __('sentence.Cancelled') }}
-                                                                </label>
-                                                            @endif
-                                                        </td>
-                                                        {{-- <td class="text-center">
-                                                            {{ $appointment->created_at->format('d M Y H:i') }}</td> --}}
-                                                        <td class="text-center">
-                                                            @if ($appointment->visited == 1)
-                                                                <label class="badge badge-primary-soft">
-                                                                    <i class="fas fa-calendar"></i>
-                                                                    {{ $appointment->updated_at->format('d M Y H:i') }}
-                                                                </label>
-                                                            @endif
-                                                        </td>
-                                                        <td align="center">
-                                                            <a class="btn btn-outline-primary btn-circle btn-sm view-details-btn"
-                                                                data-date="{{ $appointment->date->format('d M Y') }}"
-                                                                data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
-                                                                data-doctor="{{ $appointment->Doctor->name }}"
-                                                                data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
-                                                                >
-                                                                <i class="fas fa-eye"></i>
-                                                            </a>
-                                                            @can('edit appointment')
-                                                                <a data-rdv_id="{{ $appointment->id }}"
-                                                                    data-rdv_date="{{ $appointment->date->format('d M Y') }}"
-                                                                    data-rdv_time_start="{{ $appointment->time_start }}"
-                                                                    data-rdv_time_end="{{ $appointment->time_end }}"
-                                                                    data-patient_name="{{ $appointment->User->name }}"
-                                                                    class=" btn btn-outline-success btn-circle btn-sm
-                                                            {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
-                                                                    data-toggle="modal" data-target="#EDITRDVModal">
-                                                                    <i class="fas fa-check"></i>
-                                                                </a>
-                                                            @endcan
-                                                            @can('delete appointment')
-                                                                @if ($appointment->visited != 1)
-                                                                    <a href="{{ url('appointment/delete/' . $appointment->id) }}"
-                                                                        class="btn btn-outline-danger btn-circle btn-sm">
-                                                                        <i class="fas fa-trash"></i>
-                                                                    </a>
-                                                                @endif
-                                                            @endcan
-                                                        </td>
-                                                    </tr>
-                                                @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $appointment->user_id)
-                                                    <tr>
-                                                        <td align="center">{{ $key + 1 }} </td>
-                                                        <td align="center"><label class="badge badge-primary-soft"><i
-                                                                    class="fas fa-calendar"></i>
-                                                                {{ $appointment->date->format('d M Y') }} </label></td>
-                                                        <td align="center"><label class="badge badge-primary-soft"><i
-                                                                    class="fa fa-clock"></i> {{ $appointment->time_start }} -
-                                                                {{ $appointment->time_end }} </label></td>
-                                                        <td class="text-center">
-                                                            @if ($appointment->visited == 0)
-                                                                <label class="badge badge-warning-soft">
-                                                                    <i class="fas fa-hourglass-start"></i>
-                                                                    {{ __('sentence.Not Yet Visited') }}
-                                                                </label>
-                                                            @elseif($appointment->visited == 1)
-                                                                <label class="badge badge-success-soft">
-                                                                    <i class="fas fa-check"></i> {{ __('sentence.Visited') }}
-                                                                </label>
-                                                            @else
-                                                                <label class="badge badge-danger-soft">
-                                                                    <i class="fas fa-user-times"></i>
-                                                                    {{ __('sentence.Cancelled') }}
-                                                                </label>
-                                                            @endif
-                                                        </td>
-                                                        <td align="center">
-                                                            <a>
-
-                                                            </a>
-                                                            @can('edit appointment')
-                                                                @php
-                                                                    $appointmentDate = \Carbon\Carbon::parse(
-                                                                        $appointment->date,
-                                                                    );
-                                                                    $appointmentTimeStart = \Carbon\Carbon::parse(
-                                                                        $appointment->time_start,
-                                                                    );
-                                                                    $currentDateTime = now();
-                                                                    $isFutureDateTime =
-                                                                        $appointmentDate->isFuture() ||
-                                                                        ($appointmentDate->isToday() &&
-                                                                            $appointmentTimeStart->isFuture());
-                                                                @endphp
-
-                                                                <a data-rdv_id="{{ $appointment->id }}"
-                                                                    data-rdv_date="{{ $appointment->date->format('d M Y') }}"
-                                                                    data-rdv_time_start="{{ $appointment->time_start }}"
-                                                                    data-rdv_time_end="{{ $appointment->time_end }}"
-                                                                    data-patient_name="{{ $appointment->User->name }}"
-                                                                    class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime ? ' disabled opacity-button' : '' }}"
-                                                                    data-toggle="modal" data-target="#EDITRDVModal">
-                                                                    <i class="fas fa-check"></i>
-                                                                </a>
-                                                            @endcan
-                                                            @can('delete appointment')
-                                                                <a href="{{ url('appointment/delete/' . $appointment->id) }}"
-                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                        class="fas fa-trash"></i></a>
-                                                            @endcan
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @empty
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover">
                                                 <tr>
-                                                    <td colspan="5" align="center"><img
-                                                            src="{{ asset('img/not-found.svg') }}" width="200" />
-                                                        <br><br>
-                                                        <b
-                                                            class="text-muted">{{ __('sentence.No appointment available') }}</b>
-                                                    </td>
+                                                    {{-- <td align="center">Id</td> --}}
+                                                    <td align="center">{{ __('sentence.Date') }}</td>
+                                                    <td align="center">{{ __('sentence.Time Slot') }}</td>
+                                                    <td align="center">{{ __('sentence.Praticien') }}</td>
+                                                    <td align="center">{{ __('sentence.Status') }}</td>
+                                                    {{-- <td class="text-center">{{ __('sentence.Created at') }}</td> --}}
+                                                    <td class="text-center">{{ __('sentence.Visited At') }}</td>
+                                                    <td align="center">{{ __('sentence.Actions') }}</td>
                                                 </tr>
-                                            @endforelse
-                                        </table>
+                                                @forelse($appointments as  $key => $appointment)
+                                                    @if (Auth::user()->role_id == 2)
+                                                        <tr>
+                                                            {{-- <td align="center">{{ $key + 1 }} </td> --}}
+                                                            <td align="center"><label class="badge badge-primary-soft"><i
+                                                                        class="fas fa-calendar"></i>
+                                                                    {{ $appointment->date->format('d M Y') }} </label>
+                                                            </td>
+                                                            <td align="center"><label class="badge badge-primary-soft"><i
+                                                                        class="fa fa-clock"></i>
+                                                                    {{ $appointment->time_start }} -
+                                                                    {{ $appointment->time_end }} </label></td>
+                                                            <td class="text-center">
+                                                                @if ($appointment->visited == 0)
+                                                                    <label class="badge badge-warning-soft">
+                                                                        <i class="fas fa-hourglass-start"></i>
+                                                                        {{ __('sentence.Not Yet Visited') }}
+                                                                    </label>
+                                                                @elseif($appointment->visited == 1)
+                                                                    <label class="badge badge-success-soft">
+                                                                        <i class="fas fa-check"></i>
+                                                                        {{ __('sentence.Visited') }}
+                                                                    </label>
+                                                                @else
+                                                                    <label class="badge badge-danger-soft">
+                                                                        <i class="fas fa-user-times"></i>
+                                                                        {{ __('sentence.Cancelled') }}
+                                                                    </label>
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-center">
+                                                                {{ $appointment->created_at->format('d M Y H:i') }}
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @if ($appointment->visited == 1)
+                                                                    <label class="badge badge-primary-soft">
+                                                                        <i class="fas fa-calendar"></i>
+                                                                        {{ $appointment->updated_at->format('d M Y H:i') }}
+                                                                    </label>
+                                                                @endif
+                                                            </td>
+                                                            <td align="center">
+                                                                @can('edit appointment')
+                                                                    <a data-rdv_id="{{ $appointment->id }}"
+                                                                        data-rdv_date="{{ $appointment->date->format('d M Y') }}"
+                                                                        data-rdv_time_start="{{ $appointment->time_start }}"
+                                                                        data-rdv_time_end="{{ $appointment->time_end }}"
+                                                                        data-patient_name="{{ $appointment->User->name }}"
+                                                                        class=" btn btn-outline-success btn-circle btn-sm
+                                                            {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
+                                                                        data-toggle="modal" data-target="#EDITRDVModal">
+                                                                        <i class="fas fa-check"></i>
+                                                                    </a>
+                                                                @endcan
+                                                                @can('delete appointment')
+                                                                    @if ($appointment->visited != 1)
+                                                                        <a href="{{ url('appointment/delete/' . $appointment->id) }}"
+                                                                            class="btn btn-outline-danger btn-circle btn-sm">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </a>
+                                                                    @endif
+                                                                @endcan
+                                                            </td>
+                                                        </tr>
+                                                    @elseif(Auth::user()->role_id == 1)
+                                                        <tr>
+                                                            {{-- <td align="center">{{ $key + 1 }} </td> --}}
+                                                            <td align="center">
+                                                                <label class="badge badge-primary-soft"><i
+                                                                        class="fas fa-calendar"></i>
+                                                                    {{ $appointment->date->format('d M Y') }} </label>
+                                                            </td>
+                                                            <td align="center"><label class="badge badge-primary-soft"><i
+                                                                        class="fa fa-clock"></i>
+                                                                    {{ $appointment->time_start }} -
+                                                                    {{ $appointment->time_end }} </label></td>
+                                                            <td align="center"><label class="badge badge-primary-soft"><i
+                                                                        class="fa fa-user-injured"></i>
+                                                                    {{ $appointment->Doctor->name }} </label></td>
+                                                            <td class="text-center">
+                                                                @if ($appointment->visited == 0)
+                                                                    <label class="badge badge-warning-soft">
+                                                                        <i class="fas fa-hourglass-start"></i>
+                                                                        {{ __('sentence.Not Yet Visited') }}
+                                                                    </label>
+                                                                @elseif($appointment->visited == 1)
+                                                                    <label class="badge badge-success-soft">
+                                                                        <i class="fas fa-check"></i>
+                                                                        {{ __('sentence.Visited') }}
+                                                                    </label>
+                                                                @else
+                                                                    <label class="badge badge-danger-soft">
+                                                                        <i class="fas fa-user-times"></i>
+                                                                        {{ __('sentence.Cancelled') }}
+                                                                    </label>
+                                                                @endif
+                                                            </td>
+                                                            {{-- <td class="text-center">
+                                                                {{ $appointment->created_at->format('d M Y H:i') }}</td> --}}
+                                                            <td class="text-center">
+                                                                @if ($appointment->visited == 1)
+                                                                    <label class="badge badge-primary-soft">
+                                                                        <i class="fas fa-calendar"></i>
+                                                                        {{ $appointment->updated_at->format('d M Y H:i') }}
+                                                                    </label>
+                                                                @endif
+                                                            </td>
+                                                            <td align="center">
+                                                                <a class="btn btn-outline-primary btn-circle btn-sm view-details-btn"
+                                                                    data-date="{{ $appointment->date->format('d M Y') }}"
+                                                                    data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
+                                                                    data-doctor="{{ $appointment->Doctor->name }}"
+                                                                    data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </a>
+                                                                @can('edit appointment')
+                                                                    <a data-rdv_id="{{ $appointment->id }}"
+                                                                        data-rdv_date="{{ $appointment->date->format('d M Y') }}"
+                                                                        data-rdv_time_start="{{ $appointment->time_start }}"
+                                                                        data-rdv_time_end="{{ $appointment->time_end }}"
+                                                                        data-patient_name="{{ $appointment->User->name }}"
+                                                                        class=" btn btn-outline-success btn-circle btn-sm
+                                                                {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
+                                                                        data-toggle="modal" data-target="#EDITRDVModal">
+                                                                        <i class="fas fa-check"></i>
+                                                                    </a>
+                                                                @endcan
+                                                                @can('delete appointment')
+                                                                    @if ($appointment->visited != 1)
+                                                                        <a href="{{ url('appointment/delete/' . $appointment->id) }}"
+                                                                            class="btn btn-outline-danger btn-circle btn-sm">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </a>
+                                                                    @endif
+                                                                @endcan
+                                                            </td>
+                                                        </tr>
+                                                    @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $appointment->user_id)
+                                                        <tr>
+                                                            <td align="center">{{ $key + 1 }} </td>
+                                                            <td align="center"><label class="badge badge-primary-soft"><i
+                                                                        class="fas fa-calendar"></i>
+                                                                    {{ $appointment->date->format('d M Y') }} </label>
+                                                            </td>
+                                                            <td align="center"><label class="badge badge-primary-soft"><i
+                                                                        class="fa fa-clock"></i>
+                                                                    {{ $appointment->time_start }} -
+                                                                    {{ $appointment->time_end }} </label></td>
+                                                            <td class="text-center">
+                                                                @if ($appointment->visited == 0)
+                                                                    <label class="badge badge-warning-soft">
+                                                                        <i class="fas fa-hourglass-start"></i>
+                                                                        {{ __('sentence.Not Yet Visited') }}
+                                                                    </label>
+                                                                @elseif($appointment->visited == 1)
+                                                                    <label class="badge badge-success-soft">
+                                                                        <i class="fas fa-check"></i>
+                                                                        {{ __('sentence.Visited') }}
+                                                                    </label>
+                                                                @else
+                                                                    <label class="badge badge-danger-soft">
+                                                                        <i class="fas fa-user-times"></i>
+                                                                        {{ __('sentence.Cancelled') }}
+                                                                    </label>
+                                                                @endif
+                                                            </td>
+                                                            <td align="center">
+                                                                <a>
+
+                                                                </a>
+                                                                @can('edit appointment')
+                                                                    @php
+                                                                        $appointmentDate = \Carbon\Carbon::parse(
+                                                                            $appointment->date,
+                                                                        );
+                                                                        $appointmentTimeStart = \Carbon\Carbon::parse(
+                                                                            $appointment->time_start,
+                                                                        );
+                                                                        $currentDateTime = now();
+                                                                        $isFutureDateTime =
+                                                                            $appointmentDate->isFuture() ||
+                                                                            ($appointmentDate->isToday() &&
+                                                                                $appointmentTimeStart->isFuture());
+                                                                    @endphp
+
+                                                                    <a data-rdv_id="{{ $appointment->id }}"
+                                                                        data-rdv_date="{{ $appointment->date->format('d M Y') }}"
+                                                                        data-rdv_time_start="{{ $appointment->time_start }}"
+                                                                        data-rdv_time_end="{{ $appointment->time_end }}"
+                                                                        data-patient_name="{{ $appointment->User->name }}"
+                                                                        class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime ? ' disabled opacity-button' : '' }}"
+                                                                        data-toggle="modal" data-target="#EDITRDVModal">
+                                                                        <i class="fas fa-check"></i>
+                                                                    </a>
+                                                                @endcan
+                                                                @can('delete appointment')
+                                                                    <a href="{{ url('appointment/delete/' . $appointment->id) }}"
+                                                                        class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                            class="fas fa-trash"></i></a>
+                                                                @endcan
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="5" align="center"><img
+                                                                src="{{ asset('img/not-found.svg') }}" width="200" />
+                                                            <br><br>
+                                                            <b
+                                                                class="text-muted">{{ __('sentence.No appointment available') }}</b>
+                                                        </td>
+                                                    </tr>
+                                                @endforelse
+                                            </table>
+                                            <span class="float-right mt-3">{{ $appointments->links() }}</span>
+                                        </div>
                                     </div>
                                     {{-- ---------------------------------------------------------- End Rendez-vous  -------------------------------------------------------------------- --}}
 
@@ -641,140 +658,143 @@
                                         <div class="row">
                                             <div class="col">
                                                 @can('create prescription')
-                                                    <a class="btn btn-primary btn-sm my-4 float-right"
+                                                    <a type="button" class="btn btn-primary btn-sm my-4 float-right"
                                                         href="{{ route('prescription.create_by', ['id' => $patient->id]) }}"><i
                                                             class="fa fa-pen"></i>
                                                         {{ __('sentence.Create Prescription') }}</a>
                                                 @endcan
                                             </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover">
+                                                    <tr>
+                                                        <td align="center">{{ __('sentence.Reference') }}</td>
+                                                        <td class="text-center">{{ __('sentence.Content') }}</td>
+                                                        <td align="center">{{ __('sentence.Created at') }}</td>
+                                                        <td align="center">{{ __('sentence.follow') }}</td>
+                                                        <td align="center">{{ __('sentence.Actions') }}</td>
+                                                    </tr>
+                                                    @forelse($prescriptions as $prescription)
+                                                        @if (Auth::user()->role_id == 2)
+                                                            <tr>
+                                                                <td align="center">{{ $prescription->reference }} </td>
+                                                                <td class="text-center">
+                                                                    <label class="badge badge-primary-soft">
+                                                                        {{ count($prescription->Drug) }} Soins
+                                                                    </label>
+                                                                    <label class="badge badge-primary-soft">
+                                                                        {{ count($prescription->Test) }} Diagnostics
+                                                                    </label>
+                                                                </td>
+                                                                <td align="center"><label
+                                                                        class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
+                                                                </td>
+                                                                <td align="center">
+                                                                    <a href="{{ url('prescription/follow/' . $prescription->id) }}"
+                                                                        class="btn btn-outline-primary btn-circle btn-sm">
+                                                                        <i class="fa fa-id-card"></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td align="center">
+                                                                    @can('view prescription')
+                                                                        <a href="{{ url('prescription/view/' . $prescription->id) }}"
+                                                                            class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                                class="fa fa-eye"></i></a>
+                                                                    @endcan
+                                                                    @can('edit prescription')
+                                                                        <a href="{{ url('prescription/edit/' . $prescription->id) }}"
+                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                                class="fas fa-pen"></i></a>
+                                                                    @endcan
+                                                                    @can('delete prescription')
+                                                                        <a href="{{ url('prescription/delete/' . $prescription->id) }}"
+                                                                            class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                                class="fas fa-trash"></i></a>
+                                                                    @endcan
+                                                                </td>
+                                                            </tr>
+                                                        @elseif (Auth::user()->role_id == 1)
+                                                            <tr>
+                                                                <td align="center">{{ $prescription->reference }} </td>
+                                                                <td class="text-center">
+                                                                    <label class="badge badge-primary-soft">
+                                                                        {{ count($prescription->Drug) }} Soins
+                                                                    </label>
+                                                                    <label class="badge badge-primary-soft">
+                                                                        {{ count($prescription->Test) }} Diagnostics
+                                                                    </label>
+                                                                </td>
+                                                                <td align="center"><label
+                                                                        class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
+                                                                </td>
+
+                                                                <td align="center">
+                                                                    <a href="{{ url('prescription/follow/' . $prescription->id) }}"
+                                                                        class="btn btn-outline-primary btn-circle btn-sm">
+                                                                        <i class="fa fa-id-card"></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td align="center">
+                                                                    @can('view prescription')
+                                                                        <a href="{{ url('prescription/view/' . $prescription->id) }}"
+                                                                            class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                                class="fa fa-eye"></i></a>
+                                                                    @endcan
+                                                                    @can('edit prescription')
+                                                                        <a href="{{ url('prescription/edit/' . $prescription->id) }}"
+                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                                class="fas fa-pen"></i></a>
+                                                                    @endcan
+                                                                    @can('delete prescription')
+                                                                        <a href="{{ url('prescription/delete/' . $prescription->id) }}"
+                                                                            class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                                class="fas fa-trash"></i></a>
+                                                                    @endcan
+                                                                </td>
+                                                            </tr>
+                                                            <br>
+                                                        @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $prescription->user_id)
+                                                            <tr>
+                                                                <td align="center">{{ $prescription->reference }} </td>
+                                                                <td class="text-center">
+                                                                    <label class="badge badge-primary-soft">
+                                                                        {{ count($prescription->Drug) }} Soins
+                                                                    </label>
+                                                                    <label class="badge badge-primary-soft">
+                                                                        {{ count($prescription->Test) }} Diagnostics
+                                                                    </label>
+                                                                </td>
+                                                                <td align="center"><label
+                                                                        class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
+                                                                </td>
+                                                                <td align="center">
+                                                                    <a href="{{ url('prescription/follow/' . $prescription->id) }}"
+                                                                        class="btn btn-outline-primary btn-circle btn-sm">
+                                                                        <i class="fa fa-id-card"></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td align="center">
+                                                                    @can('view prescription')
+                                                                        <a href="{{ url('prescription/view/' . $prescription->id) }}"
+                                                                            class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                                class="fa fa-eye"></i></a>
+                                                                    @endcan
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="4" align="center"> <img
+                                                                    src="{{ asset('img/not-found.svg') }}" width="200" />
+                                                                <br><br>
+                                                                <b class="text-muted">
+                                                                    {{ __('sentence.No prescription available') }}</b>
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
+                                                </table>
+                                                <span class="float-right mt-3">{{ $prescriptions->links() }}</span>
+                                            </div>
                                         </div>
-                                        <table class="table">
-                                            <tr>
-                                                <td align="center">{{ __('sentence.Reference') }}</td>
-                                                <td class="text-center">{{ __('sentence.Content') }}</td>
-                                                <td align="center">{{ __('sentence.Created at') }}</td>
-                                                <td align="center">{{ __('sentence.follow') }}</td>
-                                                <td align="center">{{ __('sentence.Actions') }}</td>
-                                            </tr>
-                                            @forelse($prescriptions as $prescription)
-                                                @if (Auth::user()->role_id == 2)
-                                                    <tr>
-                                                        <td align="center">{{ $prescription->reference }} </td>
-                                                        <td class="text-center">
-                                                            <label class="badge badge-primary-soft">
-                                                                {{ count($prescription->Drug) }} Soins
-                                                            </label>
-                                                            <label class="badge badge-primary-soft">
-                                                                {{ count($prescription->Test) }} Diagnostics
-                                                            </label>
-                                                        </td>
-                                                        <td align="center"><label
-                                                                class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
-                                                        </td>
-                                                        <td align="center">
-                                                            <a href="{{ url('prescription/follow/' . $prescription->id) }}"
-                                                                class="btn btn-outline-primary btn-circle btn-sm">
-                                                                <i class="fa fa-id-card"></i>
-                                                            </a>
-                                                        </td>
-                                                        <td align="center">
-                                                            @can('view prescription')
-                                                                <a href="{{ url('prescription/view/' . $prescription->id) }}"
-                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                        class="fa fa-eye"></i></a>
-                                                            @endcan
-                                                            @can('edit prescription')
-                                                                <a href="{{ url('prescription/edit/' . $prescription->id) }}"
-                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                        class="fas fa-pen"></i></a>
-                                                            @endcan
-                                                            @can('delete prescription')
-                                                                <a href="{{ url('prescription/delete/' . $prescription->id) }}"
-                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                        class="fas fa-trash"></i></a>
-                                                            @endcan
-                                                        </td>
-                                                    </tr>
-                                                @elseif (Auth::user()->role_id == 1)
-                                                    <tr>
-                                                        <td align="center">{{ $prescription->reference }} </td>
-                                                        <td class="text-center">
-                                                            <label class="badge badge-primary-soft">
-                                                                {{ count($prescription->Drug) }} Soins
-                                                            </label>
-                                                            <label class="badge badge-primary-soft">
-                                                                {{ count($prescription->Test) }} Diagnostics
-                                                            </label>
-                                                        </td>
-                                                        <td align="center"><label
-                                                                class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
-                                                        </td>
-                                                        {{-- href="{{ url('prescription/follow/' . $prescription->id) }}" --}}
-                                                        <td align="center">
-                                                            <a href="{{ route('appointment.create_by_praticien', ['pres_id' => $prescription->id, 'id' => $patient->id]) }}"
-                                                                class="btn btn-outline-primary btn-circle btn-sm">
-                                                                <i class="fa fa-id-card"></i>
-                                                            </a>
-                                                        </td>
-                                                        <td align="center">
-                                                            @can('view prescription')
-                                                                <a href="{{ url('prescription/view/' . $prescription->id) }}"
-                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                        class="fa fa-eye"></i></a>
-                                                            @endcan
-                                                            @can('edit prescription')
-                                                                <a href="{{ url('prescription/edit/' . $prescription->id) }}"
-                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                        class="fas fa-pen"></i></a>
-                                                            @endcan
-                                                            @can('delete prescription')
-                                                                <a href="{{ url('prescription/delete/' . $prescription->id) }}"
-                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                        class="fas fa-trash"></i></a>
-                                                            @endcan
-                                                        </td>
-                                                    </tr>
-                                                    <br>
-                                                @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $prescription->user_id)
-                                                    <tr>
-                                                        <td align="center">{{ $prescription->reference }} </td>
-                                                        <td class="text-center">
-                                                            <label class="badge badge-primary-soft">
-                                                                {{ count($prescription->Drug) }} Soins
-                                                            </label>
-                                                            <label class="badge badge-primary-soft">
-                                                                {{ count($prescription->Test) }} Diagnostics
-                                                            </label>
-                                                        </td>
-                                                        <td align="center"><label
-                                                                class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
-                                                        </td>
-                                                        <td align="center">
-                                                            <a href="{{ url('prescription/follow/' . $prescription->id) }}"
-                                                                class="btn btn-outline-primary btn-circle btn-sm">
-                                                                <i class="fa fa-id-card"></i>
-                                                            </a>
-                                                        </td>
-                                                        <td align="center">
-                                                            @can('view prescription')
-                                                                <a href="{{ url('prescription/view/' . $prescription->id) }}"
-                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                        class="fa fa-eye"></i></a>
-                                                            @endcan
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @empty
-                                                <tr>
-                                                    <td colspan="4" align="center"> <img
-                                                            src="{{ asset('img/not-found.svg') }}" width="200" />
-                                                        <br><br>
-                                                        <b class="text-muted">
-                                                            {{ __('sentence.No prescription available') }}</b>
-                                                    </td>
-                                                </tr>
-                                            @endforelse
-                                        </table>
                                     </div>
                                     {{-- --------------------------------------------------------- End Prescription  ------------------------------------------------------------------- --}}
 
@@ -887,177 +907,185 @@
                                                         {{ __('sentence.Create Invoice') }}</a>
                                                 @endcan
                                             </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover">
+                                                    <tr>
+                                                        <th>{{ __('sentence.Invoice') }}</th>
+                                                        <th>{{ __('sentence.Date') }}</th>
+                                                        <th>{{ __('sentence.Amount') }}</th>
+                                                        <th>{{ __('sentence.Status') }}</th>
+                                                        <th>{{ __('sentence.Actions') }}</th>
+                                                    </tr>
+                                                    @forelse($invoices as $invoice)
+                                                        @if (Auth::user()->role_id == 2)
+                                                            <tr>
+                                                                <td><a
+                                                                        href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
+                                                                </td>
+                                                                <td><label
+                                                                        class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
+                                                                </td>
+                                                                <td> {{ $invoice->total_with_tax }}
+                                                                    {{ App\Setting::get_option('currency') }}
+                                                                    @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
+                                                                        <label
+                                                                            class="badge badge-danger-soft">{{ $invoice->due_amount }}
+                                                                            {{ App\Setting::get_option('currency') }} </label>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($invoice->payment_status == 'Unpaid')
+                                                                        <label class="badge badge-danger-soft">
+                                                                            <i class="fas fa-hourglass-start"></i>
+                                                                            {{ __('sentence.Unpaid') }}
+                                                                        </label>
+                                                                    @elseif($invoice->payment_status == 'Paid')
+                                                                        <label class="badge badge-success-soft">
+                                                                            <i class="fas fa-check"></i>
+                                                                            {{ __('sentence.Paid') }}
+                                                                        </label>
+                                                                    @else
+                                                                        <label class="badge badge-warning-soft">
+                                                                            <i class="fas fa-user-times"></i>
+                                                                            {{ __('sentence.Partially Paid') }}
+                                                                        </label>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @can('view invoice')
+                                                                        <a href="{{ url('billing/view/' . $invoice->id) }}"
+                                                                            class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                                class="fas fa-print"></i></a>
+                                                                    @endcan
+                                                                    @can('edit invoice')
+                                                                        <a href="{{ url('billing/edit/' . $invoice->id) }}"
+                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                                class="fas fa-pen"></i></a>
+                                                                    @endcan
+                                                                    @can('delete invoice')
+                                                                        <a href="{{ url('billing/delete/' . $invoice->id) }}"
+                                                                            class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                                class="fas fa-trash"></i></a>
+                                                                    @endcan
+                                                                    <a href="{{ url('payment/create/' . $invoice->id) }}"
+                                                                        class="btn btn-outline-secondary btn-circle btn-sm"><i
+                                                                            class="fas fa-fw fa-dollar-sign"></i></a>
+
+                                                                </td>
+                                                            </tr>
+                                                        @elseif (Auth::user()->role_id == 1)
+                                                            <tr>
+                                                                <td><a
+                                                                        href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
+                                                                </td>
+                                                                <td><label
+                                                                        class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
+                                                                </td>
+                                                                <td> {{ $invoice->total_with_tax }}
+                                                                    {{ App\Setting::get_option('currency') }}
+                                                                    @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
+                                                                        <label
+                                                                            class="badge badge-danger-soft">{{ $invoice->due_amount }}
+                                                                            {{ App\Setting::get_option('currency') }} </label>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($invoice->payment_status == 'Unpaid')
+                                                                        <label class="badge badge-danger-soft">
+                                                                            <i class="fas fa-hourglass-start"></i>
+                                                                            {{ __('sentence.Unpaid') }}
+                                                                        </label>
+                                                                    @elseif($invoice->payment_status == 'Paid')
+                                                                        <label class="badge badge-success-soft">
+                                                                            <i class="fas fa-check"></i>
+                                                                            {{ __('sentence.Paid') }}
+                                                                        </label>
+                                                                    @else
+                                                                        <label class="badge badge-warning-soft">
+                                                                            <i class="fas fa-user-times"></i>
+                                                                            {{ __('sentence.Partially Paid') }}
+                                                                        </label>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @can('view invoice')
+                                                                        <a href="{{ url('billing/view/' . $invoice->id) }}"
+                                                                            class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                                class="fas fa-print"></i></a>
+                                                                    @endcan
+                                                                    @can('edit invoice')
+                                                                        <a href="{{ url('billing/edit/' . $invoice->id) }}"
+                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                                class="fas fa-pen"></i></a>
+                                                                    @endcan
+                                                                    @can('delete invoice')
+                                                                        <a href="{{ url('billing/delete/' . $invoice->id) }}"
+                                                                            class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                                class="fas fa-trash"></i></a>
+                                                                    @endcan
+                                                                    <a href="{{ url('payment/create/' . $invoice->id) }}"
+                                                                        class="btn btn-outline-secondary btn-circle btn-sm"><i
+                                                                            class="fas fa-fw fa-dollar-sign"></i></a>
+
+                                                                </td>
+                                                            </tr>
+                                                        @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $invoice->user_id)
+                                                            <tr>
+                                                                <td><a
+                                                                        href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
+                                                                </td>
+                                                                <td><label
+                                                                        class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
+                                                                </td>
+                                                                <td> {{ $invoice->total_with_tax }}
+                                                                    {{ App\Setting::get_option('currency') }}
+                                                                    @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
+                                                                        <label
+                                                                            class="badge badge-danger-soft">{{ $invoice->due_amount }}
+                                                                            {{ App\Setting::get_option('currency') }} </label>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($invoice->payment_status == 'Unpaid')
+                                                                        <label class="badge badge-danger-soft">
+                                                                            <i class="fas fa-hourglass-start"></i>
+                                                                            {{ __('sentence.Unpaid') }}
+                                                                        </label>
+                                                                    @elseif($invoice->payment_status == 'Paid')
+                                                                        <label class="badge badge-success-soft">
+                                                                            <i class="fas fa-check"></i>
+                                                                            {{ __('sentence.Paid') }}
+                                                                        </label>
+                                                                    @else
+                                                                        <label class="badge badge-warning-soft">
+                                                                            <i class="fas fa-user-times"></i>
+                                                                            {{ __('sentence.Partially Paid') }}
+                                                                        </label>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @can('view invoice')
+                                                                        <a href="{{ url('billing/view/' . $invoice->id) }}"
+                                                                            class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                                class="fas fa-print"></i></a>
+                                                                    @endcan
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @empty
+                                                        <tr>
+                                                        </tr>
+                                                        <td colspan="6" align="center"><img
+                                                                src="{{ asset('img/not-found.svg') }}" width="200" />
+                                                            <br><br> <b
+                                                                class="text-muted">{{ __('sentence.No Invoices Available') }}</b>
+                                                        </td>
+                                                    @endforelse
+                                                </table>
+                                                <span class="float-right mt-3">{{ $invoices->links() }}</span>
+                                            </div>
+
                                         </div>
-                                        <table class="table">
-                                            <tr>
-                                                <th>{{ __('sentence.Invoice') }}</th>
-                                                <th>{{ __('sentence.Date') }}</th>
-                                                <th>{{ __('sentence.Amount') }}</th>
-                                                <th>{{ __('sentence.Status') }}</th>
-                                                <th>{{ __('sentence.Actions') }}</th>
-                                            </tr>
-                                            @forelse($invoices as $invoice)
-                                                @if (Auth::user()->role_id == 2)
-                                                    <tr>
-                                                        <td><a
-                                                                href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
-                                                        </td>
-                                                        <td><label
-                                                                class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
-                                                        </td>
-                                                        <td> {{ $invoice->total_with_tax }}
-                                                            {{ App\Setting::get_option('currency') }}
-                                                            @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
-                                                                <label
-                                                                    class="badge badge-danger-soft">{{ $invoice->due_amount }}
-                                                                    {{ App\Setting::get_option('currency') }} </label>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($invoice->payment_status == 'Unpaid')
-                                                                <label class="badge badge-danger-soft">
-                                                                    <i class="fas fa-hourglass-start"></i>
-                                                                    {{ __('sentence.Unpaid') }}
-                                                                </label>
-                                                            @elseif($invoice->payment_status == 'Paid')
-                                                                <label class="badge badge-success-soft">
-                                                                    <i class="fas fa-check"></i> {{ __('sentence.Paid') }}
-                                                                </label>
-                                                            @else
-                                                                <label class="badge badge-warning-soft">
-                                                                    <i class="fas fa-user-times"></i>
-                                                                    {{ __('sentence.Partially Paid') }}
-                                                                </label>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @can('view invoice')
-                                                                <a href="{{ url('billing/view/' . $invoice->id) }}"
-                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                        class="fas fa-print"></i></a>
-                                                            @endcan
-                                                            @can('edit invoice')
-                                                                <a href="{{ url('billing/edit/' . $invoice->id) }}"
-                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                        class="fas fa-pen"></i></a>
-                                                            @endcan
-                                                            @can('delete invoice')
-                                                                <a href="{{ url('billing/delete/' . $invoice->id) }}"
-                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                        class="fas fa-trash"></i></a>
-                                                            @endcan
-                                                            <a href="{{ url('payment/create/' . $invoice->id) }}"
-                                                                class="btn btn-outline-secondary btn-circle btn-sm"><i
-                                                                    class="fas fa-fw fa-dollar-sign"></i></a>
-
-                                                        </td>
-                                                    </tr>
-                                                @elseif (Auth::user()->role_id == 1)
-                                                    <tr>
-                                                        <td><a
-                                                                href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
-                                                        </td>
-                                                        <td><label
-                                                                class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
-                                                        </td>
-                                                        <td> {{ $invoice->total_with_tax }}
-                                                            {{ App\Setting::get_option('currency') }}
-                                                            @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
-                                                                <label
-                                                                    class="badge badge-danger-soft">{{ $invoice->due_amount }}
-                                                                    {{ App\Setting::get_option('currency') }} </label>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($invoice->payment_status == 'Unpaid')
-                                                                <label class="badge badge-danger-soft">
-                                                                    <i class="fas fa-hourglass-start"></i>
-                                                                    {{ __('sentence.Unpaid') }}
-                                                                </label>
-                                                            @elseif($invoice->payment_status == 'Paid')
-                                                                <label class="badge badge-success-soft">
-                                                                    <i class="fas fa-check"></i> {{ __('sentence.Paid') }}
-                                                                </label>
-                                                            @else
-                                                                <label class="badge badge-warning-soft">
-                                                                    <i class="fas fa-user-times"></i>
-                                                                    {{ __('sentence.Partially Paid') }}
-                                                                </label>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @can('view invoice')
-                                                                <a href="{{ url('billing/view/' . $invoice->id) }}"
-                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                        class="fas fa-print"></i></a>
-                                                            @endcan
-                                                            @can('edit invoice')
-                                                                <a href="{{ url('billing/edit/' . $invoice->id) }}"
-                                                                    class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                        class="fas fa-pen"></i></a>
-                                                            @endcan
-                                                            @can('delete invoice')
-                                                                <a href="{{ url('billing/delete/' . $invoice->id) }}"
-                                                                    class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                        class="fas fa-trash"></i></a>
-                                                            @endcan
-                                                            <a href="{{ url('payment/create/' . $invoice->id) }}"
-                                                                class="btn btn-outline-secondary btn-circle btn-sm"><i
-                                                                    class="fas fa-fw fa-dollar-sign"></i></a>
-
-                                                        </td>
-                                                    </tr>
-                                                @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $invoice->user_id)
-                                                    <tr>
-                                                        <td><a
-                                                                href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
-                                                        </td>
-                                                        <td><label
-                                                                class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
-                                                        </td>
-                                                        <td> {{ $invoice->total_with_tax }}
-                                                            {{ App\Setting::get_option('currency') }}
-                                                            @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
-                                                                <label
-                                                                    class="badge badge-danger-soft">{{ $invoice->due_amount }}
-                                                                    {{ App\Setting::get_option('currency') }} </label>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($invoice->payment_status == 'Unpaid')
-                                                                <label class="badge badge-danger-soft">
-                                                                    <i class="fas fa-hourglass-start"></i>
-                                                                    {{ __('sentence.Unpaid') }}
-                                                                </label>
-                                                            @elseif($invoice->payment_status == 'Paid')
-                                                                <label class="badge badge-success-soft">
-                                                                    <i class="fas fa-check"></i> {{ __('sentence.Paid') }}
-                                                                </label>
-                                                            @else
-                                                                <label class="badge badge-warning-soft">
-                                                                    <i class="fas fa-user-times"></i>
-                                                                    {{ __('sentence.Partially Paid') }}
-                                                                </label>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @can('view invoice')
-                                                                <a href="{{ url('billing/view/' . $invoice->id) }}"
-                                                                    class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                        class="fas fa-print"></i></a>
-                                                            @endcan
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @empty
-                                                <tr>
-                                                </tr>
-                                                <td colspan="6" align="center"><img
-                                                        src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br> <b
-                                                        class="text-muted">{{ __('sentence.No Invoices Available') }}</b>
-                                                </td>
-                                            @endforelse
-                                        </table>
                                     </div>
                                     {{-- ------------------------------------------------------- End Facturation ----------------------------------------------------------------------- --}}
 
@@ -1074,63 +1102,67 @@
                                                         {{ __('sentence.Create Psycho') }}</a>
                                                 @endcan
                                             </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover">
+                                                    <tr>
+                                                        <td align="center">{{ __('sentence.Reference') }}</td>
+                                                        <td class="text-center">{{ __('sentence.Content') }}</td>
+                                                        <td align="center">{{ __('sentence.Created at') }}</td>
+                                                        <td align="center">{{ __('sentence.follow psycho') }}</td>
+                                                        <td align="center">{{ __('sentence.Actions') }}</td>
+                                                    </tr>
+                                                    @forelse($psychos as $psycho)
+                                                        <tr>
+                                                            <td align="center">{{ $psycho->reference }} </td>
+                                                            <td class="text-center">
+                                                                <label class="badge badge-primary-soft">
+                                                                    {{ count($psycho->Drug) }} Soin(s)
+                                                                </label>
+                                                                <label class="badge badge-primary-soft">
+                                                                    {{ count($psycho->Test) }} Psychothérapie(s)
+                                                                </label>
+                                                            </td>
+                                                            <td align="center"><label
+                                                                    class="badge badge-primary-soft">{{ $psycho->created_at }}</label>
+                                                            </td>
+                                                            <td align="center">
+                                                                <a href="{{ url('prescription/follow/' . $psycho->id) }}"
+                                                                    class="btn btn-outline-primary btn-circle btn-sm">
+                                                                    <i class="fa fa-id-card"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td align="center">
+                                                                @can('view prescription')
+                                                                    <a href="{{ url('prescription/view/' . $psycho->id) }}"
+                                                                        class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                            class="fa fa-eye"></i></a>
+                                                                @endcan
+                                                                @can('edit prescription')
+                                                                    <a href="{{ url('prescription/edit/' . $psycho->id) }}"
+                                                                        class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                            class="fas fa-pen"></i></a>
+                                                                @endcan
+                                                                @can('delete prescription')
+                                                                    <a href="{{ url('prescription/delete/' . $psycho->id) }}"
+                                                                        class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                            class="fas fa-trash"></i></a>
+                                                                @endcan
+                                                            </td>
+                                                        </tr>
+                                                        <br>
+                                                    @empty
+                                                        <tr>
+                                                        </tr>
+                                                        <td colspan="6" align="center"><img
+                                                                src="{{ asset('img/not-found.svg') }}" width="200" />
+                                                            <br><br> <b
+                                                                class="text-muted">{{ __('sentence.No Psycho Available') }}</b>
+                                                        </td>
+                                                    @endforelse
+                                                </table>
+                                                <span class="float-right mt-3">{{ $psychos->links() }}</span>
+                                            </div>
                                         </div>
-                                        <table class="table">
-                                            <tr>
-                                                <td align="center">{{ __('sentence.Reference') }}</td>
-                                                <td class="text-center">{{ __('sentence.Content') }}</td>
-                                                <td align="center">{{ __('sentence.Created at') }}</td>
-                                                <td align="center">{{ __('sentence.follow psycho') }}</td>
-                                                <td align="center">{{ __('sentence.Actions') }}</td>
-                                            </tr>
-                                            @forelse($psychos as $psycho)
-                                                <tr>
-                                                    <td align="center">{{ $psycho->reference }} </td>
-                                                    <td class="text-center">
-                                                        <label class="badge badge-primary-soft">
-                                                            {{ count($psycho->Drug) }} Soin(s)
-                                                        </label>
-                                                        <label class="badge badge-primary-soft">
-                                                            {{ count($psycho->Test) }} Psychothérapie(s)
-                                                        </label>
-                                                    </td>
-                                                    <td align="center"><label
-                                                            class="badge badge-primary-soft">{{ $psycho->created_at }}</label>
-                                                    </td>
-                                                    <td align="center">
-                                                        <a href="{{ url('prescription/follow/' . $psycho->id) }}"
-                                                            class="btn btn-outline-primary btn-circle btn-sm">
-                                                            <i class="fa fa-id-card"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td align="center">
-                                                        @can('view prescription')
-                                                            <a href="{{ url('prescription/view/' . $psycho->id) }}"
-                                                                class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                    class="fa fa-eye"></i></a>
-                                                        @endcan
-                                                        @can('edit prescription')
-                                                            <a href="{{ url('prescription/edit/' . $psycho->id) }}"
-                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                    class="fas fa-pen"></i></a>
-                                                        @endcan
-                                                        @can('delete prescription')
-                                                            <a href="{{ url('prescription/delete/' . $psycho->id) }}"
-                                                                class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                    class="fas fa-trash"></i></a>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
-                                                <br>
-                                            @empty
-                                                <tr>
-                                                </tr>
-                                                <td colspan="6" align="center"><img
-                                                        src="{{ asset('img/not-found.svg') }}" width="200" /> <br><br> <b
-                                                        class="text-muted">{{ __('sentence.No Psycho Available') }}</b>
-                                                </td>
-                                            @endforelse
-                                        </table>
                                     </div>
                                     {{-- ------------------------------------------------------- End Psychothérapie ----------------------------------------------------------------------- --}}
 
