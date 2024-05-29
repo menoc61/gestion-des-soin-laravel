@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePrescriptionDrugsTable extends Migration
+class CreateRdvDrugsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,18 @@ class CreatePrescriptionDrugsTable extends Migration
      */
     public function up()
     {
-        Schema::create('prescription_drugs', function (Blueprint $table) {
+        Schema::create('rdv__drugs', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('prescription_id')
-                  ->constrained()
-                  ->onDelete('cascade');
+            $table->foreignId('appointment_id')->nullable()->default(null)
+                ->constrained()
+                ->onDelete('cascade');
 
-            $table->foreignId('drug_id')
-                  ->constrained()
-                  ->onDelete('cascade');
+            $table->foreignId('drug_id')->nullable()->default(null)
+                ->constrained()
+                ->onDelete('cascade');
 
+            $table->decimal('montant_drug')->nullable();
             $table->string('strength')->nullable();
             $table->string('dose')->nullable();
             $table->string('duration')->nullable();
@@ -40,6 +41,6 @@ class CreatePrescriptionDrugsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prescription_drugs');
+        Schema::dropIfExists('rdv__drugs');
     }
 }

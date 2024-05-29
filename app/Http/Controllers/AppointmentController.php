@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Appointment;
+use App\Drug;
 use App\Notifications\NewAppointmentByEmailNotification;
 use App\Notifications\WhatsAppNotification;
 use App\Prescription;
+use App\Rdv_Drug;
 use App\Setting;
 use App\User;
 use Auth;
@@ -31,6 +33,7 @@ class AppointmentController extends Controller
         $user = User::findOrFail($id);
         $praticiens = User::where('role_id', '!=', 3)->get();
         $user_auth = Auth::user();
+        $drugs = Drug::all();
 
         // $appointmentsDoc = Appointment::where('doctor_id', $doc_id)->get();
 
@@ -39,6 +42,7 @@ class AppointmentController extends Controller
             'praticiens' => $praticiens,
             'user_auth' => $user_auth,
             'userId' => $id,
+            'drugs' => $drugs,
             // 'appointmentsDoc' => $appointmentsDoc
         ]);
     }
@@ -159,6 +163,35 @@ class AppointmentController extends Controller
                 'from' => '213794616181',
                 'text' => 'You have an appointment on ' . $request->rdv_time_date . ' at ' . $request->rdv_time_start . ' at Sai i lama',
             ]);
+        }
+
+        if (isset($request->trade_name)) {
+            $i = count($request->trade_name);
+
+            for ($x = 0; $x < $i; ++$x) {
+                if ($request->trade_name[$x] != null) {
+                    $add_drug = new Rdv_Drug();
+
+                    $add_drug->strength = $request->input('strength.' . $x) ?? null;
+                    $add_drug->dose = $request->input('dose.' . $x) ?? null;
+                    $add_drug->duration = $request->input('duration.' . $x) ?? null;
+                    $add_drug->drug_advice = $request->input('drug_advice.' . $x) ?? null;
+                    $add_drug->appointment_id = $appointment->id;
+                    $add_drug->drug_id = $request->input('trade_name.' . $x) ?? null;
+
+                    // Récupération de l'élément de la table "drug" correspondant à "drug_id"
+                    $drug = Drug::find($add_drug->drug_id);
+
+                    // Accéder aux propriétés de l'élément "drug" récupéré
+                    if ($drug) {
+                        $nomDuDrug = $drug->amountDrug; // Remplacez "nom" par le nom de la propriété que vous souhaitez récupérer
+                        // Utilisez la valeur récupérée selon vos besoins
+                    }
+                    $add_drug->montant_drug = $nomDuDrug;
+
+                    $add_drug->save();
+                }
+            }
         }
 
         if (\Auth::user()->role_id == 3) {

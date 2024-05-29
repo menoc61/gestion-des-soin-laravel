@@ -542,7 +542,9 @@
                                                                     data-date="{{ $appointment->date->format('d M Y') }}"
                                                                     data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
                                                                     data-doctor="{{ $appointment->Doctor->name }}"
-                                                                    data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}">
+                                                                    data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
+                                                                    data-drug="{{ $appdrug }}">
+
                                                                     <i class="fas fa-eye"></i>
                                                                 </a>
                                                                 @can('edit appointment')
@@ -1328,7 +1330,7 @@
                         <p><strong>Heure:</strong> <span id="appointmentTime"></span></p>
                         <p><strong>Praticien:</strong> <span id="appointmentDoctor"></span></p>
                         <p><strong>Traitement:</strong> <span id="appointmentPrescription"></span></p>
-                        {{-- <p><strong>Traitement:</strong> <span id="appointmentPrescriptiondrug"></span></p> --}}
+                        <p><strong>Soins:</strong> <span id="appointmentPrescriptiondrug"></span></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -1353,13 +1355,13 @@
                     var time = $(this).data('time');
                     var doctor = $(this).data('doctor');
                     var prescription = $(this).data('prescription');
-                    // var drug = $(this).data('drug');
+                    var drug = $(this).data('drug');
 
                     $('#appointmentDate').text(date);
                     $('#appointmentTime').text(time);
                     $('#appointmentDoctor').text(doctor);
                     $('#appointmentPrescription').text(prescription);
-                    // $('#appointmentPrescriptiondrug').text(drug);
+                    $('#appointmentPrescriptiondrug').text(drug);
 
                     $('#viewDetailsModal').modal('show');
                 });
