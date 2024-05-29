@@ -138,7 +138,7 @@ class PrescriptionController extends Controller
             'patient_id' => ['required', 'exists:users,id'],
             'Doctor_id' => ['required', 'exists:users,id'],
             'nom' => ['required'],
-            'trade_name.*' => 'required',
+            // 'trade_name.*' => 'required',
         ]);
 
         $prescription = new Prescription();
@@ -196,7 +196,7 @@ class PrescriptionController extends Controller
             }
         }
 
-        return \Redirect::route('prescription.doctorrdv', ['id' => $prescription->id, 'user_id' => $prescription->user_id,  'doc_id' => $prescription->doctor_id])->with('success', 'Prescription Created Successfully!');
+        return \Redirect::route('prescription.follow', ['id' => $prescription->id])->with('success', 'Prescription Created Successfully!');
     }
 
     public function all()

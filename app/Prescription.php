@@ -25,11 +25,6 @@ class Prescription extends Model implements Auditable
         return $this->belongsToMany('App\Test', 'prescription_tests');
     }
 
-    public function Items()
-    {
-        return $this->hasMany('App\Billing_item');
-    }
-
     public function RDV()
     {
         return $this->hasMany('App\Appointment');

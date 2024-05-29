@@ -102,11 +102,12 @@ class DrugController extends Controller
         }
     }
 
-
     public function destroy($id)
     {
         Drug::destroy($id);
 
         return \Redirect::route('drug.all')->with('success', __('sentence.Drug Deleted Successfully'));
     }
+
+
 }

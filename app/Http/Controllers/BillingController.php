@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Appointment;
 use App\Billing;
 use App\Billing_item;
 use App\Prescription;
@@ -27,16 +28,17 @@ class BillingController extends Controller
     public function create_By_id($id)
     {
         $user = User::find($id);
-        // Vérifiez si l'utilisateur existe
         if (!$user) {
-            // Gérez le cas où l'utilisateur n'est pas trouvé
         }
         // $prescriptions = Prescription::where('prescriptions.user_id', $id)->get();
-        $prescriptions = Prescription::where('user_id', $id)
-            ->whereDoesntHave('Items') // Items correspond a la fonction définie dans le model Prescription
-            ->get();
+        // $prescriptions = Prescription::where('user_id', $id)
+        //     ->whereDoesntHave('Items')
+        //     ->get();
+        $appointments = Appointment::where('user_id', $id)->orderBy('id', 'desc')->paginate(10);
 
-        return view('billing.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('prescriptions'));
+        $appointments->load('drugs');
+
+        return view('billing.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('appointments'));
     }
 
     public function create_payment($id)
@@ -58,7 +60,7 @@ class BillingController extends Controller
             'payment_mode' => 'required',
             // 'payment_status' => 'required',
             'nom.*' => 'required',
-            'invoice_amount.*' => ['required', 'numeric'],
+            // 'invoice_amount.*' => ['required', 'numeric'],
         ]);
 
         // if($request->payment_status == 'Paid' && $request->deposited_amount == $request->invoice_amount){
@@ -117,7 +119,7 @@ class BillingController extends Controller
 
             $invoice_item = new Billing_item();
 
-            $invoice_item->prescription_id = $request->nom[$x];
+            $invoice_item->appointment_id = $request->nom[$x];
             $invoice_item->invoice_amount = $request->invoice_amount[$x];
             $invoice_item->billing_id = $billing->id;
 

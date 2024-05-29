@@ -543,8 +543,7 @@
                                                                     data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
                                                                     data-doctor="{{ $appointment->Doctor->name }}"
                                                                     data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
-                                                                    data-drug="{{ $appdrug }}">
-
+                                                                    data-drugs="{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}">
                                                                     <i class="fas fa-eye"></i>
                                                                 </a>
                                                                 @can('edit appointment')
@@ -1320,17 +1319,28 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="viewDetailsModalLabel">Détail du Rendez vous</h5>
+                        <h5 class="modal-title text-center" id="viewDetailsModalLabel">Détail du Rendez vous</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p><strong>Date:</strong> <span id="appointmentDate"></span></p>
-                        <p><strong>Heure:</strong> <span id="appointmentTime"></span></p>
-                        <p><strong>Praticien:</strong> <span id="appointmentDoctor"></span></p>
-                        <p><strong>Traitement:</strong> <span id="appointmentPrescription"></span></p>
-                        <p><strong>Soins:</strong> <span id="appointmentPrescriptiondrug"></span></p>
+                        <p><b>{{ __('sentence.Praticien') }} : </b> <label class="badge badge-primary-soft"
+                                id="appointmentDoctor"></label></p>
+                        <p><b>{{ __('sentence.Date') }} : </b> <label class="badge badge-primary-soft"
+                                id="appointmentDate"></label></p>
+                        <p><b>{{ __('sentence.Time Slot') }} : </b> <label class="badge badge-primary-soft"
+                                id="appointmentTime"></span></label>
+                            @if ($appointment->Prescription == '')
+                            @else
+                                <p><b>{{ __('sentence.Test') }} : </b> <label class="badge badge-primary-soft"
+                                        id="appointmentPrescription"></span></label>
+                            @endif
+
+                            @if ($appointment->drugs == '')
+                            @else
+                                <p><b>{{ __('sentence.Drug') }} : </b> <span id="appointmentPrescriptiondrug"></span>
+                            @endif
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -1355,13 +1365,22 @@
                     var time = $(this).data('time');
                     var doctor = $(this).data('doctor');
                     var prescription = $(this).data('prescription');
-                    var drug = $(this).data('drug');
+                    var drugs = $(this).data('drugs');
 
                     $('#appointmentDate').text(date);
                     $('#appointmentTime').text(time);
                     $('#appointmentDoctor').text(doctor);
                     $('#appointmentPrescription').text(prescription);
-                    $('#appointmentPrescriptiondrug').text(drug);
+
+                    // Clear previous drug badges
+                    $('#appointmentPrescriptiondrug').empty();
+
+                    // Split drugs string into an array and create badges
+                    var drugArray = drugs.split(', ');
+                    drugArray.forEach(function(drug) {
+                        var badge = $('<label>').addClass('badge badge-primary-soft').text(drug);
+                        $('#appointmentPrescriptiondrug').append(badge).append(' ');
+                    });
 
                     $('#viewDetailsModal').modal('show');
                 });

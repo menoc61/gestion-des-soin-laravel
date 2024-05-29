@@ -23,4 +23,10 @@ class Billing extends Model implements Auditable
     public function Prescription(){
         return $this->belongsToMany('App\Prescription','Billing_item');
 }
+
+public function appointments()
+{
+    return $this->belongsToMany(Appointment::class, 'billing_items', 'appointment_id', 'billing_id');
+}
+
 }
