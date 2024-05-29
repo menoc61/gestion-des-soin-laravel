@@ -10,38 +10,32 @@
     </div>
 
     <form method="post" action="{{ route('billing.store_id', ['id' => $userId]) }}">
-        <div class="justify-content-center">
+        <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Choice Prescription') }}</h6>
-                    </div>
-                    <div class="card-body">
-
-                        {{-- <div class="col-md-4">
-                            <select class="form-control multiselect-search" name="reference[]" id="prescription" tabindex="-1" aria-hidden="true" required>
-                              <option value="">{{ __('sentence.Select Test') }}...</option>
-                              @foreach ($prescriptions as $prescription)
-                                  <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
-                              @endforeach
-                            </select>
-                        </div> --}}
-
-
-                        <fieldset class="billing_labels">
-                            <div class="repeatable"></div>
-                            <div class="form-group">
-                                <a type="button" class="btn btn-primary btn-sm add text-white" align="center"><i
-                                        class='fa fa-plus'></i> {{ __('sentence.Add Prescription Item') }}</a>
+                <div class="col-md-6">
+                    @forelse ($appointments as $appointment)
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">{{ $appointment->reason }}</h6>
                             </div>
-                        </fieldset>
-
-                        {{-- <div class="d-flex justify-content-between ">
-                    <span class="">Montant sans Taxe : <b id="total_without_tax_income">0 </b> {{ App\Setting::get_option('currency') }}</span><br>
-                    <span class="">TVA : <b>{{ App\Setting::get_option('vat') }} %</b> </span><br>
-                    <span class="">Montant Total : <b id="total_income">0 </b> {{ App\Setting::get_option('currency') }}</span>
-                    </div> --}}
-                    </div>
+                            <div class="card-body">
+                                <h6 class="m-0 font-weight-bold text-primary">{{ $appointment->reason }}</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">
+                                    Total: {{ $appointment->drugs->sum('amountDrug') }}
+                                </h6>
+                                <button type="button" class="btn btn-primary select-appointment"
+                                    data-appointment-id="{{ $appointment->reason }}"
+                                    data-amount="{{ $appointment->drugs->sum('amountDrug') }}">Select</button>
+                            </div>
+                        </div>
+                    @empty
+                        <tr>
+                            <td colspan="5" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" />
+                                <br><br>
+                                <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
+                            </td>
+                        </tr>
+                    @endforelse
                 </div>
             </div>
             <div class="col-md-6">
@@ -64,27 +58,31 @@
                                 <option value="Mobile Transaction">{{ __('sentence.Mobile Transaction') }}</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="DepositedAmount">{{ __('sentence.Already Paid') }}</label>
                             <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount">
                         </div>
-
                         <div class="form-group">
                             <label for="DueAmount">{{ __('sentence.Due Balance') }}</label>
                             <input class="form-control" type="number" name="due_amount" id="DueAmount">
                         </div>
 
-                        {{-- choix du statut de paiement --}}
+                        <div id="selected-appointments">
+                            <!-- Selected appointments will be displayed here -->
+                        </div>
 
-                        {{-- <div class="form-group">
-                  <label for="PaymentMode">{{ __('sentence.Payment Status') }}</label>
-                  <select class="form-control" name="payment_status">
-                     <option value="Paid">{{ __('sentence.Paid') }}</option>
-                     <option value="Partially Paid">{{ __('sentence.Partially Paid') }}</option>
-                     <option value="Unpaid">{{ __('sentence.Unpaid') }}</option>
-                  </select>
-               </div> --}}
+                        <div class="form-group">
+                            <label for="TotalAmount">{{ __('sentence.Total Amount') }}</label>
+                            <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}"
+                                aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" id="TotalAmount"
+                                readonly min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="SelectedAppointments">{{ __('sentence.Selected Appointments') }}</label>
+                            <input type="text" class="form-control" name="nom[]"
+                                id="SelectedAppointments" readonly>
+                        </div>
 
                         <div class="form-group">
                             <input type="submit" value="{{ __('sentence.Create Invoice') }}"
@@ -94,6 +92,8 @@
                 </div>
             </div>
         </div>
+
+
     </form>
 @endsection
 
@@ -103,7 +103,7 @@
     <div class="col">
        <div class="form-group-custom">
 
-        <select class="form-control multiselect-search" name="nom[]" id="prescription" tabindex="-1" aria-hidden="true" required>
+        {{-- <select class="form-control multiselect-search" name="nom[]" id="prescription" tabindex="-1" aria-hidden="true" required>
             @if (@empty($prescriptions))
                 <option value="">{{ __('sentence.Select Test') }}...</option>
             @else
@@ -116,7 +116,7 @@
         @endforeach
             @endif
 
-          </select>
+          </select> --}}
           {{-- <input type="text" id="strength" name="nom[]"  class="form-control" placeholder="{{ __('sentence.Invoice Title') }}" onchange="updateInvoiceTitle()" required> --}}
        </div>
     </div>
@@ -136,6 +136,65 @@
 </script>
 
     <script type="text/javascript">
+        $(document).ready(function() {
+            var totalAmount = 0;
+            var selectedAppointments = [];
+
+            $('.select-appointment').on('click', function() {
+                var $button = $(this);
+                var amount = parseFloat($button.data('amount'));
+                var appointmentId = $button.data('appointment-id');
+                var card = $button.closest('.card').clone();
+
+                if ($button.hasClass('selected')) {
+                    // Deselect and subtract the amount
+                    totalAmount -= amount;
+                    $button.removeClass('selected');
+                    $button.text('Select');
+                    $('#selected-appointments').find(`[data-appointment-id="${appointmentId}"]`).remove();
+                    selectedAppointments = selectedAppointments.filter(id => id !== appointmentId);
+                } else {
+                    // Select and add the amount
+                    totalAmount += amount;
+                    $button.addClass('selected');
+                    $button.text('Deselect');
+                    card.find('.select-appointment').remove();
+                    card.attr('data-appointment-id', appointmentId);
+                    card.append(
+                        '<button type="button" class="btn btn-danger remove-appointment">Supprimer</button>'
+                        );
+                    $('#selected-appointments').append(card);
+                    selectedAppointments.push(appointmentId);
+                }
+
+                // Update the total amount input
+                $('#TotalAmount').val(totalAmount.toFixed(2));
+                // Update the selected appointments input
+                $('#SelectedAppointments').val(selectedAppointments.join(', '));
+            });
+
+            $(document).on('click', '.remove-appointment', function() {
+                var card = $(this).closest('.card');
+                var appointmentId = card.data('appointment-id');
+                var $button = $(`.select-appointment[data-appointment-id="${appointmentId}"]`);
+                var amount = parseFloat($button.data('amount'));
+
+                totalAmount -= amount;
+                $button.removeClass('selected');
+                $button.text('Select');
+                card.remove();
+                selectedAppointments = selectedAppointments.filter(id => id !== appointmentId);
+
+                // Update the total amount input
+                $('#TotalAmount').val(totalAmount.toFixed(2));
+                // Update the selected appointments input
+                $('#SelectedAppointments').val(JSON.stringify(selectedAppointments));
+            });
+        });
+    </script>
+
+
+    {{-- <script type="text/javascript">
         setInterval(function() {
 
             $('.billing_labels').each(function() {
@@ -163,7 +222,8 @@
             });
 
         }, 1000);
-    </script>
+    </script> --}}
+
     <script type="text/javascript">
         // Function to update the invoice title when a patient is selected
         function updateInvoiceTitle() {

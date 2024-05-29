@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Appointment;
 use App\Billing;
 use App\Document;
+use App\Drug;
 use App\History;
 use App\Notifications\ResetPasswordNotification;
 use App\Patient;
@@ -219,11 +220,11 @@ class PatientController extends Controller
                 $query->whereJsonContains('diagnostic_type', 'PSYCHOTHERAPIE');
             })
             ->paginate(10);
-        $appointments = Appointment::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(10);
-        $appdrug = Rdv_Drug::select('appointment_id', 'drug_id')
-    ->whereIn('appointment_id', $appointments->pluck('id'))
-    ->groupBy('appointment_id', 'drug_id')
-    ->get();
+
+        $appointments = Appointment::where('user_id', $id)->orderBy('id', 'desc')->paginate(10);
+
+        $appointments->load('drugs'); // des rendez-vous
+
         $tests = Test::where('user_id', $id)
             ->where(function ($query) {
                 $query->orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE');
@@ -243,7 +244,6 @@ class PatientController extends Controller
             'historys' => $historys,
             'tests' => $tests,
             'psychos' => $psychos,
-            'appdrug' => $appdrug,
         ]);
     }
 

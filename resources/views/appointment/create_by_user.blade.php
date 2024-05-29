@@ -172,30 +172,29 @@
     <script type="text/template" id="drugs_labels">
         <section class="field-group">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="morphology_patient">{{ __('sentence.Drugs') }}<font color="red">*</font></label>
                     <select class="form-control multiselect-drug" name="trade_name[]" id="drug" required>
                         <option value="" disabled selected>{{ __('sentence.Select Drug') }}...</option>
                         @foreach($drugs as $drug)
-                            <option value="{{ $drug->id }}">{{ $drug->trade_name }} </option>
+                            <option value="{{ $drug->id }}" data-amountdrug="{{ $drug->amountDrug }} {{ App\Setting::get_option('currency') }}">{{ $drug->trade_name }}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-6">
-                    <label for="morphology_patient">{{ __('sentence.Description') }}<font color="red">*</font></label>
-                    <div class="form-group-custom">
-                        <textarea type="text" name="drug_advice[]" class="form-control" placeholder="{{ __('sentence.Advice_Comment') }}"></textarea>
-                    </div>
+                <div class="col-md-4">
+                    <label for="morphology_patient">{{ __('sentence.Amount') }}</label>
+                    <input type="text" name="drug_amount[]" class="form-control drug-amount" readonly>
                 </div>
                 <div class="col-md-2">
-                    <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-times-circle"></i> {{ __('sentence.Remove') }}</a>
+                    <a type="button" class="btn btn-danger btn-sm text-white span-2 delete my-4"><i class="fa fa-times-circle"></i> {{ __('sentence.Remove') }}</a>
                 </div>
-                <div class="col-12">
-                    <hr color="#a1f1d4">
-                </div>
+            </div>
+            <div class="col-12">
+                <hr color="#a1f1d4">
             </div>
         </section>
     </script>
+
 
     <script>
         $(document).ready(function() {
@@ -258,6 +257,18 @@
             $('.multiselect-doctorino').select2();
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            // Event listener for changes in the select element
+            $(document).on('change', '.multiselect-drug', function() {
+                var selectedOption = $(this).find('option:selected');
+                var amountdrug = selectedOption.data('amountdrug'); // Note the lower case
+                $(this).closest('.row').find('.drug-amount').val(amountdrug);
+            });
+        });
+    </script>
+
     <script src="{{ asset('dashboard/js/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/demo/swipper.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

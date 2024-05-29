@@ -18,7 +18,7 @@ class CreateBillingItemsTable extends Migration
             $table->foreignId('billing_id')
                 ->constrained()
                 ->onDelete('cascade');
-            $table->foreignId('prescription_id')
+            $table->foreignId('appointment_id')
                 ->constrained()
                 ->onDelete('cascade');
             $table->decimal('invoice_amount');
