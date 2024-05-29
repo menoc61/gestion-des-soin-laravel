@@ -231,10 +231,9 @@
 
 @section('header')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
-    <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}">
-        < /> <
-        script type = "text/javascript" >
-            $('#trade_name').multiselect();
+    <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
+    <script type="text/javascript">
+        $('#trade_name').multiselect();
     </script>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>

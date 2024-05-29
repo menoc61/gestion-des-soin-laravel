@@ -9,6 +9,7 @@ use App\History;
 use App\Notifications\ResetPasswordNotification;
 use App\Patient;
 use App\Prescription;
+use App\Rdv_Drug;
 use App\Test;
 use App\User;
 use Illuminate\Http\Request;
@@ -30,7 +31,6 @@ class PatientController extends Controller
             $patients = User::where('role_id', '3')->OrderBy($sortColumn, $sortOrder)->paginate(10);
         } else {
             $patients = User::where('role_id', '3')->paginate(10);
-
         }
 
         return view('patient.all', ['patients' => $patients]);
@@ -220,6 +220,10 @@ class PatientController extends Controller
             })
             ->paginate(10);
         $appointments = Appointment::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(10);
+        $appdrug = Rdv_Drug::select('appointment_id', 'drug_id')
+    ->whereIn('appointment_id', $appointments->pluck('id'))
+    ->groupBy('appointment_id', 'drug_id')
+    ->get();
         $tests = Test::where('user_id', $id)
             ->where(function ($query) {
                 $query->orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE');
@@ -238,7 +242,8 @@ class PatientController extends Controller
             'documents' => $documents,
             'historys' => $historys,
             'tests' => $tests,
-            'psychos' => $psychos
+            'psychos' => $psychos,
+            'appdrug' => $appdrug,
         ]);
     }
 
