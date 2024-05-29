@@ -26,4 +26,8 @@ class Appointment extends Model implements Auditable
     {
         return $this->hasOne('App\Prescription', 'id', 'prescription_id');
     }
+    public function Drug()
+    {
+        return $this->belongsToMany('App\Drug', 'rdv__drugs');
+    }
 }
