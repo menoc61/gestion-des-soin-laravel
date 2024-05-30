@@ -34,8 +34,7 @@ class BillingController extends Controller
         // $prescriptions = Prescription::where('user_id', $id)
         //     ->whereDoesntHave('Items')
         //     ->get();
-        $appointments = Appointment::where('user_id', $id)->orderBy('id', 'desc')->paginate(10);
-
+        $appointments = Appointment::where('user_id', $id)->whereDoesntHave('Items')->orderBy('id', 'desc')->paginate(10);
         $appointments->load('drugs');
 
         return view('billing.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('appointments'));
@@ -148,6 +147,7 @@ class BillingController extends Controller
     public function edit($id)
     {
         $billing = Billing::findOrfail($id);
+
         $billing_items = Billing_item::where('billing_id', $id)->get();
 
         return view('billing.edit', ['billing' => $billing, 'billing_items' => $billing_items]);

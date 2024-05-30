@@ -84,6 +84,7 @@ class PrescriptionController extends Controller
         $visitedCount = $currentUserAppointments->where('visited', 1)->count();
         $nonVisitedCount = $currentUserAppointments->where('visited', 0)->count();
         $appointments = Appointment::orderBy('id', 'DESC')->paginate(25);
+        $drugs = Drug::all();
 
         return view('prescription.follow', [
             'prescription' => $prescription,
@@ -94,6 +95,7 @@ class PrescriptionController extends Controller
             'appointments' => $appointments,
             'doctor' => $doctor,
             'praticiens' => $praticiens,
+            'drugs' => $drugs,
         ]);
     }
 
@@ -138,6 +140,7 @@ class PrescriptionController extends Controller
             'patient_id' => ['required', 'exists:users,id'],
             'Doctor_id' => ['required', 'exists:users,id'],
             'nom' => ['required'],
+            'test_name.*' => 'required',
             // 'trade_name.*' => 'required',
         ]);
 

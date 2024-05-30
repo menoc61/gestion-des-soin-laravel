@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <form method="post" action="{{ route('appointment.store') }}" enctype="multipart/form-data">
+    <form method="post" id="myForm" action="{{ route('appointment.store') }}" enctype="multipart/form-data">
         <div class="row justify-content-center">
             <div class="col-md-6 my-4">
                 <div class="card shadow mb-4">
@@ -153,6 +153,39 @@
                 </div>
             </div>
         </div>
+        <!--Show Modal Redirect-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail Du RDV</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Contenu de la modal...</p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="d-flex col-md-12">
+                            <div class="col-md-6 justify-content-center ">
+                                <a class="btn btn-primary" href="{{ route('billing.create_by', ['id' => $userId]) }}">
+                                    payer
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-secondary"
+                                    href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-secondary"
+                                    href="{{ route('appointment.create_by', ['id' => $userId]) }}"> Rendez-Vous
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 @endsection
 
@@ -272,4 +305,29 @@
     <script src="{{ asset('dashboard/js/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/demo/swipper.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#myForm').on('submit', function(event) {
+                event.preventDefault(); // Empêche la soumission du formulaire
+                var form = this;
+
+                $.ajax({
+                    type: $(form).attr('method'),
+                    url: $(form).attr('action'),
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        $('#myModal').modal('show'); // Affiche la modal en cas de succès
+                    },
+                    error: function(response) {
+                        // Gestion des erreurs si nécessaire
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection
