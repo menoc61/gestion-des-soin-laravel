@@ -59,8 +59,8 @@ class BillingController extends Controller
             'patient_id' => ['required', 'exists:users,id'],
             'payment_mode' => 'required',
             // 'payment_status' => 'required',
-            'nom.*' => 'required',
-            // 'invoice_amount.*' => ['required', 'numeric'],
+            'nom.*' => 'required|numeric',
+            'invoice_amount.*' => ['required', 'numeric'],
         ]);
 
         // if($request->payment_status == 'Paid' && $request->deposited_amount == $request->invoice_amount){
@@ -95,38 +95,20 @@ class BillingController extends Controller
         $billing->created_by = Auth::user()->id;
         $billing->save();
 
-        if (empty($request->nom)) {
-            return \Redirect::back()->with('danger', 'Empty Invoice Details!');
+
+        if (isset($request->nom)) {
+            $i = count($request->nom);
+
+            for ($x = 0; $x < $i; ++$x) {
+                if ($request->nom[$x] != null) {
+                    $billingItem = new Billing_item();
+                    $billingItem->invoice_amount = $request->invoice_amount[$x];
+                    $billingItem->billing_id = $billing->id;
+                    $billingItem->appointment_id = $request->input('nom.' . $x) ?? null;
+                    $billingItem->save();
+                }
+            }
         }
-
-        // $i = count($request->invoice_title);
-
-        // for ($x = 0; $x < $i; ++$x) {
-        //     echo $request->invoice_title[$x];
-
-        //     $invoice_item = new Billing_item();
-
-        //     $invoice_item->invoice_title = $request->invoice_title[$x];
-        //     $invoice_item->invoice_amount = $request->invoice_amount[$x];
-        //     $invoice_item->billing_id = $billing->id;
-
-        //     $invoice_item->save();
-        // }
-
-        $i = count($request->nom);
-        for ($x = 0; $x < $i; ++$x) {
-            // echo $request->nom[$x];
-
-            $invoice_item = new Billing_item();
-
-            $invoice_item->appointment_id = $request->nom[$x];
-            $invoice_item->invoice_amount = $request->invoice_amount[$x];
-            $invoice_item->billing_id = $billing->id;
-
-
-            $invoice_item->save();
-        }
-
         return \Redirect::route('billing.all')->with('success', 'Invoice Created Successfully!');
     }
 
