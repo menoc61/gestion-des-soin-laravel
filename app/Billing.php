@@ -20,13 +20,12 @@ class Billing extends Model implements Auditable
         return $this->hasOne('App\User', 'id', 'created_by');
     }
 
-    public function Prescription(){
-        return $this->belongsToMany('App\Prescription','Billing_item');
-}
+        public function appointments(){
+            return $this->belongsToMany('App\Appointment','Billing_item');
+    }
 
-public function appointments()
-{
-    return $this->belongsToMany(Appointment::class, 'billing_items', 'appointment_id', 'billing_id');
-}
-
+    // public function appointments()
+    // {
+    //     return $this->belongsToMany(Appointment::class, 'billing_items', 'appointment_id', 'billing_id');
+    // }
 }
