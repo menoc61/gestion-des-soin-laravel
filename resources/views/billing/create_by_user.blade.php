@@ -5,27 +5,37 @@
 @endsection
 
 @section('content')
-    <div class="mb-3">
-        <button class="btn btn-primary" onclick="goBackAndReload()">Retour</button>
+    <div class="">
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="card col-md-12">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-center"> {{ __('sentence.Create Invoice') }} De
+                        <span class="m-0 font-weight-bold text-primary text-center">{{ $userName }}</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
     </div>
 
     <form method="post" action="{{ route('billing.store_id', ['id' => $userId]) }}">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center my-4">
             <div class="col-md-6">
-                <div class="col-md-6">
+                <div class="row">
                     @forelse ($appointments as $appointment)
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">{{ $appointment->reason }}</h6>
-                            </div>
-                            <div class="card-body">
-                                <h6 class="m-0 font-weight-bold text-primary">{{ $appointment->reason }}</h6>
-                                <h6 class="m-0 font-weight-bold text-primary">
-                                    Total: {{ $appointment->drugs->sum('amountDrug') }}
-                                </h6>
-                                <button type="button" class="btn btn-primary select-appointment"
-                                    data-appointment-id="{{ $appointment->id }}"
-                                    data-amount="{{ $appointment->drugs->sum('amountDrug') }}">Select</button>
+                        <div class="col-md-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-body">
+                                    <h6 class="m-0 font-weight-bold text-primary">{{ $appointment->reason }}</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">
+                                        Total: {{ $appointment->drugs->sum('amountDrug') }}
+                                    </h6>
+                                    <button type="button" class="btn badge badge-primary-soft select-appointment"
+                                        data-appointment-id="{{ $appointment->id }}"
+                                        data-amount="{{ $appointment->drugs->sum('amountDrug') }}">Payer</button>
+                                </div>
                             </div>
                         </div>
                     @empty
@@ -46,7 +56,8 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="drug">{{ __('sentence.Select Patient') }}</label>
-                            <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id" readonly>
+                            <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id"
+                                readonly>
                             <input type="text" class="form-control" value="{{ $userName }}" readonly>
                             {{ csrf_field() }}
                         </div>
@@ -63,11 +74,7 @@
                         </div>
                         <div class="form-group">
                             <label for="DueAmount">{{ __('sentence.Due Balance') }}</label>
-                            <input class="form-control" type="number" name="due_amount" id="DueAmount">
-                        </div>
-
-                        <div id="selected-appointments">
-                            <!-- Selected appointments will be displayed here -->
+                            <input class="form-control" type="number" name="due_amount" id="DueAmount" readonly>
                         </div>
 
                         <div class="form-group">
@@ -83,6 +90,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" id="selected-appointments">
             </div>
         </div>
     </form>
@@ -93,49 +101,58 @@
         $(document).ready(function() {
             var totalAmount = 0;
 
+            function updateAmounts() {
+                $('#TotalAmount').val(totalAmount.toFixed(2));
+                var depositedAmount = parseFloat($('#DepositedAmount').val()) || 0;
+                $('#DueAmount').val((totalAmount - depositedAmount).toFixed(2));
+            }
+
             $('.select-appointment').on('click', function() {
                 var $button = $(this);
                 var amount = parseFloat($button.data('amount'));
                 var appointmentId = $button.data('appointment-id');
-                var card = $button.closest('.card').clone();
 
                 if ($button.hasClass('selected')) {
                     // Deselect and subtract the amount
                     totalAmount -= amount;
-                    $button.removeClass('selected');
-                    $button.text('Select');
-                    $('#selected-appointments').find(`.selected-appointment[data-appointment-id="${appointmentId}"]`).remove();
+                    $button.removeClass('selected badge-danger-soft').addClass('badge-primary-soft');
+                    $button.text('Payer');
+                    $('#selected-appointments').find(
+                        `.selected-appointment[data-appointment-id="${appointmentId}"]`).remove();
                 } else {
                     // Select and add the amount
                     totalAmount += amount;
-                    $button.addClass('selected');
-                    $button.text('Deselect');
-                    card.find('.select-appointment').remove();
-                    card.append(
-                        '<button type="button" class="btn btn-danger remove-appointment">Supprimer</button>'
-                    );
+                    $button.addClass('selected badge-danger-soft').removeClass('b badge-primary-soft');
+                    $button.text('Retirer');
                     $('#selected-appointments').append(`<div class="selected-appointment" data-appointment-id="${appointmentId}">
                         <input type="hidden" name="nom[]" value="${appointmentId}">
                         <input type="hidden" name="invoice_amount[]" value="${amount}">
-                        ${card.html()}
                     </div>`);
                 }
 
-                // Update the total amount input
-                $('#TotalAmount').val(totalAmount.toFixed(2));
+                // Update the total and due amounts
+                updateAmounts();
             });
 
             $(document).on('click', '.remove-appointment', function() {
                 var card = $(this).closest('.selected-appointment');
                 var appointmentId = card.data('appointment-id');
-                var amount = parseFloat($(`.select-appointment[data-appointment-id="${appointmentId}"]`).data('amount'));
+                var amount = parseFloat($(`.select-appointment[data-appointment-id="${appointmentId}"]`)
+                    .data('amount'));
 
                 totalAmount -= amount;
-                $(`.select-appointment[data-appointment-id="${appointmentId}"]`).removeClass('selected').text('Select');
+                $(`.select-appointment[data-appointment-id="${appointmentId}"]`).removeClass(
+                        'selected btn-danger')
+                    .addClass('btn-primary').text('Payer');
                 card.remove();
 
-                // Update the total amount input
-                $('#TotalAmount').val(totalAmount.toFixed(2));
+                // Update the total and due amounts
+                updateAmounts();
+            });
+
+            $('#DepositedAmount').on('input', function() {
+                // Update due amount when deposited amount is entered
+                updateAmounts();
             });
         });
 

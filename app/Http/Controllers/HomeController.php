@@ -9,6 +9,7 @@ use App\Appointment;
 use App\Billing;
 use App\Billing_item;
 use App;
+use App\Rdv_Drug;
 use App\Test;
 use Auth;
 use Carbon\Carbon;
@@ -100,10 +101,14 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $total_appointments_today = Appointment::wheredate('date', Today())->get();
         $total_prescriptions = Prescription::all()->count();
         $total_payments = Billing::all()->count();
-        $total_payments_days = Billing_item::wheredate('created_at', Today())->sum('invoice_amount');
-        $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
-        $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
-        $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
+
+        $total_payments_days = Rdv_Drug::wheredate('created_at', Today())->sum('montant_drug');
+        // $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
+        $total_payments_month = Rdv_Drug::whereMonth('created_at', date('m'))->sum('montant_drug');
+        // $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
+        $total_payments_year = Rdv_Drug::whereYear('created_at', date('Y'))->sum('montant_drug');
+        // $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
+
 
         $total_payment_by_day = Billing_item::select('created_at', 'invoice_amount')
             ->get()

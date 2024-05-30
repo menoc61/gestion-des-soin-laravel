@@ -1331,16 +1331,10 @@
                                 id="appointmentDate"></label></p>
                         <p><b>{{ __('sentence.Time Slot') }} : </b> <label class="badge badge-primary-soft"
                                 id="appointmentTime"></span></label>
-                            @if ($appointment->Prescription == '')
-                            @else
-                                <p><b>{{ __('sentence.Test') }} : </b> <label class="badge badge-primary-soft"
-                                        id="appointmentPrescription"></span></label>
-                            @endif
+                        <p><b>{{ __('sentence.Prescription') }} : </b> <label class="badge badge-primary-soft"
+                                id="appointmentPrescription"></span></label>
 
-                            @if ($appointment->drugs == '')
-                            @else
-                                <p><b>{{ __('sentence.Drug') }} : </b> <span id="appointmentPrescriptiondrug"></span>
-                            @endif
+                        <p><b>{{ __('sentence.Drug') }} : </b> <span id="appointmentPrescriptiondrug"></span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>

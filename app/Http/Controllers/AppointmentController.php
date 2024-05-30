@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Appointment;
+use App\Billing;
 use App\Drug;
 use App\Notifications\NewAppointmentByEmailNotification;
 use App\Notifications\WhatsAppNotification;
@@ -66,7 +67,7 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function rdv_praticien ($id, $doc_id)
+    public function rdv_praticien($id, $doc_id)
     {
         $user = User::findOrFail($id);
         $praticien = User::findOrFail($doc_id);
@@ -197,7 +198,7 @@ class AppointmentController extends Controller
         if (\Auth::user()->role_id == 3) {
             return back()->with('success', 'Rendez-vous crée avec succès!');
         } else {
-            return back()->with('success', 'Appointment Created Successfully!');
+            return \Redirect::route('billing.create_by', ['id' => $appointment->user_id])->with('success', 'Rendez-vous crée avec succès!');
         }
     }
 
@@ -323,6 +324,6 @@ class AppointmentController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
 
-        return view('appointment.detailAppointment', ['currentUserAppointments' => $currentUserAppointments, 'appointment'=>$appointment]);
+        return view('appointment.detailAppointment', ['currentUserAppointments' => $currentUserAppointments, 'appointment' => $appointment]);
     }
 }

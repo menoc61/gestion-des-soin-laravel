@@ -195,6 +195,7 @@ return [
     'Invoice Title' => 'Titre de la facture',
     'View billing' => 'Facturation',
     'Amount' => 'Montant',
+    'Total Amount' => 'Montant Total à Payer',
     'Remove' => 'Retirer',
     'Invoice_for_care' => 'Facture des Soins',
     'Empty Invoice' => 'Facture Vide!',
