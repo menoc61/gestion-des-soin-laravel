@@ -34,10 +34,29 @@ class BillingController extends Controller
         // $prescriptions = Prescription::where('user_id', $id)
         //     ->whereDoesntHave('Items')
         //     ->get();
-        $appointments = Appointment::where('user_id', $id)->whereDoesntHave('Items')->orderBy('id', 'desc')->paginate(10);
+
+        $appointIdsAmount = Appointment::whereHas('rdv__drugs')
+        ->groupBy('id')
+        ->pluck('id');
+
+        $montant = Appointment::where('user_id', $id)
+            ->whereIn('id', $appointIdsAmount)
+            ->whereDoesntHave('Items');
+
+
+        $appointIds = Appointment::whereHas('rdv__drugs')
+            ->groupBy('id')
+            ->pluck('id');
+
+        $appointments = Appointment::where('user_id', $id)
+            ->whereIn('id', $appointIds)
+            ->whereDoesntHave('Items')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
         $appointments->load('drugs');
 
-        return view('billing.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('appointments'));
+        return view('billing.create_By_user', ['userId' => $id, 'userName' => $user->name, 'montant' => $montant], compact('appointments'));
     }
 
     public function create_payment($id)

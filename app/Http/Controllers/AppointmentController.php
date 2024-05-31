@@ -32,11 +32,10 @@ class AppointmentController extends Controller
     public function create_By_id($id)
     {
         $user = User::findOrFail($id);
-        $praticiens = User::where('role_id', '!=', 3)->get();
         $user_auth = Auth::user();
         $drugs = Drug::all();
 
-        // $appointmentsDoc = Appointment::where('doctor_id', $doc_id)->get();
+        $praticiens = User::where('role_id', '!=', 3)->get();
 
         return view('appointment.create_By_user', [
             'userName' => $user->name,
@@ -44,7 +43,6 @@ class AppointmentController extends Controller
             'user_auth' => $user_auth,
             'userId' => $id,
             'drugs' => $drugs,
-            // 'appointmentsDoc' => $appointmentsDoc
         ]);
     }
 
@@ -325,5 +323,22 @@ class AppointmentController extends Controller
             ->get();
 
         return view('appointment.detailAppointment', ['currentUserAppointments' => $currentUserAppointments, 'appointment' => $appointment]);
+    }
+
+    public function getAppointmentsByDoctor($doctorId)
+    {
+        // Récupérer les rendez-vous du praticien avec les informations formatées
+        $userAppointments = Appointment::where('doctor_id', $doctorId)
+            ->get()
+            ->map(function ($appointment) {
+                return [
+                    'date' => $appointment->date->format('d M Y'),
+                    'time_start' => $appointment->time_start,
+                    'time_end' => $appointment->time_end,
+                    'created_at' => $appointment->created_at->format('d M Y H:i'),
+                ];
+            });
+
+        return response()->json($userAppointments);
     }
 }

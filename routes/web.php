@@ -62,6 +62,7 @@ Route::get('/appointment/today', 'AppointmentController@today')->name('appointme
 Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
+Route::get('/appointments/by-doctor/{doctorId}', 'AppointmentController@getAppointmentsByDoctor');
 
 
 // Drugs

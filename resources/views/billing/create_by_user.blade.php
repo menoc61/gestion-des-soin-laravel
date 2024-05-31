@@ -29,12 +29,41 @@
                             <div class="card shadow mb-4">
                                 <div class="card-body">
                                     <h6 class="m-0 font-weight-bold text-primary">{{ $appointment->reason }}</h6>
-                                    <h6 class="m-0 font-weight-bold text-primary">
-                                        Total: {{ $appointment->drugs->sum('amountDrug') }}
-                                    </h6>
-                                    <button type="button" class="btn badge badge-primary-soft select-appointment"
-                                        data-appointment-id="{{ $appointment->id }}"
-                                        data-amount="{{ $appointment->drugs->sum('amountDrug') }}">Payer</button>
+                                    @forelse ($appointment->drugs as $drug)
+                                        <div class="row my-4">
+                                            <div class="col-md-6">
+                                                <h6 class="m-0 font-weight-bold text-primary">
+                                                    {{ $drug->trade_name }} : </h6>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 class="m-0 font-weight-bold text-primary">
+                                                    {{ $drug->amountDrug }}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" align="center"><img src="{{ asset('img/not-found.svg') }}"
+                                                    width="200" />
+                                                <br><br>
+                                                <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn badge badge-primary-soft select-appointment"
+                                                data-appointment-id="{{ $appointment->id }}"
+                                                data-amount="{{ $appointment->drugs->sum('amountDrug') }}">Payer</button>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h6 class="m-0 font-weight-bold text-primary">
+                                                Total: {{ $appointment->drugs->sum('amountDrug') }}
+                                                {{ App\Setting::get_option('currency') }}
+                                            </h6>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -47,6 +76,10 @@
                         </tr>
                     @endforelse
                 </div>
+                <div>
+                    {{ Collect($montant)->sum('montant_drug') }}
+                    {{ App\Setting::get_option('currency') }}</div>
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="card shadow mb-4">
@@ -54,34 +87,44 @@
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Informations') }}</h6>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="drug">{{ __('sentence.Select Patient') }}</label>
-                            <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id"
-                                readonly>
-                            <input type="text" class="form-control" value="{{ $userName }}" readonly>
-                            {{ csrf_field() }}
-                        </div>
-                        <div class="form-group">
-                            <label for="PaymentMode">{{ __('sentence.Payment Mode') }}</label>
-                            <select class="form-control" name="payment_mode" id="PaymentMode">
-                                <option value="Cash">{{ __('sentence.Cash') }}</option>
-                                <option value="Mobile Transaction">{{ __('sentence.Mobile Transaction') }}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="DepositedAmount">{{ __('sentence.Already Paid') }}</label>
-                            <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount">
-                        </div>
-                        <div class="form-group">
-                            <label for="DueAmount">{{ __('sentence.Due Balance') }}</label>
-                            <input class="form-control" type="number" name="due_amount" id="DueAmount" readonly>
+                        <div class="form-group row">
+                            <div class="form-group col-md-6">
+                                <label for="drug">{{ __('sentence.Select Patient') }}</label>
+                                <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id"
+                                    readonly>
+                                <input type="text" class="form-control" value="{{ $userName }}" readonly>
+                                {{ csrf_field() }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="PaymentMode">{{ __('sentence.Payment Mode') }}</label>
+                                <select class="form-control" name="payment_mode" id="PaymentMode">
+                                    <option value="Cash">{{ __('sentence.Cash') }}</option>
+                                    <option value="Mobile Transaction">{{ __('sentence.Mobile Transaction') }}</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="TotalAmount">{{ __('sentence.Total Amount') }}</label>
-                            <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}"
-                                aria-label="Amount" aria-describedby="basic-addon1" name="total_amount" id="TotalAmount"
-                                readonly min="0">
+                        <div class="form-group row">
+                            <div class="form-group col-md-6">
+                                <label for="TotalAmount">{{ __('sentence.Total Amount') }}</label>
+                                <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}"
+                                    aria-label="Amount" aria-describedby="basic-addon1" name="total_amount" id="TotalAmount"
+                                    readonly min="0">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="DueAmount">{{ __('sentence.Remise') }}</label>
+                                <input class="form-control" type="number" name="Remise" id="Remise">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-6">
+                                <label for="DepositedAmount">{{ __('sentence.Already Paid') }}</label>
+                                <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="DueAmount">{{ __('sentence.Due Balance') }}</label>
+                                <input class="form-control" type="number" name="due_amount" id="DueAmount" readonly>
+                            </div>
                         </div>
 
                         <div class="form-group">

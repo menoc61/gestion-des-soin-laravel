@@ -306,6 +306,9 @@ return [
     'Hour_end' => 'Heure de Fin',
     'Choice' => 'Choisir',
     'Choice Praticien' => 'Choisir un Praticien',
-    'Agenda praticien' => 'Agenda du Praticien :'
+    'Agenda praticien' => 'Agenda du Praticien Sélectionné',
+    'Select Drug' => 'Sélectionner un Praticien',
+    'Remise' => 'Remise',
+    'Test Pshycho' => 'Diagnose Psychothérapeutique'
 
 ];
