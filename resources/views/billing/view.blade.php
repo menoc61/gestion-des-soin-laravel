@@ -22,12 +22,15 @@
                 <div class="card-body">
                     <!-- ROW : Doctor informations -->
                     <div class="col-md-12">
-                        <div class="col">
-                            @if (!empty(App\Setting::get_option('logo')))
-                                <img src="{{ asset('uploads/' . App\Setting::get_option('logo')) }}"><br><br>
-                            @endif
-                            {{-- {!! clean(App\Setting::get_option('header_left')) !!} --}}
-                        </div>
+                        <center>
+                            <div class="col-md-12">
+                                @if (!empty(App\Setting::get_option('logo')))
+                                    <img src="{{ asset('uploads/' . App\Setting::get_option('logo')) }}"
+                                        class="img-fluid"><br><br>
+                                @endif
+                                {{-- {!! clean(App\Setting::get_option('header_left')) !!} --}}
+                            </div>
+                        </center>
                         <div class="">
                             <div class="text-center">
                                 <b>{{ App\Setting::get_option('system_name') }}</b><br>
@@ -92,7 +95,8 @@
                                     <td colspan="2"><strong class="float-right">{{ __('sentence.Total') }}</strong></td>
                                     <td align="center">
                                         <strong>{{ $billing_items->sum('invoice_amount') + ($billing_items->sum('invoice_amount') * App\Setting::get_option('vat')) / 100 }}
-                                            {{ App\Setting::get_option('currency') }}</strong></td>
+                                            {{ App\Setting::get_option('currency') }}</strong>
+                                    </td>
                                 </tr>
                             @endempty
                         </table>
@@ -190,7 +194,8 @@
                     <td colspan="2"><strong class="float-right">{{ __('sentence.Total') }}</strong></td>
                     <td align="center">
                         <strong>{{ $billing_items->sum('invoice_amount') + ($billing_items->sum('invoice_amount') * App\Setting::get_option('vat')) / 100 }}
-                            {{ App\Setting::get_option('currency') }}</strong></td>
+                            {{ App\Setting::get_option('currency') }}</strong>
+                    </td>
                 </tr>
             @endempty
         </table>

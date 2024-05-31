@@ -29,7 +29,7 @@
                     <div class="card-body">
 
                         <div class="row ">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="patient_name">{{ __('sentence.Patient') }}</label>
                                 <select class="form-control patient_name multiselect-doctorino" name="patient"
                                     id="patient_name">
@@ -40,12 +40,12 @@
                                 {{ csrf_field() }}
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 @if (Auth::user()->role_id != 2)
                                     <div class="form-group">
                                         <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
                                         <select class="form-control " name="doctor_id" id="DoctorID" required>
-                                            {{-- <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option> --}}
+                                            <option value="" disabled selected>{{ __('sentence.Select Drug') }}...</option>
                                             @foreach ($praticiens as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -54,7 +54,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="rdvdate">{{ __('sentence.Date') }}</label>
                                 <input type="text" class="form-control target agenda" name="rdv_time_date"
                                     readonly="readonly" id="rdvdate">
@@ -78,13 +78,14 @@
                                 <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
                             </div>
 
-                            <div class="form-check">
+                            {{-- <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="send_sms" id="sms">
                                 <label class="form-check-label" for="sms">
                                     {{ __('sentence.Send SMS') }}
                                 </label>
-                            </div>
+                            </div> --}}
                         </div>
+
                         <div class="form-group row">
                             <div class="col-sm-9">
                                 <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
@@ -92,48 +93,6 @@
                         </div>
 
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }}
-                            {{ $user->name }}</h6>
-                    </div>
-                    {{-- <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <td align="center">{{ __('sentence.Date') }}</td>
-                            <td align="center">{{ __('sentence.Time Slot') }}</td>
-                            <td align="center">{{ __('sentence.Created at') }}</td>
-                        </tr>
-                        @forelse($appointmentsDoc as $appointment)
-                            <tr>
-                                <td align="center">
-                                    <label class="badge badge-primary-soft">
-                                        <i class="fas fa-calendar"></i>
-                                        {{ $appointment->date->format('d M Y') }}
-                                    </label>
-                                </td>
-                                <td align="center">
-                                    <label class="badge badge-primary-soft">
-                                        <i class="fa fa-clock"></i>
-                                        {{ $appointment->time_start }} - {{ $appointment->time_end }}
-                                    </label>
-                                </td>
-                                <td class="text-center">
-                                    {{ $appointment->created_at->format('d M Y H:i') }}
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3" align="center">
-                                    <img src="{{ asset('img/not-found.svg') }}" width="200" />
-                                    <br><br>
-                                    <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </table>
-                </div> --}}
                 </div>
             </div>
             <div class="col-md-6 my-4">
@@ -151,6 +110,25 @@
                         </fieldset>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} <span
+                                id="doctor-name"></span></h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover" id="appointments-table">
+
+                                <tr>
+                                    <td align="center">{{ __('sentence.Date') }}</td>
+                                    <td align="center">{{ __('sentence.Time Slot') }}</td>
+                                    <td align="center">{{ __('sentence.Created at') }}</td>
+                                </tr>
+                                <!-- Appointments will be dynamically inserted here -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!--Show Modal Redirect-->
@@ -158,7 +136,6 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Detail Du RDV</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
@@ -166,17 +143,17 @@
                     </div>
                     <div class="modal-footer">
                         <div class="d-flex col-md-12">
-                            <div class="col-md-6 justify-content-center ">
+                            <div class="col-md-4">
                                 <a class="btn btn-primary" href="{{ route('billing.create_by', ['id' => $userId]) }}">
                                     payer
                                 </a>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <a class="btn btn-secondary"
                                     href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
                                 </a>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <a class="btn btn-secondary"
                                     href="{{ route('appointment.create_by', ['id' => $userId]) }}"> Rendez-Vous
                                 </a>
@@ -228,6 +205,42 @@
         </section>
     </script>
 
+
+    <script>
+        $(document).ready(function() {
+            $('#DoctorID').change(function() {
+                var doctorId = $(this).val();
+                $.ajax({
+                    url: '/appointments/by-doctor/' + doctorId,
+                    method: 'GET',
+                    success: function(response) {
+                        var appointmentsTable = $('#appointments-table');
+                        appointmentsTable.find('tr:gt(0)')
+                            .remove(); // Remove existing rows except header
+
+                        if (response.length > 0) {
+                            response.forEach(function(appointment) {
+                                var newRow = '<tr>' +
+                                    '<td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i> ' +
+                                    appointment.date + '</label></td>' +
+                                    '<td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i> ' +
+                                    appointment.time_start + ' - ' + appointment
+                                    .time_end + '</label></td>' +
+                                    '<td class="text-center">' + appointment
+                                    .created_at + '</td>' +
+                                    '</tr>';
+                                appointmentsTable.append(newRow);
+                            });
+                        } else {
+                            var noData =
+                                '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
+                            appointmentsTable.append(noData);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -329,5 +342,4 @@
             });
         });
     </script>
-
 @endsection

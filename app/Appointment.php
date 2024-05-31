@@ -32,6 +32,12 @@ class Appointment extends Model implements Auditable
         return $this->belongsToMany(Drug::class, 'rdv__drugs', 'appointment_id', 'drug_id');
     }
 
+    public function rdv__drugs()
+    {
+        return $this->hasMany(Rdv_Drug::class);
+    }
+
+
     public function Items()
     {
         return $this->hasMany('App\Billing_item');

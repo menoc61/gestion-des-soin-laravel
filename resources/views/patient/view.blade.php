@@ -52,7 +52,7 @@
                             </div>
                             <hr>
 
-                            {{-- <table class="table table-striped table-align-center">
+                            <table class="table table-striped table-align-center">
                                 <tr>
                                     @isset($patient->Patient->birthday)
                                         <td>
@@ -102,7 +102,7 @@
                                     @endisset
                                 </tr>
 
-                                <tr>
+                                {{-- <tr>
                                     @isset($patient->Patient->allergie)
                                         <td>
                                             <p><b>{{ __('sentence.Allergies') }} :</b></p>
@@ -206,8 +206,8 @@
                                             @endif
                                         </td>
                                     @endisset
-                                </tr>
-                            </table> --}}
+                                </tr> --}}
+                            </table>
 
                         </div>
                         <div class="col-md-8 col-sm-6">
@@ -225,6 +225,11 @@
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link " id="tests-tab" data-toggle="tab" href="#tests" role="tab"
                                         aria-controls="tests" aria-selected="false">{{ __('sentence.Test') }}</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="psychotest-tab" data-toggle="tab" href="#psychotest"
+                                        role="tab" aria-controls="psychotest"
+                                        aria-selected="true">{{ __('sentence.Test Pshycho') }}</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="prescriptions-tab" data-toggle="tab" href="#prescriptions"
@@ -283,13 +288,7 @@
                                 {{-- ---------------------------------------------------------- Start Test  ------------------------------------------------------------------------ --}}
                                 <div class="tab-pane fade " id="tests" role="tabpanel" aria-labelledby="tests-tab">
                                     <div class="row">
-                                        <div class="col-md-6 ">
-                                            <a class="btn btn-primary btn-sm my-4 float-left"
-                                                href="{{ route('test.psychotherapie', ['id' => $patient->id]) }}"><i
-                                                    class="fa fa-pen"></i>
-                                                {{ __('sentence.Create Psycho') }}</a>
-                                        </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <a class="btn btn-primary btn-sm my-4 float-right"
                                                 href="{{ route('test.create_by', ['id' => $patient->id]) }}"><i
                                                     class="fa fa-pen"></i>
@@ -388,7 +387,7 @@
 
                                                 @empty
                                                     <tr>
-                                                        <td colspan="5" class="text-center"><img
+                                                        <td colspan="6" class="text-center"><img
                                                                 src="{{ asset('img/not-found.svg') }}" width="200" />
                                                             <br><br>
                                                             <b class="text-muted">pas de diagnostic trouvé</b>
@@ -502,7 +501,8 @@
                                                                         class="fas fa-calendar"></i>
                                                                     {{ $appointment->date->format('d M Y') }} </label>
                                                             </td>
-                                                            <td align="center"><label class="badge badge-primary-soft"><i
+                                                            <td align="center"><label
+                                                                    class="badge badge-primary-soft text-dark"><i
                                                                         class="fa fa-clock"></i>
                                                                     {{ $appointment->time_start }} -
                                                                     {{ $appointment->time_end }} </label></td>
@@ -570,7 +570,7 @@
                                                         </tr>
                                                     @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $appointment->user_id)
                                                         <tr>
-                                                            <td align="center">{{ $key + 1 }} </td>
+                                                            {{-- <td align="center">{{ $key + 1 }} </td> --}}
                                                             <td align="center"><label class="badge badge-primary-soft"><i
                                                                         class="fas fa-calendar"></i>
                                                                     {{ $appointment->date->format('d M Y') }} </label>
@@ -579,6 +579,9 @@
                                                                         class="fa fa-clock"></i>
                                                                     {{ $appointment->time_start }} -
                                                                     {{ $appointment->time_end }} </label></td>
+                                                            <td align="center"><label class="badge badge-primary-soft"><i
+                                                                        class="fa fa-user-injured"></i>
+                                                                    {{ $appointment->Doctor->name }} </label></td>
                                                             <td class="text-center">
                                                                 @if ($appointment->visited == 0)
                                                                     <label class="badge badge-warning-soft">
@@ -597,46 +600,49 @@
                                                                     </label>
                                                                 @endif
                                                             </td>
+                                                            <td class="text-center">
+                                                                @if ($appointment->visited == 1)
+                                                                    <label class="badge badge-primary-soft">
+                                                                        <i class="fas fa-calendar"></i>
+                                                                        {{ $appointment->updated_at->format('d M Y H:i') }}
+                                                                    </label>
+                                                                @endif
+                                                            </td>
                                                             <td align="center">
-                                                                <a>
-
+                                                                <a class="btn btn-outline-primary btn-circle btn-sm view-details-btn"
+                                                                    data-date="{{ $appointment->date->format('d M Y') }}"
+                                                                    data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
+                                                                    data-doctor="{{ $appointment->Doctor->name }}"
+                                                                    data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
+                                                                    data-drugs="{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}">
+                                                                    <i class="fas fa-eye"></i>
                                                                 </a>
                                                                 @can('edit appointment')
-                                                                    @php
-                                                                        $appointmentDate = \Carbon\Carbon::parse(
-                                                                            $appointment->date,
-                                                                        );
-                                                                        $appointmentTimeStart = \Carbon\Carbon::parse(
-                                                                            $appointment->time_start,
-                                                                        );
-                                                                        $currentDateTime = now();
-                                                                        $isFutureDateTime =
-                                                                            $appointmentDate->isFuture() ||
-                                                                            ($appointmentDate->isToday() &&
-                                                                                $appointmentTimeStart->isFuture());
-                                                                    @endphp
-
                                                                     <a data-rdv_id="{{ $appointment->id }}"
                                                                         data-rdv_date="{{ $appointment->date->format('d M Y') }}"
                                                                         data-rdv_time_start="{{ $appointment->time_start }}"
                                                                         data-rdv_time_end="{{ $appointment->time_end }}"
                                                                         data-patient_name="{{ $appointment->User->name }}"
-                                                                        class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime ? ' disabled opacity-button' : '' }}"
+                                                                        class=" btn btn-outline-success btn-circle btn-sm
+                                                                {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
                                                                         data-toggle="modal" data-target="#EDITRDVModal">
                                                                         <i class="fas fa-check"></i>
                                                                     </a>
                                                                 @endcan
                                                                 @can('delete appointment')
-                                                                    <a href="{{ url('appointment/delete/' . $appointment->id) }}"
-                                                                        class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                            class="fas fa-trash"></i></a>
+                                                                    @if ($appointment->visited != 1)
+                                                                        <a href="{{ url('appointment/delete/' . $appointment->id) }}"
+                                                                            class="btn btn-outline-danger btn-circle btn-sm">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </a>
+                                                                    @endif
                                                                 @endcan
                                                             </td>
                                                         </tr>
                                                     @endif
                                                 @empty
                                                     <tr>
-                                                        <td colspan="5" align="center"><img
+                                                        <td colspan="6" align="center"><img
                                                                 src="{{ asset('img/not-found.svg') }}" width="200" />
                                                             <br><br>
                                                             <b
@@ -658,12 +664,21 @@
                                         aria-labelledby="prescriptions-tab">
                                         <div class="row">
                                             <div class="col">
-                                                @can('create prescription')
-                                                    <a type="button" class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="{{ route('prescription.create_by', ['id' => $patient->id]) }}"><i
-                                                            class="fa fa-pen"></i>
-                                                        {{ __('sentence.Create Prescription') }}</a>
-                                                @endcan
+                                                @if (Auth::user()->role_id == 3)
+                                                    <div class="col-md-12">
+                                                        <div class="card-body h-25">
+                                                        </div>
+                                                        <div class="card-body h-25">
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    @can('create prescription')
+                                                        <a type="button" class="btn btn-primary btn-sm my-4 float-right"
+                                                            href="{{ route('prescription.create_by', ['id' => $patient->id]) }}"><i
+                                                                class="fa fa-pen"></i>
+                                                            {{ __('sentence.Create Prescription') }}</a>
+                                                    @endcan
+                                                @endif
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-striped table-hover">
@@ -784,7 +799,7 @@
                                                         @endif
                                                     @empty
                                                         <tr>
-                                                            <td colspan="4" align="center"> <img
+                                                            <td colspan="6" align="center"> <img
                                                                     src="{{ asset('img/not-found.svg') }}" width="200" />
                                                                 <br><br>
                                                                 <b class="text-muted">
@@ -801,17 +816,153 @@
 
 
 
+                                    {{-- ----------------------------------------------------------- Start test Psychothérapeutique  --------------------------------------------------------------- --}}
+                                    <div class="tab-pane fade" id="psychotest" role="tabpanel"
+                                        aria-labelledby="psychotest-tab">
+                                        <div class="row">
+                                            <div class="col">
+                                                @if (Auth::user()->role_id == 3)
+                                                    <div class="col-md-12">
+                                                        <div class="card-body h-25">
+                                                        </div>
+                                                        <div class="card-body h-25">
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <a class="btn btn-primary btn-sm my-4 float-right"
+                                                        href="{{ route('test.psychotherapie', ['id' => $patient->id]) }}"><i
+                                                            class="fa fa-pen"></i>
+                                                        {{ __('sentence.Create Psycho') }}</a>
+                                                @endif
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover " id="dataTable"
+                                                    width="100%" cellspacing="0">
+                                                    <tr>
+                                                        <td align="center"><b>Id</b></td>
+                                                        <td align="center"><b> Nom Diagnose</b> </td>
+                                                        <td align="center"><b>Description</b> </td>
+                                                        <td align="center"><b> Utilisation </b></td>
+                                                        <td align="center"><b> Action</b> </td>
+                                                    </tr>
+                                                    @forelse($testpshychos as $key => $testpshycho)
+                                                        @if (Auth::user()->role_id == 2)
+                                                            <tr>
+                                                                <td align="center">{{ $key + 1 }}</td>
+                                                                <td align="center">{{ $testpshycho->test_name }}</td>
+                                                                <td align="center"> {{ $testpshycho->comment }} </td>
+                                                                <td align="center">{{ __('sentence.time use') }} :
+                                                                    {{ $testpshycho->Prescription->count() }}
+                                                                    {{ __('sentence.In Prescription') }}
+                                                                </td>
+                                                                <td class="text-center">
+
+                                                                    <a href="{{ url('test/view/' . $testpshycho->id) }}"
+                                                                        class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                            class="fa fa-eye"></i></a>
+
+                                                                    @can('edit diagnostic test')
+                                                                        <a href="{{ url('test/edit/' . $testpshycho->id) }}"
+                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                                class="fa fa-pen"></i></a>
+                                                                    @endcan
+                                                                    @can('delete diagnostic test')
+                                                                        <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                            data-toggle="modal" data-target="#DeleteModal"
+                                                                            data-link="{{ url('test/delete/' . $testpshycho->id) }}"><i
+                                                                                class="fa fa-trash"></i></a>
+                                                                    @endcan
+                                                                </td>
+                                                            </tr>
+                                                        @elseif (Auth::user()->role_id == 1)
+                                                            <tr>
+                                                                <td align="center">{{ $key + 1 }}</td>
+                                                                <td align="center">{{ $testpshycho->test_name }}</td>
+                                                                <td align="center"> {{ $testpshycho->comment }} </td>
+                                                                <td align="center">{{ __('sentence.time use') }} :
+                                                                    {{ $testpshycho->Prescription->count() }}
+                                                                    {{ __('sentence.In Prescription') }}
+                                                                </td>
+                                                                <td class="text-center">
+
+                                                                    <a href="{{ url('test/view/' . $testpshycho->id) }}"
+                                                                        class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                            class="fa fa-eye"></i></a>
+
+                                                                    @can('edit diagnostic test')
+                                                                        <a href="{{ url('test/edit/' . $testpshycho->id) }}"
+                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                                class="fa fa-pen"></i></a>
+                                                                    @endcan
+                                                                    @can('delete diagnostic test')
+                                                                        <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                            data-toggle="modal" data-target="#DeleteModal"
+                                                                            data-link="{{ url('test/delete/' . $testpshycho->id) }}"><i
+                                                                                class="fa fa-trash"></i></a>
+                                                                    @endcan
+                                                                </td>
+                                                            </tr>
+                                                        @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $testpshycho->user_id)
+                                                            <tr>
+                                                                <td align="center">{{ $key + 1 }}</td>
+                                                                <td align="center">{{ $testpshycho->test_name }}</td>
+                                                                <td align="center"> {{ $testpshycho->comment }} </td>
+                                                                <td align="center">{{ __('sentence.In Prescription') }} :
+                                                                    {{ $testpshycho->Prescription->count() }}
+                                                                    {{ __('sentence.time use') }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <a href="{{ url('test/view/' . $testpshycho->id) }}"
+                                                                        class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                            class="fa fa-eye"></i></a>
+
+                                                                    @can('create appointment')
+                                                                        <a href="{{ route('appointment.create_by', ['id' => $patient->id]) }}"
+                                                                            class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                                class="far fa-calendar-plus"></i></a>
+                                                                    @endcan
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="6" class="text-center"><img
+                                                                    src="{{ asset('img/not-found.svg') }}" width="200" />
+                                                                <br><br>
+                                                                <b class="text-muted">pas de diagnostic trouvé</b>
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
+                                                </table>
+                                                <span class="float-right mt-3">{{ $testpshychos->links() }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- --------------------------------------------------------- End test Psychothérapeutique  ------------------------------------------------------------------- --}}
+
+
+
 
                                     {{-- ----------------------------------------------------------- Start Document --------------------------------------------------------------------- --}}
                                     <div class="tab-pane fade" id="documents" role="tabpanel"
                                         aria-labelledby="documents-tab">
                                         <div class="row">
                                             <div class="col">
-                                                @can('edit patient')
-                                                    <button type="button" class="btn btn-primary btn-sm my-4 float-right"
-                                                        data-toggle="modal" data-target="#NewDocumentModel"><i
-                                                            class="fa fa-plus"></i> {{ __('sentence.Add New') }}</button>
-                                                @endcan
+                                                @if (Auth::user()->role_id == 3)
+                                                    <div class="col-md-12">
+                                                        <div class="card-body h-25">
+                                                        </div>
+                                                        <div class="card-body h-25">
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    @can('edit patient')
+                                                        <button type="button" class="btn btn-primary btn-sm my-4 float-right"
+                                                            data-toggle="modal" data-target="#NewDocumentModel"><i
+                                                                class="fa fa-plus"></i> {{ __('sentence.Add New') }}</button>
+                                                    @endcan
+                                                @endif
                                             </div>
                                         </div>
 
@@ -901,12 +1052,21 @@
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                @can('create invoice')
-                                                    <a type="button" class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="{{ route('billing.create_by', ['id' => $patient->id]) }}"><i
-                                                            class="fa fa-plus"></i>
-                                                        {{ __('sentence.Create Invoice') }}</a>
-                                                @endcan
+                                                @if (Auth::user()->role_id == 3)
+                                                    <div class="col-md-12">
+                                                        <div class="card-body h-25">
+                                                        </div>
+                                                        <div class="card-body h-25">
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    @can('create invoice')
+                                                        <a type="button" class="btn btn-primary btn-sm my-4 float-right"
+                                                            href="{{ route('billing.create_by', ['id' => $patient->id]) }}"><i
+                                                                class="fa fa-plus"></i>
+                                                            {{ __('sentence.Create Invoice') }}</a>
+                                                    @endcan
+                                                @endif
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-striped table-hover">
@@ -1085,7 +1245,6 @@
                                                 </table>
                                                 <span class="float-right mt-3">{{ $invoices->links() }}</span>
                                             </div>
-
                                         </div>
                                     </div>
                                     {{-- ------------------------------------------------------- End Facturation ----------------------------------------------------------------------- --}}
@@ -1096,12 +1255,21 @@
                                     <div class="tab-pane fade" id="Psycho" role="tabpanel" aria-labelledby="Psycho-tab">
                                         <div class="row">
                                             <div class="col">
-                                                @can('create prescription')
-                                                    <a class="btn btn-primary btn-sm my-4 float-right"
-                                                        href="{{ route('prescription.psycho_by', ['id' => $patient->id]) }}"><i
-                                                            class="fa fa-pen"></i>
-                                                        {{ __('sentence.Create Psycho') }}</a>
-                                                @endcan
+                                                @if (Auth::user()->role_id == 3)
+                                                    <div class="col-md-12">
+                                                        <div class="card-body h-25">
+                                                        </div>
+                                                        <div class="card-body h-25">
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    @can('create prescription')
+                                                        <a type="button" class="btn btn-primary btn-sm my-4 float-right"
+                                                            href="{{ route('prescription.create_by', ['id' => $patient->id]) }}"><i
+                                                                class="fa fa-pen"></i>
+                                                            {{ __('sentence.Create Prescription') }}</a>
+                                                    @endcan
+                                                @endif
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-striped table-hover">
@@ -1325,16 +1493,31 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p><b>{{ __('sentence.Praticien') }} : </b> <label class="badge badge-primary-soft"
-                                id="appointmentDoctor"></label></p>
-                        <p><b>{{ __('sentence.Date') }} : </b> <label class="badge badge-primary-soft"
-                                id="appointmentDate"></label></p>
-                        <p><b>{{ __('sentence.Time Slot') }} : </b> <label class="badge badge-primary-soft"
-                                id="appointmentTime"></span></label>
-                        <p><b>{{ __('sentence.Prescription') }} : </b> <label class="badge badge-primary-soft"
-                                id="appointmentPrescription"></span></label>
-
-                        <p><b>{{ __('sentence.Drug') }} : </b> <span id="appointmentPrescriptiondrug"></span>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover">
+                                <tr>
+                                    <td><b>{{ __('sentence.Praticien') }} : </b></td>
+                                    <td> <label class="badge badge-primary-soft" id="appointmentDoctor"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Date') }} : </b></td>
+                                    <td><label class="badge badge-primary-soft" id="appointmentDate"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Time Slot') }} : </b></td>
+                                    <td><label class="badge badge-primary-soft" id="appointmentTime"></span></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Prescription') }} : </b></td>
+                                    <td><label class="badge badge-primary-soft" id="appointmentPrescription"></span></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Drug') }} : </b></td>
+                                    <td><span id="appointmentPrescriptiondrug"></span></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
