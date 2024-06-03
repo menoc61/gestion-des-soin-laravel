@@ -52,162 +52,168 @@
                             </div>
                             <hr>
 
-                            <table class="table table-striped table-align-center">
-                                <tr>
-                                    @isset($patient->Patient->birthday)
-                                        <td>
-                                            <p><b>{{ __('sentence.Birthday') }} :</b></p>
-                                        </td>
-                                        <td>
-                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->birthday }}
-                                                    ({{ \Carbon\Carbon::parse($patient->Patient->birthday)->age }} ANS)</label>
-                                            </p>
-                                        </td>
-                                    @endisset
-                                </tr>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-align-center">
+                                    <tr>
+                                        @isset($patient->Patient->birthday)
+                                            <td>
+                                                <p><b>{{ __('sentence.Birthday') }} :</b></p>
+                                            </td>
+                                            <td>
+                                                <p><label class="badge badge-success-soft">{{ $patient->Patient->birthday }}
+                                                        ({{ \Carbon\Carbon::parse($patient->Patient->birthday)->age }}
+                                                        ANS)</label>
+                                                </p>
+                                            </td>
+                                        @endisset
+                                    </tr>
 
-                                <tr>
-                                    @isset($patient->Patient->gender)
-                                        <td>
-                                            <p><b>{{ __('sentence.Gender') }} :</b></p>
-                                        </td>
-                                        <td>
-                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->gender }}</label>
-                                            </p>
-                                        </td>
-                                    @endisset
-                                </tr>
+                                    <tr>
+                                        @isset($patient->Patient->gender)
+                                            <td>
+                                                <p><b>{{ __('sentence.Gender') }} :</b></p>
+                                            </td>
+                                            <td>
+                                                <p><label
+                                                        class="badge badge-success-soft">{{ $patient->Patient->gender }}</label>
+                                                </p>
+                                            </td>
+                                        @endisset
+                                    </tr>
 
-                                <tr>
-                                    @isset($patient->Patient->phone)
-                                        <td>
-                                            <p><b>{{ __('sentence.Phone') }} :</b></p>
-                                        </td>
-                                        <td>
-                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->phone }}</label>
-                                            </p>
-                                        </td>
-                                    @endisset
-                                </tr>
+                                    <tr>
+                                        @isset($patient->Patient->phone)
+                                            <td>
+                                                <p><b>{{ __('sentence.Phone') }} :</b></p>
+                                            </td>
+                                            <td>
+                                                <p><label
+                                                        class="badge badge-success-soft">{{ $patient->Patient->phone }}</label>
+                                                </p>
+                                            </td>
+                                        @endisset
+                                    </tr>
 
-                                <tr>
-                                    @isset($patient->Patient->adress)
-                                        <td>
-                                            <p><b>{{ __('sentence.Address') }} :</b></p>
-                                        </td>
-                                        <td>
-                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->adress }}</label>
-                                            </p>
-                                        </td>
-                                    @endisset
-                                </tr>
+                                    <tr>
+                                        @isset($patient->Patient->adress)
+                                            <td>
+                                                <p><b>{{ __('sentence.Address') }} :</b></p>
+                                            </td>
+                                            <td>
+                                                <p><label
+                                                        class="badge badge-success-soft">{{ $patient->Patient->adress }}</label>
+                                                </p>
+                                            </td>
+                                        @endisset
+                                    </tr>
 
-                                {{-- <tr>
-                                    @isset($patient->Patient->allergie)
-                                        <td>
-                                            <p><b>{{ __('sentence.Allergies') }} :</b></p>
-                                        </td>
-                                        <td>
-                                            <p><label
-                                                    class="badge badge-success-soft">{{ $patient->Patient->allergie }}</label>
-                                            </p>
-                                        </td>
-                                    @endisset
-                                </tr>
+                                    {{-- <tr>
+                                        @isset($patient->Patient->allergie)
+                                            <td>
+                                                <p><b>{{ __('sentence.Allergies') }} :</b></p>
+                                            </td>
+                                            <td>
+                                                <p><label
+                                                        class="badge badge-success-soft">{{ $patient->Patient->allergie }}</label>
+                                                </p>
+                                            </td>
+                                        @endisset
+                                    </tr>
 
-                                <tr>
-                                    @isset($patient->Patient->hobbie)
-                                        <td>
-                                            <p><b>{{ __('sentence.Hobbies') }} :</b></p>
-                                        </td>
-                                        <td>
-                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->hobbie }}</label>
-                                            </p>
-                                        </td>
-                                    @endisset
-                                </tr>
+                                    <tr>
+                                        @isset($patient->Patient->hobbie)
+                                            <td>
+                                                <p><b>{{ __('sentence.Hobbies') }} :</b></p>
+                                            </td>
+                                            <td>
+                                                <p><label class="badge badge-success-soft">{{ $patient->Patient->hobbie }}</label>
+                                                </p>
+                                            </td>
+                                        @endisset
+                                    </tr>
 
-                                <tr>
-                                    @isset($patient->Patient->demande)
-                                        <td>
-                                            <p><b>{{ __('sentence.Special Requests') }} :</b></p>
-                                        </td>
-                                        <td>
-                                            <p><label class="badge badge-success-soft">{{ $patient->Patient->demande }}</label>
-                                            </p>
-                                        </td>
-                                    @endisset
-                                </tr>
-                                <hr>
-                                <tr>
-                                    @isset($patient->Patient->morphology)
-                                        <td>
-                                            <p><b>{{ __('sentence.Morphology') }} :</b>
+                                    <tr>
+                                        @isset($patient->Patient->demande)
+                                            <td>
+                                                <p><b>{{ __('sentence.Special Requests') }} :</b></p>
+                                            </td>
+                                            <td>
+                                                <p><label class="badge badge-success-soft">{{ $patient->Patient->demande }}</label>
+                                                </p>
+                                            </td>
+                                        @endisset
+                                    </tr>
+                                    <hr>
+                                    <tr>
+                                        @isset($patient->Patient->morphology)
+                                            <td>
+                                                <p><b>{{ __('sentence.Morphology') }} :</b>
 
-                                            </p>
-                                        </td>
-                                        <td>
-                                            @php
-                                                $morphologyArray = json_decode($patient->Patient->morphology);
-                                            @endphp
+                                                </p>
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $morphologyArray = json_decode($patient->Patient->morphology);
+                                                @endphp
 
-                                            @if (is_array($morphologyArray))
-                                                @foreach ($morphologyArray as $item)
-                                                    <label class="badge badge-success-soft">{{ $item }}</label>
-                                                @endforeach
-                                            @else
-                                                <span>No morphology data available.</span>
-                                            @endif
-                                        </td>
-                                    @endisset
-                                </tr>
+                                                @if (is_array($morphologyArray))
+                                                    @foreach ($morphologyArray as $item)
+                                                        <label class="badge badge-success-soft">{{ $item }}</label>
+                                                    @endforeach
+                                                @else
+                                                    <span>No morphology data available.</span>
+                                                @endif
+                                            </td>
+                                        @endisset
+                                    </tr>
 
-                                <tr>
-                                    @isset($patient->Patient->alimentation)
-                                        <td>
-                                            <p><b>{{ __('sentence.Alimentation') }} :</b>
+                                    <tr>
+                                        @isset($patient->Patient->alimentation)
+                                            <td>
+                                                <p><b>{{ __('sentence.Alimentation') }} :</b>
 
-                                            </p>
-                                        </td>
-                                        <td>
-                                            @php
-                                                $alimentationArray = json_decode($patient->Patient->alimentation);
-                                            @endphp
+                                                </p>
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $alimentationArray = json_decode($patient->Patient->alimentation);
+                                                @endphp
 
-                                            @if (is_array($alimentationArray))
-                                                @foreach ($alimentationArray as $item)
-                                                    <label class="badge badge-success-soft">{{ $item }}</label>
-                                                @endforeach
-                                            @else
-                                                <span>No alimentation data available.</span>
-                                            @endif
-                                        </td>
-                                    @endisset
-                                </tr>
+                                                @if (is_array($alimentationArray))
+                                                    @foreach ($alimentationArray as $item)
+                                                        <label class="badge badge-success-soft">{{ $item }}</label>
+                                                    @endforeach
+                                                @else
+                                                    <span>No alimentation data available.</span>
+                                                @endif
+                                            </td>
+                                        @endisset
+                                    </tr>
 
-                                <tr>
-                                    @isset($patient->Patient->type_patient)
-                                        <td>
-                                            <p><b>{{ __('sentence.Type of patient') }} :</b>
+                                    <tr>
+                                        @isset($patient->Patient->type_patient)
+                                            <td>
+                                                <p><b>{{ __('sentence.Type of patient') }} :</b>
 
-                                            </p>
-                                        </td>
-                                        <td>
-                                            @php
-                                                $type_patientArray = json_decode($patient->Patient->type_patient);
-                                            @endphp
+                                                </p>
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $type_patientArray = json_decode($patient->Patient->type_patient);
+                                                @endphp
 
-                                            @if (is_array($type_patientArray))
-                                                @foreach ($type_patientArray as $item)
-                                                    <label class="badge badge-success-soft">{{ $item }}</label>
-                                                @endforeach
-                                            @else
-                                                <span>No patient type data available.</span>
-                                            @endif
-                                        </td>
-                                    @endisset
-                                </tr> --}}
-                            </table>
+                                                @if (is_array($type_patientArray))
+                                                    @foreach ($type_patientArray as $item)
+                                                        <label class="badge badge-success-soft">{{ $item }}</label>
+                                                    @endforeach
+                                                @else
+                                                    <span>No patient type data available.</span>
+                                                @endif
+                                            </td>
+                                        @endisset
+                                    </tr> --}}
+                                </table>
+                            </div>
 
                         </div>
                         <div class="col-md-8 col-sm-6">
@@ -245,8 +251,8 @@
                                         role="tab" aria-controls="documents" aria-selected="false">Fichier Médical</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab"
-                                        aria-controls="Billing"Alert
+                                    <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing"
+                                        role="tab" aria-controls="Billing"Alert
                                         aria-selected="false">{{ __('sentence.Billings') }}</a>
                                 </li>
                             </ul>
@@ -1018,34 +1024,59 @@
                                     {{-- ------------------------------------------------------- Start Facturation --------------------------------------------------------------------- --}}
                                     <div class="tab-pane fade" id="Billing" role="tabpanel" aria-labelledby="Billing-tab">
                                         <div class="row mt-4">
-                                            <div class="col-lg-6 mb-4">
-                                                <div class="card bg-success text-white shadow">
+                                            <div class="col-lg-3 mb-4">
+                                                @php
+                                                    $totalAmount =
+                                                        $appointExist->pluck('drugs')->flatten()->sum('amountDrug') +
+                                                        $invoices->sum('total_with_tax');
+                                                @endphp
+                                                <div class="card badge-primary-soft text-dark shadow">
                                                     <div class="card-body">
                                                         {{ __('sentence.Total With Tax') }}
-                                                        <div class="text-white small">
-                                                            {{ Collect($invoices)->sum('total_with_tax') }}
-                                                            {{ App\Setting::get_option('currency') }}</div>
+                                                        <div class="text-dark big">
+                                                            <b>{{ $totalAmount }}
+                                                                {{ App\Setting::get_option('currency') }}</b>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-lg-4 mb-4">
-                                                <div class="card bg-success text-white shadow">
+                                            <div class="col-lg-3 mb-4">
+                                                <div class="card bg-secondary text-white shadow">
                                                     <div class="card-body">
                                                         {{ __('sentence.Already Paid') }}
-                                                        <div class="text-white small">
-                                                            {{ Collect($invoices)->sum('deposited_amount') }}
-                                                            {{ App\Setting::get_option('currency') }}</div>
+                                                        <div class="text-white big">
+                                                            <b> {{ $invoices->sum('deposited_amount') }}
+                                                                {{ App\Setting::get_option('currency') }}</b>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div> --}}
-
-                                            <div class="col-lg-6 mb-4">
+                                            </div>
+                                            <div class="col-lg-3 mb-4">
+                                                <div class="card badge-warning-soft text-dark shadow">
+                                                    <div class="card-body">
+                                                        {{ __('sentence.Total Remise') }}
+                                                        <div class="text-dark big">
+                                                            <b> {{ $invoices->sum('Remise') }}
+                                                                {{ App\Setting::get_option('currency') }}</b>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 mb-4">
+                                                @php
+                                                    $totalAmount =
+                                                        $appointExist->pluck('drugs')->flatten()->sum('amountDrug') +
+                                                        $invoices
+                                                            ->whereIn('payment_status', ['Partially Paid', 'Unpaid'])
+                                                            ->sum('due_amount');
+                                                @endphp
                                                 <div class="card bg-danger text-white shadow">
                                                     <div class="card-body">
                                                         {{ __('sentence.Due Balance') }}
-                                                        <div class="text-white small">
-                                                            {{ Collect($invoices)->whereIn('payment_status', ['Partially Paid', 'Unpaid'])->sum('due_amount') }}
-                                                            {{ App\Setting::get_option('currency') }}</div>
+                                                        <div class="text-white big">
+                                                            <b>{{ $totalAmount }}
+                                                                {{ App\Setting::get_option('currency') }}</b>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

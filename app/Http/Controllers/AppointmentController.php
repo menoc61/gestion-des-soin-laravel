@@ -25,8 +25,11 @@ class AppointmentController extends Controller
     public function create()
     {
         $patients = User::where('role_id', '3')->get();
+        $praticiens = User::where('role_id', '!=', 3)->get();
+        $drugs = Drug::all();
 
-        return view('appointment.create', ['patients' => $patients]);
+
+        return view('appointment.create', ['patients' => $patients, 'praticiens' => $praticiens,'drugs' => $drugs,]);
     }
 
     public function create_By_id($id)
