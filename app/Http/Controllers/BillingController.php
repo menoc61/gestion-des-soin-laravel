@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Appointment;
 use App\Billing;
 use App\Billing_item;
+use App\Payment;
 use App\Prescription;
+use App\Rdv_Drug;
 use App\Setting;
 use App\User;
 use Illuminate\Http\Request;
@@ -27,16 +30,57 @@ class BillingController extends Controller
     public function create_By_id($id)
     {
         $user = User::find($id);
-        // Vérifiez si l'utilisateur existe
         if (!$user) {
-            // Gérez le cas où l'utilisateur n'est pas trouvé
         }
         // $prescriptions = Prescription::where('prescriptions.user_id', $id)->get();
-        $prescriptions = Prescription::where('user_id', $id)
-            ->whereDoesntHave('Items') // Items correspond a la fonction définie dans le model Prescription
-            ->get();
+        // $prescriptions = Prescription::where('user_id', $id)
+        //     ->whereDoesntHave('Items')
+        //     ->get();
 
-        return view('billing.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('prescriptions'));
+        $appointIds = Appointment::whereHas('rdv__drugs')
+            ->groupBy('id')
+            ->pluck('id');
+
+        $appointments = Appointment::where('user_id', $id)
+            ->whereIn('id', $appointIds)
+            ->whereDoesntHave('Items')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
+        $appointments->load('drugs');
+
+        return view('billing.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('appointments'));
+    }
+
+    public function storeBilling(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'deposited_amount' => 'required|numeric|min:0',
+        ]);
+
+        $billing = Billing::findOrFail($id);
+
+        // Enregistrer le paiement
+        $payment = new Payment();
+        $payment->billing_id = $billing->id;
+        $payment->amount = $request->deposited_amount;
+        $payment->save();
+
+        // Mettre à jour les montants dans la facture
+        $billing->deposited_amount += $request->deposited_amount;
+        $billing->due_amount = $billing->total_with_tax - ($billing->deposited_amount + $billing->Remise); // Assurez-vous d'utiliser le champ correct
+        // Déterminer le statut du paiement
+        if ($billing->deposited_amount == 0) {
+            $billing->payment_status = 'Unpaid';
+        } elseif ($billing->due_amount == 0) {
+            $billing->payment_status = 'Paid';
+        } else {
+            $billing->payment_status = 'Partially Paid';
+        }
+
+        $billing->save();
+
+        return redirect()->route('billing.all')->with('success', 'Paiement ajouté avec succès.');
     }
 
     public function create_payment($id)
@@ -56,77 +100,70 @@ class BillingController extends Controller
         $validatedData = $request->validate([
             'patient_id' => ['required', 'exists:users,id'],
             'payment_mode' => 'required',
-            // 'payment_status' => 'required',
-            'nom.*' => 'required',
+            'nom.*' => 'required|numeric',
             'invoice_amount.*' => ['required', 'numeric'],
+            'deposited_amount' => 'nullable|numeric|min:0',
+            'due_amount' => 'nullable|numeric|min:0',
+            'payment_amount' => 'nullable|numeric|min:0',
+            'payment_date' => 'nullable|date',
         ]);
 
-        // if($request->payment_status == 'Paid' && $request->deposited_amount == $request->invoice_amount){
-        //     $request->due_amount = 0;
-        //     $request->deposited_amount = Collect($request->invoice_amount)->sum()+(Collect($request->invoice_amount)->sum()*Setting::get_option('vat')/100);
-        //   }
-        while ($request->deposited_amount < 0 || $request->due_amount < 0 || $request->invoice_amount < 0) {
-            return \Redirect::back()->with('danger', 'le montant ne doit pas être négatif!');
-        }
-        if ($request->deposited_amount >= 1 && $request->deposited_amount < $request->invoice_amount) {
-            $request->payment_status = 'Partially Paid';
-        }
-        if ($request->due_amount == 0) {
-            $request->payment_status = 'Paid';
+        // Validation des montants négatifs
+        if ($request->deposited_amount < 0 || $request->due_amount < 0 || $request->invoice_amount < 0) {
+            return \Redirect::back()->with('danger', 'Le montant ne doit pas être négatif!');
         }
 
+        // Déterminer le statut du paiement
         if ($request->deposited_amount == 0) {
             $request->payment_status = 'Unpaid';
+        } elseif ($request->due_amount == 0) {
+            $request->payment_status = 'Paid';
+        } else {
+            $request->payment_status = 'Partially Paid';
         }
 
+        // Créer une nouvelle facture
         $billing = new Billing();
-
         $billing->user_id = $request->patient_id;
         $billing->payment_mode = $request->payment_mode;
         $billing->payment_status = $request->payment_status;
         $billing->reference = 'b' . rand(10000, 99999);
         $billing->due_amount = $request->due_amount;
+        $billing->Remise = $request->Remise;
         $billing->deposited_amount = $request->deposited_amount;
         $billing->vat = Setting::get_option('vat');
-        $billing->total_without_tax = Collect($request->invoice_amount)->sum();
-        $billing->total_with_tax = Collect($request->invoice_amount)->sum() + (Collect($request->invoice_amount)->sum() * Setting::get_option('vat') / 100);
+        $billing->total_without_tax = collect($request->invoice_amount)->sum();
+        $billing->total_with_tax = collect($request->invoice_amount)->sum() + (collect($request->invoice_amount)->sum() * Setting::get_option('vat') / 100);
         $billing->created_by = Auth::user()->id;
         $billing->save();
 
-        if (empty($request->nom)) {
-            return \Redirect::back()->with('danger', 'Empty Invoice Details!');
+        // Enregistrer les éléments de facturation
+        if (isset($request->nom)) {
+            $i = count($request->nom);
+
+            for ($x = 0; $x < $i; ++$x) {
+                if ($request->nom[$x] != null) {
+                    $billingItem = new Billing_item();
+                    $billingItem->invoice_amount = $request->invoice_amount[$x];
+                    $billingItem->billing_id = $billing->id;
+                    $billingItem->appointment_id = $request->input('nom.' . $x) ?? null;
+                    $billingItem->save();
+                }
+            }
         }
 
-        // $i = count($request->invoice_title);
-
-        // for ($x = 0; $x < $i; ++$x) {
-        //     echo $request->invoice_title[$x];
-
-        //     $invoice_item = new Billing_item();
-
-        //     $invoice_item->invoice_title = $request->invoice_title[$x];
-        //     $invoice_item->invoice_amount = $request->invoice_amount[$x];
-        //     $invoice_item->billing_id = $billing->id;
-
-        //     $invoice_item->save();
-        // }
-
-        $i = count($request->nom);
-        for ($x = 0; $x < $i; ++$x) {
-            // echo $request->nom[$x];
-
-            $invoice_item = new Billing_item();
-
-            $invoice_item->prescription_id = $request->nom[$x];
-            $invoice_item->invoice_amount = $request->invoice_amount[$x];
-            $invoice_item->billing_id = $billing->id;
-
-
-            $invoice_item->save();
+        // Enregistrer le paiement partiel
+        if ($request->filled('deposited_amount') && $request->deposited_amount > 0) {
+            $payment = new Payment();
+            $payment->billing_id = $billing->id;
+            $payment->amount = $request->deposited_amount;
+            $payment->created_at = $request->payment_date ?? now();
+            $payment->save();
         }
 
         return \Redirect::route('billing.all')->with('success', 'Invoice Created Successfully!');
     }
+
 
     public function all()
     {
@@ -144,9 +181,22 @@ class BillingController extends Controller
     public function view($id)
     {
         $billing = Billing::findOrfail($id);
-        $billing_items = Billing_item::where('billing_id', $id)->get();
 
-        return view('billing.view', ['billing' => $billing, 'billing_items' => $billing_items]);
+        $appointIds = Appointment::whereHas('rdv__drugs')
+            ->groupBy('id')
+            ->pluck('id');
+
+        $appointments = Appointment::where('user_id', $id)
+            ->whereIn('id', $appointIds)
+            ->whereDoesntHave('Items')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
+        $appointments->load('drugs');
+
+        $billing_items = Billing_item::where('billing_id', $id)->whereIn('appointment_id', $appointIds)->get();
+
+        return view('billing.view', ['billing' => $billing, 'billing_items' => $billing_items, 'appointments'=>$appointments]);
     }
 
     public function pdf($id)
@@ -164,6 +214,7 @@ class BillingController extends Controller
     public function edit($id)
     {
         $billing = Billing::findOrfail($id);
+
         $billing_items = Billing_item::where('billing_id', $id)->get();
 
         return view('billing.edit', ['billing' => $billing, 'billing_items' => $billing_items]);

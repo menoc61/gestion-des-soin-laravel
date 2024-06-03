@@ -2,8 +2,7 @@
 
 @section('header')
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
-    <link rel="stylesheet" type="text/css"
-        href="{{ asset('css/bootstrap-multiselect.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
 @endsection
 
 @section('title')
@@ -21,7 +20,8 @@
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.New Patient') }}</h6>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{ route('patient.create') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('patient.create') }}"
+                        enctype="multipart/form-data">
                         @csrf
                         <center>
                             <div class="form-row">
@@ -60,7 +60,8 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="inputAddress2">{{ __('sentence.Address') }}<font color="red">*</font></label>
+                                <label for="inputAddress2">{{ __('sentence.Address') }}<font color="red">*</font>
+                                </label>
                                 <input type="text" class="form-control" id="Address" name="adress">
                             </div>
                         </div>
@@ -184,13 +185,15 @@
     </style>
 
 @section('footer')
-<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
-    <script type="text/javascript"
-        src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
+
+    <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
+
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#morphology_patient, #alimentation_patient, #digestion_patient, #type_patient,#Gender').multiselect();
     </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const fileUpload = document.getElementById("file-upload");
@@ -218,4 +221,5 @@
             });
         });
     </script>
+
 @endsection

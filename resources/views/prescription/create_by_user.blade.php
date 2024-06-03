@@ -67,7 +67,7 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card shadow mb-4">
+                {{-- <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
                     </div>
@@ -80,7 +80,7 @@
                             </div>
                         </fieldset>
                     </div>
-                </div>
+                </div> --}}
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Tests list') }}</h6>
@@ -158,7 +158,7 @@
         });
     </script>
 
-    <script type="text/template" id="drugs_labels">
+    {{-- <script type="text/template" id="drugs_labels">
         <section class="field-group">
             <div class="row">
                 <div class="col-md-4">
@@ -184,7 +184,7 @@
                 </div>
             </div>
         </section>
-    </script>
+    </script> --}}
 
     <script>
         $(document).ready(function() {
