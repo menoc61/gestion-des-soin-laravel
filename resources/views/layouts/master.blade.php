@@ -137,10 +137,10 @@
                             <div id="collapseAppointment" class="collapse" aria-labelledby="headingTwo"
                                 data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
-                                    @can('create appointment')
+                                    {{-- @can('create appointment')
                                         <a class="collapse-item"
                                             href="{{ route('appointment.create') }}">{{ __('sentence.New Appointment') }}</a>
-                                    @endcan
+                                    @endcan --}}
                                     @can('view all appointments')
                                         <a class="collapse-item"
                                             href="{{ route('appointment.today') }}">{{ __('sentence.Today\'s Appointments') }}</a>

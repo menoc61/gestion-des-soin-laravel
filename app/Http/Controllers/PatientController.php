@@ -226,6 +226,16 @@ class PatientController extends Controller
 
         $appointments->load('drugs'); // des rendez-vous
 
+        $appointIds = Appointment::whereHas('rdv__drugs')
+            ->groupBy('id')
+            ->pluck('id');
+
+        $appointExist = Appointment::where('user_id', $id)
+            ->whereIn('id', $appointIds)
+            ->whereDoesntHave('Items')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
         $tests = Test::where('user_id', $id)
             ->where(function ($query) {
                 $query->orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE');
@@ -255,6 +265,7 @@ class PatientController extends Controller
             'tests' => $tests,
             'psychos' => $psychos,
             'testpshychos' => $testpshychos,
+            'appointExist' => $appointExist,
         ]);
     }
 

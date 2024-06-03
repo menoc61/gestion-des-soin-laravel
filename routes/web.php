@@ -113,7 +113,9 @@ Route::post('/billing/update', 'BillingController@update')->name('billing.update
 Route::get('/billing/create_by/{id}', 'BillingController@create_By_Id')->where('id', '[0-9]+')->name('billing.create_by');
 Route::post('/billing/create_by/{id}', 'BillingController@store')->name('billing.store_id');
 Route::get('/payment/create/{id}', 'BillingController@create_payment')->where('id', '[0-9]+')->name('billing.payment')->middleware(['role_or_permission:Admin|create invoice']);
-Route::post('/payment/create/', 'BillingController@update')->name('payment.store');
+// Route pour enregistrer le paiement supplémentaire
+Route::post('/payment/create/{id}', 'BillingController@storeBilling')->name('payment.store');
+
 
 // Settings
 /* Doctorino Settings */

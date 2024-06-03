@@ -309,6 +309,9 @@ return [
     'Agenda praticien' => 'Agenda du Praticien Sélectionné',
     'Select Drug' => 'Sélectionner un Praticien',
     'Remise' => 'Remise',
-    'Test Pshycho' => 'Diagnose Psychothérapeutique'
+    'Test Pshycho' => 'Diagnose Psychothérapeutique',
+    'Buy billing' => 'Payer la Facture',
+    'Total Remise' => 'Total Remise',
+    'Praticienino Settings' => 'Paramètre de l\'application'
 
 ];

@@ -76,10 +76,17 @@
                         </tr>
                     @endforelse
                 </div>
-                <div>
-                    {{ Collect($montant)->sum('montant_drug') }}
-                    {{ App\Setting::get_option('currency') }}</div>
-                </div>
+                @if ($appointments->isNotEmpty())
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                Somme totale des montants de médicaments :
+                                {{ $appointments->pluck('drugs')->flatten()->sum('amountDrug') }}
+                                {{ App\Setting::get_option('currency') }}
+                            </h6>
+                        </div>
+                    </div>
+                @endif
             </div>
             <div class="col-md-6">
                 <div class="card shadow mb-4">
@@ -112,7 +119,7 @@
                                     readonly min="0">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="DueAmount">{{ __('sentence.Remise') }}</label>
+                                <label for="Remise">{{ __('sentence.Remise') }}</label>
                                 <input class="form-control" type="number" name="Remise" id="Remise">
                             </div>
                         </div>
@@ -137,6 +144,7 @@
             </div>
         </div>
     </form>
+
 @endsection
 
 @section('footer')
@@ -145,9 +153,11 @@
             var totalAmount = 0;
 
             function updateAmounts() {
-                $('#TotalAmount').val(totalAmount.toFixed(2));
+                var remise = parseFloat($('#Remise').val()) || 0;
                 var depositedAmount = parseFloat($('#DepositedAmount').val()) || 0;
-                $('#DueAmount').val((totalAmount - depositedAmount).toFixed(2));
+                var finalAmount = totalAmount - remise;
+                $('#TotalAmount').val(finalAmount);
+                $('#DueAmount').val((finalAmount - depositedAmount));
             }
 
             $('.select-appointment').on('click', function() {
@@ -165,12 +175,12 @@
                 } else {
                     // Select and add the amount
                     totalAmount += amount;
-                    $button.addClass('selected badge-danger-soft').removeClass('b badge-primary-soft');
+                    $button.addClass('selected badge-danger-soft').removeClass('badge-primary-soft');
                     $button.text('Retirer');
                     $('#selected-appointments').append(`<div class="selected-appointment" data-appointment-id="${appointmentId}">
-                        <input type="hidden" name="nom[]" value="${appointmentId}">
-                        <input type="hidden" name="invoice_amount[]" value="${amount}">
-                    </div>`);
+                    <input type="hidden" name="nom[]" value="${appointmentId}">
+                    <input type="hidden" name="invoice_amount[]" value="${amount}">
+                </div>`);
                 }
 
                 // Update the total and due amounts
@@ -193,8 +203,8 @@
                 updateAmounts();
             });
 
-            $('#DepositedAmount').on('input', function() {
-                // Update due amount when deposited amount is entered
+            $('#DepositedAmount, #Remise').on('input', function() {
+                // Update due amount when deposited amount or remise is entered
                 updateAmounts();
             });
         });
@@ -204,3 +214,4 @@
         }
     </script>
 @endsection
+
