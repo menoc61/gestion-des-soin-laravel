@@ -52,8 +52,6 @@ Route::get('/appointment/checkslots/{id}', 'AppointmentController@checkslots');
 Route::get('/appointment/delete/{id}', 'AppointmentController@destroy')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|delete appointment']);
 Route::post('/appointment/edit', 'AppointmentController@store_edit')->name('appointment.store_edit')->middleware(['role_or_permission:Admin|edit appointment']);
 Route::get('/appointment/create_by/{id}', 'AppointmentController@create_By_id')->name('appointment.create_by')->middleware(['role_or_permission:Admin|create appointment']);
-Route::get('/appointment/create_by_praticien/{pres_id}/{id}', 'AppointmentController@rdv_praticien_By_id')->name('appointment.create_by_praticien');
-Route::get('/appointment/create_by/{id}/{doc_id}', 'AppointmentController@rdv_praticien')->name('appointment.rdv');
 Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
@@ -64,7 +62,8 @@ Route::get('/appointment/today', 'AppointmentController@today')->name('appointme
 Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
-Route::get('/appointment/Detail/{id}', 'AppointmentController@DetailAppointment')->name('appointmentrdvDetail.view');
+Route::get('/appointments/by-doctor/{doctorId}', 'AppointmentController@getAppointmentsByDoctor');
+
 
 // Drugs
 Route::get('/drug/create', 'DrugController@create')->name('drug.create')->middleware(['role_or_permission:Admin|create drug']);
@@ -114,7 +113,9 @@ Route::post('/billing/update', 'BillingController@update')->name('billing.update
 Route::get('/billing/create_by/{id}', 'BillingController@create_By_Id')->where('id', '[0-9]+')->name('billing.create_by');
 Route::post('/billing/create_by/{id}', 'BillingController@store')->name('billing.store_id');
 Route::get('/payment/create/{id}', 'BillingController@create_payment')->where('id', '[0-9]+')->name('billing.payment')->middleware(['role_or_permission:Admin|create invoice']);
-Route::post('/payment/create/', 'BillingController@update')->name('payment.store');
+// Route pour enregistrer le paiement supplémentaire
+Route::post('/payment/create/{id}', 'BillingController@storeBilling')->name('payment.store');
+
 
 // Settings
 /* Doctorino Settings */

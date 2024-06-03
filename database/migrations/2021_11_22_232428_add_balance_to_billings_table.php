@@ -14,11 +14,12 @@ class AddBalanceToBillingsTable extends Migration
     public function up()
     {
         Schema::table('billings', function (Blueprint $table) {
-            $table->decimal('due_amount')->nullable();
-            $table->decimal('deposited_amount')->nullable();
-            $table->string('vat')->nullable();
-            $table->decimal('total_without_tax')->nullable();
-            $table->decimal('total_with_tax')->nullable();
+            $table->bigInteger('due_amount')->nullable();
+            $table->bigInteger('deposited_amount')->nullable();
+            $table->bigInteger('vat')->nullable();
+            $table->bigInteger('total_without_tax')->nullable();
+            $table->bigInteger('total_with_tax')->nullable();
+            $table->bigInteger('Remise')->nullable();
         });
     }
 
@@ -31,12 +32,12 @@ class AddBalanceToBillingsTable extends Migration
     {
         Schema::table('billings', function (Blueprint $table) {
 
-            $table->string('due_amount')->nullable();
-            $table->string('deposited_amount')->nullable();
-            $table->string('vat')->nullable();
-            $table->string('total_without_tax')->nullable();
-            $table->string('total_with_tax')->nullable();
-
+            $table->bigInteger('due_amount')->nullable();
+            $table->bigInteger('deposited_amount')->nullable();
+            $table->bigInteger('vat')->nullable();
+            $table->bigInteger('total_without_tax')->nullable();
+            $table->bigInteger('total_with_tax')->nullable();
+            $table->bigInteger('Remise')->nullable();
         });
     }
 }

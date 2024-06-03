@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Redirect;
 use App\Setting;
 use Str;
+use Intervention\Image\Facades\Image;
 
 class SettingController extends Controller
 {

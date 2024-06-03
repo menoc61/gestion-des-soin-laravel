@@ -141,6 +141,8 @@
 
         }, 1000);
     </script>
+
+
     <script type="text/javascript">
         // Function to update the invoice title when a patient is selected
         function updateInvoiceTitle() {
