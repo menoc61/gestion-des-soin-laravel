@@ -19,13 +19,13 @@ var myLineChart = new Chart(ctx, {
     ],
   },
   options: {
-    title: {
-      display: true,
-      text: "CHIFFRE D'AFFAIRE PAR MOIS",
-      fontSize: 20,
-      fontStyle: "bold",
-      padding: 20,
-    },
+    // title: {
+    //   display: true,
+    //   text: "Chiffre d'affaire par mois",
+    //   fontSize: 30,
+    // //   fontStyle: "bold",
+    //   padding: 10,
+    // },
     scales: {
       xAxes: [
         {
@@ -36,12 +36,12 @@ var myLineChart = new Chart(ctx, {
             display: true,
           },
           ticks: {
-            maxTicksLimit: 7,
+            maxTicksLimit: 5,
           },
           scaleLabel: {
-            display: true,
+            display: false,
             labelString: "Mois",
-            fontSize: 14,
+            fontSize: 20,
             fontStyle: "bold",
           },
         },
@@ -51,7 +51,7 @@ var myLineChart = new Chart(ctx, {
           ticks: {
             min: 0,
             max: 1000000,
-            maxTicksLimit: 10,
+            maxTicksLimit: 5,
           },
           gridLines: {
             display: true,
@@ -59,7 +59,7 @@ var myLineChart = new Chart(ctx, {
           scaleLabel: {
             display: true,
             labelString: "Montant",
-            fontSize: 14,
+            fontSize: 25,
             fontStyle: "bold",
           },
         },

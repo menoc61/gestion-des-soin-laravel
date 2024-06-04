@@ -12133,5 +12133,11 @@ input[type='password']:focus
     top: -70px;
     right: -100px;
 }
-
+.success-message {
+    background-color: #dff0d8;
+    color: #3c763d;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
 

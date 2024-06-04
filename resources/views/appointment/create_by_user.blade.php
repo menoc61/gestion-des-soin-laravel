@@ -45,7 +45,8 @@
                                     <div class="form-group">
                                         <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
                                         <select class="form-control " name="doctor_id" id="DoctorID" required>
-                                            <option value="" disabled selected>{{ __('sentence.Select Drug') }}...</option>
+                                            <option value="" disabled selected>{{ __('sentence.Select Drug') }}...
+                                            </option>
                                             @foreach ($praticiens as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -139,15 +140,20 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <p>Contenu de la modal...</p>
+                        <div class="success-message">
+                            Votre opération a été effectuée avec succès !
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <div class="d-flex col-md-12">
-                            <div class="col-md-4">
-                                <a class="btn btn-primary" href="{{ route('billing.create_by', ['id' => $userId]) }}">
-                                    payer
-                                </a>
-                            </div>
+                            @if (Auth::user()->role_id != 3)
+                                <div class="col-md-4">
+                                    <a class="btn btn-primary"
+                                        href="{{ route('billing.create_by', ['id' => $userId]) }}">
+                                        payer
+                                    </a>
+                                </div>
+                            @endif
                             <div class="col-md-4">
                                 <a class="btn btn-secondary"
                                     href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
@@ -155,7 +161,7 @@
                             </div>
                             <div class="col-md-4">
                                 <a class="btn btn-secondary"
-                                    href="{{ route('appointment.create_by', ['id' => $userId]) }}"> Rendez-Vous
+                                    href="{{ route('appointment.create_by', ['id' => $userId]) }}"> Nouveau RDV
                                 </a>
                             </div>
                         </div>

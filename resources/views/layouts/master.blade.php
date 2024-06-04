@@ -56,6 +56,11 @@
                         <img src="{{ asset('img/sai-i-lama-logo.png') }}" class="img-fluid">
                     </div>
                 </center>
+                <div class="align-center mt-3">
+                    <center>
+                        <b class="text-light">GESTION DES SOINS</b>
+                    </center>
+                </div>
                 <hr>
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">

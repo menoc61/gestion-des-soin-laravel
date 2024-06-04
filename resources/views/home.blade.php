@@ -206,9 +206,12 @@
 
         {{-- graph section --}}
         <div class="row d-flex justify-content-between">
-            <div class="col-md-12 ">
-                <div class="chart mb-4">
-                    <div class="mt-5"><canvas id="myAreaChart" width="100%" height="25%"></canvas></div>
+            <div class="col-md-6 ">
+                <div class="card mb-4">
+                    <div class="card-header"><b>Chiffre d'affaire par Mois</b></div>
+                    <div class="card-body">
+                        <div class=""><canvas id="myBarChart" width="100%"></canvas></div>
+                    </div>
                 </div>
             </div>
             {{-- <div class="col-md-6 ">
