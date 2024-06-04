@@ -5,11 +5,18 @@
 @endsection
 
 @section('content')
-    <div class="mb-3">
-        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    <div class="">
+        <div class="d-flex justify-content-center">
+            <div class="card col-md-12">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.All Patients') }}
+                    </h2>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="card mb-4">
+    <div class="card mb-4 mt-4">
         <div class="card-header py-3">
             <div class="row">
                 <div class="col-6">
@@ -61,7 +68,8 @@
                     </tr>
                     @forelse($patients as $key => $patient)
                         <tr>
-                            <td class="text-center"><a href="{{ url('patient/view/' . $patient->id) }}"> {{ $patient->name }} </a></td>
+                            <td class="text-center"><a href="{{ url('patient/view/' . $patient->id) }}">
+                                    {{ $patient->name }} </a></td>
                             <td class="text-center"> {{ @$patient->Patient->phone }} </td>
                             <td class="text-center"><label
                                     class="badge badge-primary-soft">{{ $patient->created_at->format('d M Y H:i') }}</label>

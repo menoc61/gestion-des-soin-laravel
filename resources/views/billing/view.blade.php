@@ -34,7 +34,6 @@
                         <div class="">
                             <div class="text-center">
                                 <b>{{ App\Setting::get_option('system_name') }}</b><br>
-                                <b>{{ App\Setting::get_option('title') }}</b><br>
                                 <b>{{ App\Setting::get_option('address') }}</b><br>
                                 <b>{{ App\Setting::get_option('phone') }}</b><br>
                                 <b>{{ App\Setting::get_option('hospital_email') }}</b>
@@ -42,14 +41,19 @@
                         </div>
                     </div>
 
-                    <div class="border-top mt-5">
-                        <h5 class="text-center mt-4 "><b>{{ __('sentence.Invoice_for_care') }} </b></h5>
+                    {{-- <div class="border-top bg-success">
+
+                    </div> --}}
+
+                    <div class="card mt-4">
+                        <div class="card-body badge-primary-soft text-center">
+                            <b class="text-dark">{{ __('sentence.Invoice_for_care') }} n° {{ $billing->reference }} </b>
+                        </div>
                     </div>
 
-                    <div class="col-12 border-top mt-4">
+                    <div class="col-12 border-top">
                         <p class="mt-4">
                             <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y h:m:s') }}<br>
-                            <b>{{ __('sentence.Reference') }} :</b> {{ $billing->reference }}<br>
                             <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->User->name }}
                         </p>
                     </div>
@@ -59,60 +63,67 @@
                     <div class="row justify-content-center">
                         <div class="col">
                             <br><br>
-                            <table class="table">
-                                <tr style="background: #2e3f50; color: #fff;">
-                                    <td width="10%">ID</td>
-                                    <td width="60%">{{ __('sentence.Item') }}</td>
-                                    <td width="30%" align="center">{{ __('sentence.Amount') }}</td>
-                                </tr>
-                                @forelse ($billing_items as $key => $billing_item)
-                                    @forelse ($billing_item->Appointment->drugs as $key => $drug)
-                                        <tr>
-                                            <td width="10%">#</td>
-                                            <td width="60%" class="m-0 font-weight-bold text-primary">
-                                                {{ $drug->trade_name }}
-                                            </td>
-                                            <td width="30%" align="center" class="m-0 font-weight-bold text-primary">
-                                                {{ $drug->amountDrug }}
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <td colspan="5" align="center"><img src="{{ asset('img/not-found.svg') }}"
-                                                width="200" />
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <tr style="background: #2e3f50; color: #fff;">
+                                        <td width="10%">ID</td>
+                                        <td width="60%">{{ __('sentence.Item') }}</td>
+                                        <td width="30%" align="center">{{ __('sentence.Amount') }}</td>
+                                    </tr>
+                                    @forelse ($billing_items as $key => $billing_item)
+                                        @forelse ($billing_item->Appointment->drugs as $key => $drug)
+                                            <tr>
+                                                <td width="10%">#</td>
+                                                <td width="60%" class="m-0 font-weight-bold text-primary">
+                                                    {{ $drug->trade_name }}
+                                                </td>
+                                                <td width="30%" align="center" class="m-0 font-weight-bold text-primary">
+                                                    {{ $drug->amountDrug }}
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <td colspan="5" align="center"><img src="{{ asset('img/not-found.svg') }}"
+                                                    width="200" />
 
-                                            <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
-                                        </td>
+                                                <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
+                                            </td>
+                                        @endforelse
+                                    @empty
+                                        <tr>
+                                            <td colspan="3">{{ __('sentence.Empty Invoice') }}</td>
+                                        </tr>
                                     @endforelse
-                                @empty
+                                @empty(!$billing_item)
+                                    @if (App\Setting::get_option('vat') > 0)
+                                        <tr>
+                                            <td colspan="2"><strong
+                                                    class="float-right">{{ __('sentence.Sub-Total') }}</strong></td>
+                                            <td align="center"><strong>{{ $billing_items->sum('invoice_amount') }}
+                                                    {{ App\Setting::get_option('currency') }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><strong
+                                                    class="float-right">{{ __('sentence.VAT') }}</strong>
+                                            </td>
+                                            <td align="center"><strong> {{ App\Setting::get_option('vat') }}%</strong></td>
+                                        </tr>
+                                    @endif
                                     <tr>
-                                        <td colspan="3">{{ __('sentence.Empty Invoice') }}</td>
-                                    </tr>
-                                @endforelse
-                            @empty(!$billing_item)
-                                @if (App\Setting::get_option('vat') > 0)
-                                    <tr>
-                                        <td colspan="2"><strong
-                                                class="float-right">{{ __('sentence.Sub-Total') }}</strong></td>
-                                        <td align="center"><strong>{{ $billing_items->sum('invoice_amount') }}
-                                                {{ App\Setting::get_option('currency') }}</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"><strong class="float-right">{{ __('sentence.VAT') }}</strong>
+                                        <td colspan="2"><strong class="float-right">{{ __('sentence.Total') }}</strong>
                                         </td>
-                                        <td align="center"><strong> {{ App\Setting::get_option('vat') }}%</strong></td>
+                                        <td align="center">
+                                            <strong>{{ $billing_items->sum('invoice_amount') + ($billing_items->sum('invoice_amount') * App\Setting::get_option('vat')) / 100 }}
+                                                {{ App\Setting::get_option('currency') }}</strong>
+                                        </td>
                                     </tr>
-                                @endif
-                                <tr>
-                                    <td colspan="2"><strong class="float-right">{{ __('sentence.Total') }}</strong></td>
-                                    <td align="center">
-                                        <strong>{{ $billing_items->sum('invoice_amount') + ($billing_items->sum('invoice_amount') * App\Setting::get_option('vat')) / 100 }}
-                                            {{ App\Setting::get_option('currency') }}</strong>
-                                    </td>
-                                </tr>
-                            @endempty
-                        </table>
+                                @endempty
+                            </table>
+                        </div>
                     </div>
                 </div>
+                {{-- <div>
+                    Merci de nous faire Confiance <b>{{ App\Setting::get_option('title') }}</b><br>
+                </div> --}}
                 <div style="margin-bottom: 250px;"></div>
 
                 <!-- END ROW : Drugs List -->
@@ -135,16 +146,17 @@
 <div id="print_area" style="display: none;">
     <div class="row">
         <div class="col-md-12">
-            <div class="col">
-                @if (!empty(App\Setting::get_option('logo')))
-                    <img src="{{ asset('uploads/' . App\Setting::get_option('logo')) }}"><br><br>
-                @endif
-                {{-- {!! clean(App\Setting::get_option('header_left')) !!} --}}
-            </div>
+            <center>
+                <div class="col-md-12">
+                    @if (!empty(App\Setting::get_option('logo')))
+                        <img src="{{ asset('uploads/' . App\Setting::get_option('logo')) }}" class="img-fluid"><br><br>
+                    @endif
+                    {{-- {!! clean(App\Setting::get_option('header_left')) !!} --}}
+                </div>
+            </center>
             <div class="">
                 <div class="text-center">
                     <b>{{ App\Setting::get_option('system_name') }}</b><br>
-                    <b>{{ App\Setting::get_option('title') }}</b><br>
                     <b>{{ App\Setting::get_option('address') }}</b><br>
                     <b>{{ App\Setting::get_option('phone') }}</b><br>
                     <b>{{ App\Setting::get_option('hospital_email') }}</b>
@@ -152,16 +164,15 @@
             </div>
         </div>
 
-
-        <div class="col-12 border-top mt-5">
-            <h5 class="text-center mt-4 "><b>{{ __('sentence.Invoice_for_care') }} </b></h5>
+        <div class="card col-12 mt-4">
+            <div class="card-body text-center" style="background: #7c9cbd; color: #fff;">
+                <b class="text-dark">{{ __('sentence.Invoice_for_care') }} n° {{ $billing->reference }} </b>
+            </div>
         </div>
 
-
-        <div class="col-12 border-top mt-4 ">
+        <div class="col-12 mt-4 ">
             <p class="float-left mt-4">
                 <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y h:m:s') }}<br>
-                <b>{{ __('sentence.Reference') }} :</b> {{ $billing->reference }}<br>
                 <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->User->name }}
             </p>
         </div>
@@ -171,56 +182,59 @@
     <div class="row justify-content-center">
         <div class="col">
             <br><br>
-            <table class="table">
-                <tr style="background: #2e3f50; color: #fff;">
-                    <td width="10%">ID</td>
-                    <td width="60%">{{ __('sentence.Item') }}</td>
-                    <td width="30%" align="center">{{ __('sentence.Amount') }}</td>
-                </tr>
-                @forelse ($billing_items as $key => $billing_item)
-                    @forelse ($billing_item->Appointment->drugs as $key => $drug)
-                        <tr>
-                            <td width="10%">#</td>
-                            <td width="60%" class="m-0 font-weight-bold text-primary">
-                                {{ $drug->trade_name }}
-                            </td>
-                            <td width="30%" align="center" class="m-0 font-weight-bold text-primary">
-                                {{ $drug->amountDrug }}
-                            </td>
-                        </tr>
-                    @empty
-                        <td colspan="5" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" />
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <tr style="background: #2e3f50; color: #fff;">
+                        <td width="10%">ID</td>
+                        <td width="60%">{{ __('sentence.Item') }}</td>
+                        <td width="30%" align="center">{{ __('sentence.Amount') }}</td>
+                    </tr>
+                    @forelse ($billing_items as $key => $billing_item)
+                        @forelse ($billing_item->Appointment->drugs as $key => $drug)
+                            <tr>
+                                <td width="10%">#</td>
+                                <td width="60%" class="m-0 font-weight-bold text-primary">
+                                    {{ $drug->trade_name }}
+                                </td>
+                                <td width="30%" align="center" class="m-0 font-weight-bold text-primary">
+                                    {{ $drug->amountDrug }}
+                                </td>
+                            </tr>
+                        @empty
+                            <td colspan="5" align="center"><img src="{{ asset('img/not-found.svg') }}"
+                                    width="200" />
 
-                            <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
-                        </td>
+                                <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
+                            </td>
+                        @endforelse
+                    @empty
+                        <tr>
+                            <td colspan="3">{{ __('sentence.Empty Invoice') }}</td>
+                        </tr>
                     @endforelse
-                @empty
+                @empty(!$billing_item)
+                    @if (App\Setting::get_option('vat') > 0)
+                        <tr>
+                            <td colspan="2"><strong class="float-right">{{ __('sentence.Sub-Total') }}</strong></td>
+                            <td align="center"><strong>{{ $billing_items->sum('invoice_amount') }}
+                                    {{ App\Setting::get_option('currency') }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong class="float-right">{{ __('sentence.VAT') }}</strong>
+                            </td>
+                            <td align="center"><strong> {{ App\Setting::get_option('vat') }}%</strong></td>
+                        </tr>
+                    @endif
                     <tr>
-                        <td colspan="3">{{ __('sentence.Empty Invoice') }}</td>
-                    </tr>
-                @endforelse
-            @empty(!$billing_item)
-                @if (App\Setting::get_option('vat') > 0)
-                    <tr>
-                        <td colspan="2"><strong class="float-right">{{ __('sentence.Sub-Total') }}</strong></td>
-                        <td align="center"><strong>{{ $billing_items->sum('invoice_amount') }}
-                                {{ App\Setting::get_option('currency') }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><strong class="float-right">{{ __('sentence.VAT') }}</strong>
+                        <td colspan="2"><strong class="float-right">{{ __('sentence.Total') }}</strong></td>
+                        <td align="center">
+                            <strong>{{ $billing_items->sum('invoice_amount') + ($billing_items->sum('invoice_amount') * App\Setting::get_option('vat')) / 100 }}
+                                {{ App\Setting::get_option('currency') }}</strong>
                         </td>
-                        <td align="center"><strong> {{ App\Setting::get_option('vat') }}%</strong></td>
                     </tr>
-                @endif
-                <tr>
-                    <td colspan="2"><strong class="float-right">{{ __('sentence.Total') }}</strong></td>
-                    <td align="center">
-                        <strong>{{ $billing_items->sum('invoice_amount') + ($billing_items->sum('invoice_amount') * App\Setting::get_option('vat')) / 100 }}
-                            {{ App\Setting::get_option('currency') }}</strong>
-                    </td>
-                </tr>
-            @endempty
-        </table>
+                @endempty
+            </table>
+        </div>
     </div>
 </div>
 

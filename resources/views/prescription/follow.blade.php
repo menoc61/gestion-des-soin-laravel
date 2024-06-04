@@ -5,11 +5,21 @@
 @endsection
 
 @section('content')
-    <div class="mb-3">
-        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    <div class="">
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="card col-md-12">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.follow') }}
+                        </h2>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-4">
         <div class="col-md-12 d-flex">
             <div class="col-md-4">
                 <div class="card shadow mb-4">
@@ -155,6 +165,14 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                    @else
+                                        <div class="form-group">
+                                            <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
+                                            <input type="hidden" class="form-control " value="{{ Auth::user()->id }}"
+                                                name="doctor_id" id="DoctorID">
+                                            <input type="text" class="form-control " value="{{ Auth::user()->name }}"
+                                                readonly>
+                                        </div>
                                     @endif
                                     @php
                                         $doctorId = $prescription->doctor_id;
@@ -201,7 +219,8 @@
                                     </label>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <input class="form-control" value="{{ $prescription->id }}" type="hidden" name="prescription_id" readonly>
+                                    <input class="form-control" value="{{ $prescription->id }}" type="hidden"
+                                        name="prescription_id" readonly>
                                 </div>
 
                             </div>

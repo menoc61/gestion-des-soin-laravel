@@ -232,27 +232,31 @@
                                     <a class="nav-link " id="tests-tab" data-toggle="tab" href="#tests" role="tab"
                                         aria-controls="tests" aria-selected="false">{{ __('sentence.Test') }}</a>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="psychotest-tab" data-toggle="tab" href="#psychotest"
-                                        role="tab" aria-controls="psychotest"
-                                        aria-selected="true">{{ __('sentence.Test Pshycho') }}</a>
-                                </li>
+                                @if (Auth::user()->role_id == 1)
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" id="psychotest-tab" data-toggle="tab" href="#psychotest"
+                                            role="tab" aria-controls="psychotest"
+                                            aria-selected="true">{{ __('sentence.Test Pshycho') }}</a>
+                                    </li>
+                                @endif
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="prescriptions-tab" data-toggle="tab" href="#prescriptions"
                                         role="tab" aria-controls="prescriptions"
                                         aria-selected="false">{{ __('sentence.Prescriptions') }}</a>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="Psycho-tab" data-toggle="tab" href="#Psycho" role="tab"
-                                        aria-controls="Psycho" aria-selected="false">{{ __('sentence.Psycho') }}</a>
-                                </li>
+                                @if (Auth::user()->role_id == 1)
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" id="Psycho-tab" data-toggle="tab" href="#Psycho" role="tab"
+                                            aria-controls="Psycho" aria-selected="false">{{ __('sentence.Psycho') }}</a>
+                                    </li>
+                                @endif
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents"
                                         role="tab" aria-controls="documents" aria-selected="false">Fichier Médical</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing"
-                                        role="tab" aria-controls="Billing"Alert
+                                    <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab"
+                                        aria-controls="Billing"Alert
                                         aria-selected="false">{{ __('sentence.Billings') }}</a>
                                 </li>
                             </ul>
@@ -308,19 +312,23 @@
                                                     <td align="center"><b>Id</b></td>
                                                     <td align="center"><b> Nom Diagnose</b> </td>
                                                     <td align="center"><b>Description</b> </td>
-                                                    <td align="center"><b> Utilisation </b></td>
+                                                    {{-- <td align="center"><b> Utilisation </b></td> --}}
                                                     <td align="center"><b> Action</b> </td>
                                                 </tr>
                                                 @forelse($tests as $key => $test)
                                                     @if (Auth::user()->role_id == 2)
                                                         <tr>
                                                             <td align="center">{{ $key + 1 }}</td>
-                                                            <td align="center">{{ $test->test_name }}</td>
-                                                            <td align="center"> {{ $test->comment }} </td>
-                                                            <td align="center">{{ __('sentence.time use') }} :
+                                                            <td align="center"><label class="badge badge-primary-soft">
+                                                                    {{ $test->test_name }}
+                                                                </label></td>
+                                                            <td align="center"><label class="badge badge-primary-soft">
+                                                                    {{ $test->comment }}
+                                                                </label></td>
+                                                            {{-- <td align="center">{{ __('sentence.time use') }} :
                                                                 {{ $test->Prescription->count() }}
                                                                 {{ __('sentence.In Prescription') }}
-                                                            </td>
+                                                            </td> --}}
                                                             <td class="text-center">
 
                                                                 <a href="{{ url('test/view/' . $test->id) }}"
@@ -343,12 +351,16 @@
                                                     @elseif (Auth::user()->role_id == 1)
                                                         <tr>
                                                             <td align="center">{{ $key + 1 }}</td>
-                                                            <td align="center">{{ $test->test_name }}</td>
-                                                            <td align="center"> {{ $test->comment }} </td>
-                                                            <td align="center">{{ __('sentence.time use') }} :
+                                                            <td align="center"><label class="badge badge-primary-soft">
+                                                                    {{ $test->test_name }}
+                                                                </label></td>
+                                                            <td align="center"><label class="badge badge-primary-soft">
+                                                                    {{ $test->comment }}
+                                                                </label></td>
+                                                            {{-- <td align="center">{{ __('sentence.time use') }} :
                                                                 {{ $test->Prescription->count() }}
                                                                 {{ __('sentence.In Prescription') }}
-                                                            </td>
+                                                            </td> --}}
                                                             <td class="text-center">
 
                                                                 <a href="{{ url('test/view/' . $test->id) }}"
@@ -371,12 +383,16 @@
                                                     @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $test->user_id)
                                                         <tr>
                                                             <td align="center">{{ $key + 1 }}</td>
-                                                            <td align="center">{{ $test->test_name }}</td>
-                                                            <td align="center"> {{ $test->comment }} </td>
-                                                            <td align="center">{{ __('sentence.In Prescription') }} :
+                                                            <td align="center"><label class="badge badge-primary-soft">
+                                                                    {{ $test->test_name }}
+                                                                </label></td>
+                                                            <td align="center"><label class="badge badge-primary-soft">
+                                                                    {{ $test->comment }}
+                                                                </label></td>
+                                                            {{-- <td align="center">{{ __('sentence.In Prescription') }} :
                                                                 {{ $test->Prescription->count() }}
                                                                 {{ __('sentence.time use') }}
-                                                            </td>
+                                                            </td> --}}
                                                             <td class="text-center">
                                                                 <a href="{{ url('test/view/' . $test->id) }}"
                                                                     class="btn btn-outline-primary btn-circle btn-sm"><i
@@ -436,7 +452,7 @@
                                                     <td align="center">{{ __('sentence.Actions') }}</td>
                                                 </tr>
                                                 @forelse($appointments as  $key => $appointment)
-                                                    @if (Auth::user()->role_id == 2)
+                                                    @if (Auth::user()->role_id == 3 && Auth::user()->id == $appointment->user_id)
                                                         <tr>
                                                             {{-- <td align="center">{{ $key + 1 }} </td> --}}
                                                             <td align="center"><label class="badge badge-primary-soft"><i
@@ -447,6 +463,9 @@
                                                                         class="fa fa-clock"></i>
                                                                     {{ $appointment->time_start }} -
                                                                     {{ $appointment->time_end }} </label></td>
+                                                            <td align="center"><label class="badge badge-primary-soft"><i
+                                                                        class="fa fa-user-injured"></i>
+                                                                    {{ $appointment->Doctor->name }} </label></td>
                                                             <td class="text-center">
                                                                 @if ($appointment->visited == 0)
                                                                     <label class="badge badge-warning-soft">
@@ -466,9 +485,6 @@
                                                                 @endif
                                                             </td>
                                                             <td class="text-center">
-                                                                {{ $appointment->created_at->format('d M Y H:i') }}
-                                                            </td>
-                                                            <td class="text-center">
                                                                 @if ($appointment->visited == 1)
                                                                     <label class="badge badge-primary-soft">
                                                                         <i class="fas fa-calendar"></i>
@@ -477,6 +493,14 @@
                                                                 @endif
                                                             </td>
                                                             <td align="center">
+                                                                <a class="btn btn-outline-primary btn-circle btn-sm view-details-btn"
+                                                                    data-date="{{ $appointment->date->format('d M Y') }}"
+                                                                    data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
+                                                                    data-doctor="{{ $appointment->Doctor->name }}"
+                                                                    data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
+                                                                    data-drugs="{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </a>
                                                                 @can('edit appointment')
                                                                     <a data-rdv_id="{{ $appointment->id }}"
                                                                         data-rdv_date="{{ $appointment->date->format('d M Y') }}"
@@ -484,7 +508,7 @@
                                                                         data-rdv_time_end="{{ $appointment->time_end }}"
                                                                         data-patient_name="{{ $appointment->User->name }}"
                                                                         class=" btn btn-outline-success btn-circle btn-sm
-                                                            {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
+                                                                {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
                                                                         data-toggle="modal" data-target="#EDITRDVModal">
                                                                         <i class="fas fa-check"></i>
                                                                     </a>
@@ -499,7 +523,7 @@
                                                                 @endcan
                                                             </td>
                                                         </tr>
-                                                    @elseif(Auth::user()->role_id == 1)
+                                                    @else
                                                         <tr>
                                                             {{-- <td align="center">{{ $key + 1 }} </td> --}}
                                                             <td align="center">
@@ -534,7 +558,7 @@
                                                                 @endif
                                                             </td>
                                                             {{-- <td class="text-center">
-                                                                {{ $appointment->created_at->format('d M Y H:i') }}</td> --}}
+                                                            {{ $appointment->created_at->format('d M Y H:i') }}</td> --}}
                                                             <td class="text-center">
                                                                 @if ($appointment->visited == 1)
                                                                     <label class="badge badge-primary-soft">
@@ -559,78 +583,7 @@
                                                                         data-rdv_time_end="{{ $appointment->time_end }}"
                                                                         data-patient_name="{{ $appointment->User->name }}"
                                                                         class=" btn btn-outline-success btn-circle btn-sm
-                                                                {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
-                                                                        data-toggle="modal" data-target="#EDITRDVModal">
-                                                                        <i class="fas fa-check"></i>
-                                                                    </a>
-                                                                @endcan
-                                                                @can('delete appointment')
-                                                                    @if ($appointment->visited != 1)
-                                                                        <a href="{{ url('appointment/delete/' . $appointment->id) }}"
-                                                                            class="btn btn-outline-danger btn-circle btn-sm">
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </a>
-                                                                    @endif
-                                                                @endcan
-                                                            </td>
-                                                        </tr>
-                                                    @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $appointment->user_id)
-                                                        <tr>
-                                                            {{-- <td align="center">{{ $key + 1 }} </td> --}}
-                                                            <td align="center"><label class="badge badge-primary-soft"><i
-                                                                        class="fas fa-calendar"></i>
-                                                                    {{ $appointment->date->format('d M Y') }} </label>
-                                                            </td>
-                                                            <td align="center"><label class="badge badge-primary-soft"><i
-                                                                        class="fa fa-clock"></i>
-                                                                    {{ $appointment->time_start }} -
-                                                                    {{ $appointment->time_end }} </label></td>
-                                                            <td align="center"><label class="badge badge-primary-soft"><i
-                                                                        class="fa fa-user-injured"></i>
-                                                                    {{ $appointment->Doctor->name }} </label></td>
-                                                            <td class="text-center">
-                                                                @if ($appointment->visited == 0)
-                                                                    <label class="badge badge-warning-soft">
-                                                                        <i class="fas fa-hourglass-start"></i>
-                                                                        {{ __('sentence.Not Yet Visited') }}
-                                                                    </label>
-                                                                @elseif($appointment->visited == 1)
-                                                                    <label class="badge badge-success-soft">
-                                                                        <i class="fas fa-check"></i>
-                                                                        {{ __('sentence.Visited') }}
-                                                                    </label>
-                                                                @else
-                                                                    <label class="badge badge-danger-soft">
-                                                                        <i class="fas fa-user-times"></i>
-                                                                        {{ __('sentence.Cancelled') }}
-                                                                    </label>
-                                                                @endif
-                                                            </td>
-                                                            <td class="text-center">
-                                                                @if ($appointment->visited == 1)
-                                                                    <label class="badge badge-primary-soft">
-                                                                        <i class="fas fa-calendar"></i>
-                                                                        {{ $appointment->updated_at->format('d M Y H:i') }}
-                                                                    </label>
-                                                                @endif
-                                                            </td>
-                                                            <td align="center">
-                                                                <a class="btn btn-outline-primary btn-circle btn-sm view-details-btn"
-                                                                    data-date="{{ $appointment->date->format('d M Y') }}"
-                                                                    data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
-                                                                    data-doctor="{{ $appointment->Doctor->name }}"
-                                                                    data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
-                                                                    data-drugs="{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}">
-                                                                    <i class="fas fa-eye"></i>
-                                                                </a>
-                                                                @can('edit appointment')
-                                                                    <a data-rdv_id="{{ $appointment->id }}"
-                                                                        data-rdv_date="{{ $appointment->date->format('d M Y') }}"
-                                                                        data-rdv_time_start="{{ $appointment->time_start }}"
-                                                                        data-rdv_time_end="{{ $appointment->time_end }}"
-                                                                        data-patient_name="{{ $appointment->User->name }}"
-                                                                        class=" btn btn-outline-success btn-circle btn-sm
-                                                                {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
+                                                            {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
                                                                         data-toggle="modal" data-target="#EDITRDVModal">
                                                                         <i class="fas fa-check"></i>
                                                                     </a>
@@ -696,7 +649,7 @@
                                                         <td align="center">{{ __('sentence.Actions') }}</td>
                                                     </tr>
                                                     @forelse($prescriptions as $prescription)
-                                                        @if (Auth::user()->role_id == 2)
+                                                        {{-- @if (Auth::user()->role_id == 2)
                                                             <tr>
                                                                 <td align="center">{{ $prescription->reference }} </td>
                                                                 <td class="text-center">
@@ -734,7 +687,37 @@
                                                                     @endcan
                                                                 </td>
                                                             </tr>
-                                                        @elseif (Auth::user()->role_id == 1)
+                                                        @elseif (Auth::user()->role_id == 1) --}}
+
+                                                        @if (Auth::user()->role_id == 3 && Auth::user()->id == $prescription->user_id)
+                                                            <tr>
+                                                                <td align="center">{{ $prescription->reference }} </td>
+                                                                <td class="text-center">
+                                                                    <label class="badge badge-primary-soft">
+                                                                        {{ count($prescription->Drug) }} Soins
+                                                                    </label>
+                                                                    <label class="badge badge-primary-soft">
+                                                                        {{ count($prescription->Test) }} Diagnostics
+                                                                    </label>
+                                                                </td>
+                                                                <td align="center"><label
+                                                                        class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
+                                                                </td>
+                                                                <td align="center">
+                                                                    <a href="{{ url('prescription/follow/' . $prescription->id) }}"
+                                                                        class="btn btn-outline-primary btn-circle btn-sm">
+                                                                        <i class="fa fa-id-card"></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td align="center">
+                                                                    @can('view prescription')
+                                                                        <a href="{{ url('prescription/view/' . $prescription->id) }}"
+                                                                            class="btn btn-outline-success btn-circle btn-sm"><i
+                                                                                class="fa fa-eye"></i></a>
+                                                                    @endcan
+                                                                </td>
+                                                            </tr>
+                                                        @else
                                                             <tr>
                                                                 <td align="center">{{ $prescription->reference }} </td>
                                                                 <td class="text-center">
@@ -774,34 +757,6 @@
                                                                 </td>
                                                             </tr>
                                                             <br>
-                                                        @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $prescription->user_id)
-                                                            <tr>
-                                                                <td align="center">{{ $prescription->reference }} </td>
-                                                                <td class="text-center">
-                                                                    <label class="badge badge-primary-soft">
-                                                                        {{ count($prescription->Drug) }} Soins
-                                                                    </label>
-                                                                    <label class="badge badge-primary-soft">
-                                                                        {{ count($prescription->Test) }} Diagnostics
-                                                                    </label>
-                                                                </td>
-                                                                <td align="center"><label
-                                                                        class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
-                                                                </td>
-                                                                <td align="center">
-                                                                    <a href="{{ url('prescription/follow/' . $prescription->id) }}"
-                                                                        class="btn btn-outline-primary btn-circle btn-sm">
-                                                                        <i class="fa fa-id-card"></i>
-                                                                    </a>
-                                                                </td>
-                                                                <td align="center">
-                                                                    @can('view prescription')
-                                                                        <a href="{{ url('prescription/view/' . $prescription->id) }}"
-                                                                            class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                                class="fa fa-eye"></i></a>
-                                                                    @endcan
-                                                                </td>
-                                                            </tr>
                                                         @endif
                                                     @empty
                                                         <tr>
@@ -820,134 +775,72 @@
                                     </div>
                                     {{-- --------------------------------------------------------- End Prescription  ------------------------------------------------------------------- --}}
 
-
-
-                                    {{-- ----------------------------------------------------------- Start test Psychothérapeutique  --------------------------------------------------------------- --}}
-                                    <div class="tab-pane fade" id="psychotest" role="tabpanel"
-                                        aria-labelledby="psychotest-tab">
-                                        <div class="row">
-                                            <div class="col">
-                                                @if (Auth::user()->role_id == 3)
-                                                    <div class="col-md-12">
-                                                        <div class="card-body h-25">
-                                                        </div>
-                                                        <div class="card-body h-25">
-                                                        </div>
-                                                    </div>
-                                                @else
+                                    @if (Auth::user()->role_id == 1)
+                                        {{-- ----------------------------------------------------------- Start test Psychothérapeutique  --------------------------------------------------------------- --}}
+                                        <div class="tab-pane fade" id="psychotest" role="tabpanel"
+                                            aria-labelledby="psychotest-tab">
+                                            <div class="row">
+                                                <div class="col">
                                                     <a class="btn btn-primary btn-sm my-4 float-right"
                                                         href="{{ route('test.psychotherapie', ['id' => $patient->id]) }}"><i
                                                             class="fa fa-pen"></i>
                                                         {{ __('sentence.Create Psycho') }}</a>
-                                                @endif
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered table-striped table-hover " id="dataTable"
-                                                    width="100%" cellspacing="0">
-                                                    <tr>
-                                                        <td align="center"><b>Id</b></td>
-                                                        <td align="center"><b> Nom Diagnose</b> </td>
-                                                        <td align="center"><b>Description</b> </td>
-                                                        <td align="center"><b> Utilisation </b></td>
-                                                        <td align="center"><b> Action</b> </td>
-                                                    </tr>
-                                                    @forelse($testpshychos as $key => $testpshycho)
-                                                        @if (Auth::user()->role_id == 2)
-                                                            <tr>
-                                                                <td align="center">{{ $key + 1 }}</td>
-                                                                <td align="center">{{ $testpshycho->test_name }}</td>
-                                                                <td align="center"> {{ $testpshycho->comment }} </td>
-                                                                <td align="center">{{ __('sentence.time use') }} :
-                                                                    {{ $testpshycho->Prescription->count() }}
-                                                                    {{ __('sentence.In Prescription') }}
-                                                                </td>
-                                                                <td class="text-center">
-
-                                                                    <a href="{{ url('test/view/' . $testpshycho->id) }}"
-                                                                        class="btn btn-outline-primary btn-circle btn-sm"><i
-                                                                            class="fa fa-eye"></i></a>
-
-                                                                    @can('edit diagnostic test')
-                                                                        <a href="{{ url('test/edit/' . $testpshycho->id) }}"
-                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                                class="fa fa-pen"></i></a>
-                                                                    @endcan
-                                                                    @can('delete diagnostic test')
-                                                                        <a class="btn btn-outline-danger btn-circle btn-sm"
-                                                                            data-toggle="modal" data-target="#DeleteModal"
-                                                                            data-link="{{ url('test/delete/' . $testpshycho->id) }}"><i
-                                                                                class="fa fa-trash"></i></a>
-                                                                    @endcan
-                                                                </td>
-                                                            </tr>
-                                                        @elseif (Auth::user()->role_id == 1)
-                                                            <tr>
-                                                                <td align="center">{{ $key + 1 }}</td>
-                                                                <td align="center">{{ $testpshycho->test_name }}</td>
-                                                                <td align="center"> {{ $testpshycho->comment }} </td>
-                                                                <td align="center">{{ __('sentence.time use') }} :
-                                                                    {{ $testpshycho->Prescription->count() }}
-                                                                    {{ __('sentence.In Prescription') }}
-                                                                </td>
-                                                                <td class="text-center">
-
-                                                                    <a href="{{ url('test/view/' . $testpshycho->id) }}"
-                                                                        class="btn btn-outline-primary btn-circle btn-sm"><i
-                                                                            class="fa fa-eye"></i></a>
-
-                                                                    @can('edit diagnostic test')
-                                                                        <a href="{{ url('test/edit/' . $testpshycho->id) }}"
-                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                                class="fa fa-pen"></i></a>
-                                                                    @endcan
-                                                                    @can('delete diagnostic test')
-                                                                        <a class="btn btn-outline-danger btn-circle btn-sm"
-                                                                            data-toggle="modal" data-target="#DeleteModal"
-                                                                            data-link="{{ url('test/delete/' . $testpshycho->id) }}"><i
-                                                                                class="fa fa-trash"></i></a>
-                                                                    @endcan
-                                                                </td>
-                                                            </tr>
-                                                        @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $testpshycho->user_id)
-                                                            <tr>
-                                                                <td align="center">{{ $key + 1 }}</td>
-                                                                <td align="center">{{ $testpshycho->test_name }}</td>
-                                                                <td align="center"> {{ $testpshycho->comment }} </td>
-                                                                <td align="center">{{ __('sentence.In Prescription') }} :
-                                                                    {{ $testpshycho->Prescription->count() }}
-                                                                    {{ __('sentence.time use') }}
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <a href="{{ url('test/view/' . $testpshycho->id) }}"
-                                                                        class="btn btn-outline-primary btn-circle btn-sm"><i
-                                                                            class="fa fa-eye"></i></a>
-
-                                                                    @can('create appointment')
-                                                                        <a href="{{ route('appointment.create_by', ['id' => $patient->id]) }}"
-                                                                            class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                                class="far fa-calendar-plus"></i></a>
-                                                                    @endcan
-                                                                </td>
-                                                            </tr>
-                                                        @endif
-
-                                                    @empty
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-striped table-hover "
+                                                        id="dataTable" width="100%" cellspacing="0">
                                                         <tr>
-                                                            <td colspan="6" class="text-center"><img
-                                                                    src="{{ asset('img/not-found.svg') }}" width="200" />
-                                                                <br><br>
-                                                                <b class="text-muted">pas de diagnostic trouvé</b>
-                                                            </td>
+                                                            <td align="center"><b>Id</b></td>
+                                                            <td align="center"><b> Nom Diagnose</b> </td>
+                                                            <td align="center"><b>Description</b> </td>
+                                                            <td align="center"><b> Utilisation </b></td>
+                                                            <td align="center"><b> Action</b> </td>
                                                         </tr>
-                                                    @endforelse
-                                                </table>
-                                                <span class="float-right mt-3">{{ $testpshychos->links() }}</span>
+                                                        @forelse($testpshychos as $key => $testpshycho)
+                                                            <tr>
+                                                                <td align="center">{{ $key + 1 }}</td>
+                                                                <td align="center">{{ $testpshycho->test_name }}</td>
+                                                                <td align="center"> {{ $testpshycho->comment }} </td>
+                                                                <td align="center">{{ __('sentence.time use') }} :
+                                                                    {{ $testpshycho->Prescription->count() }}
+                                                                    {{ __('sentence.In Prescription') }}
+                                                                </td>
+                                                                <td class="text-center">
+
+                                                                    <a href="{{ url('test/view/' . $testpshycho->id) }}"
+                                                                        class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                            class="fa fa-eye"></i></a>
+
+                                                                    @can('edit diagnostic test')
+                                                                        <a href="{{ url('test/edit/' . $testpshycho->id) }}"
+                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                                class="fa fa-pen"></i></a>
+                                                                    @endcan
+                                                                    @can('delete diagnostic test')
+                                                                        <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                            data-toggle="modal" data-target="#DeleteModal"
+                                                                            data-link="{{ url('test/delete/' . $testpshycho->id) }}"><i
+                                                                                class="fa fa-trash"></i></a>
+                                                                    @endcan
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="6" class="text-center"><img
+                                                                        src="{{ asset('img/not-found.svg') }}"
+                                                                        width="200" />
+                                                                    <br><br>
+                                                                    <b class="text-muted">pas de diagnostic trouvé</b>
+                                                                </td>
+                                                            </tr>
+                                                        @endforelse
+                                                    </table>
+                                                    <span class="float-right mt-3">{{ $testpshychos->links() }}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {{-- --------------------------------------------------------- End test Psychothérapeutique  ------------------------------------------------------------------- --}}
-
-
+                                        {{-- --------------------------------------------------------- End test Psychothérapeutique  ------------------------------------------------------------------- --}}
+                                    @endif
 
 
                                     {{-- ----------------------------------------------------------- Start Document --------------------------------------------------------------------- --}}

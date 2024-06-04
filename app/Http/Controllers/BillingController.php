@@ -161,7 +161,7 @@ class BillingController extends Controller
             $payment->save();
         }
 
-        return \Redirect::route('billing.all')->with('success', 'Invoice Created Successfully!');
+        return \Redirect::route('patient.view',['id' => $billing->user_id])->with('success', 'Invoice Created Successfully!');
     }
 
 

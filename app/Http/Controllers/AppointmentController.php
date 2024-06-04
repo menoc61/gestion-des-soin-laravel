@@ -331,7 +331,7 @@ class AppointmentController extends Controller
     public function getAppointmentsByDoctor($doctorId)
     {
         // Récupérer les rendez-vous du praticien avec les informations formatées
-        $userAppointments = Appointment::where('doctor_id', $doctorId)
+        $userAppointments = Appointment::where('doctor_id', $doctorId)->where('visited', 0)
             ->get()
             ->map(function ($appointment) {
                 return [
