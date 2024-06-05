@@ -108,6 +108,7 @@ $permission = Permission::create(['name' => 'delete invoice']);
         // $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
         $total_payments_year = Rdv_Drug::whereYear('created_at', date('Y'))->sum('montant_drug');
         // $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
+        $countRDVread = Appointment::where('is_read',0)->count();
 
 
         $total_payment_by_day = Billing_item::select('created_at', 'invoice_amount')
@@ -178,6 +179,7 @@ $permission = Permission::create(['name' => 'delete invoice']);
             'defaultStartDate' => $defaultStartDate,
             'defaultEndDate' => $defaultEndDate,
             'nameday' => $nameday,
+            'countRDVread' => $countRDVread
         ]);
     }
 

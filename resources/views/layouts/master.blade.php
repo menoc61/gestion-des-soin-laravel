@@ -494,7 +494,8 @@
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.View Profile') }}
                                     </a> --}}
-                                    <a class="dropdown-item" href="{{ route('user.edit', ['id' => Auth::user()->id]) }}">
+                                    <a class="dropdown-item"
+                                        href="{{ route('user.edit', ['id' => Auth::user()->id]) }}">
                                         <i class="fas fa-pen fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.Update Profile') }}
                                     </a>

@@ -255,8 +255,8 @@
                                         role="tab" aria-controls="documents" aria-selected="false">Fichier Médical</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab"
-                                        aria-controls="Billing"Alert
+                                    <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing"
+                                        role="tab" aria-controls="Billing"Alert
                                         aria-selected="false">{{ __('sentence.Billings') }}</a>
                                 </li>
                             </ul>
@@ -569,9 +569,12 @@
                                                             </td>
                                                             <td align="center">
                                                                 <a class="btn btn-outline-primary btn-circle btn-sm view-details-btn"
+                                                                    data-id="{{ $appointment->id }}"
                                                                     data-date="{{ $appointment->date->format('d M Y') }}"
                                                                     data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
                                                                     data-doctor="{{ $appointment->Doctor->name }}"
+                                                                    data-read="{{ $appointment->is_read }}"
+                                                                    data-visited="{{ $appointment->visited }}"
                                                                     data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
                                                                     data-drugs="{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}">
                                                                     <i class="fas fa-eye"></i>
@@ -1296,6 +1299,7 @@
                             class="d-none">
                             <input type="hidden" name="rdv_id" id="rdv_id">
                             <input type="hidden" name="rdv_status" value="1">
+                            <input type="hidden" name="is_read" value="1">
                             @csrf
                         </form>
                         <a class="btn btn-danger text-white"
@@ -1420,6 +1424,14 @@
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover">
                                 <tr>
+                                    <td><b>ID: </b></td>
+                                    <td> <label class="badge badge-primary-soft" id="appointmentID"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Consulter</b></td>
+                                    <td> <label class="badge badge-primary-soft" id="appointmentRead"></label></td>
+                                </tr>
+                                <tr>
                                     <td><b>{{ __('sentence.Praticien') }} : </b></td>
                                     <td> <label class="badge badge-primary-soft" id="appointmentDoctor"></label></td>
                                 </tr>
@@ -1444,7 +1456,15 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <a class="btn btn-primary text-white"
+                        onclick="event.preventDefault(); document.getElementById('rdv-form').submit();"> OK </a>
+                    <form id="rdv-form" action="{{ route('appointment.store_edit') }}" method="POST"
+                        class="d-none">
+                        <input type="hidden" name="rdv_id" id="rdvId">
+                        <input type="hidden" name="is_read" value="1">
+                        <input type="hidden" name="rdv_status"  id="rdvStatus">
+                        @csrf
+                    </form>
                     </div>
                 </div>
             </div>
@@ -1462,14 +1482,20 @@
         <script>
             $(document).ready(function() {
                 $('.view-details-btn').on('click', function() {
+                    var id = $(this).data('id');
                     var date = $(this).data('date');
                     var time = $(this).data('time');
                     var doctor = $(this).data('doctor');
                     var prescription = $(this).data('prescription');
                     var drugs = $(this).data('drugs');
+                    var read = $(this).data('read');
+                    var visited = $(this).data('visited');
+
 
                     $('#appointmentDate').text(date);
                     $('#appointmentTime').text(time);
+                    $('#appointmentRead').text(read);
+                    $('#appointmentID').text(id);
                     $('#appointmentDoctor').text(doctor);
                     $('#appointmentPrescription').text(prescription);
 
@@ -1482,6 +1508,9 @@
                         var badge = $('<label>').addClass('badge badge-primary-soft').text(drug);
                         $('#appointmentPrescriptiondrug').append(badge).append(' ');
                     });
+
+                    $('#rdvId').val(id);
+                    $('#rdvStatus').val(visited);
 
                     $('#viewDetailsModal').modal('show');
                 });

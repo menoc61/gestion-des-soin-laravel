@@ -152,6 +152,7 @@ class AppointmentController extends Controller
         $appointment->time_start = $request->rdv_time_start;
         $appointment->time_end = $request->rdv_time_end;
         $appointment->visited = 0;
+        $appointment->is_read = 0;
         $appointment->reason = $request->reason;
         $appointment->prescription_id = $request->prescription_id;
         $appointment->save();
@@ -205,16 +206,19 @@ class AppointmentController extends Controller
 
     public function store_edit(Request $request)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'rdv_id' => ['required', 'exists:appointments,id'],
             'rdv_status' => ['required', 'numeric'],
+            'is_read' => ['required']
         ]);
 
         $appointment = Appointment::findOrFail($request->rdv_id);
         $appointment->visited = $request->rdv_status;
+        $appointment->is_read = $request->is_read;
         $appointment->save();
 
-        return \Redirect::back()->with('success', 'Appointment Updated Successfully!');
+        return \Redirect::back();
     }
 
     public function all()
