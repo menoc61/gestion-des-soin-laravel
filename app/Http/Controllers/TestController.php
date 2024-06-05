@@ -143,7 +143,11 @@ class TestController extends Controller
 
         $test->save();
 
-        return \Redirect::route('prescription.create_by', ['id' => $test->user_id])->with('success', __('sentence.Test Created Successfully'));
+        if( Auth::user()->role_id == 3){
+            return back()->with('success', 'Votre DIagnose a été enregistré');
+        }else{
+            return \Redirect::route('prescription.create_by', ['id' => $test->user_id])->with('success', __('sentence.Test Created Successfully'));
+        }
     }
 
     public function all()

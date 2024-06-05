@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <form method="post" action="{{ route('appointment.store') }}" enctype="multipart/form-data">
+    <form method="post" id="myForm" action="{{ route('appointment.store') }}" enctype="multipart/form-data">
         <div class="row justify-content-center">
             <div class="col-md-6 my-4">
                 <div class="card shadow mb-4">
@@ -29,7 +29,7 @@
                     <div class="card-body">
 
                         <div class="row ">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="patient_name">{{ __('sentence.Patient') }}</label>
                                 <select class="form-control patient_name multiselect-doctorino" name="patient"
                                     id="patient_name">
@@ -40,12 +40,12 @@
                                 {{ csrf_field() }}
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 @if (Auth::user()->role_id != 2)
                                     <div class="form-group">
                                         <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
                                         <select class="form-control " name="doctor_id" id="DoctorID" required>
-                                            {{-- <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option> --}}
+                                            <option value="" disabled selected>{{ __('sentence.Select Drug') }}...</option>
                                             @foreach ($praticiens as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -54,7 +54,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="rdvdate">{{ __('sentence.Date') }}</label>
                                 <input type="text" class="form-control target agenda" name="rdv_time_date"
                                     readonly="readonly" id="rdvdate">
@@ -78,13 +78,14 @@
                                 <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
                             </div>
 
-                            <div class="form-check">
+                            {{-- <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="send_sms" id="sms">
                                 <label class="form-check-label" for="sms">
                                     {{ __('sentence.Send SMS') }}
                                 </label>
-                            </div>
+                            </div> --}}
                         </div>
+
                         <div class="form-group row">
                             <div class="col-sm-9">
                                 <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
@@ -92,48 +93,6 @@
                         </div>
 
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }}
-                            {{ $user->name }}</h6>
-                    </div>
-                    {{-- <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <td align="center">{{ __('sentence.Date') }}</td>
-                            <td align="center">{{ __('sentence.Time Slot') }}</td>
-                            <td align="center">{{ __('sentence.Created at') }}</td>
-                        </tr>
-                        @forelse($appointmentsDoc as $appointment)
-                            <tr>
-                                <td align="center">
-                                    <label class="badge badge-primary-soft">
-                                        <i class="fas fa-calendar"></i>
-                                        {{ $appointment->date->format('d M Y') }}
-                                    </label>
-                                </td>
-                                <td align="center">
-                                    <label class="badge badge-primary-soft">
-                                        <i class="fa fa-clock"></i>
-                                        {{ $appointment->time_start }} - {{ $appointment->time_end }}
-                                    </label>
-                                </td>
-                                <td class="text-center">
-                                    {{ $appointment->created_at->format('d M Y H:i') }}
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3" align="center">
-                                    <img src="{{ asset('img/not-found.svg') }}" width="200" />
-                                    <br><br>
-                                    <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </table>
-                </div> --}}
                 </div>
             </div>
             <div class="col-md-6 my-4">
@@ -149,6 +108,57 @@
                                         class='fa fa-plus'></i> {{ __('sentence.Add Drug') }}</a>
                             </div>
                         </fieldset>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} <span
+                                id="doctor-name"></span></h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover" id="appointments-table">
+
+                                <tr>
+                                    <td align="center">{{ __('sentence.Date') }}</td>
+                                    <td align="center">{{ __('sentence.Time Slot') }}</td>
+                                    <td align="center">{{ __('sentence.Created at') }}</td>
+                                </tr>
+                                <!-- Appointments will be dynamically inserted here -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Show Modal Redirect-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Contenu de la modal...</p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="d-flex col-md-12">
+                            <div class="col-md-4">
+                                <a class="btn btn-primary" href="{{ route('billing.create_by', ['id' => $userId]) }}">
+                                    payer
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="btn btn-secondary"
+                                    href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="btn btn-secondary"
+                                    href="{{ route('appointment.create_by', ['id' => $userId]) }}"> Rendez-Vous
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -172,29 +182,64 @@
     <script type="text/template" id="drugs_labels">
         <section class="field-group">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="morphology_patient">{{ __('sentence.Drugs') }}<font color="red">*</font></label>
                     <select class="form-control multiselect-drug" name="trade_name[]" id="drug" required>
                         <option value="" disabled selected>{{ __('sentence.Select Drug') }}...</option>
                         @foreach($drugs as $drug)
-                            <option value="{{ $drug->id }}">{{ $drug->trade_name }} </option>
+                            <option value="{{ $drug->id }}" data-amountdrug="{{ $drug->amountDrug }} {{ App\Setting::get_option('currency') }}">{{ $drug->trade_name }}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-6">
-                    <label for="morphology_patient">{{ __('sentence.Description') }}<font color="red">*</font></label>
-                    <div class="form-group-custom">
-                        <textarea type="text" name="drug_advice[]" class="form-control" placeholder="{{ __('sentence.Advice_Comment') }}"></textarea>
-                    </div>
+                <div class="col-md-4">
+                    <label for="morphology_patient">{{ __('sentence.Amount') }}</label>
+                    <input type="text" name="drug_amount[]" class="form-control drug-amount" readonly>
                 </div>
                 <div class="col-md-2">
-                    <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-times-circle"></i> {{ __('sentence.Remove') }}</a>
-                </div>
-                <div class="col-12">
-                    <hr color="#a1f1d4">
+                    <a type="button" class="btn btn-danger btn-sm text-white span-2 delete my-4"><i class="fa fa-times-circle"></i> {{ __('sentence.Remove') }}</a>
                 </div>
             </div>
+            <div class="col-12">
+                <hr color="#a1f1d4">
+            </div>
         </section>
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#DoctorID').change(function() {
+                var doctorId = $(this).val();
+                $.ajax({
+                    url: '/appointments/by-doctor/' + doctorId,
+                    method: 'GET',
+                    success: function(response) {
+                        var appointmentsTable = $('#appointments-table');
+                        appointmentsTable.find('tr:gt(0)')
+                            .remove(); // Remove existing rows except header
+
+                        if (response.length > 0) {
+                            response.forEach(function(appointment) {
+                                var newRow = '<tr>' +
+                                    '<td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i> ' +
+                                    appointment.date + '</label></td>' +
+                                    '<td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i> ' +
+                                    appointment.time_start + ' - ' + appointment
+                                    .time_end + '</label></td>' +
+                                    '<td class="text-center">' + appointment
+                                    .created_at + '</td>' +
+                                    '</tr>';
+                                appointmentsTable.append(newRow);
+                            });
+                        } else {
+                            var noData =
+                                '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
+                            appointmentsTable.append(noData);
+                        }
+                    }
+                });
+            });
+        });
     </script>
 
     <script>
@@ -258,7 +303,43 @@
             $('.multiselect-doctorino').select2();
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            // Event listener for changes in the select element
+            $(document).on('change', '.multiselect-drug', function() {
+                var selectedOption = $(this).find('option:selected');
+                var amountdrug = selectedOption.data('amountdrug'); // Note the lower case
+                $(this).closest('.row').find('.drug-amount').val(amountdrug);
+            });
+        });
+    </script>
+
     <script src="{{ asset('dashboard/js/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/demo/swipper.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#myForm').on('submit', function(event) {
+                event.preventDefault(); // Empêche la soumission du formulaire
+                var form = this;
+
+                $.ajax({
+                    type: $(form).attr('method'),
+                    url: $(form).attr('action'),
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        $('#myModal').modal('show'); // Affiche la modal en cas de succès
+                    },
+                    error: function(response) {
+                        // Gestion des erreurs si nécessaire
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

@@ -195,6 +195,7 @@ return [
     'Invoice Title' => 'Titre de la facture',
     'View billing' => 'Facturation',
     'Amount' => 'Montant',
+    'Total Amount' => 'Montant Total à Payer',
     'Remove' => 'Retirer',
     'Invoice_for_care' => 'Facture des Soins',
     'Empty Invoice' => 'Facture Vide!',
@@ -305,6 +306,12 @@ return [
     'Hour_end' => 'Heure de Fin',
     'Choice' => 'Choisir',
     'Choice Praticien' => 'Choisir un Praticien',
-    'Agenda praticien' => 'Agenda du Praticien :'
+    'Agenda praticien' => 'Agenda du Praticien Sélectionné',
+    'Select Drug' => 'Sélectionner un Praticien',
+    'Remise' => 'Remise',
+    'Test Pshycho' => 'Diagnose Psychothérapeutique',
+    'Buy billing' => 'Payer la Facture',
+    'Total Remise' => 'Total Remise',
+    'Praticienino Settings' => 'Paramètre de l\'application'
 
 ];

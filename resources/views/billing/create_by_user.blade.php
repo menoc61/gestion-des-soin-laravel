@@ -5,44 +5,88 @@
 @endsection
 
 @section('content')
-    <div class="mb-3">
-        <button class="btn btn-primary" onclick="goBackAndReload()">Retour</button>
+    <div class="">
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="card col-md-12">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-center"> {{ __('sentence.Create Invoice') }} De
+                        <span class="m-0 font-weight-bold text-primary text-center">{{ $userName }}</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
     </div>
 
     <form method="post" action="{{ route('billing.store_id', ['id' => $userId]) }}">
-        <div class="justify-content-center">
+        <div class="row justify-content-center my-4">
             <div class="col-md-6">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Choice Prescription') }}</h6>
-                    </div>
-                    <div class="card-body">
-
-                        {{-- <div class="col-md-4">
-                            <select class="form-control multiselect-search" name="reference[]" id="prescription" tabindex="-1" aria-hidden="true" required>
-                              <option value="">{{ __('sentence.Select Test') }}...</option>
-                              @foreach ($prescriptions as $prescription)
-                                  <option value="{{ $prescription->id }}">{{ $prescription->reference }}</option>
-                              @endforeach
-                            </select>
-                        </div> --}}
-
-
-                        <fieldset class="billing_labels">
-                            <div class="repeatable"></div>
-                            <div class="form-group">
-                                <a type="button" class="btn btn-primary btn-sm add text-white" align="center"><i
-                                        class='fa fa-plus'></i> {{ __('sentence.Add Prescription Item') }}</a>
+                <div class="row">
+                    @forelse ($appointments as $appointment)
+                        <div class="col-md-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-body">
+                                    <h6 class="m-0 font-weight-bold text-primary">{{ $appointment->reason }}</h6>
+                                    @forelse ($appointment->drugs as $drug)
+                                        <div class="row my-4">
+                                            <div class="col-md-6">
+                                                <h6 class="m-0 font-weight-bold text-primary">
+                                                    {{ $drug->trade_name }} : </h6>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 class="m-0 font-weight-bold text-primary">
+                                                    {{ $drug->amountDrug }}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" align="center"><img src="{{ asset('img/not-found.svg') }}"
+                                                    width="200" />
+                                                <br><br>
+                                                <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn badge badge-primary-soft select-appointment"
+                                                data-appointment-id="{{ $appointment->id }}"
+                                                data-amount="{{ $appointment->drugs->sum('amountDrug') }}">Payer</button>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h6 class="m-0 font-weight-bold text-primary">
+                                                Total: {{ $appointment->drugs->sum('amountDrug') }}
+                                                {{ App\Setting::get_option('currency') }}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </fieldset>
-
-                        {{-- <div class="d-flex justify-content-between ">
-                    <span class="">Montant sans Taxe : <b id="total_without_tax_income">0 </b> {{ App\Setting::get_option('currency') }}</span><br>
-                    <span class="">TVA : <b>{{ App\Setting::get_option('vat') }} %</b> </span><br>
-                    <span class="">Montant Total : <b id="total_income">0 </b> {{ App\Setting::get_option('currency') }}</span>
-                    </div> --}}
-                    </div>
+                        </div>
+                    @empty
+                        <tr>
+                            <td colspan="5" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" />
+                                <br><br>
+                                <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
+                            </td>
+                        </tr>
+                    @endforelse
                 </div>
+                @if ($appointments->isNotEmpty())
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                Somme totale des montants de médicaments :
+                                {{ $appointments->pluck('drugs')->flatten()->sum('amountDrug') }}
+                                {{ App\Setting::get_option('currency') }}
+                            </h6>
+                        </div>
+                    </div>
+                @endif
             </div>
             <div class="col-md-6">
                 <div class="card shadow mb-4">
@@ -50,41 +94,45 @@
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Informations') }}</h6>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="drug">{{ __('sentence.Select Patient') }}</label>
-                            <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id"
-                                readonly>
-                            <input type="text" class="form-control" value="{{ $userName }}" readonly>
-                            {{ csrf_field() }}
-                        </div>
-                        <div class="form-group">
-                            <label for="PaymentMode">{{ __('sentence.Payment Mode') }}</label>
-                            <select class="form-control" name="payment_mode" id="PaymentMode">
-                                <option value="Cash">{{ __('sentence.Cash') }}</option>
-                                <option value="Mobile Transaction">{{ __('sentence.Mobile Transaction') }}</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="DepositedAmount">{{ __('sentence.Already Paid') }}</label>
-                            <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount">
+                        <div class="form-group row">
+                            <div class="form-group col-md-6">
+                                <label for="drug">{{ __('sentence.Select Patient') }}</label>
+                                <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id"
+                                    readonly>
+                                <input type="text" class="form-control" value="{{ $userName }}" readonly>
+                                {{ csrf_field() }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="PaymentMode">{{ __('sentence.Payment Mode') }}</label>
+                                <select class="form-control" name="payment_mode" id="PaymentMode">
+                                    <option value="Cash">{{ __('sentence.Cash') }}</option>
+                                    <option value="Mobile Transaction">{{ __('sentence.Mobile Transaction') }}</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="DueAmount">{{ __('sentence.Due Balance') }}</label>
-                            <input class="form-control" type="number" name="due_amount" id="DueAmount">
+                        <div class="form-group row">
+                            <div class="form-group col-md-6">
+                                <label for="TotalAmount">{{ __('sentence.Total Amount') }}</label>
+                                <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}"
+                                    aria-label="Amount" aria-describedby="basic-addon1" name="total_amount" id="TotalAmount"
+                                    readonly min="0">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="Remise">{{ __('sentence.Remise') }}</label>
+                                <input class="form-control" type="number" name="Remise" id="Remise">
+                            </div>
                         </div>
-
-                        {{-- choix du statut de paiement --}}
-
-                        {{-- <div class="form-group">
-                  <label for="PaymentMode">{{ __('sentence.Payment Status') }}</label>
-                  <select class="form-control" name="payment_status">
-                     <option value="Paid">{{ __('sentence.Paid') }}</option>
-                     <option value="Partially Paid">{{ __('sentence.Partially Paid') }}</option>
-                     <option value="Unpaid">{{ __('sentence.Unpaid') }}</option>
-                  </select>
-               </div> --}}
+                        <div class="form-group row">
+                            <div class="form-group col-md-6">
+                                <label for="DepositedAmount">{{ __('sentence.Already Paid') }}</label>
+                                <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="DueAmount">{{ __('sentence.Due Balance') }}</label>
+                                <input class="form-control" type="number" name="due_amount" id="DueAmount" readonly>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <input type="submit" value="{{ __('sentence.Create Invoice') }}"
@@ -92,120 +140,78 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" id="selected-appointments">
             </div>
         </div>
     </form>
+
 @endsection
 
 @section('footer')
-    <script type="text/template" id="billing_labels">
-   <div class="field-group row">
-    <div class="col">
-       <div class="form-group-custom">
-
-        <select class="form-control multiselect-search" name="nom[]" id="prescription" tabindex="-1" aria-hidden="true" required>
-            @if (@empty($prescriptions))
-                <option value="">{{ __('sentence.Select Test') }}...</option>
-            @else
-            @foreach($prescriptions as $prescription)
-            @if (Auth::user()->role_id == 2 && Auth::user()->id == $prescription->doctor_id )
-                <option value="{{ $prescription->id }}">{{ $prescription->nom }}</option>
-            @elseif (Auth::user()->role_id == 1)
-                <option value="{{ $prescription->id }}">{{ $prescription->nom }}</option>
-            @endif
-        @endforeach
-            @endif
-
-          </select>
-          {{-- <input type="text" id="strength" name="nom[]"  class="form-control" placeholder="{{ __('sentence.Invoice Title') }}" onchange="updateInvoiceTitle()" required> --}}
-       </div>
-    </div>
-    <div class="col">
-       <div class="input-group mb-3">
-        <input type="number" class="form-control" placeholder="{{ __('sentence.Amount') }}" aria-label="Amount" aria-describedby="basic-addon1" name="invoice_amount[]" required min="0">
-
-          <div class="input-group-append">
-             <span class="input-group-text" id="basic-addon1">{{ App\Setting::get_option('currency') }}</span>
-          </div>
-       </div>
-    </div>
-    <div class="col-md-3">
-       <a type="button" class="btn btn-danger btn-sm text-white span-2 delete"><i class="fa fa-times-circle"></i> {{ __('sentence.Remove') }}</a>
-    </div>
-   </div>
-</script>
-
     <script type="text/javascript">
-        setInterval(function() {
+        $(document).ready(function() {
+            var totalAmount = 0;
 
-            $('.billing_labels').each(function() {
-                var totalPoints = 0;
-                var DepositedAmount = parseFloat($('#DepositedAmount').val());
-                var DueAmount = 0;
-                //   var vat = {{ App\Setting::get_option('vat') }};
+            function updateAmounts() {
+                var remise = parseFloat($('#Remise').val()) || 0;
+                var depositedAmount = parseFloat($('#DepositedAmount').val()) || 0;
+                var finalAmount = totalAmount - remise;
+                $('#TotalAmount').val(finalAmount);
+                $('#DueAmount').val((finalAmount - depositedAmount));
+            }
 
-                $(this).find('input[aria-label="Amount"]').each(function() {
-                    if ($(this).val() !== '') {
-                        totalPoints += parseFloat($(this)
-                            .val()); //<==== a catch  in here !! read below
-                    }
-                });
+            $('.select-appointment').on('click', function() {
+                var $button = $(this);
+                var amount = parseFloat($button.data('amount'));
+                var appointmentId = $button.data('appointment-id');
 
-                $('#total_without_tax_income').text(totalPoints);
-                //   $('#total_income').text(totalPoints+(totalPoints*vat/100));
-
-                if ($('#DepositedAmount').val() !== '') {
-                    $('#DueAmount').val((totalPoints) - DepositedAmount);
+                if ($button.hasClass('selected')) {
+                    // Deselect and subtract the amount
+                    totalAmount -= amount;
+                    $button.removeClass('selected badge-danger-soft').addClass('badge-primary-soft');
+                    $button.text('Payer');
+                    $('#selected-appointments').find(
+                        `.selected-appointment[data-appointment-id="${appointmentId}"]`).remove();
                 } else {
-                    $('#DueAmount').val((totalPoints));
+                    // Select and add the amount
+                    totalAmount += amount;
+                    $button.addClass('selected badge-danger-soft').removeClass('badge-primary-soft');
+                    $button.text('Retirer');
+                    $('#selected-appointments').append(`<div class="selected-appointment" data-appointment-id="${appointmentId}">
+                    <input type="hidden" name="nom[]" value="${appointmentId}">
+                    <input type="hidden" name="invoice_amount[]" value="${amount}">
+                </div>`);
                 }
 
+                // Update the total and due amounts
+                updateAmounts();
             });
 
-        }, 1000);
-    </script>
-    <script type="text/javascript">
-        // Function to update the invoice title when a patient is selected
-        function updateInvoiceTitle() {
-            var selectedPatientName = $('#drug option:selected').text();
-            var invoiceTitle = "diagnostic de " + selectedPatientName;
-            $('input[name="nom[]"]').val(invoiceTitle);
-        }
+            $(document).on('click', '.remove-appointment', function() {
+                var card = $(this).closest('.selected-appointment');
+                var appointmentId = card.data('appointment-id');
+                var amount = parseFloat($(`.select-appointment[data-appointment-id="${appointmentId}"]`)
+                    .data('amount'));
 
-        // Add onchange event to the patient select input
-        $('#drug').on('change', function() {
-            updateInvoiceTitle();
+                totalAmount -= amount;
+                $(`.select-appointment[data-appointment-id="${appointmentId}"]`).removeClass(
+                        'selected btn-danger')
+                    .addClass('btn-primary').text('Payer');
+                card.remove();
+
+                // Update the total and due amounts
+                updateAmounts();
+            });
+
+            $('#DepositedAmount, #Remise').on('input', function() {
+                // Update due amount when deposited amount or remise is entered
+                updateAmounts();
+            });
         });
-
-        // Initial auto-fill when the page loads
-        updateInvoiceTitle();
-
-        setInterval(function() {
-            $('.billing_labels').each(function() {
-                var totalPoints = 0;
-                var DepositedAmount = parseFloat($('#DepositedAmount').val());
-                var DueAmount = 0;
-
-                $(this).find('input[aria-label="Amount"]').each(function() {
-                    if ($(this).val() !== '') {
-                        totalPoints += parseFloat($(this).val());
-                    }
-                });
-
-                $('#total_without_tax_income').text(totalPoints);
-
-                if ($('#DepositedAmount').val() !== '') {
-                    $('#DueAmount').val(totalPoints - DepositedAmount);
-                } else {
-                    $('#DueAmount').val(totalPoints);
-                }
-
-            });
-
-        }, 1000);
 
         function goBackAndReload() {
             window.location.replace(document.referrer);
         }
     </script>
 @endsection
+

@@ -9,10 +9,17 @@ class Drug extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     protected $table = 'drugs';
-    protected $fillable = ['trade_name','generic_name','note'];
+    protected $fillable = ['trade_name', 'generic_name', 'note'];
 
-    public function Prescription(){
-                return $this->hasMany('App\Prescription_drug');
+
+    public function appointments()
+    {
+        return $this->belongsToMany(Appointment::class, 'rdv__drugs', 'drug_id', 'appointment_id');
     }
 
+
+    public function Prescription()
+    {
+        return $this->hasMany('App\Prescription_drug');
+    }
 }
