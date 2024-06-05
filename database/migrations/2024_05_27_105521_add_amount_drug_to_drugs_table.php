@@ -14,7 +14,7 @@ class AddAmountDrugToDrugsTable extends Migration
     public function up()
     {
         Schema::table('drugs', function (Blueprint $table) {
-            $table->decimal('amountDrug')->nullable();
+            $table->bigInteger('amountDrug')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddAmountDrugToDrugsTable extends Migration
     public function down()
     {
         Schema::table('drugs', function (Blueprint $table) {
-            $table->decimal('amountDrug')->nullable();
+            $table->bigInteger('amountDrug')->nullable();
         });
     }
 }

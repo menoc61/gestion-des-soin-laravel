@@ -24,7 +24,7 @@ class CreateRdvDrugsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
-            $table->decimal('montant_drug')->nullable();
+            $table->bigInteger('montant_drug')->nullable();
             $table->string('strength')->nullable();
             $table->string('dose')->nullable();
             $table->string('duration')->nullable();

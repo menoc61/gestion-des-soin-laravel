@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Appointment;
+use App\Billing;
 use App\Drug;
 use App\Notifications\NewAppointmentByEmailNotification;
 use App\Notifications\WhatsAppNotification;
@@ -24,18 +25,20 @@ class AppointmentController extends Controller
     public function create()
     {
         $patients = User::where('role_id', '3')->get();
+        $praticiens = User::where('role_id', '!=', 3)->get();
+        $drugs = Drug::all();
 
-        return view('appointment.create', ['patients' => $patients]);
+
+        return view('appointment.create', ['patients' => $patients, 'praticiens' => $praticiens,'drugs' => $drugs,]);
     }
 
     public function create_By_id($id)
     {
         $user = User::findOrFail($id);
-        $praticiens = User::where('role_id', '!=', 3)->get();
         $user_auth = Auth::user();
         $drugs = Drug::all();
 
-        // $appointmentsDoc = Appointment::where('doctor_id', $doc_id)->get();
+        $praticiens = User::where('role_id', '!=', 3)->get();
 
         return view('appointment.create_By_user', [
             'userName' => $user->name,
@@ -43,7 +46,6 @@ class AppointmentController extends Controller
             'user_auth' => $user_auth,
             'userId' => $id,
             'drugs' => $drugs,
-            // 'appointmentsDoc' => $appointmentsDoc
         ]);
     }
 
@@ -66,7 +68,7 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function rdv_praticien ($id, $doc_id)
+    public function rdv_praticien($id, $doc_id)
     {
         $user = User::findOrFail($id);
         $praticien = User::findOrFail($doc_id);
@@ -197,7 +199,7 @@ class AppointmentController extends Controller
         if (\Auth::user()->role_id == 3) {
             return back()->with('success', 'Rendez-vous crée avec succès!');
         } else {
-            return back()->with('success', 'Appointment Created Successfully!');
+            return \Redirect::route('billing.create_by', ['id' => $appointment->user_id])->with('success', 'Rendez-vous crée avec succès!');
         }
     }
 
@@ -323,6 +325,23 @@ class AppointmentController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
 
-        return view('appointment.detailAppointment', ['currentUserAppointments' => $currentUserAppointments, 'appointment'=>$appointment]);
+        return view('appointment.detailAppointment', ['currentUserAppointments' => $currentUserAppointments, 'appointment' => $appointment]);
+    }
+
+    public function getAppointmentsByDoctor($doctorId)
+    {
+        // Récupérer les rendez-vous du praticien avec les informations formatées
+        $userAppointments = Appointment::where('doctor_id', $doctorId)
+            ->get()
+            ->map(function ($appointment) {
+                return [
+                    'date' => $appointment->date->format('d M Y'),
+                    'time_start' => $appointment->time_start,
+                    'time_end' => $appointment->time_end,
+                    'created_at' => $appointment->created_at->format('d M Y H:i'),
+                ];
+            });
+
+        return response()->json($userAppointments);
     }
 }

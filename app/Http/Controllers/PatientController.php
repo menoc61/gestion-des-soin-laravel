@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Appointment;
 use App\Billing;
 use App\Document;
+use App\Drug;
 use App\History;
 use App\Notifications\ResetPasswordNotification;
 use App\Patient;
@@ -203,6 +204,7 @@ class PatientController extends Controller
 
     public function view($id)
     {
+
         $patient = User::findOrfail($id);
         $prescriptions = Prescription::select('prescriptions.*')
             ->join('prescription_tests', 'prescription_tests.prescription_id', '=', 'prescriptions.id')
@@ -210,7 +212,7 @@ class PatientController extends Controller
             ->where('prescriptions.user_id', $id)
             ->where(function ($query) {
                 $query->orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE');
-            })->paginate(10);
+            })->paginate(7);
         $psychos = Prescription::select('prescriptions.*')
             ->join('prescription_tests', 'prescription_tests.prescription_id', '=', 'prescriptions.id')
             ->join('tests', 'tests.id', '=', 'prescription_tests.test_id')
@@ -218,21 +220,40 @@ class PatientController extends Controller
             ->where(function ($query) {
                 $query->whereJsonContains('diagnostic_type', 'PSYCHOTHERAPIE');
             })
+            ->paginate(7);
+
+        $appointments = Appointment::where('user_id', $id)->orderBy('id', 'desc')->paginate(7);
+
+        $appointments->load('drugs'); // des rendez-vous
+
+        $appointIds = Appointment::whereHas('rdv__drugs')
+            ->groupBy('id')
+            ->pluck('id');
+
+        $appointExist = Appointment::where('user_id', $id)
+            ->whereIn('id', $appointIds)
+            ->whereDoesntHave('Items')
+            ->orderBy('id', 'desc')
             ->paginate(10);
-        $appointments = Appointment::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(10);
-        $appdrug = Rdv_Drug::select('appointment_id', 'drug_id')
-    ->whereIn('appointment_id', $appointments->pluck('id'))
-    ->groupBy('appointment_id', 'drug_id')
-    ->get();
+
         $tests = Test::where('user_id', $id)
             ->where(function ($query) {
                 $query->orWhereJsonDoesntContain('diagnostic_type', 'PSYCHOTHERAPIE');
             })
             ->orderBy('id', 'desc')
-            ->paginate(10);
-        $documents = Document::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(10);
-        $invoices = Billing::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(10);
-        $historys = History::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(10);
+            ->paginate(7);
+
+        $testpshychos = Test::where('user_id', $id)
+
+            ->where(function ($query) {
+                $query->whereJsonContains('diagnostic_type', 'PSYCHOTHERAPIE');
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(7);
+
+        $documents = Document::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(7);
+        $invoices = Billing::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(7);
+        $historys = History::where('user_id', $id)->OrderBy('id', 'Desc')->paginate(7);
 
         return view('patient.view', [
             'patient' => $patient,
@@ -243,7 +264,8 @@ class PatientController extends Controller
             'historys' => $historys,
             'tests' => $tests,
             'psychos' => $psychos,
-            'appdrug' => $appdrug,
+            'testpshychos' => $testpshychos,
+            'appointExist' => $appointExist,
         ]);
     }
 
