@@ -16,10 +16,20 @@
     @endcan --}}
 
     @role('Admin')
-        <div>
+       <div class="row ">
+        <div class="col-md-6">
             <input type="date" onchange="StartDateFilter(this)" value={{ $defaultStartDate }}>
             <input type="date" onchange="EndDateFilter(this)" value={{ $defaultEndDate }}>
         </div>
+        <div class="col-md-6">
+            <div class="form-group float-right ">
+                <button class="posi" type="submit">
+                    <span><i class="fas fa-bell"></i></span>
+                </button>
+                <button class="btn btn-danger rounded-circle posi_value">{{$countRDVread}}</button>
+            </div>
+        </div>
+       </div>
         {{-- <div class="row top"> --}}
 
         {{-- carte contenant le nombre de rendez-vous qu'aura lieu un jour  --}}
@@ -206,7 +216,7 @@
 
         {{-- graph section --}}
         <div class="row d-flex justify-content-between">
-            <div class="col-md-6 ">
+            <div class="col-sm-6">
                 <div class="card mb-4">
                     <div class="card-header"><b>Chiffre d'affaire par Mois</b></div>
                     <div class="card-body">

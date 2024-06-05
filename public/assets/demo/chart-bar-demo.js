@@ -56,12 +56,12 @@ var myLineChart = new Chart(ctx, {
           gridLines: {
             display: true,
           },
-          scaleLabel: {
-            display: true,
-            labelString: "Montant",
-            fontSize: 25,
-            fontStyle: "bold",
-          },
+        //   scaleLabel: {
+        //     display: true,
+        //     labelString: "Montant",
+        //     fontSize: 25,
+        //     fontStyle: "bold",
+        //   },
         },
       ],
     },
