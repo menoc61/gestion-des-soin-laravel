@@ -12,8 +12,8 @@
         <div class="d-flex justify-content-center">
             <div class="card col-md-12">
                 <div class="card-header py-3">
-                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.follow') }}
-                        </h2>
+                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.follow') }} De {{ $prescription->User->name }}
+                    </h2>
                 </div>
             </div>
         </div>
@@ -154,7 +154,7 @@
                                     {{ csrf_field() }}
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-3">
                                     @if (Auth::user()->role_id != 2)
                                         <div class="form-group">
                                             <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
@@ -188,7 +188,7 @@
                                     @endphp
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-3">
                                     <label for="rdvdate">{{ __('sentence.Date') }}</label>
                                     <input type="text" class="form-control target agenda" name="rdv_time_date"
                                         readonly="readonly" id="rdvdate">
@@ -208,16 +208,16 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="reason">{{ __('sentence.Reason for visit') }}</label>
-                                    <textarea class="form-control" id="reason" name="reason"></textarea>
+                                    <textarea class="form-control" id="reason" name="reason" readonly></textarea>
                                     <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
                                 </div>
 
-                                <div class="form-check">
+                                {{-- <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="send_sms" id="sms">
                                     <label class="form-check-label" for="sms">
                                         {{ __('sentence.Send SMS') }}
                                     </label>
-                                </div>
+                                </div> --}}
                                 <div class="form-group col-md-3">
                                     <input class="form-control" value="{{ $prescription->id }}" type="hidden"
                                         name="prescription_id" readonly>
@@ -235,11 +235,12 @@
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Detail Du RDV</h5>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            {{-- <button type="button" class="close" data-dismiss="modal">&times;</button> --}}
                                         </div>
                                         <div class="modal-body">
-                                            <p>Contenu de la modal...</p>
+                                            <div class="success-message">
+                                                Votre opération a été effectuée avec succès !
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
 
@@ -249,9 +250,6 @@
 
                                             <a class="btn btn-secondary"
                                                 href="{{ route('patient.view', ['id' => $prescription->user_id]) }}">Accueil</a>
-
-                                            <button class="btn btn-secondary" type="button"
-                                                data-dismiss="modal">OK</button>
                                         </div>
                                     </div>
                                 </div>

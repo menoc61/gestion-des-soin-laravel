@@ -40,7 +40,7 @@ class AppointmentController extends Controller
 
         $praticiens = User::where('role_id', '!=', 3)->get();
 
-        return view('appointment.create_By_user', [
+        return view('appointment.create_by_user', [
             'userName' => $user->name,
             'praticiens' => $praticiens,
             'user_auth' => $user_auth,

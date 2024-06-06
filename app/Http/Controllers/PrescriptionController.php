@@ -47,7 +47,7 @@ class PrescriptionController extends Controller
             })
             ->get();
 
-        return view('prescription.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
+        return view('prescription.create_by_user', ['userId' => $id, 'userName' => $user->name], compact('drugs', 'patients', 'praticiens', 'tests'));
     }
 
     public function create_Psychotherapie_By_Id($id)

@@ -38,16 +38,17 @@
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group">
-                            {{-- <label for="PatientID">{{ __('sentence.Patient') }} :</label> --}}
+                            <label for="PatientID">{{ __('sentence.Patient') }} :</label>
                             <input type="hidden" class="form-control" value="{{ $userId }}" name="patient_id"
                                 readonly>
-                            <input type="hidden" class="form-control" value="{{ $userName }}" readonly>
+                            <input type="text" class="form-control" value="{{ $userName }}" readonly>
                             {{ csrf_field() }}
                         </div>
                         <div class="form-group">
                             <label for="DoctorID">{{ __('sentence.Praticiens') }} :</label>
                             @if (Auth::user()->role_id === 1)
-                                <select class="form-control" name="Doctor_id" id="DoctorID" required>
+                                <select class="form-control multiselect-search"name="Doctor_id" id="DoctorID"
+                                    tabindex="-1" aria-hidden="true" required>
                                     <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
                                     @foreach ($praticiens as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -67,7 +68,40 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Tests list') }}</h6>
+                    </div>
+                    <div class="card-body form-group row">
+                        <div class="form-group col-md-4">
+                            <label for="morphology_patient">{{ __('sentence.Tests') }}<font color="red">*
+                                </font></label>
+                            <div>
+                                <select class="form-control multiselect-search" name="test_name[]" id="testSelect"
+                                    tabindex="-1" aria-hidden="true" required>
+                                    @if (@empty($tests))
+                                        <option value="">{{ __('sentence.Select Test') }}...</option>
+                                    @else
+                                        @foreach ($tests as $test)
+                                            @if (Auth::user()->role_id == 2 && Auth::user()->id == $test->created_by)
+                                                <option value="{{ $test->id }}">{{ $test->test_name }}</option>
+                                            @elseif (Auth::user()->role_id == 1)
+                                                <option value="{{ $test->id }}">{{ $test->test_name }}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">{{ __('sentence.Description') }}<font color="red">*</font></label>
+                            <textarea type="text" class="form-control" name="description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="col-md-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
@@ -110,7 +144,7 @@
                         <textarea type="text" class="form-control" name="description"></textarea>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </form>
 @endsection
@@ -156,7 +190,6 @@
             });
         });
     </script>
-
 @endsection
 
 @section('header')

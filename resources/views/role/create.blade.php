@@ -35,10 +35,10 @@
                             <div class="col-sm-9">
                                 <select id="example-multiple-selected" multiple="multiple" name="permissions[]">
                                     @forelse($permissions as $permission)
-                                        <option value="{{ $permission->name }}">{{ $permission->name }}</option>
+                                        <option value="{{ $permission->name }}" class="row">{{ $permission->name }}
+                                        </option>
                                     @empty
                                     @endforelse
-
                                 </select>
                             </div>
                         </div>
@@ -58,13 +58,11 @@
 @endsection
 
 @section('header')
-    <link rel="stylesheet" type="text/css"
-        href="{{ asset('css/bootstrap-multiselect.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-multiselect.css') }}">
 @endsection
 
 @section('footer')
-    <script type="text/javascript"
-        src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $('#example-multiple-selected').multiselect();

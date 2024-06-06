@@ -98,7 +98,7 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $total_patients = User::where('role_id', '3')->count();
         $total_patients_today = User::where('role_id', '3')->wheredate('created_at', Today())->count();
         $total_appointments = Appointment::all()->count();
-        $total_appointments_today = Appointment::wheredate('date', Today())->get();
+        $total_appointments_today = Appointment::where('visited', 0)->wheredate('date', Today())->get();
         $total_prescriptions = Prescription::all()->count();
         $total_payments = Billing::all()->count();
 
@@ -110,6 +110,7 @@ $permission = Permission::create(['name' => 'delete invoice']);
         // $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
         $countRDVread = Appointment::where('is_read',0)->count();
 
+        $appointments = Appointment::where('is_read', 0)->orderBy('id', 'desc')->paginate(7);
 
         $total_payment_by_day = Billing_item::select('created_at', 'invoice_amount')
             ->get()
@@ -179,7 +180,8 @@ $permission = Permission::create(['name' => 'delete invoice']);
             'defaultStartDate' => $defaultStartDate,
             'defaultEndDate' => $defaultEndDate,
             'nameday' => $nameday,
-            'countRDVread' => $countRDVread
+            'countRDVread' => $countRDVread,
+            'appointments' => $appointments,
         ]);
     }
 

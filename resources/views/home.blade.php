@@ -16,20 +16,48 @@
     @endcan --}}
 
     @role('Admin')
-       <div class="row ">
-        <div class="col-md-6">
-            <input type="date" onchange="StartDateFilter(this)" value={{ $defaultStartDate }}>
-            <input type="date" onchange="EndDateFilter(this)" value={{ $defaultEndDate }}>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group float-right ">
-                <button class="posi" type="submit">
-                    <span><i class="fas fa-bell"></i></span>
-                </button>
-                <button class="btn btn-danger rounded-circle posi_value">{{$countRDVread}}</button>
+        <div class="row ">
+            <div class="col-md-6">
+                <input type="date" onchange="StartDateFilter(this)" value={{ $defaultStartDate }}>
+                <input type="date" onchange="EndDateFilter(this)" value={{ $defaultEndDate }}>
+            </div>
+            <div class="col-md-6">
+                <div class="wrapper">
+                    <div class="notification_wrap float-right">
+                        <div class="posi float-right btn btn-secondary rounded-circle">
+                            <span><i class="fas fa-bell"></i></span>
+                            <div class="btn btn-danger rounded-circle posi_value">{{ $countRDVread }}</div>
+                        </div>
+                        <div class="dropdown">
+                            <tr>
+                                <td class="text-center">Notification</td>
+                            </tr>
+                            @forelse ($appointments as $appointment)
+                                <div class="row notify_item d-flex justify-content-center">
+                                    <tr>
+                                        <td><span class="badge badge-primary-soft">{{ $appointment->User->name }}</span></td>
+                                        <td><span class="badge badge-primary-soft">{{ $appointment->date->format('d M Y') }}</span></td>
+                                        <td><span class="badge badge-primary-soft">{{ $appointment->time_start }} - {{ $appointment->time_end }}</span></td>
+                                        <td><a class="btn btn-outline-success btn-circle btn-sm view-details-btn"
+                                                data-id="{{ $appointment->id }}"
+                                                data-date="{{ $appointment->date->format('d M Y') }}"
+                                                data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
+                                                data-doctor="{{ $appointment->Doctor->name }}"
+                                                data-read="{{ $appointment->is_read }}"
+                                                data-visited="{{ $appointment->visited }}"
+                                                data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
+                                                data-drugs="{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}">
+                                                <i class="fas fa-eye"></i>
+                                            </a></td>
+                                    </tr>
+                                </div>
+                            @empty
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-       </div>
         {{-- <div class="row top"> --}}
 
         {{-- carte contenant le nombre de rendez-vous qu'aura lieu un jour  --}}
@@ -232,6 +260,64 @@
         </div>
 
         {{-- graph section end --}}
+        <div class="modal fade" id="viewDetailsModal" tabindex="-1" role="dialog" aria-labelledby="viewDetailsModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="viewDetailsModalLabel">Détail du Rendez vous</h5>
+                        {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> --}}
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover">
+                                <tr>
+                                    <td><b>ID: </b></td>
+                                    <td> <label class="badge badge-primary-soft" id="appointmentID"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Consulter</b></td>
+                                    <td> <label class="badge badge-primary-soft" id="appointmentRead"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Praticien') }} : </b></td>
+                                    <td> <label class="badge badge-primary-soft" id="appointmentDoctor"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Date') }} : </b></td>
+                                    <td><label class="badge badge-primary-soft" id="appointmentDate"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Time Slot') }} : </b></td>
+                                    <td><label class="badge badge-primary-soft" id="appointmentTime"></span></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Prescription') }} : </b></td>
+                                    <td><label class="badge badge-primary-soft" id="appointmentPrescription"></span></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Drug') }} : </b></td>
+                                    <td><span id="appointmentPrescriptiondrug"></span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-primary text-white"
+                            onclick="event.preventDefault(); document.getElementById('rdv-form').submit();"> OK </a>
+                        <form id="rdv-form" action="{{ route('appointment.store_edit') }}" method="POST" class="d-none">
+                            <input type="hidden" name="rdv_id" id="rdvId">
+                            <input type="hidden" name="is_read" value="1">
+                            <input type="hidden" name="rdv_status" id="rdvStatus">
+                            @csrf
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endrole
 
     @role('Praticien')
@@ -505,7 +591,6 @@
                                     <tr>
                                         <th class="text-center">ID</th>
                                         <th>{{ __('sentence.Patient Name') }}</th>
-                                        <th class="text-center">{{ __('sentence.Reason for visit') }}</th>
                                         <th class="text-center">{{ __('sentence.Schedule Info') }}</th>
                                         <th class="text-center">{{ __('sentence.Status') }}</th>
                                         <th class="text-center">{{ __('sentence.Created at') }}</th>
@@ -519,9 +604,6 @@
                                             <td class="text-center">{{ $key + 1 }}</td>
                                             <td><a href="{{ url('patient/view/' . $appointment->user_id) }}">
                                                     {{ $appointment->User->name }} </a></td>
-                                            <td class="text-center"><label
-                                                    class="badge badge-primary-soft">{{ $appointment->reason }}</label></td>
-
                                             <td class="text-center">
                                                 <label class="badge badge-primary-soft">
                                                     <i class="fas fa-calendar"></i> {{ $appointment->date->format('d M Y') }}
@@ -534,7 +616,8 @@
                                             <td class="text-center">
                                                 @if ($appointment->visited == 0)
                                                     <label class="badge badge-warning-soft">
-                                                        <i class="fas fa-hourglass-start"></i> {{ __('sentence.Not Yet Visited') }}
+                                                        <i class="fas fa-hourglass-start"></i>
+                                                        {{ __('sentence.Not Yet Visited') }}
                                                     </label>
                                                 @elseif($appointment->visited == 1)
                                                     <label class="badge badge-success-soft">
@@ -694,6 +777,52 @@
 
             return date >= startDate && date <= endDate;
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.view-details-btn').on('click', function() {
+                var id = $(this).data('id');
+                var date = $(this).data('date');
+                var time = $(this).data('time');
+                var doctor = $(this).data('doctor');
+                var prescription = $(this).data('prescription');
+                var drugs = $(this).data('drugs');
+                var read = $(this).data('read');
+                var visited = $(this).data('visited');
+
+
+                $('#appointmentDate').text(date);
+                $('#appointmentTime').text(time);
+                $('#appointmentRead').text(read);
+                $('#appointmentID').text(id);
+                $('#appointmentDoctor').text(doctor);
+                $('#appointmentPrescription').text(prescription);
+
+                // Clear previous drug badges
+                $('#appointmentPrescriptiondrug').empty();
+
+                // Split drugs string into an array and create badges
+                var drugArray = drugs.split(', ');
+                drugArray.forEach(function(drug) {
+                    var badge = $('<label>').addClass('badge badge-primary-soft').text(drug);
+                    $('#appointmentPrescriptiondrug').append(badge).append(' ');
+                });
+
+                $('#rdvId').val(id);
+                $('#rdvStatus').val(visited);
+
+                $('#viewDetailsModal').modal('show');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $(".posi").click(function() {
+                $(".dropdown").toggleClass("active");
+            });
+        });
     </script>
 
     <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>

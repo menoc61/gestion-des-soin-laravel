@@ -50,10 +50,9 @@
                                             {{ csrf_field() }}
                                         </div>
                                         <div class="form-group col-md-6">
-                                                <label for="inputPassword3">{{ __('sentence.Description') }}</label>
-                                                <input type="text" class="form-control" id="inputPassword3"
-                                                    name="comment"
-                                                    placeholder="Entre une description correspondant au type de diagnostic sélectionné">
+                                            <label for="inputPassword3">{{ __('sentence.Description') }}</label>
+                                            <input type="text" class="form-control" id="inputPassword3" name="comment"
+                                                placeholder="Entre une description correspondant au type de diagnostic sélectionné">
                                         </div>
                                     </div>
 
@@ -327,6 +326,9 @@
                                                 <div class="col-sm-9">
                                                     <select id="Etat-generale-des-mains" class="form-control"
                                                         name="Etat_generale_des_mains">
+                                                        <option value="" disabled selected>Selectionner une option
+                                                            ...
+                                                        </option>
                                                         <option value="Normale">Normale</option>
                                                         <option value="Sèche">Sèche</option>
                                                         <option value="Très sèches">Très sèches</option>
@@ -340,6 +342,9 @@
                                                 <div class="col-sm-9">
                                                     <select id="Etat-des-ongles-mains" class="form-control"
                                                         name="Etat_des_ongles_mains">
+                                                        <option value="" disabled selected>Selectionner une option
+                                                            ...
+                                                        </option>
                                                         <option value="Normaux">Normaux</option>
                                                         <option value="Dures">Dures</option>
                                                         <option value="Cassants">Cassants</option>
@@ -410,16 +415,24 @@
                                         <h5>FACE INTERNE</h5>
 
                                         <div class="form-group row">
-                                            <div class="col-sm-4">
+                                            {{-- <div class="col-sm-4">
                                                 <label for="relief"
                                                     class="col-sm-12 col-form-label">{{ __('sentence.relief') }}</label>
                                                 <input type="text" class="form-control" id="relief"
+                                                    name="reliefInput_main">
+                                            </div> --}}
+                                            <div class="col-sm-4">
+                                                <label for="relief"
+                                                    class="col-sm-12 col-form-label">{{ __('sentence.relief') }}</label>
+                                                <input type="text" class="form-control"
                                                     name="reliefInput_main">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label for="cicatrices-main"
                                                     class="col-sm-12 col-form-label">{{ __('sentence.cicatrices') }}</label>
                                                 <select class="form-control" id="cicatrices-main" name="cicatrices_main">
+                                                    <option value="" disabled selected>Selectionner une option ...
+                                                    </option>
                                                     <option value="oui">{{ __('sentence.oui') }}</option>
                                                     <option value="non">{{ __('sentence.non') }}</option>
                                                 </select>
@@ -428,6 +441,8 @@
                                                 <label for="callosites-main"
                                                     class="col-sm-12 col-form-label">{{ __('sentence.callosites') }}</label>
                                                 <select class="form-control" id="callosites-main" name="callosites_main">
+                                                    <option value="" disabled selected>Selectionner une option ...
+                                                    </option>
                                                     <option value="oui">{{ __('sentence.oui') }}</option>
                                                     <option value="non">{{ __('sentence.non') }}</option>
                                                 </select>
@@ -451,6 +466,8 @@
                                                 <label for="tache-main"
                                                     class="col-sm-12 col-form-label">{{ __('sentence.taches') }}</label>
                                                 <select class="form-control" id="tache-main" name="tache_main">
+                                                    <option value="" disabled selected>Selectionner une option ...
+                                                    </option>
                                                     <option value="oui">{{ __('sentence.oui') }}</option>
                                                     <option value="non">{{ __('sentence.non') }}</option>
                                                 </select>
@@ -460,6 +477,8 @@
                                                     class="col-sm-12 col-form-label">{{ __('sentence.cicatrices') }}</label>
                                                 <select class="form-control" id="cicatrices-main-dorsal"
                                                     name="cicatrices_main_dorsal">
+                                                    <option value="" disabled selected>Selectionner une option ...
+                                                    </option>
                                                     <option value="oui">{{ __('sentence.oui') }}</option>
                                                     <option value="non">{{ __('sentence.non') }}</option>
                                                 </select>
@@ -469,6 +488,8 @@
                                                     class="col-sm-12 col-form-label">{{ __('sentence.espaces inter digitale') }}</label>
                                                 <select class="form-control" id="callosites-main-dorsal"
                                                     name="callosite_main_dorsal">
+                                                    <option value="" disabled selected>Selectionner une option ...
+                                                    </option>
                                                     <option value="oui">{{ __('sentence.oui') }}</option>
                                                     <option value="non">{{ __('sentence.non') }}</option>
                                                 </select>
@@ -499,6 +520,8 @@
                                                 <div class="col-sm-9">
                                                     <select id="Etat-generale-des-pied" class="form-control"
                                                         name="Etat_generale_des_pieds">
+                                                        <option value="" disabled selected>Selectionner une option ...
+                                                        </option>
                                                         <option value="Normale">Normale</option>
                                                         <option value="Sèche">Sèche</option>
                                                         <option value="Très sèches">Très sèches</option>
@@ -512,6 +535,8 @@
                                                 <div class="col-sm-9">
                                                     <select id="Etat-des-ongles" class="form-control"
                                                         name="Etat_des_ongles_pieds">
+                                                        <option value="" disabled selected>Selectionner une option ...
+                                                        </option>
                                                         <option value="Normaux">Normaux</option>
                                                         <option value="Dures">Dures</option>
                                                         <option value="Cassants">Cassants</option>
@@ -596,6 +621,8 @@
                                                     class="col-sm-9 col-form-label">{{ __('sentence.taches foot') }}</label>
                                                 <select class="form-control col-sm-9" id="cicatrices"
                                                     name="taches_pieds">
+                                                    <option value="" disabled selected>Selectionner une option ...
+                                                    </option>
                                                     <option value="oui">{{ __('oui') }}</option>
                                                     <option value="non">{{ __('non') }}</option>
                                                 </select>
@@ -606,6 +633,8 @@
                                                     class="col-sm-9 col-form-label">{{ __('sentence.aureoles') }}</label>
                                                 <select class="form-control col-sm-9" id="aureoles_pieds"
                                                     name="aureoles_pieds">
+                                                    <option value="" disabled selected>Selectionner une option ...
+                                                    </option>
                                                     <option value="oui">{{ __('oui') }}</option>
                                                     <option value="non">{{ __('non') }}</option>
                                                 </select>
@@ -616,6 +645,8 @@
                                                     class="col-sm-9 col-form-label">{{ __('sentence.veines face ext') }}</label>
                                                 <select class="form-control col-sm-9" id="veines_face_ext_pieds"
                                                     name="veines_face_ext_pieds">
+                                                    <option value="" disabled selected>Selectionner une option ...
+                                                    </option>
                                                     <option value="oui">{{ __('sentence.oui') }}</option>
                                                     <option value="non">{{ __('sentence.non') }}</option>
                                                 </select>
@@ -626,6 +657,8 @@
                                                     class="col-sm-9 col-form-label">{{ __('sentence.veines face int') }}</label>
                                                 <select class="form-control col-sm-9" id="veines_face_int_pieds"
                                                     name="veines_face_int_pieds">
+                                                    <option value="" disabled selected>Selectionner une option ...
+                                                    </option>
                                                     <option value="oui">{{ __('sentence.oui') }}</option>
                                                     <option value="non">{{ __('sentence.non') }}</option>
                                                 </select>
@@ -636,6 +669,8 @@
                                                     class="col-sm-9 col-form-label">{{ __('sentence.douleur talon') }}</label>
                                                 <select class="form-control col-sm-9" id="douleur_talon_pieds"
                                                     name="douleur_talon_pieds">
+                                                    <option value="" disabled selected>Selectionner une option ...
+                                                    </option>
                                                     <option value="oui">{{ __('sentence.oui') }}</option>
                                                     <option value="non">{{ __('sentence.non') }}</option>
                                                 </select>
