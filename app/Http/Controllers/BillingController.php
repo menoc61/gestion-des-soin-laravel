@@ -49,7 +49,7 @@ class BillingController extends Controller
 
         $appointments->load('drugs');
 
-        return view('billing.create_By_user', ['userId' => $id, 'userName' => $user->name], compact('appointments'));
+        return view('billing.create_by_user', ['userId' => $id, 'userName' => $user->name], compact('appointments'));
     }
 
     public function storeBilling(Request $request, $id)
@@ -102,9 +102,9 @@ class BillingController extends Controller
             'payment_mode' => 'required',
             'nom.*' => 'required|numeric',
             'invoice_amount.*' => ['required', 'numeric'],
-            'deposited_amount' => 'nullable|numeric|min:0',
-            'due_amount' => 'nullable|numeric|min:0',
-            'payment_amount' => 'nullable|numeric|min:0',
+            'deposited_amount' => 'nullable|numeric|',
+            'due_amount' => 'nullable|numeric|',
+            'payment_amount' => 'nullable|numeric|',
             'payment_date' => 'nullable|date',
         ]);
 
@@ -112,6 +112,11 @@ class BillingController extends Controller
         if ($request->deposited_amount < 0 || $request->due_amount < 0 || $request->invoice_amount < 0) {
             return \Redirect::back()->with('danger', 'Le montant ne doit pas être négatif!');
         }
+
+        if ($request->Remise > $request->invoice_amount ) {
+            return \Redirect::back()->with('danger', 'La remise ne peut pas être suppérieur au montant total à payer!');
+        }
+
 
         // Déterminer le statut du paiement
         if ($request->deposited_amount == 0) {

@@ -9,6 +9,7 @@ use App\Drug;
 use App\History;
 use App\Notifications\ResetPasswordNotification;
 use App\Patient;
+use App\Payment;
 use App\Prescription;
 use App\Rdv_Drug;
 use App\Test;

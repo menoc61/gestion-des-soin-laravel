@@ -643,10 +643,11 @@
                                                 @endif
                                             </div>
                                             <div class="table-responsive">
-                                                <table class="table table-bordered table-striped table-hover">
+                                                <table class="table table-bordered table-striped table-hover " id="dataTable"
+                                                    width="100%" cellspacing="0">
                                                     <tr>
                                                         <td align="center">{{ __('sentence.Reference') }}</td>
-                                                        <td class="text-center">{{ __('sentence.Content') }}</td>
+                                                        <td class="text-center">{{ __('sentence.Name') }}</td>
                                                         <td align="center">{{ __('sentence.Created at') }}</td>
                                                         <td align="center">{{ __('sentence.follow') }}</td>
                                                         <td align="center">{{ __('sentence.Actions') }}</td>
@@ -723,14 +724,10 @@
                                                         @else
                                                             <tr>
                                                                 <td align="center">{{ $prescription->reference }} </td>
-                                                                <td class="text-center">
-                                                                    <label class="badge badge-primary-soft">
-                                                                        {{ count($prescription->Drug) }} Soins
-                                                                    </label>
-                                                                    <label class="badge badge-primary-soft">
-                                                                        {{ count($prescription->Test) }} Diagnostics
-                                                                    </label>
+                                                                <td align="center"><label
+                                                                        class="badge badge-primary-soft">{{ $prescription->nom }}</label>
                                                                 </td>
+
                                                                 <td align="center"><label
                                                                         class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
                                                                 </td>
@@ -795,25 +792,22 @@
                                                         <tr>
                                                             <td align="center"><b>Id</b></td>
                                                             <td align="center"><b> Nom Diagnose</b> </td>
-                                                            <td align="center"><b>Description</b> </td>
-                                                            <td align="center"><b> Utilisation </b></td>
+                                                            {{-- <td align="center"><b>Description</b> </td> --}}
                                                             <td align="center"><b> Action</b> </td>
                                                         </tr>
                                                         @forelse($testpshychos as $key => $testpshycho)
                                                             <tr>
                                                                 <td align="center">{{ $key + 1 }}</td>
-                                                                <td align="center">{{ $testpshycho->test_name }}</td>
-                                                                <td align="center"> {{ $testpshycho->comment }} </td>
-                                                                <td align="center">{{ __('sentence.time use') }} :
-                                                                    {{ $testpshycho->Prescription->count() }}
-                                                                    {{ __('sentence.In Prescription') }}
-                                                                </td>
+                                                                <td align="center"><label class="badge badge-primary-soft">
+                                                                        {{ $testpshycho->test_name }}
+                                                                    </label></td>
+                                                                {{-- <td align="center"><label class="badge badge-primary-soft">
+                                                                        {{ $testpshycho->comment }}
+                                                                    </label></td> --}}
                                                                 <td class="text-center">
-
                                                                     <a href="{{ url('test/view/' . $testpshycho->id) }}"
                                                                         class="btn btn-outline-primary btn-circle btn-sm"><i
                                                                             class="fa fa-eye"></i></a>
-
                                                                     @can('edit diagnostic test')
                                                                         <a href="{{ url('test/edit/' . $testpshycho->id) }}"
                                                                             class="btn btn-outline-warning btn-circle btn-sm"><i
@@ -998,22 +992,22 @@
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-striped table-hover">
                                                     <tr>
-                                                        <th>{{ __('sentence.Invoice') }}</th>
-                                                        <th>{{ __('sentence.Date') }}</th>
-                                                        <th>{{ __('sentence.Amount') }}</th>
-                                                        <th>{{ __('sentence.Status') }}</th>
-                                                        <th>{{ __('sentence.Actions') }}</th>
+                                                        <th class="text-center">{{ __('sentence.Invoice') }}</th>
+                                                        <th class="text-center">{{ __('sentence.Date') }}</th>
+                                                        <th class="text-center">{{ __('sentence.Amount') }}</th>
+                                                        <th class="text-center">{{ __('sentence.Status') }}</th>
+                                                        <th class="text-center">{{ __('sentence.Actions') }}</th>
                                                     </tr>
                                                     @forelse($invoices as $invoice)
                                                         @if (Auth::user()->role_id == 2)
                                                             <tr>
-                                                                <td><a
+                                                                <td class="text-center"><a
                                                                         href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
                                                                 </td>
-                                                                <td><label
+                                                                <td class="text-center"><label
                                                                         class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
                                                                 </td>
-                                                                <td> {{ $invoice->total_with_tax }}
+                                                                <td class="text-center"> {{ $invoice->total_with_tax }}
                                                                     {{ App\Setting::get_option('currency') }}
                                                                     @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
                                                                         <label
@@ -1021,7 +1015,7 @@
                                                                             {{ App\Setting::get_option('currency') }} </label>
                                                                     @endif
                                                                 </td>
-                                                                <td>
+                                                                <td class="text-center">
                                                                     @if ($invoice->payment_status == 'Unpaid')
                                                                         <label class="badge badge-danger-soft">
                                                                             <i class="fas fa-hourglass-start"></i>
@@ -1039,17 +1033,17 @@
                                                                         </label>
                                                                     @endif
                                                                 </td>
-                                                                <td>
+                                                                <td class="text-center">
                                                                     @can('view invoice')
                                                                         <a href="{{ url('billing/view/' . $invoice->id) }}"
                                                                             class="btn btn-outline-success btn-circle btn-sm"><i
                                                                                 class="fas fa-print"></i></a>
                                                                     @endcan
-                                                                    @can('edit invoice')
+                                                                    {{-- @can('edit invoice')
                                                                         <a href="{{ url('billing/edit/' . $invoice->id) }}"
                                                                             class="btn btn-outline-warning btn-circle btn-sm"><i
                                                                                 class="fas fa-pen"></i></a>
-                                                                    @endcan
+                                                                    @endcan --}}
                                                                     @can('delete invoice')
                                                                         <a href="{{ url('billing/delete/' . $invoice->id) }}"
                                                                             class="btn btn-outline-danger btn-circle btn-sm"><i
@@ -1063,13 +1057,13 @@
                                                             </tr>
                                                         @elseif (Auth::user()->role_id == 1)
                                                             <tr>
-                                                                <td><a
+                                                                <td class="text-center"><a
                                                                         href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
                                                                 </td>
-                                                                <td><label
+                                                                <td class="text-center"><label
                                                                         class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
                                                                 </td>
-                                                                <td> {{ $invoice->total_with_tax }}
+                                                                <td class="text-center"> {{ $invoice->total_with_tax }}
                                                                     {{ App\Setting::get_option('currency') }}
                                                                     @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
                                                                         <label
@@ -1077,7 +1071,7 @@
                                                                             {{ App\Setting::get_option('currency') }} </label>
                                                                     @endif
                                                                 </td>
-                                                                <td>
+                                                                <td class="text-center">
                                                                     @if ($invoice->payment_status == 'Unpaid')
                                                                         <label class="badge badge-danger-soft">
                                                                             <i class="fas fa-hourglass-start"></i>
@@ -1095,17 +1089,17 @@
                                                                         </label>
                                                                     @endif
                                                                 </td>
-                                                                <td>
+                                                                <td class="text-center">
                                                                     @can('view invoice')
                                                                         <a href="{{ url('billing/view/' . $invoice->id) }}"
                                                                             class="btn btn-outline-success btn-circle btn-sm"><i
                                                                                 class="fas fa-print"></i></a>
                                                                     @endcan
-                                                                    @can('edit invoice')
-                                                                        <a href="{{ url('billing/edit/' . $invoice->id) }}"
-                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                                class="fas fa-pen"></i></a>
-                                                                    @endcan
+                                                                    {{-- @can('edit invoice')
+                                                                            <a href="{{ url('billing/edit/' . $invoice->id) }}"
+                                                                                class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                                    class="fas fa-pen"></i></a>
+                                                                        @endcan --}}
                                                                     @can('delete invoice')
                                                                         <a href="{{ url('billing/delete/' . $invoice->id) }}"
                                                                             class="btn btn-outline-danger btn-circle btn-sm"><i
@@ -1114,18 +1108,17 @@
                                                                     <a href="{{ url('payment/create/' . $invoice->id) }}"
                                                                         class="btn btn-outline-secondary btn-circle btn-sm"><i
                                                                             class="fas fa-fw fa-dollar-sign"></i></a>
-
                                                                 </td>
                                                             </tr>
                                                         @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $invoice->user_id)
                                                             <tr>
-                                                                <td><a
+                                                                <td class="text-center"><a
                                                                         href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
                                                                 </td>
-                                                                <td><label
+                                                                <td class="text-center"><label
                                                                         class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
                                                                 </td>
-                                                                <td> {{ $invoice->total_with_tax }}
+                                                                <td class="text-center"> {{ $invoice->total_with_tax }}
                                                                     {{ App\Setting::get_option('currency') }}
                                                                     @if ($invoice->payment_status == 'Unpaid' or $invoice->payment_status == 'Partially Paid')
                                                                         <label
@@ -1133,7 +1126,7 @@
                                                                             {{ App\Setting::get_option('currency') }} </label>
                                                                     @endif
                                                                 </td>
-                                                                <td>
+                                                                <td class="text-center">
                                                                     @if ($invoice->payment_status == 'Unpaid')
                                                                         <label class="badge badge-danger-soft">
                                                                             <i class="fas fa-hourglass-start"></i>
@@ -1151,7 +1144,7 @@
                                                                         </label>
                                                                     @endif
                                                                 </td>
-                                                                <td>
+                                                                <td class="text-center">
                                                                     @can('view invoice')
                                                                         <a href="{{ url('billing/view/' . $invoice->id) }}"
                                                                             class="btn btn-outline-success btn-circle btn-sm"><i
@@ -1192,7 +1185,7 @@
                                                 @else
                                                     @can('create prescription')
                                                         <a type="button" class="btn btn-primary btn-sm my-4 float-right"
-                                                            href="{{ route('prescription.create_by', ['id' => $patient->id]) }}"><i
+                                                            href="{{ route('prescription.psycho_by', ['id' => $patient->id]) }}"><i
                                                                 class="fa fa-pen"></i>
                                                             {{ __('sentence.Create Prescription') }}</a>
                                                     @endcan
@@ -1416,9 +1409,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title text-center" id="viewDetailsModalLabel">Détail du Rendez vous</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
-                        </button>
+                        </button> --}}
                     </div>
                     <div class="modal-body">
                         <div class="table-responsive">
@@ -1457,14 +1450,13 @@
                     </div>
                     <div class="modal-footer">
                         <a class="btn btn-primary text-white"
-                        onclick="event.preventDefault(); document.getElementById('rdv-form').submit();"> OK </a>
-                    <form id="rdv-form" action="{{ route('appointment.store_edit') }}" method="POST"
-                        class="d-none">
-                        <input type="hidden" name="rdv_id" id="rdvId">
-                        <input type="hidden" name="is_read" value="1">
-                        <input type="hidden" name="rdv_status"  id="rdvStatus">
-                        @csrf
-                    </form>
+                            onclick="event.preventDefault(); document.getElementById('rdv-form').submit();"> OK </a>
+                        <form id="rdv-form" action="{{ route('appointment.store_edit') }}" method="POST" class="d-none">
+                            <input type="hidden" name="rdv_id" id="rdvId">
+                            <input type="hidden" name="is_read" value="1">
+                            <input type="hidden" name="rdv_status" id="rdvStatus">
+                            @csrf
+                        </form>
                     </div>
                 </div>
             </div>
