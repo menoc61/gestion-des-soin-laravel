@@ -1,6 +1,7 @@
 # Local Installation with Automatic Setup using `setup.sh`
 
 ## Table of Contents
+
 0. [Prerequisites](#prerequisites)
 1. [Usage](#usage)
 2. [Features](#features)
@@ -12,8 +13,7 @@
 4. [Customization](#customization)
 5. [Contributing](#contributing)
 6. [License](#license)
-
-> other options are available
+7. [Common Error](#common-error)
 
 ## Prerequisites
 
@@ -27,11 +27,13 @@ Before running the setup script, ensure you have the following dependencies inst
 ## Usage
 
 1. Make the script executable:
+
     ```bash
     chmod +x setup.sh
     ```
 
 2. Run the script:
+
     ```bash
     ./setup.sh
     ```
@@ -72,8 +74,12 @@ Before running the setup script, ensure you have the following dependencies inst
 
 ## Contributing
 
-Contributions are welcome! Feel free to submit issues or pull requests on the [github.com/menoc61/gestion-des-soin-laravel ](https://github.com/menoc61/gestion-des-soin-laravel/).
+Contributions are welcome! Feel free to submit issues or pull requests on the [github.com/menoc61/gestion-des-soin-laravel](https://github.com/menoc61/gestion-des-soin-laravel/).
 
 ## License
 
 This script is open-source and available under the [MIT License](LICENSE).
+
+## Common Error
+
+See the [Error handler file](handleError.md) for more details.

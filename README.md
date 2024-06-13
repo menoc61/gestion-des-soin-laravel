@@ -12,12 +12,11 @@ Welcome to the GESTION_SOIN_V1 Documentation! This documentation provides inform
 - [Upgrade](#upgrade)
 - [FAQ](#faq)
 - [Resources](#resources)
-- [Issue](#support)
-
+- [Issue](#issue)
 
 ## Getting Started
 
-GESTION_SOIN_V1 is a complete solution for doctors to manage patient appointments, details, and billing. It offers a user-friendly interface and a range of features to handle patients efficiently. The system is highly customizable and easy to set up. The documentation provides step-by-step instructions for installation and configuration. If you need assistance, feel free to contact us at gillemomeni@gmail.com.
+GESTION_SOIN_V1 is a complete solution for doctors to manage patient appointments, details, and billing. It offers a user-friendly interface and a range of features to handle patients efficiently. The system is highly customizable and easy to set up. The documentation provides step-by-step instructions for installation and configuration. If you need assistance, feel free to contact us at <gillemomeni@gmail.com>.
 
 ## License
 
@@ -129,8 +128,8 @@ Find helpful resources for GESTION_SOIN_v1 below:
 
 - comming soon 😶 [Documentation](https://gilles-momeni.vercel.app/)
 
-
 ## Issue
 
 - If you have any questions or need support, a project to develop please [contact us](gillemomeni@gmail.com).
 - Report issues or bug on the issue tab [ISSUE](https://github.com/menoc61/gestion-des-soin-laravel/issues)
+- See the [Error handler file](handleError.md) for more details.
