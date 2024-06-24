@@ -232,7 +232,7 @@
                                     <a class="nav-link " id="tests-tab" data-toggle="tab" href="#tests" role="tab"
                                         aria-controls="tests" aria-selected="false">{{ __('sentence.Test') }}</a>
                                 </li>
-                                @if (Auth::user()->role_id == 1)
+                                @if (Auth::user()->role_id != 2)
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" id="psychotest-tab" data-toggle="tab" href="#psychotest"
                                             role="tab" aria-controls="psychotest"
@@ -244,7 +244,7 @@
                                         role="tab" aria-controls="prescriptions"
                                         aria-selected="false">{{ __('sentence.Prescriptions') }}</a>
                                 </li>
-                                @if (Auth::user()->role_id == 1)
+                                @if (Auth::user()->role_id != 2)
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" id="Psycho-tab" data-toggle="tab" href="#Psycho" role="tab"
                                             aria-controls="Psycho" aria-selected="false">{{ __('sentence.Psycho') }}</a>
@@ -260,6 +260,7 @@
                                         aria-selected="false">{{ __('sentence.Billings') }}</a>
                                 </li>
                             </ul>
+
                             <div class="tab-content" id="myTabContent">
 
                                 {{-- <div class="tab-pane fade " id="profile" role="tabpanel"
@@ -316,7 +317,7 @@
                                                     <td align="center"><b> Action</b> </td>
                                                 </tr>
                                                 @forelse($tests as $key => $test)
-                                                    @if (Auth::user()->role_id == 2)
+                                                    {{-- @if (Auth::user()->role_id == 2)
                                                         <tr>
                                                             <td align="center">{{ $key + 1 }}</td>
                                                             <td align="center"><label class="badge badge-primary-soft">
@@ -325,10 +326,10 @@
                                                             <td align="center"><label class="badge badge-primary-soft">
                                                                     {{ $test->comment }}
                                                                 </label></td>
-                                                            {{-- <td align="center">{{ __('sentence.time use') }} :
+                                                            <td align="center">{{ __('sentence.time use') }} :
                                                                 {{ $test->Prescription->count() }}
                                                                 {{ __('sentence.In Prescription') }}
-                                                            </td> --}}
+                                                            </td>
                                                             <td class="text-center">
 
                                                                 <a href="{{ url('test/view/' . $test->id) }}"
@@ -347,40 +348,8 @@
                                                                             class="fa fa-trash"></i></a>
                                                                 @endcan
                                                             </td>
-                                                        </tr>
-                                                    @elseif (Auth::user()->role_id == 1)
-                                                        <tr>
-                                                            <td align="center">{{ $key + 1 }}</td>
-                                                            <td align="center"><label class="badge badge-primary-soft">
-                                                                    {{ $test->test_name }}
-                                                                </label></td>
-                                                            <td align="center"><label class="badge badge-primary-soft">
-                                                                    {{ $test->comment }}
-                                                                </label></td>
-                                                            {{-- <td align="center">{{ __('sentence.time use') }} :
-                                                                {{ $test->Prescription->count() }}
-                                                                {{ __('sentence.In Prescription') }}
-                                                            </td> --}}
-                                                            <td class="text-center">
-
-                                                                <a href="{{ url('test/view/' . $test->id) }}"
-                                                                    class="btn btn-outline-primary btn-circle btn-sm"><i
-                                                                        class="fa fa-eye"></i></a>
-
-                                                                @can('edit diagnostic test')
-                                                                    <a href="{{ url('test/edit/' . $test->id) }}"
-                                                                        class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                            class="fa fa-pen"></i></a>
-                                                                @endcan
-                                                                @can('delete diagnostic test')
-                                                                    <a class="btn btn-outline-danger btn-circle btn-sm"
-                                                                        data-toggle="modal" data-target="#DeleteModal"
-                                                                        data-link="{{ url('test/delete/' . $test->id) }}"><i
-                                                                            class="fa fa-trash"></i></a>
-                                                                @endcan
-                                                            </td>
-                                                        </tr>
-                                                    @elseif (Auth::user()->role_id == 3 && Auth::user()->id == $test->user_id)
+                                                        </tr> --}}
+                                                    @if (Auth::user()->role_id == 3 && Auth::user()->id == $test->user_id)
                                                         <tr>
                                                             <td align="center">{{ $key + 1 }}</td>
                                                             <td align="center"><label class="badge badge-primary-soft">
@@ -397,11 +366,37 @@
                                                                 <a href="{{ url('test/view/' . $test->id) }}"
                                                                     class="btn btn-outline-primary btn-circle btn-sm"><i
                                                                         class="fa fa-eye"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    @else
+                                                        <tr>
+                                                            <td align="center">{{ $key + 1 }}</td>
+                                                            <td align="center"><label class="badge badge-primary-soft">
+                                                                    {{ $test->test_name }}
+                                                                </label></td>
+                                                            <td align="center"><label class="badge badge-primary-soft">
+                                                                    {{ $test->comment }}
+                                                                </label></td>
+                                                            {{-- <td align="center">{{ __('sentence.time use') }} :
+                                                                {{ $test->Prescription->count() }}
+                                                                {{ __('sentence.In Prescription') }}
+                                                            </td> --}}
+                                                            <td class="text-center">
 
-                                                                @can('create appointment')
-                                                                    <a href="{{ route('appointment.create_by', ['id' => $patient->id]) }}"
-                                                                        class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                            class="far fa-calendar-plus"></i></a>
+                                                                <a href="{{ url('test/view/' . $test->id) }}"
+                                                                    class="btn btn-outline-primary btn-circle btn-sm"><i
+                                                                        class="fa fa-eye"></i></a>
+
+                                                                @can('edit diagnostic test')
+                                                                    <a href="{{ url('test/edit/' . $test->id) }}"
+                                                                        class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                            class="fa fa-pen"></i></a>
+                                                                @endcan
+                                                                @can('delete diagnostic test')
+                                                                    <a class="btn btn-outline-danger btn-circle btn-sm"
+                                                                        data-toggle="modal" data-target="#DeleteModal"
+                                                                        data-link="{{ url('test/delete/' . $test->id) }}"><i
+                                                                            class="fa fa-trash"></i></a>
                                                                 @endcan
                                                             </td>
                                                         </tr>
@@ -649,70 +644,28 @@
                                                         <td align="center">{{ __('sentence.Reference') }}</td>
                                                         <td class="text-center">{{ __('sentence.Name') }}</td>
                                                         <td align="center">{{ __('sentence.Created at') }}</td>
-                                                        <td align="center">{{ __('sentence.follow') }}</td>
+                                                        @if (Auth::user()->role_id == 3)
+                                                        @else
+                                                            <td align="center">{{ __('sentence.follow') }}</td>
+                                                        @endif
                                                         <td align="center">{{ __('sentence.Actions') }}</td>
                                                     </tr>
                                                     @forelse($prescriptions as $prescription)
-                                                        {{-- @if (Auth::user()->role_id == 2)
-                                                            <tr>
-                                                                <td align="center">{{ $prescription->reference }} </td>
-                                                                <td class="text-center">
-                                                                    <label class="badge badge-primary-soft">
-                                                                        {{ count($prescription->Drug) }} Soins
-                                                                    </label>
-                                                                    <label class="badge badge-primary-soft">
-                                                                        {{ count($prescription->Test) }} Diagnostics
-                                                                    </label>
-                                                                </td>
-                                                                <td align="center"><label
-                                                                        class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
-                                                                </td>
-                                                                <td align="center">
-                                                                    <a href="{{ url('prescription/follow/' . $prescription->id) }}"
-                                                                        class="btn btn-outline-primary btn-circle btn-sm">
-                                                                        <i class="fa fa-id-card"></i>
-                                                                    </a>
-                                                                </td>
-                                                                <td align="center">
-                                                                    @can('view prescription')
-                                                                        <a href="{{ url('prescription/view/' . $prescription->id) }}"
-                                                                            class="btn btn-outline-success btn-circle btn-sm"><i
-                                                                                class="fa fa-eye"></i></a>
-                                                                    @endcan
-                                                                    @can('edit prescription')
-                                                                        <a href="{{ url('prescription/edit/' . $prescription->id) }}"
-                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                                class="fas fa-pen"></i></a>
-                                                                    @endcan
-                                                                    @can('delete prescription')
-                                                                        <a href="{{ url('prescription/delete/' . $prescription->id) }}"
-                                                                            class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                                class="fas fa-trash"></i></a>
-                                                                    @endcan
-                                                                </td>
-                                                            </tr>
-                                                        @elseif (Auth::user()->role_id == 1) --}}
-
                                                         @if (Auth::user()->role_id == 3 && Auth::user()->id == $prescription->user_id)
                                                             <tr>
                                                                 <td align="center">{{ $prescription->reference }} </td>
-                                                                <td class="text-center">
-                                                                    <label class="badge badge-primary-soft">
-                                                                        {{ count($prescription->Drug) }} Soins
-                                                                    </label>
-                                                                    <label class="badge badge-primary-soft">
-                                                                        {{ count($prescription->Test) }} Diagnostics
-                                                                    </label>
+                                                                <td align="center"><label
+                                                                        class="badge badge-primary-soft">{{ $prescription->nom }}</label>
                                                                 </td>
                                                                 <td align="center"><label
                                                                         class="badge badge-primary-soft">{{ $prescription->created_at }}</label>
                                                                 </td>
-                                                                <td align="center">
+                                                                {{-- <td align="center">
                                                                     <a href="{{ url('prescription/follow/' . $prescription->id) }}"
                                                                         class="btn btn-outline-primary btn-circle btn-sm">
                                                                         <i class="fa fa-id-card"></i>
                                                                     </a>
-                                                                </td>
+                                                                </td> --}}
                                                                 <td align="center">
                                                                     @can('view prescription')
                                                                         <a href="{{ url('prescription/view/' . $prescription->id) }}"
@@ -775,7 +728,7 @@
                                     </div>
                                     {{-- --------------------------------------------------------- End Prescription  ------------------------------------------------------------------- --}}
 
-                                    @if (Auth::user()->role_id == 1)
+                                    @if (Auth::user()->role_id != 2)
                                         {{-- ----------------------------------------------------------- Start test Psychothérapeutique  --------------------------------------------------------------- --}}
                                         <div class="tab-pane fade" id="psychotest" role="tabpanel"
                                             aria-labelledby="psychotest-tab">
@@ -1195,47 +1148,51 @@
                                                 <table class="table table-bordered table-striped table-hover">
                                                     <tr>
                                                         <td align="center">{{ __('sentence.Reference') }}</td>
-                                                        <td class="text-center">{{ __('sentence.Content') }}</td>
+                                                        <td class="text-center">{{ __('sentence.Name') }}</td>
                                                         <td align="center">{{ __('sentence.Created at') }}</td>
-                                                        <td align="center">{{ __('sentence.follow psycho') }}</td>
+                                                        @if (Auth::user()->role_id == 3)
+                                                        @else
+                                                            <td align="center">{{ __('sentence.follow') }}</td>
+                                                        @endif
                                                         <td align="center">{{ __('sentence.Actions') }}</td>
                                                     </tr>
                                                     @forelse($psychos as $psycho)
                                                         <tr>
                                                             <td align="center">{{ $psycho->reference }} </td>
-                                                            <td class="text-center">
-                                                                <label class="badge badge-primary-soft">
-                                                                    {{ count($psycho->Drug) }} Soin(s)
-                                                                </label>
-                                                                <label class="badge badge-primary-soft">
-                                                                    {{ count($psycho->Test) }} Psychothérapie(s)
-                                                                </label>
-                                                            </td>
+                                                            <td align="center"><label
+                                                                class="badge badge-primary-soft">{{ $psycho->nom }}</label>
+                                                        </td>
                                                             <td align="center"><label
                                                                     class="badge badge-primary-soft">{{ $psycho->created_at }}</label>
                                                             </td>
-                                                            <td align="center">
-                                                                <a href="{{ url('prescription/follow/' . $psycho->id) }}"
-                                                                    class="btn btn-outline-primary btn-circle btn-sm">
-                                                                    <i class="fa fa-id-card"></i>
-                                                                </a>
-                                                            </td>
+                                                            @if (Auth::user()->role_id == 3)
+                                                            @else
+                                                                <td align="center">
+                                                                    <a href="{{ url('prescription/follow/' . $psycho->id) }}"
+                                                                        class="btn btn-outline-primary btn-circle btn-sm">
+                                                                        <i class="fa fa-id-card"></i>
+                                                                    </a>
+                                                                </td>
+                                                            @endif
                                                             <td align="center">
                                                                 @can('view prescription')
                                                                     <a href="{{ url('prescription/view/' . $psycho->id) }}"
                                                                         class="btn btn-outline-success btn-circle btn-sm"><i
                                                                             class="fa fa-eye"></i></a>
                                                                 @endcan
-                                                                @can('edit prescription')
-                                                                    <a href="{{ url('prescription/edit/' . $psycho->id) }}"
-                                                                        class="btn btn-outline-warning btn-circle btn-sm"><i
-                                                                            class="fas fa-pen"></i></a>
-                                                                @endcan
-                                                                @can('delete prescription')
-                                                                    <a href="{{ url('prescription/delete/' . $psycho->id) }}"
-                                                                        class="btn btn-outline-danger btn-circle btn-sm"><i
-                                                                            class="fas fa-trash"></i></a>
-                                                                @endcan
+                                                                @if (Auth::user()->role_id == 3)
+                                                                @else
+                                                                    @can('edit prescription')
+                                                                        <a href="{{ url('prescription/edit/' . $psycho->id) }}"
+                                                                            class="btn btn-outline-warning btn-circle btn-sm"><i
+                                                                                class="fas fa-pen"></i></a>
+                                                                    @endcan
+                                                                    @can('delete prescription')
+                                                                        <a href="{{ url('prescription/delete/' . $psycho->id) }}"
+                                                                            class="btn btn-outline-danger btn-circle btn-sm"><i
+                                                                                class="fas fa-trash"></i></a>
+                                                                    @endcan
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                         <br>
@@ -1449,14 +1406,19 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a class="btn btn-primary text-white"
-                            onclick="event.preventDefault(); document.getElementById('rdv-form').submit();"> OK </a>
-                        <form id="rdv-form" action="{{ route('appointment.store_edit') }}" method="POST" class="d-none">
-                            <input type="hidden" name="rdv_id" id="rdvId">
-                            <input type="hidden" name="is_read" value="1">
-                            <input type="hidden" name="rdv_status" id="rdvStatus">
-                            @csrf
-                        </form>
+                        @if (Auth::user()->role_id == 3)
+                            <button class="btn btn-primary" type="button" data-dismiss="modal">OK</button>
+                        @else
+                            <a class="btn btn-primary text-white"
+                                onclick="event.preventDefault(); document.getElementById('rdv-form').submit();"> OK </a>
+                            <form id="rdv-form" action="{{ route('appointment.store_edit') }}" method="POST"
+                                class="d-none">
+                                <input type="hidden" name="rdv_id" id="rdvId">
+                                <input type="hidden" name="is_read" value="1">
+                                <input type="hidden" name="rdv_status" id="rdvStatus">
+                                @csrf
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>

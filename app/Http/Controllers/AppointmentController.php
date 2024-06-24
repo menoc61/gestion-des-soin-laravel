@@ -348,4 +348,16 @@ class AppointmentController extends Controller
 
         return response()->json($userAppointments);
     }
+
+    public function checkAvailability($doctor_id, $date)
+    {
+        // Récupérer les rendez-vous existants pour le praticien et la date donnés
+        $appointments = Appointment::where('doctor_id', $doctor_id)
+                                   ->whereDate('rdv_time_date', $date)
+                                   ->get(['rdv_time_start', 'rdv_time_end']);
+
+        // Retourner les données sous forme de réponse JSON
+        return response()->json($appointments);
+    }
+
 }

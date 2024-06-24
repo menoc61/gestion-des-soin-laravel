@@ -41,6 +41,13 @@ class UserApiController extends Controller
                 'role_id' => ['numeric'],
             ]);
 
+            // Check if user already exists
+            // $existingUser = User::where('email', $request->email)->first();
+
+            // if ($existingUser) {
+            //     return response()->json(['message' => 'User already exists'], 200);
+            // }
+
             if ($validatedData->fails()) {
                 return response()->json([
                     'status' => false,
@@ -350,6 +357,4 @@ class UserApiController extends Controller
             ]);
         }
     }
-
-
 }

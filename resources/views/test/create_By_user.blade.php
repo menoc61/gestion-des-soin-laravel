@@ -15,7 +15,7 @@
             <button class="btn btn-primary" onclick="history.back()">Retour</button>
         </div>
         <div class="d-flex justify-content-center">
-            <div class="card col-md-10">
+            <div class="card col-md-12">
                 <div class="card-header py-3">
                     <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.Test') }} De
                         {{ $userName }}</h2>
@@ -320,10 +320,10 @@
                                     <div class="card-body">
 
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label for="Etat-generale-des-mains"
-                                                    class="col-sm-9 col-form-label">{{ __('sentence.general hand state') }}</label>
-                                                <div class="col-sm-9">
+                                                    class="col-sm-12 col-form-label">{{ __('sentence.general hand state') }}</label>
+                                                <div class="col-sm-12">
                                                     <select id="Etat-generale-des-mains" class="form-control"
                                                         name="Etat_generale_des_mains">
                                                         <option value="" disabled selected>Selectionner une option
@@ -336,10 +336,10 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label for="Etat-des-ongles-mains"
-                                                    class="col-sm-9 col-form-label">{{ __('sentence.nail state') }}</label>
-                                                <div class="col-sm-9">
+                                                    class="col-sm-12 col-form-label">{{ __('sentence.nail state') }}</label>
+                                                <div class="col-sm-12">
                                                     <select id="Etat-des-ongles-mains" class="form-control"
                                                         name="Etat_des_ongles_mains">
                                                         <option value="" disabled selected>Selectionner une option
@@ -352,14 +352,10 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <hr>
-
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label for="signes-particuliers-mains"
-                                                    class="col-sm-9 col-form-label">{{ __('sentence.particular type hand') }}</label>
-                                                <div class="col-sm-9">
+                                                    class="col-sm-12 col-form-label">{{ __('sentence.particular type hand') }}</label>
+                                                <div class="col-sm-12">
                                                     <select id="signes-particuliers" class="form-control"
                                                         multiple="multiple" name="signes_particuliers_mains[]">
                                                         <option value="Rousseurs">Rousseurs</option>
@@ -369,10 +365,34 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                        </div>
+                                        <hr>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-4">
+                                                <label for="soin"
+                                                    class="col-sm-12 col-form-label">{{ __('sentence.soin') }}</label>
+                                                <div class="col-sm-12">
+                                                    <select class="form-control" id="soin" multiple="multiple"
+                                                        name="soinList_main[]">
+                                                        <option value="1">soin 1</option>
+                                                        <option value="2">soin 2</option>
+                                                        <option value="3">soin 3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label for="vernis"
+                                                    class="col-sm-12 col-form-label">{{ __('sentence.vernis') }}</label>
+                                                <div class="col-sm-12">
+                                                    <input type="text" class="form-control" id="vernis"
+                                                        name="vernisInput_main">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
                                                 <label for="signes-particuliers-ongles-mains"
-                                                    class="col-sm-9 col-form-label">{{ __('sentence.finger state') }}</label>
-                                                <div class="col-sm-9">
+                                                    class="col-sm-12 col-form-label">{{ __('sentence.finger state') }}</label>
+                                                <div class="col-sm-12">
                                                     <select id="signes-particuliers-ongles" class="form-control"
                                                         multiple="multiple" name="signes_particuliers_ongles_mains[]">
                                                         <option value="Epais">Epais</option>
@@ -383,30 +403,6 @@
                                                         <option value="Friables et poudreux">Friables et poudreux</option>
                                                         <option value="Striées">Striées</option>
                                                     </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr>
-
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <label for="soin"
-                                                    class="col-sm-9 col-form-label">{{ __('sentence.soin') }}</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control" id="soin" multiple="multiple"
-                                                        name="soinList_main[]">
-                                                        <option value="1">soin 1</option>
-                                                        <option value="2">soin 2</option>
-                                                        <option value="3">soin 3</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label for="vernis"
-                                                    class="col-sm-9 col-form-label">{{ __('sentence.vernis') }}</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="vernis"
-                                                        name="vernisInput_main">
                                                 </div>
                                             </div>
                                         </div>

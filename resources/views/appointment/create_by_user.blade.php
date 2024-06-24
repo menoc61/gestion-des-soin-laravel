@@ -172,7 +172,7 @@
 @endsection
 
 @section('header')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
@@ -245,6 +245,62 @@
                     }
                 });
             });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Initialisation du datepicker
+            $(".agenda").datepicker({
+                uiLibrary: "bootstrap4",
+                format: "yyyy-mm-dd",
+                todayHighlight: true,
+                minDate: function() {
+                    var date = new Date();
+                    date.setDate(date.getDate());
+                    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                }
+            }).on("changeDate", function(e) {
+                var selectedDate = $(this).val();
+                var doctorId = $('#DoctorID').val();
+
+                if (doctorId && selectedDate) {
+                    $.ajax({
+                        url: '/appointments/check-availability/' + doctorId + '/' + selectedDate,
+                        method: 'GET',
+                        success: function(response) {
+                            var startTimes = response.map(function(appointment) {
+                                return appointment.rdv_time_start;
+                            });
+
+                            var endTimes = response.map(function(appointment) {
+                                return appointment.rdv_time_end;
+                            });
+
+                            // Désactiver les options d'heure de début et de fin qui existent déjà
+                            $('input[name="rdv_time_start"]').find('option').each(function() {
+                                if (startTimes.includes($(this).val())) {
+                                    $(this).attr('disabled', true);
+                                } else {
+                                    $(this).attr('disabled', false);
+                                }
+                            });
+
+                            $('input[name="rdv_time_end"]').find('option').each(function() {
+                                if (endTimes.includes($(this).val())) {
+                                    $(this).attr('disabled', true);
+                                } else {
+                                    $(this).attr('disabled', false);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            // Initialiser Select2
+            $('.multiselect-doctorino').select2();
+            $('.multiselect-search').select2();
         });
     </script>
 

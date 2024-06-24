@@ -36,7 +36,7 @@ var myLineChart = new Chart(ctx, {
             display: true,
           },
           ticks: {
-            maxTicksLimit: 5,
+            maxTicksLimit: 3,
           },
           scaleLabel: {
             display: false,
