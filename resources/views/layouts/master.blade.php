@@ -56,6 +56,11 @@
                         <img src="{{ asset('img/sai-i-lama-logo.png') }}" class="img-fluid">
                     </div>
                 </center>
+                <div class="align-center mt-3">
+                    <center>
+                        <b class="text-light">GESTION DES SOINS</b>
+                    </center>
+                </div>
                 <hr>
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">
@@ -489,7 +494,8 @@
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.View Profile') }}
                                     </a> --}}
-                                    <a class="dropdown-item" href="{{ route('user.edit', ['id' => Auth::user()->id]) }}">
+                                    <a class="dropdown-item"
+                                        href="{{ route('user.edit', ['id' => Auth::user()->id]) }}">
                                         <i class="fas fa-pen fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.Update Profile') }}
                                     </a>

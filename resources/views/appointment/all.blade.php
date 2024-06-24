@@ -6,8 +6,22 @@
 
 @section('content')
 
+    <div class="">
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="card col-md-12">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.All Appointments') }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- DataTales  -->
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4 mt-4">
         <div class="card-header py-3">
             <div class="row">
                 <div class="col-6">

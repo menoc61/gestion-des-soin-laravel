@@ -40,7 +40,7 @@ class AppointmentController extends Controller
 
         $praticiens = User::where('role_id', '!=', 3)->get();
 
-        return view('appointment.create_By_user', [
+        return view('appointment.create_by_user', [
             'userName' => $user->name,
             'praticiens' => $praticiens,
             'user_auth' => $user_auth,
@@ -152,6 +152,7 @@ class AppointmentController extends Controller
         $appointment->time_start = $request->rdv_time_start;
         $appointment->time_end = $request->rdv_time_end;
         $appointment->visited = 0;
+        $appointment->is_read = 0;
         $appointment->reason = $request->reason;
         $appointment->prescription_id = $request->prescription_id;
         $appointment->save();
@@ -205,16 +206,19 @@ class AppointmentController extends Controller
 
     public function store_edit(Request $request)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'rdv_id' => ['required', 'exists:appointments,id'],
             'rdv_status' => ['required', 'numeric'],
+            'is_read' => ['required']
         ]);
 
         $appointment = Appointment::findOrFail($request->rdv_id);
         $appointment->visited = $request->rdv_status;
+        $appointment->is_read = $request->is_read;
         $appointment->save();
 
-        return \Redirect::back()->with('success', 'Appointment Updated Successfully!');
+        return \Redirect::back();
     }
 
     public function all()
@@ -331,7 +335,7 @@ class AppointmentController extends Controller
     public function getAppointmentsByDoctor($doctorId)
     {
         // Récupérer les rendez-vous du praticien avec les informations formatées
-        $userAppointments = Appointment::where('doctor_id', $doctorId)
+        $userAppointments = Appointment::where('doctor_id', $doctorId)->where('visited', 0)
             ->get()
             ->map(function ($appointment) {
                 return [
@@ -344,4 +348,16 @@ class AppointmentController extends Controller
 
         return response()->json($userAppointments);
     }
+
+    public function checkAvailability($doctor_id, $date)
+    {
+        // Récupérer les rendez-vous existants pour le praticien et la date donnés
+        $appointments = Appointment::where('doctor_id', $doctor_id)
+                                   ->whereDate('rdv_time_date', $date)
+                                   ->get(['rdv_time_start', 'rdv_time_end']);
+
+        // Retourner les données sous forme de réponse JSON
+        return response()->json($appointments);
+    }
+
 }

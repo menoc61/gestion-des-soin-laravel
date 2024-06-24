@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Redirect;
 use Spatie\Permission\Models\Role;
+use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Http;
 
 class UsersController extends Controller
 {
@@ -35,6 +37,84 @@ class UsersController extends Controller
         $roles = Role::all();
 
         return view('user.create', ['roles' => $roles]);
+    }
+
+    public function generateToken($user)
+    {
+        $payload = [
+            'sub' => $user->email,
+            'permissions' => ['createProduct',
+            'viewProduct',
+            'updateProduct',
+            'deleteProduct',
+            'createCustomer',
+            'viewCustomer',
+            'updateCustomer',
+            'deleteCustomer',
+            'createSupplier',
+            'viewSupplier',
+            'updateSupplier',
+            'deleteSupplier',
+            'createTransaction',
+            'viewTransaction',
+            'updateTransaction',
+            'deleteTransaction',
+            'createSaleInvoice',
+            'viewSaleInvoice',
+            'updateSaleInvoice',
+            'deleteSaleInvoice',
+            'createPurchaseInvoice',
+            'viewPurchaseInvoice',
+            'updatePurchaseInvoice',
+            'deletePurchaseInvoice',
+            'createPaymentPurchaseInvoice',
+            'viewPaymentPurchaseInvoice',
+            'updatePaymentPurchaseInvoice',
+            'deletePaymentPurchaseInvoice',
+            'createPaymentSaleInvoice',
+            'viewPaymentSaleInvoice',
+            'updatePaymentSaleInvoice',
+            'deletePaymentSaleInvoice',
+            'createRole',
+            'viewRole',
+            'updateRole',
+            'deleteRole',
+            'createRolePermission',
+            'viewRolePermission',
+            'updateRolePermission',
+            'deleteRolePermission',
+            'createUser',
+            'viewUser',
+            'updateUser',
+            'deleteUser',
+            'professionalUser',
+            'viewDashboard',
+            'viewPermission',
+            'createDesignation',
+            'viewDesignation',
+            'updateDesignation',
+            'deleteDesignation',
+            'createProductCategory',
+            'viewProductCategory',
+            'updateProductCategory',
+            'deleteProductCategory',
+            'createReturnPurchaseInvoice',
+            'viewReturnPurchaseInvoice',
+            'updateReturnPurchaseInvoice',
+            'deleteReturnPurchaseInvoice',
+            'createReturnSaleInvoice',
+            'viewReturnSaleInvoice',
+            'updateReturnSaleInvoice',
+            'deleteReturnSaleInvoice',
+            'updateSetting',
+            'viewSetting'], // Ajoutez les permissions ici
+            'iat' => time(),
+            'exp' => time() + 60 * 60 * 24, // 24 heures
+        ];
+
+        $jwt = JWT::encode($payload, env('JWT_SECRET'), 'HS256');
+
+        return $jwt; // Retourne le JWT sans l'envelopper dans une réponse JSON
     }
 
     public function store(Request $request)
@@ -82,12 +162,44 @@ class UsersController extends Controller
         }
         $user->save();
 
+        if ($user->role_id == 1) {
+            $role = 'admin';
+        } else {
+            $role = $role->name;
+        }
+
+        // Générer le token JWT
+        $token = $this->generateToken($user);
+
+        // Envoyer la requête avec le token
+        $response = Http::withToken($token)->post('http://localhost:5001/v1/user/register', [
+            'email' => $user->email,
+            'password' => $request->password,
+            'role' => $role,
+            'username' => $user->name,
+            'salary' => '5000',
+            'designation_id' => 1,
+            'join_date' => "2024-06-20 00:00:00",
+            'leave_date' => "2024-06-20 00:00:00",
+            'id_no' => 'PO-8686',
+            'department' => 'test',
+            'phone' => $request->phone,
+            'address' => 'Yaounde',
+            'blood_group' => 'A+',
+            'createdAt' => $user->created_at->format('Y-m-d\TH:i:s.u\Z'),
+            'updatedAt' => $user->updated_at->format('Y-m-d\TH:i:s.u\Z'),
+        ]);
+
         $patient = new Patient();
         $patient->user_id = $user->id;
         $patient->phone = $request->phone;
         $patient->gender = $request->gender;
         $patient->birthday = '00-00-0000';
         $patient->save();
+
+        if ($response->failed()) {
+            return \Redirect::route('user.all')->with('error', __('sentence.User synchronization failed'));
+        }
 
         return \Redirect::route('user.all')->with('success', __('sentence.User Created Successfully'));
     }

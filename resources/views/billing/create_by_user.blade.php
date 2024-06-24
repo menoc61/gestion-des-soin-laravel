@@ -28,7 +28,15 @@
                         <div class="col-md-4">
                             <div class="card shadow mb-4">
                                 <div class="card-body">
-                                    <h6 class="m-0 font-weight-bold text-primary">{{ $appointment->reason }}</h6>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <h6 class="m-0 font-weight-bold text-secondary">{{ $appointment->id }}</h6>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <h6 class="m-0 font-weight-bold text-secondary float-right">{{ $appointment->date->format('d M Y') }}</h6>
+                                        </div>
+                                    </div>
+                                    <hr>
                                     @forelse ($appointment->drugs as $drug)
                                         <div class="row my-4">
                                             <div class="col-md-6">
@@ -37,7 +45,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <h6 class="m-0 font-weight-bold text-primary">
-                                                    {{ $drug->amountDrug }}
+                                                    {{ $drug->amountDrug }} {{ App\Setting::get_option('currency') }}
                                                 </h6>
                                             </div>
                                         </div>
@@ -76,17 +84,17 @@
                         </tr>
                     @endforelse
                 </div>
-                @if ($appointments->isNotEmpty())
+                {{-- @if ($appointments->isNotEmpty())
                     <div class="row">
                         <div class="col-md-12">
                             <h6 class="m-0 font-weight-bold text-primary">
-                                Somme totale des montants de médicaments :
+                                Somme totale des soins :
                                 {{ $appointments->pluck('drugs')->flatten()->sum('amountDrug') }}
                                 {{ App\Setting::get_option('currency') }}
                             </h6>
                         </div>
                     </div>
-                @endif
+                @endif --}}
             </div>
             <div class="col-md-6">
                 <div class="card shadow mb-4">
@@ -120,13 +128,15 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="Remise">{{ __('sentence.Remise') }}</label>
-                                <input class="form-control" type="number" name="Remise" id="Remise">
+                                <input class="form-control" type="number" min="0" value="0" name="Remise"
+                                    id="Remise">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="form-group col-md-6">
                                 <label for="DepositedAmount">{{ __('sentence.Already Paid') }}</label>
-                                <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount">
+                                <input class="form-control" type="number" value="0" name="deposited_amount"
+                                    id="DepositedAmount">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="DueAmount">{{ __('sentence.Due Balance') }}</label>
@@ -214,4 +224,3 @@
         }
     </script>
 @endsection
-
