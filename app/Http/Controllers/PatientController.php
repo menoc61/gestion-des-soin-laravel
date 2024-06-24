@@ -17,6 +17,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
+use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Http;
 
 class PatientController extends Controller
 {
@@ -41,6 +43,84 @@ class PatientController extends Controller
     public function create()
     {
         return view('patient.create');
+    }
+
+    public function generateToken($user)
+    {
+        $payload = [
+            'sub' => $user->email,
+            'permissions' => ['createProduct',
+            'viewProduct',
+            'updateProduct',
+            'deleteProduct',
+            'createCustomer',
+            'viewCustomer',
+            'updateCustomer',
+            'deleteCustomer',
+            'createSupplier',
+            'viewSupplier',
+            'updateSupplier',
+            'deleteSupplier',
+            'createTransaction',
+            'viewTransaction',
+            'updateTransaction',
+            'deleteTransaction',
+            'createSaleInvoice',
+            'viewSaleInvoice',
+            'updateSaleInvoice',
+            'deleteSaleInvoice',
+            'createPurchaseInvoice',
+            'viewPurchaseInvoice',
+            'updatePurchaseInvoice',
+            'deletePurchaseInvoice',
+            'createPaymentPurchaseInvoice',
+            'viewPaymentPurchaseInvoice',
+            'updatePaymentPurchaseInvoice',
+            'deletePaymentPurchaseInvoice',
+            'createPaymentSaleInvoice',
+            'viewPaymentSaleInvoice',
+            'updatePaymentSaleInvoice',
+            'deletePaymentSaleInvoice',
+            'createRole',
+            'viewRole',
+            'updateRole',
+            'deleteRole',
+            'createRolePermission',
+            'viewRolePermission',
+            'updateRolePermission',
+            'deleteRolePermission',
+            'createUser',
+            'viewUser',
+            'updateUser',
+            'deleteUser',
+            'professionalUser',
+            'viewDashboard',
+            'viewPermission',
+            'createDesignation',
+            'viewDesignation',
+            'updateDesignation',
+            'deleteDesignation',
+            'createProductCategory',
+            'viewProductCategory',
+            'updateProductCategory',
+            'deleteProductCategory',
+            'createReturnPurchaseInvoice',
+            'viewReturnPurchaseInvoice',
+            'updateReturnPurchaseInvoice',
+            'deleteReturnPurchaseInvoice',
+            'createReturnSaleInvoice',
+            'viewReturnSaleInvoice',
+            'updateReturnSaleInvoice',
+            'deleteReturnSaleInvoice',
+            'updateSetting',
+            'viewSetting'], // Ajoutez les permissions ici
+            'iat' => time(),
+            'exp' => time() + 60 * 60 * 24, // 24 heures
+        ];
+
+        $jwt = JWT::encode($payload, env('JWT_SECRET'), 'HS256');
+
+        return $jwt; // Retourne le JWT sans l'envelopper dans une réponse JSON
     }
 
     public function store(Request $request)
@@ -116,6 +196,18 @@ class PatientController extends Controller
         $patient->alimentation = json_encode($request->alimentation);
         $patient->digestion = $request->digestion;
         $patient->save();
+
+        // Générer le token JWT
+        $token = $this->generateToken($user);
+
+        $response = Http::withToken($token)->post('http://localhost:5001/v1/customer/', [
+            'name' => $user->name,
+            'phone' => $request->phone,
+            'address' => $request->adress,
+            'type_customer' => 'particulier',
+            'createdAt' => $user->created_at->format('Y-m-d\TH:i:s.u\Z'),
+            'updatedAt' => $user->updated_at->format('Y-m-d\TH:i:s.u\Z'),
+        ]);
 
         return \Redirect::route('test.create_by', ['id' => $patient->user_id])->with('success', __('sentence.Patient Created Successfully'));
     }

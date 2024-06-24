@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.3 || ^8.1",
         "fideloper/proxy": "^4.2",
+        "firebase/php-jwt": "^6.10",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "infobip/infobip-api-php-client": "^5.1",

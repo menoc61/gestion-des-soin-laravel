@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -172,3 +173,5 @@ Route::post('/notification/edit', 'NotificationController@store_edit')->name('no
 Route::get('/notification/all', 'NotificationController@all')->name('notification.all')->middleware(['role_or_permission:Admin|view all notification']);
 Route::get('/notification/delete/{id}', 'NotificationController@destroy')->where('id', '[0-9]+')->name('notification.delete')->middleware(['role_or_permission:Admin|delete notification']);
 Route::post('/notification/delete-selected', 'NotificationController@deleteSelected')->name('notification.delete-selected')->middleware(['role_or_permission:Admin|delete notification']);
+
+
