@@ -31,6 +31,11 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="payment_amount">{{ __('Montant du paiement') }}</label>
+                            <input type="number" class="form-control"  value="{{$billing->due_amount}}"
+                                readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment_amount">{{ __('Montant du paiement') }}</label>
                             <input type="number" class="form-control" id="deposited_amount" name="deposited_amount"
                                 required>
                         </div>
@@ -40,8 +45,8 @@
                                 value="{{ now()->toDateString() }}" required readonly>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="{{ __('sentence.Buy billing') }}" class="btn btn-success btn-block"
-                                align="center">
+                            <input type="submit" value="{{ __('sentence.Buy billing') }}"
+                                class="btn btn-success btn-block" align="center">
                         </div>
                     </div>
                 </div>

@@ -44,8 +44,10 @@
                                 @if (Auth::user()->role_id != 2)
                                     <div class="form-group">
                                         <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
-                                        <select class="form-control " name="doctor_id" id="DoctorID" required>
-                                            <option value="" disabled selected>{{ __('sentence.Select Drug') }}...</option>
+                                        <select class="form-control multiselect-search" name="doctor_id" id="DoctorID"
+                                            required>
+                                            <option value="" disabled selected>{{ __('sentence.Select Drug') }}...
+                                            </option>
                                             @foreach ($praticiens as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -72,11 +74,11 @@
                                 <input type="time" class="form-control target" name="rdv_time_end">
                             </div>
 
-                            <div class="form-group col-md-6">
+                            {{-- <div class="form-group col-md-6">
                                 <label for="reason">{{ __('sentence.Reason for visit') }}</label>
                                 <textarea class="form-control" id="reason" name="reason"></textarea>
                                 <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
-                            </div>
+                            </div> --}}
 
                             {{-- <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="send_sms" id="sms">
@@ -136,26 +138,29 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        {{-- <button type="button" class="close" data-dismiss="modal">&times;</button> --}}
                     </div>
                     <div class="modal-body">
-                        <p>Contenu de la modal...</p>
+                        <div class="success-message">
+                            Votre opération a été effectuée avec succès !
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <div class="d-flex col-md-12">
+                            @if (Auth::user()->role_id != 3)
+                                <div class="col-md-4">
+                                    <a class="btn btn-primary" href="{{ route('billing.create_by', ['id' => $userId]) }}">
+                                        payer
+                                    </a>
+                                </div>
+                            @endif
                             <div class="col-md-4">
-                                <a class="btn btn-primary" href="{{ route('billing.create_by', ['id' => $userId]) }}">
-                                    payer
+                                <a class="btn btn-secondary" href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
                                 </a>
                             </div>
                             <div class="col-md-4">
                                 <a class="btn btn-secondary"
-                                    href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
-                                </a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn btn-secondary"
-                                    href="{{ route('appointment.create_by', ['id' => $userId]) }}"> Rendez-Vous
+                                    href="{{ route('appointment.create_by', ['id' => $userId]) }}"> Nouveau RDV
                                 </a>
                             </div>
                         </div>
@@ -167,6 +172,7 @@
 @endsection
 
 @section('header')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
@@ -184,7 +190,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="morphology_patient">{{ __('sentence.Drugs') }}<font color="red">*</font></label>
-                    <select class="form-control multiselect-drug" name="trade_name[]" id="drug" required>
+                    <select class="form-control multiselect-search multiselect-drug" name="trade_name[]" id="drug" tabindex="-1" aria-hidden="true" required>
                         <option value="" disabled selected>{{ __('sentence.Select Drug') }}...</option>
                         @foreach($drugs as $drug)
                             <option value="{{ $drug->id }}" data-amountdrug="{{ $drug->amountDrug }} {{ App\Setting::get_option('currency') }}">{{ $drug->trade_name }}</option>
@@ -239,6 +245,62 @@
                     }
                 });
             });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Initialisation du datepicker
+            $(".agenda").datepicker({
+                uiLibrary: "bootstrap4",
+                format: "yyyy-mm-dd",
+                todayHighlight: true,
+                minDate: function() {
+                    var date = new Date();
+                    date.setDate(date.getDate());
+                    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                }
+            }).on("changeDate", function(e) {
+                var selectedDate = $(this).val();
+                var doctorId = $('#DoctorID').val();
+
+                if (doctorId && selectedDate) {
+                    $.ajax({
+                        url: '/appointments/check-availability/' + doctorId + '/' + selectedDate,
+                        method: 'GET',
+                        success: function(response) {
+                            var startTimes = response.map(function(appointment) {
+                                return appointment.rdv_time_start;
+                            });
+
+                            var endTimes = response.map(function(appointment) {
+                                return appointment.rdv_time_end;
+                            });
+
+                            // Désactiver les options d'heure de début et de fin qui existent déjà
+                            $('input[name="rdv_time_start"]').find('option').each(function() {
+                                if (startTimes.includes($(this).val())) {
+                                    $(this).attr('disabled', true);
+                                } else {
+                                    $(this).attr('disabled', false);
+                                }
+                            });
+
+                            $('input[name="rdv_time_end"]').find('option').each(function() {
+                                if (endTimes.includes($(this).val())) {
+                                    $(this).attr('disabled', true);
+                                } else {
+                                    $(this).attr('disabled', false);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            // Initialiser Select2
+            $('.multiselect-doctorino').select2();
+            $('.multiselect-search').select2();
         });
     </script>
 
@@ -339,6 +401,45 @@
                         // Gestion des erreurs si nécessaire
                     }
                 });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.multiselect-search').select2();
+
+            // Get references to the patient and test select elements
+            const patientSelect = $('#PatientID');
+            const testSelect = $('#test');
+
+            // Store the original test options
+            const originalTestOptions = testSelect.html();
+
+            // Function to update test options based on the selected patient
+            function updateTestOptions() {
+                const selectedPatientName = patientSelect.find('option:selected').text();
+
+                // Clear and restore original test options
+                testSelect.empty().html(originalTestOptions);
+
+                // Filter and show test options based on the selected patient
+                testSelect.find('option').each(function() {
+                    const optionText = $(this).text();
+                    if (optionText.includes(selectedPatientName)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                // Trigger the Select2 plugin to update the dropdown
+                testSelect.trigger('change');
+            }
+
+            // Attach a change event listener to the patient select element
+            patientSelect.on('change', function() {
+                updateTestOptions();
             });
         });
     </script>
