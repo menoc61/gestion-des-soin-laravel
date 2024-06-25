@@ -138,6 +138,7 @@ Route::get('/users/edit/{id}', 'UsersController@edit')->where('id', '[0-9]+')->n
 // Route::get('/users/edit', 'UsersController@edit_profile')->name('user.edit_profile');
 Route::post('/users/edit', 'UsersController@store_edit')->name('user.store_edit');
 Route::post('/users/fonction/search', 'UsersController@searchfonction')->name('user.search');
+Route::get('/user/delete/{id}', 'UsersController@destroy')->where('id', '[0-9]+')->name('user.destroy')->middleware(['role_or_permission:Admin|delete patient']);
 /* Roles */
 Route::get('/roles/all', 'RolesController@all_roles')->name('roles.all')->middleware(['role_or_permission:Admin']);
 Route::get('/role/create', 'RolesController@create')->name('role.create')->middleware(['role_or_permission:Admin']);

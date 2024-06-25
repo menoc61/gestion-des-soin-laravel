@@ -218,7 +218,7 @@ class AppointmentController extends Controller
         $appointment->is_read = $request->is_read;
         $appointment->save();
 
-        return \Redirect::back();
+        return \Redirect::route('patient.view', ['id' => $appointment->user_id]);
     }
 
     public function all()
