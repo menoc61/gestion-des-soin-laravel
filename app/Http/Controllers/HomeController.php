@@ -94,6 +94,7 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $total_prescriptions_for_pratician = Prescription::where('doctor_id', $doctorId)->count();
         $total_tests_for_pratician = Test::where('created_by', $doctorId)->count();
         $total_amount_for_pratician = Billing::where('created_by', $doctorId)->sum('total_with_tax');
+        $agendaDoctors = Appointment::where('doctor_id', $doctorId)->where('visited', 0)->whereMonth('date', date('m'))->get();
         // Home concernant l'Admin
         $total_patients = User::where('role_id', '3')->count();
         $total_patients_today = User::where('role_id', '3')->wheredate('created_at', Today())->count();
@@ -182,6 +183,7 @@ $permission = Permission::create(['name' => 'delete invoice']);
             'nameday' => $nameday,
             'countRDVread' => $countRDVread,
             'appointments' => $appointments,
+            'agendaDoctors'=> $agendaDoctors,
         ]);
     }
 
