@@ -80,8 +80,8 @@
                             <label for="Gender" class="col-sm-3 col-form-label">{{ __('sentence.Gender') }}</label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="gender" id="Gender">
-                                    <option value="Male">{{ __('sentence.Male') }}</option>
-                                    <option value="Female">{{ __('sentence.Female') }}</option>
+                                    <option value="Homme">{{ __('sentence.Male') }}</option>
+                                    <option value="Femme">{{ __('sentence.Female') }}</option>
                                 </select>
                             </div>
                         </div>

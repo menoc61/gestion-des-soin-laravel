@@ -632,7 +632,7 @@ mark {
 
 .initialism {
   font-size: 90%;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 .blockquote {
@@ -4984,10 +4984,11 @@ input[type="submit"].btn-block {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  /* background-color: #fff; */
   background-clip: border-box;
   border: 1px solid #e3e6f0;
-  border-radius: 0.35rem;
+  border-radius: 0.50rem;
+  background: rgba(225, 225, 225, 0.3);
 }
 
 .card > hr {
@@ -10404,12 +10405,6 @@ a:focus {
   display: flex;
 }
 
-#wrapper #content-wrapper {
-  background-color: #f8f9fc;
-  width: 100%;
-  overflow-x: hidden;
-}
-
 #wrapper #content-wrapper #content {
   flex: 1 0 auto;
 }
@@ -12230,3 +12225,9 @@ input[type='password']:focus
 .notification_wrap .dropdown.active{
     display: block;
 }
+#wrapper #content-wrapper {
+    width: 100%;
+    overflow-x: hidden;
+    background: linear-gradient(45deg, #abdfc2, #ecf3f300, #8e419c70);
+    z-index: 1;
+  }

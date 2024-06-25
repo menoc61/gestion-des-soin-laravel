@@ -403,6 +403,7 @@
             </ul>
             <!-- End of Sidebar -->
             <!-- Content Wrapper -->
+            <div class="background-blur"></div>
             <div id="content-wrapper" class="d-flex flex-column">
                 <!-- Main Content -->
                 <div id="content">
