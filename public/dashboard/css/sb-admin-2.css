@@ -11249,3 +11249,6 @@ body.sidebar-toggled footer.sticky-footer {
     background-image: url("../../img/salon.jpg");
     background-repeat: no-repeat;
 }
+.transpar{
+    background: linear-gradient(to bottom, #f1f4f9, #dff1ff);
+}

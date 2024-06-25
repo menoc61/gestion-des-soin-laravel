@@ -181,7 +181,7 @@ class UsersController extends Controller
             'designation_id' => 1,
             'join_date' => "2024-06-20 00:00:00",
             'leave_date' => "2024-06-20 00:00:00",
-            'id_no' => 'PO-8686',
+            'id_no' => 'PZD-8686',
             'department' => 'test',
             'phone' => $request->phone,
             'address' => 'Yaounde',
@@ -276,5 +276,10 @@ class UsersController extends Controller
 
         return view('appointment.rdvPraticien', ['praticiens' => $praticiens]);
     }
+    public function destroy($id)
+    {
+        $user = User::destroy($id);
 
+        return \Redirect::back()->with('success', 'User Deleted Successfully');
+    }
 }
