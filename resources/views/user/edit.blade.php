@@ -24,6 +24,7 @@
                 <div class="card-body">
                     <form method="post" action="{{ route('user.store_edit') }}">
                         @csrf
+                        <input type="hidden" name="user_id" value="{{ $user->id }}">
                         <center>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
@@ -32,7 +33,7 @@
                                     <div class="image-container">
                                         <span class="hover-text">Choisir le Profil</span>
                                         <img id="image-preview" src="{{ asset('img/default-image.jpeg') }}"
-                                            alt="Image Preview">
+                                            alt="Image Preview" value="{{ $user->image }}">
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +42,7 @@
                             <label for="Name" class="col-sm-3 col-form-label">{{ __('sentence.Full Name') }}<font
                                     color="red">*</font></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="Name" name="name">
+                                <input type="text" class="form-control" id="Name" name="name" value="{{ $user->name }}">
                                 {{ csrf_field() }}
                             </div>
                         </div>
@@ -49,7 +50,7 @@
                             <label for="Email" class="col-sm-3 col-form-label">{{ __('sentence.Email Adress') }}<font
                                     color="red">*</font></label>
                             <div class="col-sm-9">
-                                <input type="email" class="form-control" id="Email" name="email">
+                                <input type="email" class="form-control" id="Email" name="email" value="{{ $user->email }}">
                             </div>
                         </div>
 
@@ -66,14 +67,14 @@
                                 <font color="red">*</font>
                             </label>
                             <div class="col-sm-9">
-                                <input type="password" class="form-control" id="Password" name="password_confirmation">
+                                <input type="password" class="form-control" id="Password" name="password_confirmation" >
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="Phone" class="col-sm-3 col-form-label">{{ __('sentence.Phone') }}</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="Phone" name="phone">
+                                <input type="text" class="form-control" id="Phone" name="phone" value="{{ $user->phone }}">
                             </div>
                         </div>
                         <div class="form-group row">

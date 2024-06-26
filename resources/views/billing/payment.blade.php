@@ -30,12 +30,12 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="payment_amount">{{ __('Montant du paiement') }}</label>
+                            <label for="payment_amount">{{ __('sentence.Due Balance') }}</label>
                             <input type="number" class="form-control"  value="{{$billing->due_amount}}"
                                 readonly>
                         </div>
                         <div class="form-group">
-                            <label for="payment_amount">{{ __('Montant du paiement') }}</label>
+                            <label for="payment_amount">{{ __('sentence.Already Paid') }}</label>
                             <input type="number" class="form-control" id="deposited_amount" name="deposited_amount"
                                 required>
                         </div>

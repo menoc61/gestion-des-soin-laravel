@@ -312,6 +312,7 @@ return [
     'Test Pshycho' => 'Diagnose Psychothérapeutique',
     'Buy billing' => 'Payer la Facture',
     'Total Remise' => 'Total Remise',
-    'Praticienino Settings' => 'Paramètre de l\'application'
-
+    'Praticienino Settings' => 'Paramètre de l\'application',
+    'Delete Alert' => 'Voulez-vous vraiment supprimer cette donnée',
+    'Delete' => 'Supprimer'
 ];

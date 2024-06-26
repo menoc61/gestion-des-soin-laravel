@@ -24,9 +24,9 @@ class UsersController extends Controller
         $sortColumn = request()->get('sort');
         $sortOrder = request()->get('order', 'asc');
         if (!empty($sortColumn)) {
-            $users = User::where('role_id','!=',3)->orderBy($sortColumn, $sortOrder)->paginate(25);
+            $users = User::where('role_id', '!=', 3)->orderBy($sortColumn, $sortOrder)->paginate(10);
         } else {
-            $users = User::where('role_id','!=',3)->paginate(25);
+            $users = User::where('role_id', '!=', 3)->paginate(10);
         }
 
         return view('user.all', ['users' => $users]);
@@ -43,71 +43,73 @@ class UsersController extends Controller
     {
         $payload = [
             'sub' => $user->email,
-            'permissions' => ['createProduct',
-            'viewProduct',
-            'updateProduct',
-            'deleteProduct',
-            'createCustomer',
-            'viewCustomer',
-            'updateCustomer',
-            'deleteCustomer',
-            'createSupplier',
-            'viewSupplier',
-            'updateSupplier',
-            'deleteSupplier',
-            'createTransaction',
-            'viewTransaction',
-            'updateTransaction',
-            'deleteTransaction',
-            'createSaleInvoice',
-            'viewSaleInvoice',
-            'updateSaleInvoice',
-            'deleteSaleInvoice',
-            'createPurchaseInvoice',
-            'viewPurchaseInvoice',
-            'updatePurchaseInvoice',
-            'deletePurchaseInvoice',
-            'createPaymentPurchaseInvoice',
-            'viewPaymentPurchaseInvoice',
-            'updatePaymentPurchaseInvoice',
-            'deletePaymentPurchaseInvoice',
-            'createPaymentSaleInvoice',
-            'viewPaymentSaleInvoice',
-            'updatePaymentSaleInvoice',
-            'deletePaymentSaleInvoice',
-            'createRole',
-            'viewRole',
-            'updateRole',
-            'deleteRole',
-            'createRolePermission',
-            'viewRolePermission',
-            'updateRolePermission',
-            'deleteRolePermission',
-            'createUser',
-            'viewUser',
-            'updateUser',
-            'deleteUser',
-            'professionalUser',
-            'viewDashboard',
-            'viewPermission',
-            'createDesignation',
-            'viewDesignation',
-            'updateDesignation',
-            'deleteDesignation',
-            'createProductCategory',
-            'viewProductCategory',
-            'updateProductCategory',
-            'deleteProductCategory',
-            'createReturnPurchaseInvoice',
-            'viewReturnPurchaseInvoice',
-            'updateReturnPurchaseInvoice',
-            'deleteReturnPurchaseInvoice',
-            'createReturnSaleInvoice',
-            'viewReturnSaleInvoice',
-            'updateReturnSaleInvoice',
-            'deleteReturnSaleInvoice',
-            'updateSetting',
-            'viewSetting'], // Ajoutez les permissions ici
+            'permissions' => [
+                'createProduct',
+                'viewProduct',
+                'updateProduct',
+                'deleteProduct',
+                'createCustomer',
+                'viewCustomer',
+                'updateCustomer',
+                'deleteCustomer',
+                'createSupplier',
+                'viewSupplier',
+                'updateSupplier',
+                'deleteSupplier',
+                'createTransaction',
+                'viewTransaction',
+                'updateTransaction',
+                'deleteTransaction',
+                'createSaleInvoice',
+                'viewSaleInvoice',
+                'updateSaleInvoice',
+                'deleteSaleInvoice',
+                'createPurchaseInvoice',
+                'viewPurchaseInvoice',
+                'updatePurchaseInvoice',
+                'deletePurchaseInvoice',
+                'createPaymentPurchaseInvoice',
+                'viewPaymentPurchaseInvoice',
+                'updatePaymentPurchaseInvoice',
+                'deletePaymentPurchaseInvoice',
+                'createPaymentSaleInvoice',
+                'viewPaymentSaleInvoice',
+                'updatePaymentSaleInvoice',
+                'deletePaymentSaleInvoice',
+                'createRole',
+                'viewRole',
+                'updateRole',
+                'deleteRole',
+                'createRolePermission',
+                'viewRolePermission',
+                'updateRolePermission',
+                'deleteRolePermission',
+                'createUser',
+                'viewUser',
+                'updateUser',
+                'deleteUser',
+                'professionalUser',
+                'viewDashboard',
+                'viewPermission',
+                'createDesignation',
+                'viewDesignation',
+                'updateDesignation',
+                'deleteDesignation',
+                'createProductCategory',
+                'viewProductCategory',
+                'updateProductCategory',
+                'deleteProductCategory',
+                'createReturnPurchaseInvoice',
+                'viewReturnPurchaseInvoice',
+                'updateReturnPurchaseInvoice',
+                'deleteReturnPurchaseInvoice',
+                'createReturnSaleInvoice',
+                'viewReturnSaleInvoice',
+                'updateReturnSaleInvoice',
+                'deleteReturnSaleInvoice',
+                'updateSetting',
+                'viewSetting'
+            ], // Ajoutez les permissions ici
             'iat' => time(),
             'exp' => time() + 60 * 60 * 24, // 24 heures
         ];
@@ -229,7 +231,15 @@ class UsersController extends Controller
             ])],
         ]);
 
+        // Trouver l'utilisateur par 'user_id'
         $user = User::find($request->user_id);
+
+        // Assigner le nouveau rôle à l'utilisateur
+        $role = Role::find($request->role_id);
+
+        if (!$user) {
+            return \Redirect::route('user.all')->with('error', __('sentence.User not found'));
+        }
         $user->password = \Hash::make($request->password);
         $user->email = $request->email;
         $user->name = $request->name;
@@ -251,6 +261,8 @@ class UsersController extends Controller
         } else {
             $user->image = '';
         }
+        // Supprimer tous les rôles existants de l'utilisateur
+        $user->roles()->detach();
         // If the role exists, assign it to the user
         if ($role) {
             $user->assignRole($role);
@@ -266,10 +278,11 @@ class UsersController extends Controller
                 'gender' => $request->gender,
             ]);
 
-        return \Redirect::route('user.all')->with('success', __('sentence.User Updated Successfully'));
+        return \Redirect::route('user.all')->with('success', __('sentence.Utilisateur mis à jour Avec Succès'));
     }
 
-    public function searchfonction(Request $request){
+    public function searchfonction(Request $request)
+    {
         $term = $request->term;
 
         $praticiens = User::where('name', 'LIKE', '%' . $term . '%')->OrderBy('id', 'DESC')->paginate(10);
@@ -280,6 +293,6 @@ class UsersController extends Controller
     {
         $user = User::destroy($id);
 
-        return \Redirect::back()->with('success', 'User Deleted Successfully');
+        return \Redirect::back()->with('success', 'Utilisateur Supprimé Avec Succès');
     }
 }

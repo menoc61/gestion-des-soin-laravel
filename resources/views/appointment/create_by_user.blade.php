@@ -124,7 +124,6 @@
                                 <tr>
                                     <td align="center">{{ __('sentence.Date') }}</td>
                                     <td align="center">{{ __('sentence.Time Slot') }}</td>
-                                    <td align="center">{{ __('sentence.Created at') }}</td>
                                 </tr>
                                 <!-- Appointments will be dynamically inserted here -->
                             </table>
@@ -211,7 +210,6 @@
         </section>
     </script>
 
-
     <script>
         $(document).ready(function() {
             $('#DoctorID').change(function() {
@@ -231,7 +229,7 @@
                                     appointment.date + '</label></td>' +
                                     '<td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i> ' +
                                     appointment.time_start + ' - ' + appointment
-                                    .time_end + '</label></td>' +
+                                    .time_end + '</label></td>'
                                     '<td class="text-center">' + appointment
                                     .created_at + '</td>' +
                                     '</tr>';
@@ -248,7 +246,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             // Initialisation du datepicker
             $(".agenda").datepicker({
@@ -302,7 +300,7 @@
             $('.multiselect-doctorino').select2();
             $('.multiselect-search').select2();
         });
-    </script>
+    </script> --}}
 
     <script>
         $(document).ready(function() {
@@ -346,7 +344,7 @@
         });
     </script>
 
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         $(document).ready(function() {
             $(".agenda").datepicker({
                 uiLibrary: "bootstrap4",
@@ -364,7 +362,7 @@
 
             $('.multiselect-doctorino').select2();
         });
-    </script>
+    </script> --}}
 
     <script>
         $(document).ready(function() {

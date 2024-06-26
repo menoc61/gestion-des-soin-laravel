@@ -116,6 +116,9 @@ Route::post('/billing/create_by/{id}', 'BillingController@store')->name('billing
 Route::get('/payment/create/{id}', 'BillingController@create_payment')->where('id', '[0-9]+')->name('billing.payment')->middleware(['role_or_permission:Admin|create invoice']);
 // Route pour enregistrer le paiement supplémentaire
 Route::post('/payment/create/{id}', 'BillingController@storeBilling')->name('payment.store');
+Route::get('/billing/{billingId}/payments', 'BillingController@getPaymentsByBillingId');
+
+
 
 
 // Settings
