@@ -309,7 +309,7 @@
                                         <div class="table-responsive">
                                             <table class="table table-bordered table-striped table-hover " id="dataTable"
                                                 width="100%" cellspacing="0">
-                                                <tr>
+                                                <tr class="bg bg-light">
                                                     <td align="center"><b>Id</b></td>
                                                     <td align="center"><b> Nom Diagnose</b> </td>
                                                     <td align="center"><b>Description</b> </td>
@@ -436,15 +436,15 @@
                                         </div>
                                         <div class="table-responsive">
                                             <table class="table table-bordered table-striped table-hover">
-                                                <tr>
+                                                <tr class="bg bg-light">
                                                     {{-- <td align="center">Id</td> --}}
-                                                    <td align="center">{{ __('sentence.Date') }}</td>
-                                                    <td align="center">{{ __('sentence.Time Slot') }}</td>
-                                                    <td align="center">{{ __('sentence.Praticien') }}</td>
-                                                    <td align="center">{{ __('sentence.Status') }}</td>
+                                                    <td align="center"><b>{{ __('sentence.Date') }}</b></td>
+                                                    <td align="center"><b>{{ __('sentence.Time Slot') }}</b></td>
+                                                    <td align="center"><b>{{ __('sentence.Praticien') }}</b></td>
+                                                    <td align="center"><b>{{ __('sentence.Status') }}</b></td>
                                                     {{-- <td class="text-center">{{ __('sentence.Created at') }}</td> --}}
-                                                    <td class="text-center">{{ __('sentence.Visited At') }}</td>
-                                                    <td align="center">{{ __('sentence.Actions') }}</td>
+                                                    <td class="text-center"><b>{{ __('sentence.Visited At') }}</b></td>
+                                                    <td align="center"><b>{{ __('sentence.Actions') }}</b></td>
                                                 </tr>
                                                 @forelse($appointments as  $key => $appointment)
                                                     @if (Auth::user()->role_id == 3 && Auth::user()->id == $appointment->user_id)
@@ -522,7 +522,7 @@
                                                         <tr>
                                                             {{-- <td align="center">{{ $key + 1 }} </td> --}}
                                                             <td align="center">
-                                                                <label class="badge badge-primary-soft"><i
+                                                                <label class="badge badge-primary-soft text-dark"><i
                                                                         class="fas fa-calendar"></i>
                                                                     {{ $appointment->date->format('d M Y') }} </label>
                                                             </td>
@@ -531,7 +531,7 @@
                                                                         class="fa fa-clock"></i>
                                                                     {{ $appointment->time_start }} -
                                                                     {{ $appointment->time_end }} </label></td>
-                                                            <td align="center"><label class="badge badge-primary-soft"><i
+                                                            <td align="center"><label class=""><i
                                                                         class="fa fa-user-injured"></i>
                                                                     {{ $appointment->Doctor->name }} </label></td>
                                                             <td class="text-center">
@@ -556,7 +556,7 @@
                                                             {{ $appointment->created_at->format('d M Y H:i') }}</td> --}}
                                                             <td class="text-center">
                                                                 @if ($appointment->visited == 1)
-                                                                    <label class="badge badge-primary-soft">
+                                                                    <label class="badge badge-success-soft text-dark">
                                                                         <i class="fas fa-calendar"></i>
                                                                         {{ $appointment->updated_at->format('d M Y H:i') }}
                                                                     </label>
@@ -640,7 +640,7 @@
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-striped table-hover " id="dataTable"
                                                     width="100%" cellspacing="0">
-                                                    <tr>
+                                                    <tr class="bg bg-light">
                                                         <td align="center">{{ __('sentence.Reference') }}</td>
                                                         <td class="text-center">{{ __('sentence.Name') }}</td>
                                                         <td align="center">{{ __('sentence.Created at') }}</td>
@@ -742,7 +742,7 @@
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered table-striped table-hover "
                                                         id="dataTable" width="100%" cellspacing="0">
-                                                        <tr>
+                                                        <tr class="bg bg-light">
                                                             <td align="center"><b>Id</b></td>
                                                             <td align="center"><b> Nom Diagnose</b> </td>
                                                             {{-- <td align="center"><b>Description</b> </td> --}}
@@ -862,8 +862,6 @@
 
 
 
-
-
                                     {{-- ------------------------------------------------------- Start Facturation --------------------------------------------------------------------- --}}
                                     <div class="tab-pane fade" id="Billing" role="tabpanel" aria-labelledby="Billing-tab">
                                         <div class="row mt-4">
@@ -944,7 +942,7 @@
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-striped table-hover">
-                                                    <tr>
+                                                    <tr class="bg bg-light">
                                                         <th class="text-center">{{ __('sentence.Invoice') }}</th>
                                                         <th class="text-center">{{ __('sentence.Date') }}</th>
                                                         <th class="text-center">{{ __('sentence.Amount') }}</th>
@@ -1043,6 +1041,10 @@
                                                                     @endif
                                                                 </td>
                                                                 <td class="text-center">
+                                                                    <a class="btn btn-outline-primary btn-circle btn-sm view-payments"
+                                                                        data-billing-id="{{ $invoice->id }}">
+                                                                        <i class="fas fa-eye"></i>
+                                                                    </a>
                                                                     @can('view invoice')
                                                                         <a href="{{ url('billing/view/' . $invoice->id) }}"
                                                                             class="btn btn-outline-success btn-circle btn-sm"><i
@@ -1116,7 +1118,7 @@
                                                         </td>
                                                     @endforelse
                                                 </table>
-                                                <span class="float-right mt-3">{{ $invoices->links() }}</span>
+                                                <span class="float-right mt-3">{{ $invoices->links() }} </span>
                                             </div>
                                         </div>
                                     </div>
@@ -1146,7 +1148,7 @@
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-striped table-hover">
-                                                    <tr>
+                                                    <tr class="bg bg-light">
                                                         <td align="center">{{ __('sentence.Reference') }}</td>
                                                         <td class="text-center">{{ __('sentence.Name') }}</td>
                                                         <td align="center">{{ __('sentence.Created at') }}</td>
@@ -1160,8 +1162,8 @@
                                                         <tr>
                                                             <td align="center">{{ $psycho->reference }} </td>
                                                             <td align="center"><label
-                                                                class="badge badge-primary-soft">{{ $psycho->nom }}</label>
-                                                        </td>
+                                                                    class="badge badge-primary-soft">{{ $psycho->nom }}</label>
+                                                            </td>
                                                             <td align="center"><label
                                                                     class="badge badge-primary-soft">{{ $psycho->created_at }}</label>
                                                             </td>
@@ -1424,6 +1426,38 @@
             </div>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="billingModal" tabindex="-1" role="dialog" aria-labelledby="billingModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="billingModalLabel">Détails des Paiements</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped" id="Payments-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Montant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Les données seront ajoutées ici via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     @endsection
 
     @section('header')
@@ -1467,6 +1501,45 @@
                     $('#rdvStatus').val(visited);
 
                     $('#viewDetailsModal').modal('show');
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function() {
+                // Événement de clic sur une facture (ou tout autre élément déclencheur)
+                $('.view-payments').click(function() {
+                    var billingId = $(this).data(
+                    'billing-id'); // Assurez-vous que chaque élément a un attribut data-billing-id
+                    $.ajax({
+                        url: '/billing/' + billingId + '/payments',
+                        method: 'GET',
+                        success: function(response) {
+                            console.log('Réponse de la requête AJAX :', response);
+
+                            var paymentsTable = $('#Payments-table').find('tbody');
+                            paymentsTable.empty(); // Vide le contenu existant du tableau
+
+                            if (response.length > 0) {
+                                response.forEach(function(payment) {
+                                    var newRow = '<tr>' +
+                                        '<td>' + payment.created_at + '</td>' +
+                                        '<td>' + payment.amount + '</td>' +
+                                        '</tr>';
+                                    paymentsTable.append(newRow);
+                                });
+                            } else {
+                                var noData =
+                                    '<tr><td colspan="2" class="text-center">Aucun paiement trouvé</td></tr>';
+                                paymentsTable.append(noData);
+                            }
+
+                            // Afficher la modal après avoir mis à jour le tableau
+                            $('#billingModal').modal('show');
+                        },
+                        error: function(error) {
+                            console.error('Erreur lors de la récupération des paiements :', error);
+                        }
+                    });
                 });
             });
         </script>

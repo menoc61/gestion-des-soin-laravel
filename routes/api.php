@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/users/register', [UserApiController::class, 'RegisterUser']);
 
 Route::post('/users/login', [UserApiController::class, 'LoginUser']);
+Route::get('/billing/{billingId}/payments', [UserApiController::class, 'getPaymentsByBillingId']);
 
 Route::prefix('v1')->as('v1.')->middleware('auth:sanctum')->group(function () {
     Route::get('/users/me', [UserApiController::class, 'GetUser']);

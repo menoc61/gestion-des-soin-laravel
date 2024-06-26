@@ -459,7 +459,7 @@ mark,
 
 .initialism {
   font-size: 90%;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 .blockquote {
