@@ -8,6 +8,7 @@ use App\Document;
 use App\History;
 use App\Http\Controllers\Controller;
 use App\Patient;
+use App\Payment;
 use App\Prescription;
 use App\Test;
 use App\User;
@@ -356,5 +357,18 @@ class UserApiController extends Controller
                 'error' => $ex->getMessage()
             ]);
         }
+    }
+
+    public function getPaymentsByBillingId($billingId)
+    {
+        $payments = Payment::where('billing_id', $billingId)->get()->map(function ($payment) {
+            return [
+                'id' => $payment->id,
+                'created_at' => $payment->created_at->format('d M Y'),
+                'amount' => $payment->amount,
+            ];
+        });
+
+        return response()->json($payments);
     }
 }

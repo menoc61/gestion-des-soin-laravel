@@ -12,7 +12,8 @@
         <div class="d-flex justify-content-center">
             <div class="card col-md-12">
                 <div class="card-header py-3">
-                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.follow') }} De {{ $prescription->User->name }}
+                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.follow') }} De
+                        {{ $prescription->User->name }}
                     </h2>
                 </div>
             </div>
@@ -20,6 +21,169 @@
     </div>
 
     <div class="row justify-content-center mt-4">
+        <form method="post" id="myForm" class="col-md-12 d-flex" action="{{ route('appointment.store') }}"
+            enctype="multipart/form-data">
+            <div class="col-md-12 d-flex">
+                <div class="col-md-5">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
+                        </div>
+                        <div class="card-body">
+                            <fieldset class="drugs_labels">
+                                <div class="repeatable"></div>
+                                <div class="form-group">
+                                    <a type="button" class="btn btn-sm btn-primary add text-white" align="center"><i
+                                            class='fa fa-plus'></i> {{ __('sentence.Add Drug') }}</a>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} <span
+                                    id="doctor-name"></span></h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover" id="appointments-table">
+
+                                    <tr>
+                                        <td align="center">{{ __('sentence.Date') }}</td>
+                                        <td align="center">{{ __('sentence.Time Slot') }}</td>
+                                    </tr>
+                                    <!-- Appointments will be dynamically inserted here -->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="card shadow mb-4" id="create_appointment_block">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.set meetings') }}</h6>
+                            <small id="emailHelp" class="form-text text-muted">Ce Traitement comporte
+                                : {{ $prescription->dosage }} Séance(s) de Travail </small>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row ">
+                                <div class="form-group col-md-6">
+                                    <label for="patient_name">{{ __('sentence.Patient') }}</label>
+                                    <select class="form-control patient_name multiselect-doctorino" name="patient"
+                                        id="patient_name">
+
+                                        <option value="{{ $prescription->user_id }}" selected>
+                                            {{ $prescription->User->name }}
+                                        </option>
+                                    </select>
+                                    {{ csrf_field() }}
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    @if (Auth::user()->role_id != 2)
+                                        <div class="form-group">
+                                            <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
+                                            <select class="form-control " name="doctor_id" id="DoctorID" required>
+                                                <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+                                                @foreach ($praticiens as $user)
+                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @else
+                                        <div class="form-group">
+                                            <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
+                                            <input type="hidden" class="form-control " value="{{ Auth::user()->id }}"
+                                                name="doctor_id" id="DoctorID">
+                                            <input type="text" class="form-control " value="{{ Auth::user()->name }}"
+                                                readonly>
+                                        </div>
+                                    @endif
+                                    @php
+                                        $doctorId = $prescription->doctor_id;
+                                        $reason =
+                                            'Ref[' .
+                                            $prescription->id .
+                                            '-d' .
+                                            $prescription->dosage .
+                                            '] ID:' .
+                                            $prescription->reference .
+                                            '_' .
+                                            $prescription->nom;
+                                    @endphp
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="rdvdate">{{ __('sentence.Date') }}</label>
+                                    <input type="text" class="form-control target agenda" name="rdv_time_date"
+                                        readonly="readonly" id="rdvdate">
+                                    <small id="emailHelp" class="form-text text-muted">Select date to view time slots
+                                        available</small>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
+                                    <input type="time" class="form-control target" name="rdv_time_start">
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
+                                    <input type="time" class="form-control target" name="rdv_time_end">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="reason">{{ __('sentence.Reason for visit') }}</label>
+                                    <textarea class="form-control" id="reason" name="reason" readonly></textarea>
+                                    <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
+                                </div>
+
+                                {{-- <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="send_sms" id="sms">
+                                <label class="form-check-label" for="sms">
+                                    {{ __('sentence.Send SMS') }}
+                                </label>
+                            </div> --}}
+                                <div class="form-group col-md-3">
+                                    <input class="form-control" value="{{ $prescription->id }}" type="hidden"
+                                        name="prescription_id" readonly>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-9">
+                                    <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Show Modal Redirect-->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            {{-- <button type="button" class="close" data-dismiss="modal">&times;</button> --}}
+                        </div>
+                        <div class="modal-body">
+                            <div class="success-message">
+                                Votre opération a été effectuée avec succès !
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <a class="btn btn-primary"
+                                href="{{ route('prescription.follow', ['id' => $prescription->id]) }}"> OK
+                            </a>
+
+                            <a class="btn btn-secondary"
+                                href="{{ route('patient.view', ['id' => $prescription->user_id]) }}">Accueil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         <div class="col-md-12 d-flex">
             <div class="col-md-4">
                 <div class="card shadow mb-4">
@@ -129,153 +293,6 @@
                 </div>
             </div>
         </div>
-        <form method="post" id="myForm" class="col-md-12 d-flex" action="{{ route('appointment.store') }}"
-            enctype="multipart/form-data">
-            <div class="col-md-12 d-flex">
-                <div class="col-md-7">
-                    <div class="card shadow mb-4" id="create_appointment_block">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.set meetings') }}</h6>
-                            <small id="emailHelp" class="form-text text-muted">Ce Traitement comporte
-                                : {{ $prescription->dosage }} Séance(s) de Travail </small>
-                        </div>
-                        <div class="card-body">
-
-                            <div class="row ">
-                                <div class="form-group col-md-6">
-                                    <label for="patient_name">{{ __('sentence.Patient') }}</label>
-                                    <select class="form-control patient_name multiselect-doctorino" name="patient"
-                                        id="patient_name">
-
-                                        <option value="{{ $prescription->user_id }}" selected>
-                                            {{ $prescription->User->name }}
-                                        </option>
-                                    </select>
-                                    {{ csrf_field() }}
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    @if (Auth::user()->role_id != 2)
-                                        <div class="form-group">
-                                            <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
-                                            <select class="form-control " name="doctor_id" id="DoctorID" required>
-                                                <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
-                                                @foreach ($praticiens as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    @else
-                                        <div class="form-group">
-                                            <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
-                                            <input type="hidden" class="form-control " value="{{ Auth::user()->id }}"
-                                                name="doctor_id" id="DoctorID">
-                                            <input type="text" class="form-control " value="{{ Auth::user()->name }}"
-                                                readonly>
-                                        </div>
-                                    @endif
-                                    @php
-                                        $doctorId = $prescription->doctor_id;
-                                        $reason =
-                                            'Ref[' .
-                                            $prescription->id .
-                                            '-d' .
-                                            $prescription->dosage .
-                                            '] ID:' .
-                                            $prescription->reference .
-                                            '_' .
-                                            $prescription->nom;
-                                    @endphp
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="rdvdate">{{ __('sentence.Date') }}</label>
-                                    <input type="text" class="form-control target agenda" name="rdv_time_date"
-                                        readonly="readonly" id="rdvdate">
-                                    <small id="emailHelp" class="form-text text-muted">Select date to view time slots
-                                        available</small>
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
-                                    <input type="time" class="form-control target" name="rdv_time_start">
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
-                                    <input type="time" class="form-control target" name="rdv_time_end">
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="reason">{{ __('sentence.Reason for visit') }}</label>
-                                    <textarea class="form-control" id="reason" name="reason" readonly></textarea>
-                                    <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
-                                </div>
-
-                                {{-- <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="send_sms" id="sms">
-                                    <label class="form-check-label" for="sms">
-                                        {{ __('sentence.Send SMS') }}
-                                    </label>
-                                </div> --}}
-                                <div class="form-group col-md-3">
-                                    <input class="form-control" value="{{ $prescription->id }}" type="hidden"
-                                        name="prescription_id" readonly>
-                                </div>
-
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-9">
-                                    <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
-                                </div>
-                            </div>
-
-                            <!--Show Modal Redirect-->
-                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            {{-- <button type="button" class="close" data-dismiss="modal">&times;</button> --}}
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="success-message">
-                                                Votre opération a été effectuée avec succès !
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-
-                                            <a class="btn btn-primary"
-                                                href="{{ route('prescription.follow', ['id' => $prescription->id]) }}"> OK
-                                            </a>
-
-                                            <a class="btn btn-secondary"
-                                                href="{{ route('patient.view', ['id' => $prescription->user_id]) }}">Accueil</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
-                        </div>
-                        <div class="card-body">
-                            <fieldset class="drugs_labels">
-                                <div class="repeatable"></div>
-                                <div class="form-group">
-                                    <a type="button" class="btn btn-sm btn-primary add text-white" align="center"><i
-                                            class='fa fa-plus'></i> {{ __('sentence.Add Drug') }}</a>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
     </div>
 
 
@@ -522,6 +539,42 @@
                     },
                     error: function(response) {
                         // Gestion des erreurs si nécessaire
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#DoctorID').change(function() {
+                var doctorId = $(this).val();
+                $.ajax({
+                    url: '/appointments/by-doctor/' + doctorId,
+                    method: 'GET',
+                    success: function(response) {
+                        var appointmentsTable = $('#appointments-table');
+                        appointmentsTable.find('tr:gt(0)')
+                            .remove(); // Remove existing rows except header
+
+                        if (response.length > 0) {
+                            response.forEach(function(appointment) {
+                                var newRow = '<tr>' +
+                                    '<td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i> ' +
+                                    appointment.date + '</label></td>' +
+                                    '<td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i> ' +
+                                    appointment.time_start + ' - ' + appointment
+                                    .time_end + '</label></td>'
+                                '<td class="text-center">' + appointment
+                                    .created_at + '</td>' +
+                                    '</tr>';
+                                appointmentsTable.append(newRow);
+                            });
+                        } else {
+                            var noData =
+                                '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
+                            appointmentsTable.append(noData);
+                        }
                     }
                 });
             });

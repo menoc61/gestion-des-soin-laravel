@@ -80,7 +80,7 @@ class BillingController extends Controller
 
         $billing->save();
 
-        return redirect()->route('billing.all')->with('success', 'Paiement ajouté avec succès.');
+        return \Redirect::route('patient.view', ['id' => $billing->user_id])->with('success', 'Paiement éffectué avec succès.');
     }
 
     public function create_payment($id)
@@ -113,7 +113,7 @@ class BillingController extends Controller
             return \Redirect::back()->with('danger', 'Le montant ne doit pas être négatif!');
         }
 
-        if ($request->Remise > $request->invoice_amount ) {
+        if ($request->Remise > $request->invoice_amount) {
             return \Redirect::back()->with('danger', 'La remise ne peut pas être suppérieur au montant total à payer!');
         }
 
@@ -166,7 +166,7 @@ class BillingController extends Controller
             $payment->save();
         }
 
-        return \Redirect::route('patient.view',['id' => $billing->user_id])->with('success', 'Invoice Created Successfully!');
+        return \Redirect::route('patient.view', ['id' => $billing->user_id])->with('success', 'Invoice Created Successfully!');
     }
 
 
@@ -201,7 +201,7 @@ class BillingController extends Controller
 
         $billing_items = Billing_item::where('billing_id', $id)->whereIn('appointment_id', $appointIds)->get();
 
-        return view('billing.view', ['billing' => $billing, 'billing_items' => $billing_items, 'appointments'=>$appointments]);
+        return view('billing.view', ['billing' => $billing, 'billing_items' => $billing_items, 'appointments' => $appointments]);
     }
 
     public function pdf($id)
@@ -321,4 +321,18 @@ class BillingController extends Controller
 
         return \Redirect::route('billing.all')->with('success', 'Invoice Deleted Successfully!');
     }
+
+    public function getPaymentsByBillingId($billingId)
+    {
+        $payments = Payment::where('billing_id', $billingId)->get()->map(function ($payment) {
+            return [
+                'id' => $payment->id,
+                'created_at' => $payment->created_at->format('d M Y'),
+                'amount' => $payment->amount,
+            ];
+        });
+
+        return response()->json($payments);
+    }
+
 }
