@@ -12,12 +12,12 @@ class MailInvoiceNotification extends Notification
     use Queueable;
 
     public $userName;
-    public $dueAmount;
+    public $totalAmount;
 
-    public function __construct($userName, $dueAmount)
+    public function __construct($userName, $totalAmount)
     {
         $this->userName = $userName;
-        $this->dueAmount = $dueAmount;
+        $this->totalAmount = $totalAmount;
     }
 
     public function via($notifiable)
@@ -29,7 +29,7 @@ class MailInvoiceNotification extends Notification
     {
         return (new MailMessage)
             ->line('Bonjour ' . $this->userName . ',')
-            ->line('Votre montant dû est de ' . $this->dueAmount . ' Fcfa.')
+            ->line('Votre montant dû est de ' . $this->totalAmount . ' Fcfa.')
             // ->action('Paiement', url('/'))
             ->line('Merci de régler avant la date d\'échéance!');
     }

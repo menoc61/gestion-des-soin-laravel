@@ -289,7 +289,7 @@
                     </li>
                 @endif --}}
 
-                @if (Auth::user()->can('create notification') ||
+                {{-- @if (Auth::user()->can('create notification') ||
                         Auth::user()->can('edit notification') ||
                         Auth::user()->can('view notification') ||
                         Auth::user()->can('view all notifications'))
@@ -314,7 +314,7 @@
                             </div>
                         </div>
                     </li>
-                @endif
+                @endif --}}
                 {{-- ********************* Debut Section Utilisateurs et rôles de la sidenav ************************** --}}
 
                 @if (Auth::user()->can('manage roles') && Auth::user()->role_id == 1)

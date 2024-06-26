@@ -30,11 +30,11 @@
                         </div>
                         <div class="dropdown">
                             <tr>
-                                <td class="text-center"><b>Notification Rendez-Vous</b></td>
+                                <td class="text-center "><b>Notification Rendez-Vous</b></td>
                             </tr>
                             @forelse ($appointments as $appointment)
                                 <div class="row notify_item d-flex justify-content-center">
-                                    <div class="card w-100">
+                                    <div class="card w-100 ">
                                         <div class="card-header">
                                             <tr class="text-center">
                                                 <td>Nom</td>
@@ -232,8 +232,8 @@
             {{-- carte contenant le montant du chiffre d'affaire de l'année en cour --}}
             <!-- Pending Requests Card Example -->
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
-                <div class="card border-bottom-warning shadow h-100 py-2 card-po1 ">
-                    <div class="card-body shadow-lg card-po bg-warning col-md-9  ">
+                <div class="card border-bottom-success shadow h-100 py-2 card-po1 ">
+                    <div class="card-body shadow-lg card-po bg-success col-md-9  ">
                         <div class="col-auto">
                             <center><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></center>
                         </div>
@@ -241,7 +241,7 @@
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     {{ __('sentence.Payments this year') }} {{ date('Y') }}</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_payments_year }}
                                     {{ App\Setting::get_option('currency') }}</div>
@@ -257,7 +257,7 @@
         {{-- graph section --}}
         <div class="row d-flex justify-content-between">
             <div class="col-sm-5">
-                <div class="card h-90 shadow mb-4">
+                <div class="card h200 shadow mb-4">
                     <div class="card-header py-3">
                         <div class="row">
                             <div class="col-8">
@@ -321,7 +321,7 @@
                 </div>
             </div>
             <div class="col-sm-7">
-                <div class="card h-90 mb-4">
+                <div class="card h200 mb-4">
                     <div class="card-header py-3">
                         <div class="row">
                             <div class="col-8">
