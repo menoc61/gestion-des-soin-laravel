@@ -19,6 +19,10 @@ class CreatePaymentsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->integer('amount');
+            $table->foreignId('created_by')
+                ->nullable()
+                ->constrained('users')
+                ->onDelete('set null');
             $table->timestamps();
         });
     }

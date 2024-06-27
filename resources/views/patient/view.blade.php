@@ -1443,6 +1443,7 @@
                                 <tr>
                                     <th>Date</th>
                                     <th>Montant</th>
+                                    <th>Nom</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1524,6 +1525,7 @@
                                     var newRow = '<tr>' +
                                         '<td>' + payment.created_at + '</td>' +
                                         '<td>' + payment.amount + '</td>' +
+                                        '<td>' + payment.user_name + '</td>' +
                                         '</tr>';
                                     paymentsTable.append(newRow);
                                 });
