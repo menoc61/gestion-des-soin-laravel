@@ -64,6 +64,8 @@ class BillingController extends Controller
         $payment = new Payment();
         $payment->billing_id = $billing->id;
         $payment->amount = $request->deposited_amount;
+        // $payment->created_by = $billing->created_by;
+        $payment->created_by = Auth::user()->id;
         $payment->save();
 
         // Mettre à jour les montants dans la facture
@@ -324,11 +326,12 @@ class BillingController extends Controller
 
     public function getPaymentsByBillingId($billingId)
     {
-        $payments = Payment::where('billing_id', $billingId)->get()->map(function ($payment) {
+        $payments = Payment::where('billing_id', $billingId)->with('UserSessions')->get()->map(function ($payment) {
             return [
                 'id' => $payment->id,
                 'created_at' => $payment->created_at->format('d M Y'),
                 'amount' => $payment->amount,
+                'user_name' => $payment->UserSessions ? $payment->UserSessions->name : 'N/A',
             ];
         });
 
