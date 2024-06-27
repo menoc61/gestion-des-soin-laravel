@@ -641,14 +641,14 @@
                                                 <table class="table table-bordered table-striped table-hover " id="dataTable"
                                                     width="100%" cellspacing="0">
                                                     <tr class="bg bg-light">
-                                                        <td align="center">{{ __('sentence.Reference') }}</td>
-                                                        <td class="text-center">{{ __('sentence.Name') }}</td>
-                                                        <td align="center">{{ __('sentence.Created at') }}</td>
+                                                        <td align="center"><b>{{ __('sentence.Reference') }}</b></td>
+                                                        <td class="text-center"><b>{{ __('sentence.Name') }}</b></td>
+                                                        <td align="center"><b>{{ __('sentence.Created at') }}</b></td>
                                                         @if (Auth::user()->role_id == 3)
                                                         @else
-                                                            <td align="center">{{ __('sentence.follow') }}</td>
+                                                            <td align="center"><b>{{ __('sentence.follow') }}</b></td>
                                                         @endif
-                                                        <td align="center">{{ __('sentence.Actions') }}</td>
+                                                        <td align="center"><b>{{ __('sentence.Actions') }}</b></td>
                                                     </tr>
                                                     @forelse($prescriptions as $prescription)
                                                         @if (Auth::user()->role_id == 3 && Auth::user()->id == $prescription->user_id)
@@ -678,7 +678,7 @@
                                                             <tr>
                                                                 <td align="center">{{ $prescription->reference }} </td>
                                                                 <td align="center"><label
-                                                                        class="badge badge-primary-soft">{{ $prescription->nom }}</label>
+                                                                        class="badge badge-primary-soft text-dark">{{ $prescription->nom }}</label>
                                                                 </td>
 
                                                                 <td align="center"><label
@@ -985,6 +985,10 @@
                                                                     @endif
                                                                 </td>
                                                                 <td class="text-center">
+                                                                    <a class="btn btn-outline-primary btn-circle btn-sm view-payments"
+                                                                        data-billing-id="{{ $invoice->id }}">
+                                                                        <i class="fas fa-eye"></i>
+                                                                    </a>
                                                                     @can('view invoice')
                                                                         <a href="{{ url('billing/view/' . $invoice->id) }}"
                                                                             class="btn btn-outline-success btn-circle btn-sm"><i
@@ -1100,6 +1104,10 @@
                                                                     @endif
                                                                 </td>
                                                                 <td class="text-center">
+                                                                    <a class="btn btn-outline-primary btn-circle btn-sm view-payments"
+                                                                        data-billing-id="{{ $invoice->id }}">
+                                                                        <i class="fas fa-eye"></i>
+                                                                    </a>
                                                                     @can('view invoice')
                                                                         <a href="{{ url('billing/view/' . $invoice->id) }}"
                                                                             class="btn btn-outline-success btn-circle btn-sm"><i
@@ -1375,14 +1383,14 @@
                     <div class="modal-body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover">
-                                <tr>
+                                {{-- <tr>
                                     <td><b>ID: </b></td>
                                     <td> <label class="badge badge-primary-soft" id="appointmentID"></label></td>
                                 </tr>
                                 <tr>
                                     <td><b>Consulter</b></td>
                                     <td> <label class="badge badge-primary-soft" id="appointmentRead"></label></td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                     <td><b>{{ __('sentence.Praticien') }} : </b></td>
                                     <td> <label class="badge badge-primary-soft" id="appointmentDoctor"></label></td>
@@ -1426,10 +1434,10 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal Detail paiement-->
         <div class="modal fade" id="billingModal" tabindex="-1" role="dialog" aria-labelledby="billingModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="billingModalLabel">Détails des Paiements</h5>
@@ -1438,7 +1446,25 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <table class="table table-striped" id="Payments-table">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover" id="Payments-table">
+                                <thead>
+                                    <tr class="text-center">
+                                        <td><label><span>Date</span></label>
+                                        </td>
+                                        <td><label><span>Montant</span></label>
+                                        </td>
+                                        <td><label><span>Nom</span></label>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Les données seront ajoutées ici via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        {{-- <table class="table table-striped" id="Payments-table">
                             <thead>
                                 <tr>
                                     <th>Date</th>
@@ -1449,7 +1475,7 @@
                             <tbody>
                                 <!-- Les données seront ajoutées ici via JavaScript -->
                             </tbody>
-                        </table>
+                        </table> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -1468,6 +1494,7 @@
         <script type="text/javascript" src="{{ asset('dashboard/js/lightbox.js') }}"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
         <script>
             $(document).ready(function() {
                 $('.view-details-btn').on('click', function() {
@@ -1505,6 +1532,7 @@
                 });
             });
         </script>
+
         <script>
             $(document).ready(function() {
                 // Événement de clic sur une facture (ou tout autre élément déclencheur)
@@ -1522,9 +1550,9 @@
 
                             if (response.length > 0) {
                                 response.forEach(function(payment) {
-                                    var newRow = '<tr>' +
+                                    var newRow = '<tr class="text-center">' +
                                         '<td>' + payment.created_at + '</td>' +
-                                        '<td>' + payment.amount + '</td>' +
+                                        '<td>' + payment.amount + ' {{ App\Setting::get_option('currency') }}' + '</td>' +
                                         '<td>' + payment.user_name + '</td>' +
                                         '</tr>';
                                     paymentsTable.append(newRow);

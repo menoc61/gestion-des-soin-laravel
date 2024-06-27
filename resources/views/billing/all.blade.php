@@ -5,12 +5,23 @@
 @endsection
 
 @section('content')
-    <div class="mb-3">
-        <button class="btn btn-primary" onclick="goBackAndReload()">Retour</button>
+    <div class="">
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="card col-md-12">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.Payment History') }}
+
+                    </h2>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- DataTables  -->
-    <div class="card shadow mb-4">
+    <div class="card shadow mt-4 mb-4">
         <div class="card-header py-3">
             <div class="row">
                 <div class="col-8">
@@ -20,8 +31,8 @@
                     <div>
                         <form action="{{ route('envoyer.MailInvoiceNotificationAll') }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn btn-outline-info btn-circle btn-sm"><i
-                                    class="fas fa-envelope"></i></button>
+                            <button type="submit" class="btn btn-outline-info btn-circle btn-sm" data-toggle="tooltip"
+                                data-placement="top" title="Envoyer un mail aux hôtes"><i class="fas fa-envelope"></i></button>
                         </form>
                         <span class="text-info">maïl</span>
                     </div>
@@ -129,9 +140,9 @@
     </div>
 @endsection
 @section('footer')
-    <script type="text/javascript">
-        function goBackAndReload() {
-            window.location.replace(document.referrer);
-        }
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
     </script>
 @endsection
