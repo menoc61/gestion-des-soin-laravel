@@ -17,6 +17,7 @@
 
     @role('Admin')
         <div class="row ">
+            {{-- {{$PopularDrugs}} --}}
             <div class="col-md-6">
                 <input type="date" onchange="StartDateFilter(this)" value={{ $defaultStartDate }}>
                 <input type="date" onchange="EndDateFilter(this)" value={{ $defaultEndDate }}>
@@ -35,31 +36,37 @@
                             @forelse ($appointments as $appointment)
                                 <div class="row notify_item d-flex justify-content-center">
                                     <div class="card w-100 ">
-                                        <div class="card-header">
-                                            <tr class="text-center">
-                                                <td>Nom</td>
-                                                <td>Nom</td>
-                                            </tr>
-                                        </div>
                                         <div class="card-body">
-                                            <tbody>
-                                                <tr class="text-center">
-                                                    <td><span class="badge badge-primary-soft"><a
-                                                                href="{{ url('patient/view/' . $appointment->User->id) }}">
-                                                                {{ $appointment->User->name }} </a></span></td>
-                                                    <td><a class="btn btn-outline-success btn-circle btn-sm view-details-btn"
-                                                            data-id="{{ $appointment->id }}"
-                                                            data-date="{{ $appointment->date->format('d M Y') }}"
-                                                            data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
-                                                            data-doctor="{{ $appointment->Doctor->name }}"
-                                                            data-read="{{ $appointment->is_read }}"
-                                                            data-visited="{{ $appointment->visited }}"
-                                                            data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
-                                                            data-drugs="{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}">
-                                                            <i class="fas fa-eye"></i>
-                                                        </a></td>
-                                                </tr>
-                                            </tbody>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="dataTable" width="100%"
+                                                    cellspacing="0">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <td>Nom</td>
+                                                            <td>Action</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="text-center">
+                                                            <td><span class="badge badge-primary-soft"><a
+                                                                        href="{{ url('patient/view/' . $appointment->User->id) }}">
+                                                                        {{ $appointment->User->name }} </a></span></td>
+                                                            <td><a class="btn btn-outline-success btn-circle btn-sm view-details-btn"
+                                                                    data-id="{{ $appointment->id }}"
+                                                                    data-date="{{ $appointment->date->format('d M Y') }}"
+                                                                    data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
+                                                                    data-doctor="{{ $appointment->Doctor->name }}"
+                                                                    data-read="{{ $appointment->is_read }}"
+                                                                    data-visited="{{ $appointment->visited }}"
+                                                                    data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
+                                                                    data-drugs="{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -250,8 +257,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
 
         {{-- graph section --}}
@@ -336,8 +341,8 @@
             </div>
 
         </div>
-
         {{-- graph section end --}}
+
         <div class="modal fade" id="viewDetailsModal" tabindex="-1" role="dialog" aria-labelledby="viewDetailsModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -351,14 +356,14 @@
                     <div class="modal-body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover">
-                                <tr>
+                                {{-- <tr>
                                     <td><b>ID: </b></td>
                                     <td> <label class="badge badge-primary-soft" id="appointmentID"></label></td>
                                 </tr>
                                 <tr>
                                     <td><b>Consulter</b></td>
                                     <td> <label class="badge badge-primary-soft" id="appointmentRead"></label></td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                     <td><b>{{ __('sentence.Praticien') }} : </b></td>
                                     <td> <label class="badge badge-primary-soft" id="appointmentDoctor"></label></td>
@@ -401,11 +406,11 @@
 
     @role('Praticien')
         <div class="row ">
-            <div class="col-md-6">
+            {{-- <div class="col-md-6">
                 <input type="date" onchange="StartDateFilter(this)" value={{ $defaultStartDate }}>
                 <input type="date" onchange="EndDateFilter(this)" value={{ $defaultEndDate }}>
-            </div>
-            <div class="col-md-6">
+            </div> --}}
+            <div class="col-md-12">
                 <div class="wrapper">
                     <div class="notification_wrap float-right">
                         <div class="posi float-right btn btn-secondary rounded-circle">
@@ -414,43 +419,44 @@
                         </div>
                         <div class="dropdown">
                             <tr>
-                                <td class="text-center">Notification</td>
+                                <td class="text-center "><b>Notification Rendez-Vous</b></td>
                             </tr>
                             @forelse ($appointments as $appointment)
                                 <div class="row notify_item d-flex justify-content-center">
-                                    <table class="w-100">
-                                        <thead>
-                                            <tr class="text-center">
-                                                <td>Nom</td>
-                                                <td>date RDV</td>
-                                                <td>Période</td>
-                                                <td>Consulter</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="text-center">
-                                                <td><span class="badge badge-primary-soft"><a
-                                                            href="{{ url('patient/view/' . $appointment->User->id) }}">
-                                                            {{ $appointment->User->name }} </a></span></td>
-                                                <td><span
-                                                        class="badge badge-primary-soft">{{ $appointment->date->format('d M Y') }}</span>
-                                                </td>
-                                                <td><span class="badge badge-primary-soft">{{ $appointment->time_start }} -
-                                                        {{ $appointment->time_end }}</span></td>
-                                                <td><a class="btn btn-outline-success btn-circle btn-sm view-details-btn"
-                                                        data-id="{{ $appointment->id }}"
-                                                        data-date="{{ $appointment->date->format('d M Y') }}"
-                                                        data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
-                                                        data-doctor="{{ $appointment->Doctor->name }}"
-                                                        data-read="{{ $appointment->is_read }}"
-                                                        data-visited="{{ $appointment->visited }}"
-                                                        data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
-                                                        data-drugs="{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="card w-100 ">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="dataTable" width="100%"
+                                                    cellspacing="0">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <td>Nom</td>
+                                                            <td>Action</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="text-center">
+                                                            <td><span class="badge badge-primary-soft"><a
+                                                                        href="{{ url('patient/view/' . $appointment->User->id) }}">
+                                                                        {{ $appointment->User->name }} </a></span></td>
+                                                            <td><a class="btn btn-outline-success btn-circle btn-sm view-details-btn"
+                                                                    data-id="{{ $appointment->id }}"
+                                                                    data-date="{{ $appointment->date->format('d M Y') }}"
+                                                                    data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
+                                                                    data-doctor="{{ $appointment->Doctor->name }}"
+                                                                    data-read="{{ $appointment->is_read }}"
+                                                                    data-visited="{{ $appointment->visited }}"
+                                                                    data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
+                                                                    data-drugs="{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
                             @empty
                             @endforelse
@@ -572,7 +578,65 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="modal fade" id="viewDetailsModal" tabindex="-1" role="dialog" aria-labelledby="viewDetailsModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="viewDetailsModalLabel">Détail du Rendez vous</h5>
+                        {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> --}}
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover">
+                                {{-- <tr>
+                                    <td><b>ID: </b></td>
+                                    <td> <label class="badge badge-primary-soft" id="appointmentID"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Consulter</b></td>
+                                    <td> <label class="badge badge-primary-soft" id="appointmentRead"></label></td>
+                                </tr> --}}
+                                <tr>
+                                    <td><b>{{ __('sentence.Praticien') }} : </b></td>
+                                    <td> <label class="badge badge-primary-soft" id="appointmentDoctor"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Date') }} : </b></td>
+                                    <td><label class="badge badge-primary-soft" id="appointmentDate"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Time Slot') }} : </b></td>
+                                    <td><label class="badge badge-primary-soft" id="appointmentTime"></span></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Prescription') }} : </b></td>
+                                    <td><label class="badge badge-primary-soft" id="appointmentPrescription"></span></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ __('sentence.Drug') }} : </b></td>
+                                    <td><span id="appointmentPrescriptiondrug"></span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-primary text-white"
+                            onclick="event.preventDefault(); document.getElementById('rdv-form').submit();"> Page de
+                            l'hô<template></template> </a>
+                        <form id="rdv-form" action="{{ route('appointment.store_edit') }}" method="POST" class="d-none">
+                            <input type="hidden" name="rdv_id" id="rdvId">
+                            <input type="hidden" name="is_read" value="1">
+                            <input type="hidden" name="rdv_status" id="rdvStatus">
+                            @csrf
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     @endrole
 

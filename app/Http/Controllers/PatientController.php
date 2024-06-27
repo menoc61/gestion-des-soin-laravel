@@ -198,16 +198,16 @@ class PatientController extends Controller
         $patient->save();
 
         // Générer le token JWT
-        $token = $this->generateToken($user);
+        // $token = $this->generateToken($user);
 
-        $response = Http::withToken($token)->post('http://localhost:5001/v1/customer/', [
-            'name' => $user->name,
-            'phone' => $request->phone,
-            'address' => $request->adress,
-            'type_customer' => 'particulier',
-            'createdAt' => $user->created_at->format('Y-m-d\TH:i:s.u\Z'),
-            'updatedAt' => $user->updated_at->format('Y-m-d\TH:i:s.u\Z'),
-        ]);
+        // $response = Http::withToken($token)->post('http://localhost:5001/v1/customer/', [
+        //     'name' => $user->name,
+        //     'phone' => $request->phone,
+        //     'address' => $request->adress,
+        //     'type_customer' => 'particulier',
+        //     'createdAt' => $user->created_at->format('Y-m-d\TH:i:s.u\Z'),
+        //     'updatedAt' => $user->updated_at->format('Y-m-d\TH:i:s.u\Z'),
+        // ]);
 
         return \Redirect::route('test.create_by', ['id' => $patient->user_id])->with('success', __('sentence.Patient Created Successfully'));
     }
@@ -375,7 +375,7 @@ class PatientController extends Controller
     {
         $patient = User::destroy($id);
 
-        return \Redirect::back()->with('success', 'Patient Deleted Successfully');
+        return \Redirect::back()->with('success', 'Hôte Supprimé avec succès');
     }
 
     public function SendPassword($id)
