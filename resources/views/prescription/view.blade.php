@@ -693,6 +693,40 @@
                             </div>
                         </div>
                     @endif
+
+                    <!-- ROW : Appointment List -->
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <strong><u>{{ __('sentence.Appointment') }} : </u></strong><br><br>
+                            <table class="table table-bordered">
+                                <tr class="text-center">
+                                    <th><b>Numéro</b></th>
+                                    <th><b>Created_at</b></th>
+                                    <th><b>Observations</b></th>
+                                    <th><b>Praticiens</b></th>
+                                    <th><b>Soins Appliqués</b></th>
+                                </tr>
+                                @forelse ($prescriptionAppointment as $key => $appointment)
+                                    <tr class="text-center">
+                                        <td> {{ $key + 1 }} </td>
+                                        <td> {{ $appointment->created_at }} </td>
+                                        <td> {{ $appointment->rapport }} </td>
+                                        <td>{{ $appointment->Doctor->name }}</td>
+                                        <td>{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3">Aucun Soin disponible.</td>
+                                    </tr>
+                                @endforelse
+                            </table>
+                        </div>
+                    </div>
+
+
+
+
+
                     @if (!empty(App\Setting::get_option('footer_left')) && !empty(App\Setting::get_option('footer_right')))
                         <!-- ROW : Footer informations -->
                         <div class="row">
@@ -777,13 +811,13 @@
                             </td>
                         </tr>
                         @isset($prescription->User->Patient->weight)
-                        <tr>
-                            <td>
+                            <tr>
+                                <td>
                                     <br><b>{{ __('sentence.Patient Weight') }} :</b>
                                     {{ $prescription->User->Patient->weight }}
                                     Kg
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                         @endisset
                         @isset($prescription->User->Patient->height)
                             <tr>
@@ -1393,6 +1427,35 @@
                 </div>
             </div>
         @endif
+
+        <!-- ROW : Appointment List -->
+        <div class="row justify-content-center">
+            <div class="col">
+                <strong><u>{{ __('sentence.Appointment') }} : </u></strong><br><br>
+                <table class="table table-bordered">
+                    <tr class="text-center">
+                        <th><b>Numéro</b></th>
+                        <th><b>Created_at</b></th>
+                        <th><b>Observations</b></th>
+                        <th><b>Praticiens</b></th>
+                        <th><b>Soins Appliqués</b></th>
+                    </tr>
+                    @forelse ($prescriptionAppointment as $key => $appointment)
+                        <tr class="text-center">
+                            <td> {{ $key + 1 }} </td>
+                            <td> {{ $appointment->created_at }} </td>
+                            <td> {{ $appointment->rapport }} </td>
+                            <td>{{ $appointment->Doctor->name }}</td>
+                            <td>{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3">Aucun Soin disponible.</td>
+                        </tr>
+                    @endforelse
+                </table>
+            </div>
+        </div>
         <!-- ROW : Footer informations -->
         <footer style="position: absolute; bottom: 0;">
             <hr>

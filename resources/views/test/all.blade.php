@@ -5,11 +5,23 @@
 @endsection
 
 @section('content')
-    <div class="mb-3">
-        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    <div class="">
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="card col-md-12">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.Tests list') }}
+
+                    </h2>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="card shadow mb-4">
+
+    <div class="card shadow mt-4 mb-4">
         <div class="card-header py-3">
             <div class="row">
                 <div class="col-8">
@@ -54,14 +66,14 @@
                     <tbody>
                         @forelse($tests as $key => $test)
                             <tr>
-                                <td>{{  $key + 1 }}</td>
+                                <td>{{ $key + 1 }}</td>
                                 <td>{{ $test->test_name }}</td>
                                 <td> {{ $test->comment }} </td>
                                 <td align="center">{{ __('sentence.In Prescription') }} :
                                     {{ $test->Prescription->count() }} {{ __('sentence.time use') }}</td>
                                 <td class="text-center">
 
-                                        <a href="{{ url('test/view/' . $test->id) }}"
+                                    <a href="{{ url('test/view/' . $test->id) }}"
                                         class="btn btn-outline-primary btn-circle btn-sm"><i class="fa fa-eye"></i></a>
 
                                     {{-- @can('edit diagnostic test')

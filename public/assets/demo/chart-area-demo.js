@@ -98,7 +98,7 @@ var myLineChart = new Chart(ctx, {
     responsive: true,
     title: {
       display: true,
-      text: "Montant Total par Date",
+    //   text: "Montant Total par Date",
       fontSize: 20,
       fontStyle: "bold",
       padding: 20,

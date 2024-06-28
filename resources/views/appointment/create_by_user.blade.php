@@ -46,7 +46,7 @@
                                         <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
                                         <select class="form-control multiselect-search" name="doctor_id" id="DoctorID"
                                             required>
-                                            <option value="" disabled selected>{{ __('sentence.Select Drug') }}...
+                                            <option value="" disabled selected>{{ __('sentence.Select Praticien') }}...
                                             </option>
                                             @foreach ($praticiens as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
