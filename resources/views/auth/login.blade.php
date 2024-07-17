@@ -15,6 +15,8 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('dashboard/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    <!-- Axios Library -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body class="login">
@@ -35,10 +37,10 @@
                             <hr>
 
                         </div>
-                        <form method="POST" action="{{ route('login') }}" class="user">
+                        <form id="loginForm" method="POST" action="{{ route('login') }}" class="user">
                             <div class="form-group">
                                 <input id="email" type="email"
-                                    class=" input w-100 @error('email') is-invalid @enderror" name="email"
+                                    class="input w-100 @error('email') is-invalid @enderror" name="email"
                                     value="{{ old('email') }}" required autocomplete="email" autofocus
                                     aria-describedby="emailHelp" placeholder="{{ __('sentence.Email') }}">
                                 @error('email')
@@ -49,7 +51,7 @@
                             </div>
                             <div class="form-group">
                                 <input id="password" type="password"
-                                    class=" input w-100 @error('password') is-invalid @enderror" name="password"
+                                    class="input w-100 @error('password') is-invalid @enderror" name="password"
                                     required autocomplete="current-password"
                                     placeholder="{{ __('sentence.Password') }}">
                                 @error('password')
@@ -86,9 +88,67 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Extract the value before the @ in the email
+            const userName = email.split('@')[0];
+
+            const dataForHRM = {
+                userName: userName,
+                password: password
+            };
+
+            const dataForERP = {
+                username: userName,
+                password: password
+            };
+            console.log(dataForHRM, dataForERP);
+
+            // CSRF Token
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            try {
+                const responses = await Promise.all([
+                    axios.post('http://localhost:5000/user/login', dataForHRM, {
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    }),
+                    axios.post('http://localhost:5001/v1/user/login', dataForERP, {
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    })
+                ]);
+
+                // Process successful responses
+                responses.forEach(response => {
+                    if (response.data.token) {
+                        console.log(`Logged in to ${response.config.url}`, response.data);
+                        // Store token or user info as needed
+                        localStorage.setItem("access-token", response.data.token);
+                        localStorage.setItem("role", response.data.role);
+                        localStorage.setItem("user", response.data.username);
+                        localStorage.setItem("id", response.data.id);
+                        localStorage.setItem("isLogged", true);
+                    }
+                });
+
+                // Redirect or notify user as needed
+                alert('Login successful');
+                window.location.href = "/admin/dashboard"; // Example redirection
+            } catch (error) {
+                console.error('Login failed', error);
+                alert('Login failed. Please check your credentials.');
+            }
+        });
+    </script>
 </body>
 
 </html>
