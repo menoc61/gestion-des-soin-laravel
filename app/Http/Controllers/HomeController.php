@@ -15,6 +15,8 @@ use Auth;
 use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
+
 
 class HomeController extends Controller
 {
@@ -103,13 +105,14 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $total_prescriptions = Prescription::all()->count();
         $total_payments = Billing::all()->count();
 
-        $total_payments_days = Rdv_Drug::wheredate('created_at', Today())->sum('montant_drug');
+        $appointmentsVisitedId = Appointment::where('visited', 1)->pluck('id');
+        $total_payments_days = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->wheredate('created_at', Today())->sum('montant_drug');
         // $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
-        $total_payments_month = Rdv_Drug::whereMonth('created_at', date('m'))->sum('montant_drug');
+        $total_payments_month = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->whereMonth('created_at', date('m'))->sum('montant_drug');
         // $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
-        $total_payments_year = Rdv_Drug::whereYear('created_at', date('Y'))->sum('montant_drug');
+        $total_payments_year = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->whereYear('created_at', date('Y'))->sum('montant_drug');
         // $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
-        $countRDVread = Appointment::where('is_read',0)->count();
+        $countRDVread = Appointment::where('is_read', 0)->count();
 
         $appointments = Appointment::where('is_read', 0)->orderBy('id', 'desc')->paginate(7);
 
@@ -135,6 +138,14 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $appointmentHote = Appointment::where('user_id', $user->id)->count();
         $diagnoseHote = Test::where('user_id', $user->id)->count();
         $prescriptionHote = Prescription::where('user_id', $user->id)->count();
+
+
+        $PopularDrugs = Rdv_Drug::select('drug_id', DB::raw('count(*) as total'))
+            ->groupBy('drug_id')
+            ->orderBy('total', 'desc')
+            ->take(2)
+            ->get();
+
 
         // $total_payment_by_month = Billing_item::select('id', 'created_at')->get()->groupBy(
         //     function ($total_payment_by_month) {
@@ -183,7 +194,8 @@ $permission = Permission::create(['name' => 'delete invoice']);
             'nameday' => $nameday,
             'countRDVread' => $countRDVread,
             'appointments' => $appointments,
-            'agendaDoctors'=> $agendaDoctors,
+            'agendaDoctors' => $agendaDoctors,
+            'PopularDrugs' => $PopularDrugs,
         ]);
     }
 

@@ -307,12 +307,14 @@ return [
     'Choice' => 'Choisir',
     'Choice Praticien' => 'Choisir un Praticien',
     'Agenda praticien' => 'Agenda du Praticien Sélectionné',
-    'Select Drug' => 'Sélectionner un Praticien',
+    'Select Drug' => 'Sélectionner un Soin',
     'Remise' => 'Remise',
     'Test Pshycho' => 'Diagnose Psychothérapeutique',
     'Buy billing' => 'Payer la Facture',
     'Total Remise' => 'Total Remise',
     'Praticienino Settings' => 'Paramètre de l\'application',
     'Delete Alert' => 'Voulez-vous vraiment supprimer cette donnée',
-    'Delete' => 'Supprimer'
+    'Delete' => 'Supprimer',
+    'Select Praticien' => 'Sélectionner un praticien',
+    'Code for visit' => 'code de la Visite',
 ];

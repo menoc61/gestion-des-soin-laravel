@@ -5,12 +5,23 @@
 @endsection
 
 @section('content')
-    <div class="mb-3">
-        <button class="btn btn-primary" onclick="history.back()">Retour</button>
+    <div class="">
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="history.back()">Retour</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="card col-md-12">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.Drugs list') }}
+
+                    </h2>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
+    <div class="card shadow mt-4 mb-4">
         <div class="card-header py-3">
             <div class="row">
                 <div class="col-8">
@@ -70,7 +81,8 @@
                                     <label class="badge badge-primary-soft">{{ $drug->Prescription->count() }}</label>
                                     {{ __('sentence.In Prescription') }}
                                 </td>
-                                <td align="center"><label class="badge badge-primary-soft">{{ $drug->amountDrug }} fcfa</label></td>
+                                <td align="center"><label class="badge badge-primary-soft">{{ $drug->amountDrug }}
+                                        fcfa</label></td>
                                 <td class="text-center">
                                     @can('edit drug')
                                         <a href="{{ url('drug/edit/' . $drug->id) }}"

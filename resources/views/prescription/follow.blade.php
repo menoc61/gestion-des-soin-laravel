@@ -24,7 +24,7 @@
         <form method="post" id="myForm" class="col-md-12 d-flex" action="{{ route('appointment.store') }}"
             enctype="multipart/form-data">
             <div class="col-md-12 d-flex">
-                <div class="col-md-5">
+                <div class="col-md-5" id="create_appointment_block1">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
@@ -39,27 +39,9 @@
                             </fieldset>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} <span
-                                    id="doctor-name"></span></h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover" id="appointments-table">
-
-                                    <tr>
-                                        <td align="center">{{ __('sentence.Date') }}</td>
-                                        <td align="center">{{ __('sentence.Time Slot') }}</td>
-                                    </tr>
-                                    <!-- Appointments will be dynamically inserted here -->
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div class="col-md-7">
-                    <div class="card shadow mb-4" id="create_appointment_block">
+                <div class="col-md-7" id="create_appointment_block">
+                    <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.set meetings') }}</h6>
                             <small id="emailHelp" class="form-text text-muted">Ce Traitement comporte
@@ -68,11 +50,10 @@
                         <div class="card-body">
 
                             <div class="row ">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label for="patient_name">{{ __('sentence.Patient') }}</label>
                                     <select class="form-control patient_name multiselect-doctorino" name="patient"
                                         id="patient_name">
-
                                         <option value="{{ $prescription->user_id }}" selected>
                                             {{ $prescription->User->name }}
                                         </option>
@@ -80,11 +61,13 @@
                                     {{ csrf_field() }}
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-4">
                                     @if (Auth::user()->role_id != 2)
                                         <div class="form-group">
                                             <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
                                             <select class="form-control " name="doctor_id" id="DoctorID" required>
+                                                <option value="" disabled selected>
+                                                    {{ __('sentence.Select Praticien') }}...</option>
                                                 <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
                                                 @foreach ($praticiens as $user)
                                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -94,10 +77,11 @@
                                     @else
                                         <div class="form-group">
                                             <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
-                                            <input type="hidden" class="form-control " value="{{ Auth::user()->id }}"
-                                                name="doctor_id" id="DoctorID">
-                                            <input type="text" class="form-control " value="{{ Auth::user()->name }}"
-                                                readonly>
+                                            <select class="form-control " name="doctor_id" id="DoctorID" required>
+                                                <option value="" disabled selected>
+                                                    {{ __('sentence.Select Praticien') }}...</option>
+                                                <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+                                            </select>
                                         </div>
                                     @endif
                                     @php
@@ -114,28 +98,33 @@
                                     @endphp
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-4">
                                     <label for="rdvdate">{{ __('sentence.Date') }}</label>
                                     <input type="text" class="form-control target agenda" name="rdv_time_date"
                                         readonly="readonly" id="rdvdate">
-                                    <small id="emailHelp" class="form-text text-muted">Select date to view time slots
-                                        available</small>
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-4">
                                     <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
                                     <input type="time" class="form-control target" name="rdv_time_start">
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-4">
                                     <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
                                     <input type="time" class="form-control target" name="rdv_time_end">
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label for="reason">{{ __('sentence.Reason for visit') }}</label>
+                                <div class="form-group col-md-4">
+                                    <label for="reason">{{ __('sentence.Code for visit') }}</label>
                                     <textarea class="form-control" id="reason" name="reason" readonly></textarea>
                                     <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <div class="col-sm-9">
+                                        <button type="submit"
+                                            class="btn btn-success my-5">{{ __('sentence.Save') }}</button>
+                                    </div>
                                 </div>
 
                                 {{-- <div class="form-check">
@@ -147,12 +136,6 @@
                                 <div class="form-group col-md-3">
                                     <input class="form-control" value="{{ $prescription->id }}" type="hidden"
                                         name="prescription_id" readonly>
-                                </div>
-
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-9">
-                                    <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -263,6 +246,18 @@
                                                     data-rdv_time_start="{{ $appointment->time_start }}"
                                                     data-rdv_time_end="{{ $appointment->time_end }}"
                                                     data-patient_name="{{ $appointment->User->name }}"
+                                                    class="btn btn-outline-primary btn-circle btn-sm" data-toggle="modal"
+                                                    data-target="#EDITRDVModal1">
+                                                    <i class="fas fa-file"></i>
+                                                </a>
+                                            @endcan
+
+                                            @can('edit appointment')
+                                                <a data-rdv_id="{{ $appointment->id }}"
+                                                    data-rdv_date="{{ $appointment->date->format('d M Y') }}"
+                                                    data-rdv_time_start="{{ $appointment->time_start }}"
+                                                    data-rdv_time_end="{{ $appointment->time_end }}"
+                                                    data-patient_name="{{ $appointment->User->name }}"
                                                     class=" btn btn-outline-success btn-circle btn-sm
                                                     {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
                                                     data-toggle="modal" data-target="#EDITRDVModal">
@@ -272,7 +267,8 @@
                                             @can('delete appointment')
                                                 @if ($appointment->visited != 1)
                                                     <a href="{{ url('appointment/delete/' . $appointment->id) }}"
-                                                        class="btn btn-outline-danger btn-circle btn-sm">
+                                                        class="btn btn-outline-danger btn-circle btn-sm" data-toggle="tooltip"
+                                                        data-placement="top" title="Supprimer ce rendez-vous">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
                                                 @endif
@@ -365,6 +361,7 @@
                         class="d-none">
                         <input type="hidden" name="rdv_id" id="rdv_id">
                         <input type="hidden" name="rdv_status" value="1">
+                        <input type="hidden" name="is_read" value="1">
                         @csrf
                     </form>
                     <a class="btn btn-danger text-white"
@@ -379,6 +376,99 @@
             </div>
         </div>
     </div>
+
+    <!--EDIT Rapport Appointment Modal-->
+    <div class="modal fade" id="EDITRDVModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <b>Faire une Observation Pour ce Rendez-Vous</b>
+                    </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <tr>
+                                <td><b>ID: </b></td>
+                                <td> <label class="badge badge-primary-soft" id="hidden_rdv_id_span"></label></td>
+                            </tr>
+                            <tr>
+                                <td><b>{{ __('sentence.Patient') }}</b></td>
+                                <td> <label class="badge badge-primary-soft" id="patient_name"></label></td>
+                            </tr>
+                            <tr>
+                                <td><b>{{ __('sentence.Date') }} : </b></td>
+                                <td><label class="badge badge-primary-soft" id="rdv_date"></label></td>
+                            </tr>
+                            <tr>
+                                <td><b>{{ __('sentence.Time Slot') }} : </b></td>
+                                <td><label class="badge badge-primary-soft" id="rdv_time"></span></label></td>
+                            </tr>
+                        </table>
+                    </div>
+                    {{--
+                    <p><b>{{ __('ID') }} :</b> <span id="hidden_rdv_id_span"></span></p>
+                    <p><b>{{ __('sentence.Patient') }} :</b> <span id="patient_name"></span></p>
+                    <p><b>{{ __('sentence.Date') }} :</b> <span id="rdv_date"></span></p>
+                    <p><b>{{ __('sentence.Time Slot') }} :</b> <span id="rdv_time"></span></p> --}}
+                    <!-- New input field for Rapport -->
+                    <div>
+                        <form id="rdv-form-confirm1" action="{{ route('appointment.store_edit') }}" method="POST"
+                            class="">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="rdv_id" id="hidden_rdv_id">
+                            <input type="hidden" name="rdv_status" value="1">
+                            <input type="hidden" name="is_read" value="1">
+                            <input type="hidden" name="rapport" id="hidden_rapport">
+                            <div class="form-group">
+                                <label for="rapport"><b>{{ __('Observation') }}</b></label>
+                                <textarea class="form-control" id="rapport" name="rapport" placeholder="{{ __('Faire une Observation') }}"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button"
+                        data-dismiss="modal">{{ __('sentence.Close') }}</button>
+                    <a class="btn btn-success text-white"
+                        onclick="event.preventDefault(); document.getElementById('rdv-form-confirm1').submit();">Créer
+                        l'observation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal HTML agenda doctor -->
+    <div class="modal fade" id="doctorAgendaModal" tabindex="-1" role="dialog"
+        aria-labelledby="doctorAgendaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doctorAgendaModalLabel">{{ __('sentence.Agenda praticien') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover" id="appointments-table-modal">
+                            <tr>
+                                <td align="center">{{ __('sentence.Date') }}</td>
+                                <td align="center">{{ __('sentence.Time Slot') }}</td>
+                            </tr>
+                            <!-- Appointments will be dynamically inserted here -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 @endsection
 
@@ -411,11 +501,8 @@
                     <input type="text" name="drug_amount[]" class="form-control drug-amount" readonly>
                 </div>
                 <div class="col-md-2">
-                    <a type="button" class="btn btn-danger btn-sm text-white span-2 delete my-4"><i class="fa fa-times-circle"></i> {{ __('sentence.Remove') }}</a>
+                    <a type="button" class="btn btn-danger btn-sm text-white span-2 delete my-5 d-flex"><i class="fa fa-times-circle"></i> {{ __('sentence.Remove') }}</a>
                 </div>
-            </div>
-            <div class="col-12">
-                <hr color="#a1f1d4">
             </div>
         </section>
     </script>
@@ -493,8 +580,11 @@
             var prescriptionDosage = {{ $prescription->dosage }};
             if (appointmentCount == prescriptionDosage) {
                 $('#create_appointment_block').hide();
+                $('#create_appointment_block1').hide();
+
             } else {
                 $('#create_appointment_block').show();
+                $('#create_appointment_block1').show();
             }
         }
         $(document).ready(function() {
@@ -553,7 +643,7 @@
                     url: '/appointments/by-doctor/' + doctorId,
                     method: 'GET',
                     success: function(response) {
-                        var appointmentsTable = $('#appointments-table');
+                        var appointmentsTable = $('#appointments-table-modal');
                         appointmentsTable.find('tr:gt(0)')
                             .remove(); // Remove existing rows except header
 
@@ -564,9 +654,7 @@
                                     appointment.date + '</label></td>' +
                                     '<td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i> ' +
                                     appointment.time_start + ' - ' + appointment
-                                    .time_end + '</label></td>'
-                                '<td class="text-center">' + appointment
-                                    .created_at + '</td>' +
+                                    .time_end + '</label></td>' +
                                     '</tr>';
                                 appointmentsTable.append(newRow);
                             });
@@ -575,9 +663,55 @@
                                 '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
                             appointmentsTable.append(noData);
                         }
+
+                        // Afficher la modal
+                        $('#doctorAgendaModal').modal('show');
                     }
                 });
             });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            // Modal to edit appointment status
+            $("#EDITRDVModal1").on("show.bs.modal", function(event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var rdv_date = button.data("rdv_date"); // Extract info from data-* attributes
+                var rdv_id = button.data("rdv_id"); // Extract info from data-* attributes
+                var rdv_time_start = button.data("rdv_time_start"); // Extract info from data-* attributes
+                var rdv_time_end = button.data("rdv_time_end"); // Extract info from data-* attributes
+                var patient_name = button.data("patient_name"); // Extract info from data-* attributes
+
+                // Update the modal's content
+                var modal = $(this);
+                modal.find("#patient_name").text(patient_name);
+                modal.find("#rdv_date").text(rdv_date);
+                modal.find("#rdv_time").text(rdv_time_start + " - " + rdv_time_end);
+                modal.find("#hidden_rdv_id_span").text(rdv_id); // Set the rdv_id in the span
+                modal.find("#hidden_rdv_id").val(rdv_id); // Set the rdv_id in the input field
+            });
+
+            // Submit rapport form
+            $("#submit-rapport").on("click", function() {
+                var rapport = $("#rapport").val();
+                var rdv_id = $("#hidden_rdv_id").val(); // Retrieve rdv_id using .val()
+
+                // Ensure rdv_id is set
+                if (!rdv_id) {
+                    alert("RDV ID est manquant!");
+                    return false;
+                }
+
+                $("#hidden_rapport").val(rapport);
+                $("#rdv-form-confirm1").submit();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 @endsection

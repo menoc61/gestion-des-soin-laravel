@@ -171,26 +171,26 @@ class UsersController extends Controller
         }
 
         // Générer le token JWT
-        $token = $this->generateToken($user);
+        // $token = $this->generateToken($user);
 
         // Envoyer la requête avec le token
-        $response = Http::withToken($token)->post('http://localhost:5001/v1/user/register', [
-            'email' => $user->email,
-            'password' => $request->password,
-            'role' => $role,
-            'username' => $user->name,
-            'salary' => '5000',
-            'designation_id' => 1,
-            'join_date' => "2024-06-20 00:00:00",
-            'leave_date' => "2024-06-20 00:00:00",
-            'id_no' => 'PZD-8686',
-            'department' => 'test',
-            'phone' => $request->phone,
-            'address' => 'Yaounde',
-            'blood_group' => 'A+',
-            'createdAt' => $user->created_at->format('Y-m-d\TH:i:s.u\Z'),
-            'updatedAt' => $user->updated_at->format('Y-m-d\TH:i:s.u\Z'),
-        ]);
+        // $response = Http::withToken($token)->post('http://localhost:5001/v1/user/register', [
+        //     'email' => $user->email,
+        //     'password' => $request->password,
+        //     'role' => $role,
+        //     'username' => $user->name,
+        //     'salary' => '5000',
+        //     'designation_id' => 1,
+        //     'join_date' => "2024-06-20 00:00:00",
+        //     'leave_date' => "2024-06-20 00:00:00",
+        //     'id_no' => 'PZD-8686',
+        //     'department' => 'test',
+        //     'phone' => $request->phone,
+        //     'address' => 'Yaounde',
+        //     'blood_group' => 'A+',
+        //     'createdAt' => $user->created_at->format('Y-m-d\TH:i:s.u\Z'),
+        //     'updatedAt' => $user->updated_at->format('Y-m-d\TH:i:s.u\Z'),
+        // ]);
 
         $patient = new Patient();
         $patient->user_id = $user->id;
@@ -199,9 +199,9 @@ class UsersController extends Controller
         $patient->birthday = '00-00-0000';
         $patient->save();
 
-        if ($response->failed()) {
-            return \Redirect::route('user.all')->with('error', __('sentence.User synchronization failed'));
-        }
+        // if ($response->failed()) {
+        //     return \Redirect::route('user.all')->with('error', __('sentence.User synchronization failed'));
+        // }
 
         return \Redirect::route('user.all')->with('success', __('sentence.User Created Successfully'));
     }

@@ -128,10 +128,10 @@
                             <tr>
                                 <th class="text-center">ID</th>
                                 <th>{{ __('sentence.Patient Name') }}</th>
-                                <th class="text-center">{{ __('sentence.Reason for visit') }}</th>
+                                {{-- <th class="text-center">{{ __('sentence.Reason for visit') }}</th> --}}
                                 <th class="text-center">{{ __('sentence.Schedule Info') }}</th>
                                 <th class="text-center">{{ __('sentence.Status') }}</th>
-                                <th class="text-center">{{ __('sentence.Created at') }}</th>
+                                {{-- <th class="text-center">{{ __('sentence.Created at') }}</th> --}}
                                 <th class="text-center">{{ __('sentence.Visited At') }}</th>
                                 <th class="text-center">{{ __('sentence.Actions') }}</th>
                             </tr>
@@ -142,8 +142,8 @@
                                     <td class="text-center">{{ $key + 1 }}</td>
                                     <td><a href="{{ url('patient/view/' . $appointment->user_id) }}">
                                             {{ $appointment->User->name }} </a></td>
-                                    <td class="text-center"><label
-                                            class="badge badge-primary-soft">{{ $appointment->reason }}</label></td>
+                                    {{-- <td class="text-center"><label
+                                            class="badge badge-primary-soft">{{ $appointment->reason }}</label></td> --}}
 
                                     <td class="text-center">
                                         <label class="badge badge-primary-soft">
@@ -169,7 +169,7 @@
                                             </label>
                                         @endif
                                     </td>
-                                    <td class="text-center">{{ $appointment->created_at->format('d M Y H:i') }}</td>
+                                    {{-- <td class="text-center">{{ $appointment->created_at->format('d M Y H:i') }}</td> --}}
                                     <td class="text-center">
                                         @if ($appointment->visited == 1)
                                             <label class="badge badge-primary-soft">
@@ -244,6 +244,7 @@
                         class="d-none">
                         <input type="hidden" name="rdv_id" id="rdv_id">
                         <input type="hidden" name="rdv_status" value="1">
+                        <input type="hidden" name="is_read" value="1">
                         @csrf
                     </form>
                     <a class="btn btn-danger text-white"
