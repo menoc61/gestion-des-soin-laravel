@@ -319,7 +319,7 @@ class PatientController extends Controller
 
         $appointments->load('drugs'); // des rendez-vous
 
-        $appointIds = Appointment::whereHas('rdv__drugs')
+        $appointIds = Appointment::whereHas('rdv__drugs')->where('visited',1)
             ->groupBy('id')
             ->pluck('id');
 

@@ -37,7 +37,7 @@ class BillingController extends Controller
         //     ->whereDoesntHave('Items')
         //     ->get();
 
-        $appointIds = Appointment::whereHas('rdv__drugs')
+        $appointIds = Appointment::whereHas('rdv__drugs')->where('visited', 1)
             ->groupBy('id')
             ->pluck('id');
 

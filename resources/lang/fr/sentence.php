@@ -315,5 +315,6 @@ return [
     'Praticienino Settings' => 'Paramètre de l\'application',
     'Delete Alert' => 'Voulez-vous vraiment supprimer cette donnée',
     'Delete' => 'Supprimer',
-    'Select Praticien' => 'Sélectionner un praticien'
+    'Select Praticien' => 'Sélectionner un praticien',
+    'Code for visit' => 'code de la Visite',
 ];

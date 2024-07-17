@@ -24,7 +24,7 @@
         <form method="post" id="myForm" class="col-md-12 d-flex" action="{{ route('appointment.store') }}"
             enctype="multipart/form-data">
             <div class="col-md-12 d-flex">
-                <div class="col-md-5">
+                <div class="col-md-5" id="create_appointment_block1">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
@@ -39,27 +39,9 @@
                             </fieldset>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} <span
-                                    id="doctor-name"></span></h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover" id="appointments-table">
-
-                                    <tr>
-                                        <td align="center">{{ __('sentence.Date') }}</td>
-                                        <td align="center">{{ __('sentence.Time Slot') }}</td>
-                                    </tr>
-                                    <!-- Appointments will be dynamically inserted here -->
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div class="col-md-7">
-                    <div class="card shadow mb-4" id="create_appointment_block">
+                <div class="col-md-7" id="create_appointment_block">
+                    <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.set meetings') }}</h6>
                             <small id="emailHelp" class="form-text text-muted">Ce Traitement comporte
@@ -99,9 +81,6 @@
                                                 <option value="" disabled selected>
                                                     {{ __('sentence.Select Praticien') }}...</option>
                                                 <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
-                                                {{-- @foreach ($praticiens as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                @endforeach --}}
                                             </select>
                                         </div>
                                     @endif
@@ -136,15 +115,17 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <div class="col-sm-9">
-                                        <button type="submit" class="btn btn-success my-5">{{ __('sentence.Save') }}</button>
-                                    </div>
-                                </div>
-                                {{-- <div class="form-group col-md-6">
-                                    <label for="reason">{{ __('sentence.Reason for visit') }}</label>
+                                    <label for="reason">{{ __('sentence.Code for visit') }}</label>
                                     <textarea class="form-control" id="reason" name="reason" readonly></textarea>
                                     <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
-                                </div> --}}
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <div class="col-sm-9">
+                                        <button type="submit"
+                                            class="btn btn-success my-5">{{ __('sentence.Save') }}</button>
+                                    </div>
+                                </div>
 
                                 {{-- <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="send_sms" id="sms">
@@ -279,15 +260,15 @@
                                                     data-patient_name="{{ $appointment->User->name }}"
                                                     class=" btn btn-outline-success btn-circle btn-sm
                                                     {{ $appointment->visited == 1 ? ' disabled opacity-button' : '' }}"
-                                                    data-toggle="modal" data-target="#EDITRDVModal" >
+                                                    data-toggle="modal" data-target="#EDITRDVModal">
                                                     <i class="fas fa-check"></i>
                                                 </a>
                                             @endcan
                                             @can('delete appointment')
                                                 @if ($appointment->visited != 1)
                                                     <a href="{{ url('appointment/delete/' . $appointment->id) }}"
-                                                        class="btn btn-outline-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top"
-                                                         title="Supprimer ce rendez-vous">
+                                                        class="btn btn-outline-danger btn-circle btn-sm" data-toggle="tooltip"
+                                                        data-placement="top" title="Supprimer ce rendez-vous">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
                                                 @endif
@@ -462,6 +443,33 @@
         </div>
     </div>
 
+    <!-- Modal HTML agenda doctor -->
+    <div class="modal fade" id="doctorAgendaModal" tabindex="-1" role="dialog"
+        aria-labelledby="doctorAgendaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doctorAgendaModalLabel">{{ __('sentence.Agenda praticien') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover" id="appointments-table-modal">
+                            <tr>
+                                <td align="center">{{ __('sentence.Date') }}</td>
+                                <td align="center">{{ __('sentence.Time Slot') }}</td>
+                            </tr>
+                            <!-- Appointments will be dynamically inserted here -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 
 
@@ -572,8 +580,11 @@
             var prescriptionDosage = {{ $prescription->dosage }};
             if (appointmentCount == prescriptionDosage) {
                 $('#create_appointment_block').hide();
+                $('#create_appointment_block1').hide();
+
             } else {
                 $('#create_appointment_block').show();
+                $('#create_appointment_block1').show();
             }
         }
         $(document).ready(function() {
@@ -632,7 +643,7 @@
                     url: '/appointments/by-doctor/' + doctorId,
                     method: 'GET',
                     success: function(response) {
-                        var appointmentsTable = $('#appointments-table');
+                        var appointmentsTable = $('#appointments-table-modal');
                         appointmentsTable.find('tr:gt(0)')
                             .remove(); // Remove existing rows except header
 
@@ -643,9 +654,7 @@
                                     appointment.date + '</label></td>' +
                                     '<td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i> ' +
                                     appointment.time_start + ' - ' + appointment
-                                    .time_end + '</label></td>'
-                                '<td class="text-center">' + appointment
-                                    .created_at + '</td>' +
+                                    .time_end + '</label></td>' +
                                     '</tr>';
                                 appointmentsTable.append(newRow);
                             });
@@ -654,11 +663,15 @@
                                 '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
                             appointmentsTable.append(noData);
                         }
+
+                        // Afficher la modal
+                        $('#doctorAgendaModal').modal('show');
                     }
                 });
             });
         });
     </script>
+
 
     <script>
         $(document).ready(function() {
@@ -701,5 +714,4 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
-
 @endsection

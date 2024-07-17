@@ -344,7 +344,7 @@
         {{-- graph section end --}}
 
         <div class="modal fade" id="viewDetailsModal" tabindex="-1" role="dialog" aria-labelledby="viewDetailsModalLabel"
-            aria-hidden="true">
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -391,7 +391,7 @@
                     <div class="modal-footer">
                         <a class="btn btn-primary text-white"
                             onclick="event.preventDefault(); document.getElementById('rdv-form').submit();"> Page de
-                            l'hô<template></template> </a>
+                            l'hôte </a>
                         <form id="rdv-form" action="{{ route('appointment.store_edit') }}" method="POST" class="d-none">
                             <input type="hidden" name="rdv_id" id="rdvId">
                             <input type="hidden" name="is_read" value="1">

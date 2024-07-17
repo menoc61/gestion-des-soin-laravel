@@ -244,6 +244,7 @@
                         class="d-none">
                         <input type="hidden" name="rdv_id" id="rdv_id">
                         <input type="hidden" name="rdv_status" value="1">
+                        <input type="hidden" name="is_read" value="1">
                         @csrf
                     </form>
                     <a class="btn btn-danger text-white"

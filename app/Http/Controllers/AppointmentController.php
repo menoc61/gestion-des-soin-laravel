@@ -287,7 +287,7 @@ class AppointmentController extends Controller
     {
         Appointment::destroy($id);
 
-        return back()->with('success', 'Appointment Deleted Successfully!');
+        return back()->with('success', 'Rendez-Vous Supprimé avec Succès!');
     }
 
     public function notify_whatsapp($id)
