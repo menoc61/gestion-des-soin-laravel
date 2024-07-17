@@ -361,14 +361,17 @@ class UserApiController extends Controller
 
     public function getPaymentsByBillingId($billingId)
     {
-        $payments = Payment::where('billing_id', $billingId)->get()->map(function ($payment) {
+        $payments = Payment::where('billing_id', $billingId)->with('UserSessions')->get()->map(function ($payment) {
             return [
                 'id' => $payment->id,
                 'created_at' => $payment->created_at->format('d M Y'),
                 'amount' => $payment->amount,
+                'user_name' => $payment->UserSessions ? $payment->UserSessions->name : 'N/A',
             ];
         });
 
         return response()->json($payments);
     }
+
+
 }

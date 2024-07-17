@@ -154,6 +154,7 @@ class AppointmentController extends Controller
         $appointment->visited = 0;
         $appointment->is_read = 0;
         $appointment->reason = $request->reason;
+        $appointment->rapport = $request->rapport;
         $appointment->prescription_id = $request->prescription_id;
         $appointment->save();
 
@@ -216,6 +217,7 @@ class AppointmentController extends Controller
         $appointment = Appointment::findOrFail($request->rdv_id);
         $appointment->visited = $request->rdv_status;
         $appointment->is_read = $request->is_read;
+        $appointment->rapport = $request->rapport;
         $appointment->save();
 
         return \Redirect::route('patient.view', ['id' => $appointment->user_id]);
@@ -285,7 +287,7 @@ class AppointmentController extends Controller
     {
         Appointment::destroy($id);
 
-        return back()->with('success', 'Appointment Deleted Successfully!');
+        return back()->with('success', 'Rendez-Vous Supprimé avec Succès!');
     }
 
     public function notify_whatsapp($id)

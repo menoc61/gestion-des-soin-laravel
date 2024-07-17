@@ -37,7 +37,7 @@ class BillingController extends Controller
         //     ->whereDoesntHave('Items')
         //     ->get();
 
-        $appointIds = Appointment::whereHas('rdv__drugs')
+        $appointIds = Appointment::whereHas('rdv__drugs')->where('visited', 1)
             ->groupBy('id')
             ->pluck('id');
 
@@ -64,6 +64,7 @@ class BillingController extends Controller
         $payment = new Payment();
         $payment->billing_id = $billing->id;
         $payment->amount = $request->deposited_amount;
+        $payment->created_by = Auth::user()->id;
         $payment->save();
 
         // Mettre à jour les montants dans la facture
@@ -163,10 +164,11 @@ class BillingController extends Controller
             $payment->billing_id = $billing->id;
             $payment->amount = $request->deposited_amount;
             $payment->created_at = $request->payment_date ?? now();
+            $payment->created_by = Auth::user()->id;
             $payment->save();
         }
 
-        return \Redirect::route('patient.view', ['id' => $billing->user_id])->with('success', 'Invoice Created Successfully!');
+        return \Redirect::route('patient.view', ['id' => $billing->user_id])->with('success', 'Facture Crée avec Succès!');
     }
 
 
@@ -319,16 +321,17 @@ class BillingController extends Controller
 
         Billing::destroy($id);
 
-        return \Redirect::route('billing.all')->with('success', 'Invoice Deleted Successfully!');
+        return \Redirect::route('billing.all')->with('success', 'Facture Supprimée avec Succès!');
     }
 
     public function getPaymentsByBillingId($billingId)
     {
-        $payments = Payment::where('billing_id', $billingId)->get()->map(function ($payment) {
+        $payments = Payment::where('billing_id', $billingId)->with('UserSessions')->get()->map(function ($payment) {
             return [
                 'id' => $payment->id,
                 'created_at' => $payment->created_at->format('d M Y'),
                 'amount' => $payment->amount,
+                'user_name' => $payment->UserSessions ? $payment->UserSessions->name : 'N/A',
             ];
         });
 

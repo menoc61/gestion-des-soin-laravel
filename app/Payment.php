@@ -18,4 +18,8 @@ class Payment extends Model
     {
         return $this->belongsTo(Billing::class);
     }
+    public function UserSessions()
+    {
+        return $this->hasOne('App\User', 'id', 'created_by');
+    }
 }

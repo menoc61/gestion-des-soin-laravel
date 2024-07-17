@@ -21,7 +21,7 @@ class MailInvoiceController extends Controller
         // Parcourir chaque utilisateur et calculer le montant total des dettes
         foreach ($usersWithDueAmount as $user) {
             // Récupérer les IDs des rendez-vous qui ont des médicaments associés
-            $appointIds = Appointment::whereHas('rdv__drugs')
+            $appointIds = Appointment::whereHas('rdv__drugs')->where('visited', 1)
                 ->groupBy('id')
                 ->pluck('id');
 
