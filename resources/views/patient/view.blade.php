@@ -614,8 +614,6 @@
                                     {{-- ---------------------------------------------------------- End Rendez-vous  -------------------------------------------------------------------- --}}
 
 
-
-
                                     {{-- ----------------------------------------------------------- Start Prescription  --------------------------------------------------------------- --}}
                                     <div class="tab-pane fade" id="prescriptions" role="tabpanel"
                                         aria-labelledby="prescriptions-tab">
@@ -727,6 +725,7 @@
                                         </div>
                                     </div>
                                     {{-- --------------------------------------------------------- End Prescription  ------------------------------------------------------------------- --}}
+
 
                                     @if (Auth::user()->role_id != 2)
                                         {{-- ----------------------------------------------------------- Start test Psychothérapeutique  --------------------------------------------------------------- --}}
@@ -861,7 +860,6 @@
                                     {{-- ------------------------------------------------------- End Documents --------------------------------------------------------------------- --}}
 
 
-
                                     {{-- ------------------------------------------------------- Start Facturation --------------------------------------------------------------------- --}}
                                     <div class="tab-pane fade" id="Billing" role="tabpanel" aria-labelledby="Billing-tab">
                                         <div class="row mt-4">
@@ -956,7 +954,7 @@
                                                                         href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
                                                                 </td>
                                                                 <td class="text-center"><label
-                                                                        class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
+                                                                        class="badge badge-primary-soft text-dark">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
                                                                 </td>
                                                                 <td class="text-center"> {{ $invoice->total_with_tax }}
                                                                     {{ App\Setting::get_option('currency') }}
@@ -1016,7 +1014,7 @@
                                                                         href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
                                                                 </td>
                                                                 <td class="text-center"><label
-                                                                        class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
+                                                                        class="badge badge-primary-soft text-dark">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
                                                                 </td>
                                                                 <td class="text-center"> {{ $invoice->total_with_tax }}
                                                                     {{ App\Setting::get_option('currency') }}
@@ -1131,7 +1129,6 @@
                                         </div>
                                     </div>
                                     {{-- ------------------------------------------------------- End Facturation ----------------------------------------------------------------------- --}}
-
 
 
                                     {{-- ------------------------------------------------------- Start Psychothérapie --------------------------------------------------------------------- --}}
@@ -1371,7 +1368,7 @@
 
         <!--Show Modal RDV Contain-->
         <div class="modal fade" id="viewDetailsModal" tabindex="-1" role="dialog" aria-labelledby="viewDetailsModalLabel"
-            aria-hidden="true">
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1464,18 +1461,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{-- <table class="table table-striped" id="Payments-table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Montant</th>
-                                    <th>Nom</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Les données seront ajoutées ici via JavaScript -->
-                            </tbody>
-                        </table> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -1538,7 +1523,7 @@
                 // Événement de clic sur une facture (ou tout autre élément déclencheur)
                 $('.view-payments').click(function() {
                     var billingId = $(this).data(
-                    'billing-id'); // Assurez-vous que chaque élément a un attribut data-billing-id
+                        'billing-id'); // Assurez-vous que chaque élément a un attribut data-billing-id
                     $.ajax({
                         url: '/billing/' + billingId + '/payments',
                         method: 'GET',
@@ -1552,7 +1537,9 @@
                                 response.forEach(function(payment) {
                                     var newRow = '<tr class="text-center">' +
                                         '<td>' + payment.created_at + '</td>' +
-                                        '<td>' + payment.amount + ' {{ App\Setting::get_option('currency') }}' + '</td>' +
+                                        '<td>' + payment.amount +
+                                        ' {{ App\Setting::get_option('currency') }}' +
+                                        '</td>' +
                                         '<td>' + payment.user_name + '</td>' +
                                         '</tr>';
                                     paymentsTable.append(newRow);

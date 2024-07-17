@@ -105,11 +105,12 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $total_prescriptions = Prescription::all()->count();
         $total_payments = Billing::all()->count();
 
-        $total_payments_days = Rdv_Drug::wheredate('created_at', Today())->sum('montant_drug');
+        $appointmentsVisitedId = Appointment::where('visited', 1)->pluck('id');
+        $total_payments_days = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->wheredate('created_at', Today())->sum('montant_drug');
         // $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
-        $total_payments_month = Rdv_Drug::whereMonth('created_at', date('m'))->sum('montant_drug');
+        $total_payments_month = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->whereMonth('created_at', date('m'))->sum('montant_drug');
         // $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
-        $total_payments_year = Rdv_Drug::whereYear('created_at', date('Y'))->sum('montant_drug');
+        $total_payments_year = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->whereYear('created_at', date('Y'))->sum('montant_drug');
         // $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
         $countRDVread = Appointment::where('is_read', 0)->count();
 
