@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
+
+// Route pour le formulaire de connexion
+Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
+
+// Route pour le traitement de la connexion
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+
+// Route pour la déconnexion
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+Route::get('/global/dashboard', 'HomeController@global');
 
 Auth::routes(['register' => false]);
 

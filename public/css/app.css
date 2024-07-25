@@ -490,7 +490,7 @@ mark {
 
 .initialism {
 	font-size: 90%;
-	text-transform: uppercase
+	/* text-transform: uppercase */
 }
 
 .blockquote {
@@ -9887,9 +9887,9 @@ button.bg-dark:hover {
 	text-transform: uppercase!important
 }
 
-.text-capitalize {
+/* .text-capitalize {
 	text-transform: capitalize!important
-}
+} */
 
 .font-weight-light {
 	font-weight: 300!important
