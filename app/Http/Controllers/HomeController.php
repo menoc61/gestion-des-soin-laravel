@@ -206,4 +206,8 @@ $permission = Permission::create(['name' => 'delete invoice']);
         session()->put('locale', $locale);
         return redirect()->back();
     }
+
+    public function global(){
+        return view('globalHome');
+    }
 }

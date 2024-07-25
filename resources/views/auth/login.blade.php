@@ -35,7 +35,6 @@
                                 </div>
                             </center>
                             <hr>
-
                         </div>
                         <form id="loginForm" method="POST" action="{{ route('login') }}" class="user">
                             <div class="form-group">
@@ -51,9 +50,8 @@
                             </div>
                             <div class="form-group">
                                 <input id="password" type="password"
-                                    class="input w-100 @error('password') is-invalid @enderror" name="password"
-                                    required autocomplete="current-password"
-                                    placeholder="{{ __('sentence.Password') }}">
+                                    class="input w-100 @error('password') is-invalid @enderror" name="password" required
+                                    autocomplete="current-password" placeholder="{{ __('sentence.Password') }}">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -99,50 +97,59 @@
             // Extract the value before the @ in the email
             const userName = email.split('@')[0];
 
-            const dataForHRM = {
-                userName: userName,
-                password: password
-            };
-
             const dataForERP = {
                 username: userName,
                 password: password
             };
-            console.log(dataForHRM, dataForERP);
+
+            const dataForGSD = {
+                email: email,
+                password: password
+            };
 
             // CSRF Token
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             try {
-                const responses = await Promise.all([
-                    axios.post('http://localhost:5000/user/login', dataForHRM, {
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken
-                        }
-                    }),
-                    axios.post('http://localhost:5001/v1/user/login', dataForERP, {
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken
-                        }
-                    })
-                ]);
-
-                // Process successful responses
-                responses.forEach(response => {
-                    if (response.data.token) {
-                        console.log(`Logged in to ${response.config.url}`, response.data);
-                        // Store token or user info as needed
-                        localStorage.setItem("access-token", response.data.token);
-                        localStorage.setItem("role", response.data.role);
-                        localStorage.setItem("user", response.data.username);
-                        localStorage.setItem("id", response.data.id);
-                        localStorage.setItem("isLogged", true);
+                // Envoi des données à l'application Laravel
+                const laravelResponse = await axios.post('{{ route('login') }}', dataForGSD, {
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
                     }
                 });
 
-                // Redirect or notify user as needed
-                alert('Login successful');
-                window.location.href = "/admin/dashboard"; // Example redirection
+                // Vérifier si l'authentification Laravel a réussi
+                if (laravelResponse.status === 200) {
+                    console.log('Laravel login successful', laravelResponse.data);
+
+                    // Envoi des données au backend Node.js
+                    const nodeResponse = await axios.post('http://localhost:5001/v1/user/login', dataForERP, {
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    });
+
+                    // Si la réponse du backend Node.js est réussie, traiter les données et rediriger
+                    if (nodeResponse.data.token) {
+                        console.log(`Logged in to Node.js backend`, nodeResponse.data);
+                        // Store token or user info as needed
+                        localStorage.setItem("access-token", nodeResponse.data.token);
+                        localStorage.setItem("role", nodeResponse.data.role);
+                        localStorage.setItem("user", nodeResponse.data.username);
+                        localStorage.setItem("id", nodeResponse.data.id);
+                        localStorage.setItem("isLogged", true);
+
+                        // Redirection vers le tableau de bord global
+                        alert('Login successful');
+                        window.location.href = "/global/dashboard";
+                    } else {
+                        console.error('Node.js login failed', nodeResponse);
+                        alert('Login to Node.js backend failed. Please check your credentials.');
+                    }
+                } else {
+                    console.error('Laravel login failed', laravelResponse);
+                    alert('Login to Laravel failed. Please check your credentials.');
+                }
             } catch (error) {
                 console.error('Login failed', error);
                 alert('Login failed. Please check your credentials.');
