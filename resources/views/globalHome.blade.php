@@ -14,6 +14,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('dashboard/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <!-- <link href="{{ asset('dashboard/css/bootstrap.css') }}" rel="stylesheet"> -->
 
 </head>
 
@@ -43,20 +44,13 @@
             <div class="slider">
                 <div id="top-banner-1" class="banner">
                     <div class="banner-inner-wrapper header-text">
-                        <h1 class="text-secondary"
-                            style="color: linear-gradient(-45deg, rgb(238,130,238), rgb(139,0,139));">BIENVENUE SUR ERP
+                        <h1 style="color: linear-gradient(-45deg, rgb(238,130,238), rgb(139,0,139));">BIENVENUE SUR ERP
                             saï i lama</h1>
-                        <!-- <div class="main-caption">
-              <h2>Take a Glimpse Into The Beautiful Country Of:</h2>
-              <h1>Saï i lama</h1>
-              <div class="border-button"><a href="#">Se connecter </a></div>
-            </div> -->
+
                         <div class="col-md-12 col-sm-12 col-12">
-                            <center>
-                                <div class="d-flex w-25 justify-content-center align-items-center">
-                                    <img src="{{ asset('img/sai-i-lama-logo.png') }}" class="img-fluid">
-                                </div>
-                            </center>
+
+                            <img src="{{ asset('img/favicon.png') }}" alt="academy pro" class="app-ico">
+
                         </div>
                         <div class="container">
                             <div class="row">
@@ -64,28 +58,28 @@
                                     <div class="more-info">
                                         <div class="row">
                                             <div class="col-lg-4 col-sm-6 col-12">
-                                                <a href="INDE.html" class="app-icon"
+                                                <a href="http://127.0.0.1:3000/dashboard" class="app-icon"
                                                     style="border: 1px solid #079939; margin-bottom:16px;">
                                                     <img src="{{ asset('img/icons8-person-96.png') }}"
-                                                        alt="academy pro">
-                                                    <h4>Module Ressources Humaines</h4>
-                                                </a>
+                                                        alt="academy pro"> </a>
+                                                <h4>Module Ressources Humaines</h4>
+
                                             </div>
                                             <div class="col-lg-4 col-sm-6 col-12">
                                                 <a href="http://127.0.0.1:3001/dashboard" class="app-icon"
                                                     style="border: 1px solid #6A037A; margin-bottom:16px;">
                                                     <img src="{{ asset('img/icons8-ventes-totales-80.png') }}"
-                                                        alt="academy pro">
-                                                    <h4>Module gestion des Stocks</h4>
-                                                </a>
+                                                        alt="academy pro"></a>
+                                                <h4>Module gestion des Stocks</h4>
+
                                             </div>
                                             <div class="col-lg-4 col-sm-6 col-12">
                                                 <a href="http://localhost:8000/home" class="app-icon"
                                                     style="border: 1px solid #079939;">
                                                     <img src="{{ asset('img/icons8-millénaire-100.png') }}"
-                                                        alt="academy pro">
-                                                    <h4>Module Soins</h4>
-                                                </a>
+                                                        alt="academy pro"></a>
+                                                <h4>Module Soins</h4>
+
                                             </div>
                                         </div>
                                     </div>
