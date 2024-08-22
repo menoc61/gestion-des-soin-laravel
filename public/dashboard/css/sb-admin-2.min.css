@@ -32,7 +32,7 @@
   --warning: #f6c23e;
   --danger: #e74a3b;
   --light: #f8f9fc;
-  --dark: #5a5c69;
+  --dark: #838282;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -12077,7 +12077,7 @@ td > a {
     margin-left: 9%;
 }
 .login {
-    background-image: url("../../img/sai-i-lama-parallax-01.jpg");
+    /* background-image: url("../../img/sai-i-lama-parallax-01.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
@@ -12235,5 +12235,9 @@ input[type='password']:focus
   }
 .my-5 {
     margin-top: 2rem !important;
+  }
+
+  .bo{
+    border: solid var(--dark);
   }
 
