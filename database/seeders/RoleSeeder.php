@@ -87,13 +87,13 @@ class RoleSeeder extends Seeder
 
         $user = User::create([
             'name' => 'ADMIN',
-            'email' => 'admin@admin',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('admin'),
             'role_id' => 1,
         ]);
         $user2 = User::create([
             'name' => 'PRATICIENT',
-            'email' => 'doc@admin',
+            'email' => 'doc@gmail.com',
             'password' => Hash::make('admin'),
             'role_id' => 2,
         ]);

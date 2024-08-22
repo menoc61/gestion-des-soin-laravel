@@ -101,7 +101,7 @@ return [
     'Create Account' => 'Créer un compte !',
     'Forgot Your Password' => 'Mot de passe oublié ?',
     'Remember Me' => 'Se souvenir de moi',
-    'Welcome' => 'Bienvenue à nouveau !',
+    'Welcome' => 'Application de Soins !',
     'Save' => 'Sauvegarder',
     'Cancel' => 'Annuler',
     'Ready to Leave' => 'Prêt à partir?',
