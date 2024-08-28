@@ -39,86 +39,6 @@ class UsersController extends Controller
         return view('user.create', ['roles' => $roles]);
     }
 
-    public function generateToken($user)
-    {
-        $payload = [
-            'sub' => $user->email,
-            'permissions' => [
-                'createProduct',
-                'viewProduct',
-                'updateProduct',
-                'deleteProduct',
-                'createCustomer',
-                'viewCustomer',
-                'updateCustomer',
-                'deleteCustomer',
-                'createSupplier',
-                'viewSupplier',
-                'updateSupplier',
-                'deleteSupplier',
-                'createTransaction',
-                'viewTransaction',
-                'updateTransaction',
-                'deleteTransaction',
-                'createSaleInvoice',
-                'viewSaleInvoice',
-                'updateSaleInvoice',
-                'deleteSaleInvoice',
-                'createPurchaseInvoice',
-                'viewPurchaseInvoice',
-                'updatePurchaseInvoice',
-                'deletePurchaseInvoice',
-                'createPaymentPurchaseInvoice',
-                'viewPaymentPurchaseInvoice',
-                'updatePaymentPurchaseInvoice',
-                'deletePaymentPurchaseInvoice',
-                'createPaymentSaleInvoice',
-                'viewPaymentSaleInvoice',
-                'updatePaymentSaleInvoice',
-                'deletePaymentSaleInvoice',
-                'createRole',
-                'viewRole',
-                'updateRole',
-                'deleteRole',
-                'createRolePermission',
-                'viewRolePermission',
-                'updateRolePermission',
-                'deleteRolePermission',
-                'createUser',
-                'viewUser',
-                'updateUser',
-                'deleteUser',
-                'professionalUser',
-                'viewDashboard',
-                'viewPermission',
-                'createDesignation',
-                'viewDesignation',
-                'updateDesignation',
-                'deleteDesignation',
-                'createProductCategory',
-                'viewProductCategory',
-                'updateProductCategory',
-                'deleteProductCategory',
-                'createReturnPurchaseInvoice',
-                'viewReturnPurchaseInvoice',
-                'updateReturnPurchaseInvoice',
-                'deleteReturnPurchaseInvoice',
-                'createReturnSaleInvoice',
-                'viewReturnSaleInvoice',
-                'updateReturnSaleInvoice',
-                'deleteReturnSaleInvoice',
-                'updateSetting',
-                'viewSetting'
-            ], // Ajoutez les permissions ici
-            'iat' => time(),
-            'exp' => time() + 60 * 60 * 24, // 24 heures
-        ];
-
-        $jwt = JWT::encode($payload, env('JWT_SECRET'), 'HS256');
-
-        return $jwt; // Retourne le JWT sans l'envelopper dans une réponse JSON
-    }
-
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -126,12 +46,13 @@ class UsersController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role_id' => ['required', 'numeric'],
-            'fonction' => ['required', 'array', Rule::in([
+            'fonction' => ['array', Rule::in([
                 'Praticien Main',
                 'Praticien Peau',
                 'Praticien Pied',
                 'Dermatologue',
             ])],
+            'phone' =>['required', 'unique'],
         ]);
 
         $user = new User();
@@ -140,6 +61,12 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->role_id = $request->role_id;
         $user->fonction = json_encode($request->fonction);
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->gender = $request->gender;
+        $user->appChoice = $request->appChoice;
+
+
         $role = Role::findById($request->role_id);
         if ($request->hasFile('image')) {
             // We Get the image
@@ -164,33 +91,6 @@ class UsersController extends Controller
         }
         $user->save();
 
-        if ($user->role_id == 1) {
-            $role = 'admin';
-        } else {
-            $role = $role->name;
-        }
-
-        // Générer le token JWT
-        $token = $this->generateToken($user);
-
-        // Envoyer la requête avec le token
-            $response = Http::withToken($token)->post('http://localhost:5001/v1/user/register', [
-            'email' => $user->email,
-            'password' => $request->password,
-            'role' => $role,
-            'username' => $user->name,
-            'salary' => '15000',
-            'designation_id' => 1,
-            'join_date' => "2024-06-20 00:00:00",
-            'leave_date' => "2024-06-20 00:00:00",
-            'id_no' => 'PAZT-8679',
-            'department' => 'test',
-            'phone' => $request->phone,
-            'address' => 'Yaounde',
-            'blood_group' => 'A+',
-            'createdAt' => $user->created_at->format('Y-m-d\TH:i:s.u\Z'),
-            'updatedAt' => $user->updated_at->format('Y-m-d\TH:i:s.u\Z'),
-        ]);
 
         $patient = new Patient();
         $patient->user_id = $user->id;
@@ -198,10 +98,6 @@ class UsersController extends Controller
         $patient->gender = $request->gender;
         $patient->birthday = '00-00-0000';
         $patient->save();
-
-        if ($response->failed()) {
-            return \Redirect::route('user.all')->with('error', __('sentence.User synchronization failed'));
-        }
 
         return \Redirect::route('user.all')->with('success', __('sentence.User Created Successfully'));
     }
