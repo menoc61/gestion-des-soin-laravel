@@ -26,8 +26,8 @@
         <!-- Outer Row -->
         <div class="singin-singup">
             <form method="POST" action="{{ route('login') }}" class="sing-in-form">
+                <img src="{{ asset('img/favicon.png') }}" alt="" class="image1">
                 <h1 class="title">Connectez-vous</h1>
-
                 <div class="form-group input-field">
                     <i class="fas fa-envelope"></i>
                     <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email"
@@ -176,7 +176,7 @@
                     <p> Veuillez cliquer sur ce bouton afin de créer votre compte</p>
                     <button class="btn" id="sign-up-btn">Enregistrez-Vous ici</button>
                 </div>
-                <img src="{{asset('img/undraw_sync_re_492g.svg')}}" alt="" class="image">
+                <img src="{{ asset('img/undraw_sync_re_492g.svg') }}" alt="" class="image">
             </div>
         </div>
     </div>
@@ -203,27 +203,6 @@
             container.classList.remove("sign-up-mode2");
         });
     </script>
-
-    {{-- <script>
-        document
-            .getElementById("loginForm")
-            .addEventListener("submit", async (e) => {
-                let soinSuccess = false;
-                try {
-                    // Gestion des résultats
-                    if (soinSuccess === true) {
-                        alert("Login successful to both modules");
-                        window.location.href = "{{ route('login.home' }}";
-                    } else{
-                        alert("Login not success");
-
-                    }
-                } catch (error) {
-                    console.error("Unexpected error during login:", error);
-                    alert("An unexpected error occurred. Please try again later.");
-                }
-            });
-    </script> --}}
 </body>
 
 </html>
