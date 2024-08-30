@@ -317,4 +317,7 @@ return [
     'Delete' => 'Supprimer',
     'Select Praticien' => 'Sélectionner un praticien',
     'Code for visit' => 'code de la Visite',
+    'Register' => 'Inscrivez-vous ici',
+    'Send' => 'Envoyer',
+    'SelectGender' => 'Choisissez votre genre'
 ];
