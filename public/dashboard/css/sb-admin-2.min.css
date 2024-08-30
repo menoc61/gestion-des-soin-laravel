@@ -23,6 +23,7 @@
   --teal: #20c9a6;
   --cyan: #36b9cc;
   --white: #fff;
+  --whiteBg: #f0f0f0;
   --gray: #858796;
   --gray-dark: #5a5c69;
   --primary: #4e73df;
@@ -12228,7 +12229,7 @@ input[type='password']:focus
 #wrapper #content-wrapper {
     width: 100%;
     overflow-x: hidden;
-    background: linear-gradient(45deg, #abdfc2, #8e419c70);
+    background: var(--whiteBg)
   }
   .h200{
     height: 95%;

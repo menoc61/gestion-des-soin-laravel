@@ -20,7 +20,6 @@ Route::post('/users/login', [UserApiController::class, 'LoginUser']);
 Route::get('/billing/{billingId}/payments', [UserApiController::class, 'getPaymentsByBillingId']);
 
 Route::prefix('v1')->as('v1.')->middleware('auth:sanctum')->group(function () {
-    Route::get('/users/me', [UserApiController::class, 'GetUser']);
 
     Route::get('/patient/view/{id}', [UserApiController::class, 'view'])->where('id', '[0-9]+');
 

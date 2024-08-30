@@ -13,6 +13,8 @@ use App\Prescription;
 use App\Test;
 use App\User;
 use Exception;
+use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -35,19 +37,26 @@ class UserApiController extends Controller
     public function RegisterUser(Request $request)
     {
         try {
+            // Vérifier si l'email ou le téléphone existe déjà dans la base de données
+            $existingUser = User::where('email', $request->email)
+                ->orWhere('phone', $request->phone)
+                ->first();
+
+            if ($existingUser) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'L\'email ou le téléphone existe déjà.',
+                ], 400);
+            }
+
+            // Validation des données
             $validatedData = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+                'email' => ['required', 'string', 'email', 'max:255'],
                 'password' => ['required', 'string'],
                 'role_id' => ['numeric'],
+                'phone' => ['required'],
             ]);
-
-            // Check if user already exists
-            // $existingUser = User::where('email', $request->email)->first();
-
-            // if ($existingUser) {
-            //     return response()->json(['message' => 'User already exists'], 200);
-            // }
 
             if ($validatedData->fails()) {
                 return response()->json([
@@ -55,47 +64,85 @@ class UserApiController extends Controller
                     'message' => 'Vous avez oublié un champ',
                     'error' => $validatedData->errors(),
                 ], 401);
+            }
+
+            $user = new User();
+            $user->password = \Hash::make($request->password);
+            $user->email = $request->email;
+            $user->name = $request->name;
+            $user->role_id = $request->role_id ?? 3;
+            $user->address = $request->address;
+            $user->phone = $request->phone;
+            $user->gender = $request->gender;
+            $user->appChoice = $request->appChoice;
+            $user->source = $request->source ?? 'laravel';
+
+            $role = Role::findById($user->role_id);
+            if ($role) {
+                $user->assignRole($role);
             } else {
-                $user = new User();
-                $user->password = \Hash::make($request->password);
-                $user->email = $request->email;
-                $user->name = $request->name;
-                $user->role_id = $request->role_id ?? 3;
-                $user->save();
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Le rôle ID spécifié n\'existe pas',
+                ], 404);
+            }
 
-                $patient = new Patient();
-                $patient->user_id = $user->id;
-                $patient->phone = $request->phone;
-                $patient->gender = $request->gender;
-                $patient->birthday = $request->birthday ?? '00-00-0000';
-                $patient->adress = $request->adress;
-                $patient->allergie = $request->allergie ?? 'Aucune';
-                $patient->medication = $request->medication ?? 'Aucune';
-                $patient->hobbie = $request->hobbie ?? 'Aucun';
-                $patient->demande = $request->demande ?? 'Aucune';
-                $patient->type_patient = $request->type_patient ? json_encode($request->type_patient) : json_encode(['Aucun']);
-                $patient->morphology = $request->morphology ? json_encode($request->morphology) : json_encode(['Aucune']);
-                $patient->alimentation = $request->alimentation ? json_encode($request->alimentation) : json_encode(['Aucune']);
-                $patient->digestion = $request->digestion ?? 'Aucune';
-                $patient->save();
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $fileName = \Str::random(15) . '-' . $file->getClientOriginalName();
+                $destinationPath = public_path() . '/uploads/';
+                $file->move($destinationPath, $fileName);
+                $user->image = $fileName;
+            } else {
+                $user->image = '';
+            }
 
-                $role = Role::findById($user->role_id);
+            $user->save();
 
-                if ($role) {
-                    $user->assignRole($role);
-                } else {
+            if ($user->role_id === 3 && $user->appChoice === "true") {
+                // Envoyer les données à Node.js
+                $response = Http::post('http://localhost:5001/v1/customer/', [
+                    'email' => $user->email,
+                    'password' => $request->password,
+                    'role' => 'Particulier',
+                    'username' => $user->name,
+                    'phone' => $user->phone,
+                    'address' => $user->address,
+                    'gender' => $user->gender,
+                    'source' => $user->source,
+                    'createdAt' => $user->created_at->format('Y-m-d\TH:i:s.u\Z'),
+                    'updatedAt' => $user->updated_at->format('Y-m-d\TH:i:s.u\Z'),
+                ]);
+
+                if ($response->failed()) {
                     return response()->json([
                         'status' => false,
-                        'message' => 'Le rôle ID spécifié n\'existe pas',
-                    ], 404);
+                        'message' => 'Erreur de création dans Node.js',
+                    ], 400);
                 }
-
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Utilisateur créé avec succès',
-                    'token' => $user->createToken('api token')->plainTextToken,
-                ], 200);
             }
+
+            // Créer le patient
+            $patient = new Patient();
+            $patient->user_id = $user->id;
+            $patient->phone = $request->phone;
+            $patient->gender = $request->gender;
+            $patient->birthday = $request->birthday ?? '00-00-0000';
+            $patient->adress = $request->adress;
+            $patient->allergie = $request->allergie ?? 'Aucune';
+            $patient->medication = $request->medication ?? 'Aucune';
+            $patient->hobbie = $request->hobbie ?? 'Aucun';
+            $patient->demande = $request->demande ?? 'Aucune';
+            $patient->type_patient = $request->type_patient ? json_encode($request->type_patient) : json_encode(['Aucun']);
+            $patient->morphology = $request->morphology ? json_encode($request->morphology) : json_encode(['Aucune']);
+            $patient->alimentation = $request->alimentation ? json_encode($request->alimentation) : json_encode(['Aucune']);
+            $patient->digestion = $request->digestion ?? 'Aucune';
+            $patient->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Utilisateur créé avec succès',
+            ], 200);
         } catch (\Throwable $ex) {
             return response()->json([
                 'status' => false,
@@ -372,6 +419,4 @@ class UserApiController extends Controller
 
         return response()->json($payments);
     }
-
-
 }
