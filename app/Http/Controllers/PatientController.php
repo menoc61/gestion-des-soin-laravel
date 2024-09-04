@@ -186,7 +186,7 @@ class PatientController extends Controller
         $patient->birthday = $request->birthday;
         $patient->phone = $request->phone;
         $patient->gender = $request->gender;
-        $patient->adress = $request->adress;
+        $patient->address = $request->address;
         $patient->allergie = $request->allergie;
         $patient->medication = $request->medication;
         $patient->hobbie = $request->hobbie;
