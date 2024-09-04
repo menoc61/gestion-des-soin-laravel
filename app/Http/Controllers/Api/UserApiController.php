@@ -75,7 +75,7 @@ class UserApiController extends Controller
             $user->phone = $request->phone;
             $user->gender = $request->gender;
             $user->appChoice = $request->appChoice;
-            $user->source = $request->source ?? 'laravel';
+            $user->source = 'Gestion de soins';
 
             $role = Role::findById($user->role_id);
             if ($role) {
@@ -128,7 +128,7 @@ class UserApiController extends Controller
             $patient->phone = $request->phone;
             $patient->gender = $request->gender;
             $patient->birthday = $request->birthday ?? '00-00-0000';
-            $patient->adress = $request->adress;
+            $patient->address = $request->address;
             $patient->allergie = $request->allergie ?? 'Aucune';
             $patient->medication = $request->medication ?? 'Aucune';
             $patient->hobbie = $request->hobbie ?? 'Aucun';
@@ -139,10 +139,18 @@ class UserApiController extends Controller
             $patient->digestion = $request->digestion ?? 'Aucune';
             $patient->save();
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Utilisateur créé avec succès',
-            ], 200);
+            // Vérifier si la requête vient d'un client mobile ou web
+            if ($request->has('mobile') && $request->mobile == true) {
+                // Réponse JSON pour client mobile
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Utilisateur créé avec succès',
+                    'user' => $user,
+                ], 200);
+            } else {
+                // Redirection vers la vue login pour application web
+                return redirect()->route('login.home')->with('success', __('sentence.User Created Successfully'));
+            }
         } catch (\Throwable $ex) {
             return response()->json([
                 'status' => false,
@@ -246,8 +254,8 @@ class UserApiController extends Controller
                     if ($request->has('birthday')) {
                         $patient->birthday = $request->birthday;
                     }
-                    if ($request->has('adress')) {
-                        $patient->adress = $request->adress;
+                    if ($request->has('address')) {
+                        $patient->address = $request->address;
                     }
                     $patient->update();
                 }
