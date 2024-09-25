@@ -99,7 +99,8 @@ return [
     'Email' => 'Adresse e-mail',
     'Password' => 'Mot de passe',
     'Create Account' => 'Créer un compte !',
-    'Forgot Your Password' => 'Mot de passe oublié ?',
+    'Forgot Your Password' => 'Mot de passe oublié ? cliquez ici !',
+    'new patient create' => 'Vous êtes nouveau ? cliquez ici et créez votre compte !',
     'Remember Me' => 'Se souvenir de moi',
     'Welcome' => 'Application de Soins !',
     'Save' => 'Sauvegarder',
@@ -319,5 +320,6 @@ return [
     'Code for visit' => 'code de la Visite',
     'Register' => 'Inscrivez-vous ici',
     'Send' => 'Envoyer',
-    'SelectGender' => 'Choisissez votre genre'
+    'SelectGender' => 'Choisissez votre genre',
+    'Confirm Password' => 'Confirmez votre mot de passe'
 ];

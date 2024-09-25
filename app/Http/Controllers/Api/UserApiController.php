@@ -101,7 +101,7 @@ class UserApiController extends Controller
 
             if ($user->role_id === 3 && $user->appChoice === "true") {
                 // Envoyer les données à Node.js
-                $response = Http::post('http://localhost:5001/v1/customer/', [
+                $response = Http::post('http://localhost:5001/v1/customer', [
                     'email' => $user->email,
                     'password' => $request->password,
                     'role' => 'Particulier',
@@ -125,10 +125,7 @@ class UserApiController extends Controller
             // Créer le patient
             $patient = new Patient();
             $patient->user_id = $user->id;
-            $patient->phone = $request->phone;
-            $patient->gender = $request->gender;
             $patient->birthday = $request->birthday ?? '00-00-0000';
-            $patient->address = $request->address;
             $patient->allergie = $request->allergie ?? 'Aucune';
             $patient->medication = $request->medication ?? 'Aucune';
             $patient->hobbie = $request->hobbie ?? 'Aucun';
@@ -139,18 +136,12 @@ class UserApiController extends Controller
             $patient->digestion = $request->digestion ?? 'Aucune';
             $patient->save();
 
-            // Vérifier si la requête vient d'un client mobile ou web
-            if ($request->has('mobile') && $request->mobile == true) {
-                // Réponse JSON pour client mobile
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Utilisateur créé avec succès',
-                    'user' => $user,
-                ], 200);
-            } else {
-                // Redirection vers la vue login pour application web
-                return redirect()->route('login.home')->with('success', __('sentence.User Created Successfully'));
-            }
+            // Réponse JSON pour client mobile
+            return response()->json([
+                'status' => true,
+                'message' => 'Utilisateur créé avec succès',
+                'user' => $user,
+            ], 200);
         } catch (\Throwable $ex) {
             return response()->json([
                 'status' => false,

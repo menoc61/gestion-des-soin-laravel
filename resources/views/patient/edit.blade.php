@@ -80,7 +80,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="inputAddress2">{{ __('sentence.Address') }}<font color="red">*</font></label>
-                                <input type="text" class="form-control" id="Address" name="adress"
+                                <input type="text" class="form-control" id="Address" name="address"
                                     value="{{ $patient->Patient->adress }}">
                             </div>
                         </div>

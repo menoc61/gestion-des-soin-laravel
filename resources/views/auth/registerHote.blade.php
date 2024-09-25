@@ -8,125 +8,121 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>sai i lama - register</title>
+    <title>sai i lama - Login</title>
 
     <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- Lien vers Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Custom styles for this template-->
-    <link href="{{ asset('dashboard/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('dashboard/css/login.min.css') }}" rel="stylesheet">
 
 </head>
 
-<body class="login">
+<body>
     <div class="container">
         <!-- Outer Row -->
-        <div class="row justify-content-center">
-            <div class="col-md-9 bo my-5">
-                <div class="col-lg-12">
-                    <div class="p-5">
-                        <form method="post" action="{{ url('/api/users/register') }}" class="user">
-                            @csrf
-                            <div class="form-group row">
-                                <div class="form-group col-md-6">
-                                    <label for="Name"
-                                        class="col-sm-12 col-form-label">{{ __('sentence.Full Name') }}
-                                        <font color="red">*</font>
-                                    </label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="Name" name="name">
-                                        {{ csrf_field() }}
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="Email"
-                                        class="col-sm-12 col-form-label">{{ __('sentence.Email Adress') }}
-                                        <font color="red">*</font>
-                                    </label>
-                                    <div class="col-sm-12">
-                                        <input type="email" class="form-control" id="Email" name="email">
-                                    </div>
-                                </div>
-                            </div>
+        <div class="singin-singup">
+            <form method="post" action="{{ route('patient.store') }}" enctype="multipart/form-data"
+                class="sing-up-form">
+                @csrf
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <h1 class="title">Creez votre compte</h1>
+                <div class="form-group fle">
+                    <i class="fas fa-user"></i>
+                    <input type="text" class="form-control input" placeholder="{{ __('sentence.Full Name') }}"
+                        id="Name" name="name">
+                </div>
 
-                            <div class="form-group row">
-                                <div class="form-group col-md-6">
-                                    <label for="Password" class="col-sm-12 col-form-label">{{ __('sentence.Password') }}
-                                        <font color="red">*</font>
-                                    </label>
-                                    <div class="col-sm-12">
-                                        <input type="password" class="form-control" id="Password" name="password">
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="Password"
-                                        class="col-sm-12 col-form-label">{{ __('sentence.Password Confirmation') }}
-                                        <font color="red">*</font>
-                                    </label>
-                                    <div class="col-sm-12">
-                                        <input type="password" class="form-control" id="Password"
-                                            name="password_confirmation">
-                                    </div>
-                                </div>
-                            </div>
+                <div class="form-group  fle">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-control input" id="Email"
+                        placeholder="{{ __('sentence.Email') }}" name="email">
+                </div>
 
-                            <div class="form-group row">
-                                <div class="form-group col-md-6">
-                                    <label for="Phone"
-                                        class="col-sm-12 col-form-label">{{ __('sentence.Phone') }}</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="Phone" name="phone">
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="Gender"
-                                        class="col-sm-12 col-form-label">{{ __('sentence.Gender') }}</label>
-                                    <div class="col-sm-12">
-                                        <select class="form-control" name="gender" id="Gender">
-                                            <option value="Homme">{{ __('sentence.Male') }}</option>
-                                            <option value="Femme">{{ __('sentence.Female') }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="form-group fle">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-control input" id="password"
+                        placeholder="{{ __('sentence.Password') }}" name="password" autocomplete="off">
+                </div>
+                <p id="password-error" style="color: red;"></p>
+                <div class="form-group fle">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-control input" id="confirm_password" name="password_confirmation"
+                        autocomplete="off" placeholder="{{ __('sentence.Confirm Password') }}">
+                </div>
 
-                            <div class="form-group row">
-                                <div class="form-group col-md-6">
-                                    <label for="fonction_user" class="col-sm-12 col-form-label">Voulez-vous avoir accès a notre e-shop ?
-                                        <font color="red">*</font>
-                                    </label>
-                                    <div class="col-md-12">
-                                        <select class="form-control" id="fonction_user" name="appChoice">
-                                            <option value="false">Non</option>
-                                            <option value="true">Oui</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputAddress2"
-                                        class="col-sm-12 col-form-label">{{ __('sentence.Address') }}<font
-                                            color="red">*
-                                        </font>
-                                    </label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="Address" name="address">
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <div class="col-sm-9">
-                                    <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
-                                </div>
-                            </div>
-                        </form>
-                        <hr>
+                <div class="form-group fle">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" class="form-control input" id="Address" name="address"
+                        placeholder="{{ __('sentence.Address') }}">
+                </div>
+                <div class="form-group fle">
+                    <i class="fas fa-phone"></i>
+                    <input type="text" class="form-control input" id="Phone" name="phone"
+                        placeholder="{{ __('sentence.Phone') }}">
+                </div>
+
+                <div class="form-group fle">
+                    <i class="fas fa-venus-mars"></i> <!-- Icône de genre -->
+                    <select class="form-control" name="gender" id="Gender">
+                        <option value="" disabled selected hidden>{{ __('sentence.SelectGender') }}</option>
+                        <!-- Placeholder -->
+                        <option value="Homme">{{ __('sentence.Male') }}</option>
+                        <option value="Femme">{{ __('sentence.Female') }}</option>
+                    </select>
+                </div>
+                <div class="form-group fle">
+                    <div class="custom-control custom-checkbox small">
+                        <label class="custom-control-label" for="customCheck">Souhaitez-vous avoir accès à notre
+                            e-shop</label>
+                        <input type="hidden" name="appChoice" value="false">
+                        <input class="custom-control-input" type="checkbox" value="true" name="appChoice"
+                            id="customCheck">
+                        {{ csrf_field() }}
                     </div>
                 </div>
+
+                <button class="btn btn-success" id="submit-btn" type="submit">
+                    {{ __('sentence.Send') }}</button>
+
+                <p class="account-text">Vous avez déja un compte ? <a href="" id="sign-in-btn2">Connectez-Vous
+                        ici</a>
+                </p>
+            </form>
+        </div>
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3>Vous avez déja un compte ?</h3>
+                    <p>
+                    </p>
+                    <button class="btn" id="sign-in-btn">Connectez-Vous ici</button>
+                </div>
+                <img src="" alt="" class="image">
+            </div>
+            <div class="panel right-panel">
+                <div class="content">
+                    <h3>Vous êtes nouveau ?</h3>
+                    <p> Veuillez cliquer sur ce bouton afin de créer votre compte</p>
+                    <button class="btn" id="sign-up-btn">Enregistrez-Vous ici</button>
+                </div>
+                <img src="{{ asset('img/undraw_sync_re_492g.svg') }}" alt="" class="image">
             </div>
         </div>
-
     </div>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+
 </body>
 
 </html>
