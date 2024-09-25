@@ -35,75 +35,42 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
 
+        // user Authentifié
         $user = Auth::user();
         $doctorId = $user->id;
-        //$user->assignRole('admin');
-        //$user->syncRoles(['assistant']);
 
-        //$role = Role::create(['name' => 'admin']);
-        //1$role = Role::create(['name' => 'assistant']);
+        // Dates sélectionnées par l'utilisateur
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
 
-        //$role = Role::findById(4); $role->givePermissionTo(Permission::all());
+        // Si aucune date n'est fournie, définis des valeurs par défaut
+        if (!$startDate || !$endDate) {
+            $startDate = now()->startOfMonth();  // Début du mois actuel
+            $endDate = now()->endOfMonth();  // Fin du mois actuel
+        }
 
-        //$permission = Permission::create(['name' => 'manage roles']);
+        // // Card Home concernant le Praticien
+        // $total_prescriptions_for_pratician = Prescription::whereBetween('created_at', [$startDate, $endDate])->where('doctor_id', $doctorId)->count();
+        // $total_tests_for_pratician = Test::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->count();
+        // $total_amount_for_pratician = Billing::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->sum('total_with_tax');
+        // $agendaDoctors = Appointment::where('doctor_id', $doctorId)->where('visited', 0)->whereMonth('date', date('m'))->get();
 
-        /*
+        // // Card Home concernant l'Admin
+        // $total_patients = User::where('role_id', '3')->whereBetween('created_at', [$startDate, $endDate])->count();
+        // $total_patients_today = User::where('role_id', '3')->whereBetween('created_at', [$startDate, $endDate])->count();
+        // $total_appointments = Appointment::whereBetween('created_at', [$startDate, $endDate])->count();
+        // $total_appointments_today = Appointment::where('visited', 0)->whereBetween('created_at', [$startDate, $endDate])->get();
+        // $total_prescriptions = Prescription::whereBetween('created_at', [$startDate, $endDate])->count();
+        // $total_payments = Billing::whereBetween('created_at', [$startDate, $endDate])->count();
 
-$permission = Permission::create(['name' => 'view patient']);
-$permission = Permission::create(['name' => 'view all patients']);
-$permission = Permission::create(['name' => 'delete patient']);
+        // // Card Home concernant l'Hote
+        $appointmentHote = Appointment::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
+        $diagnoseHote = Test::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
+        $prescriptionHote = Prescription::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
 
-$permission = Permission::create(['name' => 'create health history']);
-$permission = Permission::create(['name' => 'delete health history']);
-
-$permission = Permission::create(['name' => 'add medical files']);
-$permission = Permission::create(['name' => 'delete medical files']);
-
-
-$permission = Permission::create(['name' => 'create appointment']);
-$permission = Permission::create(['name' => 'view all appointments']);
-$permission = Permission::create(['name' => 'delete appointment']);
-
-$permission = Permission::create(['name' => 'create prescription']);
-$permission = Permission::create(['name' => 'view prescription']);
-$permission = Permission::create(['name' => 'view all prescriptions']);
-$permission = Permission::create(['name' => 'edit prescription']);
-$permission = Permission::create(['name' => 'delete prescription']);
-$permission = Permission::create(['name' => 'print prescription']);
-
-
-$permission = Permission::create(['name' => 'create drug']);
-$permission = Permission::create(['name' => 'edit drug']);
-$permission = Permission::create(['name' => 'view drug']);
-$permission = Permission::create(['name' => 'view all drugs']);
-
-$permission = Permission::create(['name' => 'create diagnostic test']);
-$permission = Permission::create(['name' => 'edit diagnostic test']);
-$permission = Permission::create(['name' => 'view all diagnostic tests']);
-
-$permission = Permission::create(['name' => 'create invoice']);
-$permission = Permission::create(['name' => 'edit invoice']);
-$permission = Permission::create(['name' => 'view invoice']);
-$permission = Permission::create(['name' => 'view all invoices']);
-$permission = Permission::create(['name' => 'delete invoice']);
-
-*/
-
-        // Home concernant le Praticien
-        $total_prescriptions_for_pratician = Prescription::where('doctor_id', $doctorId)->count();
-        $total_tests_for_pratician = Test::where('created_by', $doctorId)->count();
-        $total_amount_for_pratician = Billing::where('created_by', $doctorId)->sum('total_with_tax');
-        $agendaDoctors = Appointment::where('doctor_id', $doctorId)->where('visited', 0)->whereMonth('date', date('m'))->get();
-        // Home concernant l'Admin
-        $total_patients = User::where('role_id', '3')->count();
-        $total_patients_today = User::where('role_id', '3')->wheredate('created_at', Today())->count();
-        $total_appointments = Appointment::all()->count();
-        $total_appointments_today = Appointment::where('visited', 0)->wheredate('date', Today())->get();
-        $total_prescriptions = Prescription::all()->count();
-        $total_payments = Billing::all()->count();
 
         $appointmentsVisitedId = Appointment::where('visited', 1)->pluck('id');
         $total_payments_days = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->wheredate('created_at', Today())->sum('montant_drug');
@@ -135,9 +102,7 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $nonVisitedCount = Appointment::all()->where('visited', 0)->count();
         $allAppointment = Appointment::all()->count();
 
-        $appointmentHote = Appointment::where('user_id', $user->id)->count();
-        $diagnoseHote = Test::where('user_id', $user->id)->count();
-        $prescriptionHote = Prescription::where('user_id', $user->id)->count();
+
 
 
         $PopularDrugs = Rdv_Drug::select('drug_id', DB::raw('count(*) as total'))
@@ -146,19 +111,6 @@ $permission = Permission::create(['name' => 'delete invoice']);
             ->take(2)
             ->get();
 
-
-        // $total_payment_by_month = Billing_item::select('id', 'created_at')->get()->groupBy(
-        //     function ($total_payment_by_month) {
-        //         return Carbon::parse($total_payment_by_month->created_at)->format('F');
-        //     }
-        // );
-        // $months = [];
-        // $monthCount = [];
-        // foreach ($total_payment_by_month as $month => $values) {
-        //     $months[] = $month;
-        //     $monthCount[] = count($values);
-        // }
-
         // Obtention du premier jour du mois actuel
         $defaultStartDate = Carbon::now()->startOfMonth()->toDateString();
 
@@ -166,42 +118,77 @@ $permission = Permission::create(['name' => 'delete invoice']);
         $defaultEndDate = Carbon::now()->endOfMonth()->toDateString();
         $nameday = Carbon::now()->formatLocalized('%A');
 
+        // Card Home concernant l'Admin
+        // Requête pour obtenir les données entre les dates sélectionnées
+        $total_appointments = Appointment::whereBetween('date', [$startDate, $endDate])->count();
+        $total_patients = User::where('role_id', '3')->whereBetween('created_at', [$startDate, $endDate])->count();
+        $total_prescriptions = Prescription::whereBetween('created_at', [$startDate, $endDate])->count();
+        $total_payments = Billing::whereBetween('created_at', [$startDate, $endDate])->sum('total_with_tax');
+
+        // // Card Home concernant le Praticien
+        $total_prescriptions_for_pratician = Prescription::whereBetween('created_at', [$startDate, $endDate])->where('doctor_id', $doctorId)->count();
+        $total_tests_for_pratician = Test::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->count();
+        $total_amount_for_pratician = Billing::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->sum('total_with_tax');
+        $agendaDoctors = Appointment::where('doctor_id', $doctorId)->where('visited', 0)->whereMonth('date', date('m'))->paginate(3);
+
+        $total_appointments_today = Appointment::where('visited', 0)->wheredate('date', Today())->paginate(3);
+
+
+        // Vérifie si la requête est AJAX pour retourner les données filtrées
+        if ($request->ajax()) {
+            return response()->json([
+                'total_patients' => $total_patients,
+                'total_prescriptions' => $total_prescriptions,
+                'total_appointments' => $total_appointments,
+                'total_payments' => $total_payments,
+
+                'total_amount_for_pratician' => $total_amount_for_pratician,
+                'total_tests_for_pratician' => $total_tests_for_pratician,
+                'total_prescriptions_for_pratician' => $total_prescriptions_for_pratician,
+            ]);
+        }
+
+
         return view('home', [
             'total_patients' => $total_patients,
             'total_prescriptions' => $total_prescriptions,
-            'total_patients_today' => $total_patients_today,
             'total_appointments' => $total_appointments,
-            'total_appointments_today' => $total_appointments_today,
             'total_payments' => $total_payments,
+
+            'total_prescriptions_for_pratician' => $total_prescriptions_for_pratician,
+            'total_tests_for_pratician' => $total_tests_for_pratician,
+            'total_amount_for_pratician' => $total_amount_for_pratician,
+            'agendaDoctors' => $agendaDoctors,
+
+            'total_appointments_today' => $total_appointments_today,
+
             'total_payments_month' => $total_payments_month,
             'total_payments_year' => $total_payments_year,
             'total_payment_by_day' => $total_payment_by_day,
             'totalAmounts' => $totalAmounts,
             'days' => $days,
             'dayCount' => $dayCount,
-            'total_prescriptions_for_pratician' => $total_prescriptions_for_pratician,
-            'total_tests_for_pratician' => $total_tests_for_pratician,
-            'total_amount_for_pratician' => $total_amount_for_pratician,
+
             'visitedCount' => $visitedCount,
             'nonVisitedCount' => $nonVisitedCount,
             'allAppointment' => $allAppointment,
             'total_payments_days' => $total_payments_days,
+
             'appointmentHote' => $appointmentHote,
             'diagnoseHote' => $diagnoseHote,
             'prescriptionHote' => $prescriptionHote,
+
             'defaultStartDate' => $defaultStartDate,
             'defaultEndDate' => $defaultEndDate,
             'nameday' => $nameday,
             'countRDVread' => $countRDVread,
             'appointments' => $appointments,
-            'agendaDoctors' => $agendaDoctors,
             'PopularDrugs' => $PopularDrugs,
         ]);
     }
 
     public function lang($locale)
     {
-
         App::setLocale($locale);
         session()->put('locale', $locale);
         return redirect()->back();

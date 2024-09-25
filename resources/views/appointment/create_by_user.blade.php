@@ -12,7 +12,7 @@
         <div class="d-flex justify-content-center">
             <div class="card col-md-10">
                 <div class="card-header py-3">
-                    <h2 class="m-0 font-weight-bold text-primary text-center"> {{ __('sentence.Take Appointment') }} Pour
+                    <h2 class="m-0 font-weight-bold text-dark text-center"> {{ __('sentence.Take Appointment') }} Pour
                         {{ $userName }}</h2>
                 </div>
             </div>
@@ -46,14 +46,28 @@
                                         <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
                                         <select class="form-control multiselect-search" name="doctor_id" id="DoctorID"
                                             required>
-                                            <option value="" disabled selected>{{ __('sentence.Select Praticien') }}...
+                                            <option value="" disabled selected>
+                                                {{ __('sentence.Select Praticien') }}...
                                             </option>
                                             @foreach ($praticiens as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
+                                @else
+                                    <div class="form-group">
+                                        <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
+                                        <select class="form-control multiselect-search" name="doctor_id" id="DoctorID"
+                                            required>
+                                            <option value="" disabled selected>
+                                                {{ __('sentence.Select Praticien') }}...
+                                            </option>
+                                            <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}
+                                            </option>
+                                        </select>
+                                    </div>
                                 @endif
+
                             </div>
 
                             <div class="form-group col-md-4">
@@ -114,10 +128,9 @@
                 </div>
                 <div class="card">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} <span
+                        <h6 class="m-0 font-weight-bold text-primary mb-4">{{ __('sentence.Agenda praticien') }} <span
                                 id="doctor-name"></span></h6>
-                    </div>
-                    <div class="card-body">
+
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover" id="appointments-table">
 
@@ -154,7 +167,8 @@
                                 </div>
                             @endif
                             <div class="col-md-4">
-                                <a class="btn btn-secondary" href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
+                                <a class="btn btn-secondary"
+                                    href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
                                 </a>
                             </div>
                             <div class="col-md-4">
@@ -230,7 +244,7 @@
                                     '<td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i> ' +
                                     appointment.time_start + ' - ' + appointment
                                     .time_end + '</label></td>'
-                                    '<td class="text-center">' + appointment
+                                '<td class="text-center">' + appointment
                                     .created_at + '</td>' +
                                     '</tr>';
                                 appointmentsTable.append(newRow);

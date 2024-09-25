@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/lang/{locale}', 'HomeController@lang');
 
 // Patients
+Route::get('/newpatient/create', 'PatientController@createnew')->name('newpatient.create');
 Route::get('/patient/create', 'PatientController@create')->name('patient.create')->middleware(['role_or_permission:Admin|add patient']);
 Route::post('/patient/create', 'PatientController@store')->name('patient.store');
 Route::get('/patient/all', 'PatientController@all')->name('patient.all')->middleware(['role_or_permission:Admin|view all patients']);

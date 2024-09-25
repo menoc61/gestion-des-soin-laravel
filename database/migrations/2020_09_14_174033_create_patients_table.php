@@ -19,9 +19,6 @@ class CreatePatientsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->string('birthday');
-            $table->string('phone')->nullable();
-            $table->mediumText('adress')->nullable();
-            $table->string('gender');
             $table->string('medication')->nullable();
             $table->string('hobbie')->nullable();
             $table->string('demande')->nullable();

@@ -18,13 +18,14 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class PatientController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('store', 'createnew');
     }
 
     public function all()
@@ -32,9 +33,9 @@ class PatientController extends Controller
         $sortColumn = request()->get('sort');
         $sortOrder = request()->get('order', 'asc');
         if (!empty($sortColumn)) {
-            $patients = User::where('role_id', '3')->OrderBy($sortColumn, $sortOrder)->paginate(10);
+            $patients = User::where('role_id', '3')->OrderBy($sortColumn, $sortOrder)->paginate(7);
         } else {
-            $patients = User::where('role_id', '3')->paginate(10);
+            $patients = User::where('role_id', '3')->paginate(7);
         }
 
         return view('patient.all', ['patients' => $patients]);
@@ -45,172 +46,177 @@ class PatientController extends Controller
         return view('patient.create');
     }
 
-    public function generateToken($user)
+    public function createnew()
     {
-        $payload = [
-            'sub' => $user->email,
-            'permissions' => ['createProduct',
-            'viewProduct',
-            'updateProduct',
-            'deleteProduct',
-            'createCustomer',
-            'viewCustomer',
-            'updateCustomer',
-            'deleteCustomer',
-            'createSupplier',
-            'viewSupplier',
-            'updateSupplier',
-            'deleteSupplier',
-            'createTransaction',
-            'viewTransaction',
-            'updateTransaction',
-            'deleteTransaction',
-            'createSaleInvoice',
-            'viewSaleInvoice',
-            'updateSaleInvoice',
-            'deleteSaleInvoice',
-            'createPurchaseInvoice',
-            'viewPurchaseInvoice',
-            'updatePurchaseInvoice',
-            'deletePurchaseInvoice',
-            'createPaymentPurchaseInvoice',
-            'viewPaymentPurchaseInvoice',
-            'updatePaymentPurchaseInvoice',
-            'deletePaymentPurchaseInvoice',
-            'createPaymentSaleInvoice',
-            'viewPaymentSaleInvoice',
-            'updatePaymentSaleInvoice',
-            'deletePaymentSaleInvoice',
-            'createRole',
-            'viewRole',
-            'updateRole',
-            'deleteRole',
-            'createRolePermission',
-            'viewRolePermission',
-            'updateRolePermission',
-            'deleteRolePermission',
-            'createUser',
-            'viewUser',
-            'updateUser',
-            'deleteUser',
-            'professionalUser',
-            'viewDashboard',
-            'viewPermission',
-            'createDesignation',
-            'viewDesignation',
-            'updateDesignation',
-            'deleteDesignation',
-            'createProductCategory',
-            'viewProductCategory',
-            'updateProductCategory',
-            'deleteProductCategory',
-            'createReturnPurchaseInvoice',
-            'viewReturnPurchaseInvoice',
-            'updateReturnPurchaseInvoice',
-            'deleteReturnPurchaseInvoice',
-            'createReturnSaleInvoice',
-            'viewReturnSaleInvoice',
-            'updateReturnSaleInvoice',
-            'deleteReturnSaleInvoice',
-            'updateSetting',
-            'viewSetting'], // Ajoutez les permissions ici
-            'iat' => time(),
-            'exp' => time() + 60 * 60 * 24, // 24 heures
-        ];
-
-        $jwt = JWT::encode($payload, env('JWT_SECRET'), 'HS256');
-
-        return $jwt; // Retourne le JWT sans l'envelopper dans une réponse JSON
+        return view('auth.register');
     }
+
+    // public function generateToken($user)
+    // {
+    //     $payload = [
+    //         'sub' => $user->email,
+    //         'permissions' => [
+    //             'createProduct',
+    //             'viewProduct',
+    //             'updateProduct',
+    //             'deleteProduct',
+    //             'createCustomer',
+    //             'viewCustomer',
+    //             'updateCustomer',
+    //             'deleteCustomer',
+    //             'createSupplier',
+    //             'viewSupplier',
+    //             'updateSupplier',
+    //             'deleteSupplier',
+    //             'createTransaction',
+    //             'viewTransaction',
+    //             'updateTransaction',
+    //             'deleteTransaction',
+    //             'createSaleInvoice',
+    //             'viewSaleInvoice',
+    //             'updateSaleInvoice',
+    //             'deleteSaleInvoice',
+    //             'createPurchaseInvoice',
+    //             'viewPurchaseInvoice',
+    //             'updatePurchaseInvoice',
+    //             'deletePurchaseInvoice',
+    //             'createPaymentPurchaseInvoice',
+    //             'viewPaymentPurchaseInvoice',
+    //             'updatePaymentPurchaseInvoice',
+    //             'deletePaymentPurchaseInvoice',
+    //             'createPaymentSaleInvoice',
+    //             'viewPaymentSaleInvoice',
+    //             'updatePaymentSaleInvoice',
+    //             'deletePaymentSaleInvoice',
+    //             'createRole',
+    //             'viewRole',
+    //             'updateRole',
+    //             'deleteRole',
+    //             'createRolePermission',
+    //             'viewRolePermission',
+    //             'updateRolePermission',
+    //             'deleteRolePermission',
+    //             'createUser',
+    //             'viewUser',
+    //             'updateUser',
+    //             'deleteUser',
+    //             'professionalUser',
+    //             'viewDashboard',
+    //             'viewPermission',
+    //             'createDesignation',
+    //             'viewDesignation',
+    //             'updateDesignation',
+    //             'deleteDesignation',
+    //             'createProductCategory',
+    //             'viewProductCategory',
+    //             'updateProductCategory',
+    //             'deleteProductCategory',
+    //             'createReturnPurchaseInvoice',
+    //             'viewReturnPurchaseInvoice',
+    //             'updateReturnPurchaseInvoice',
+    //             'deleteReturnPurchaseInvoice',
+    //             'createReturnSaleInvoice',
+    //             'viewReturnSaleInvoice',
+    //             'updateReturnSaleInvoice',
+    //             'deleteReturnSaleInvoice',
+    //             'updateSetting',
+    //             'viewSetting'
+    //         ], // Ajoutez les permissions ici
+    //         'iat' => time(),
+    //         'exp' => time() + 60 * 60 * 24, // 24 heures
+    //     ];
+
+    //     $jwt = JWT::encode($payload, env('JWT_SECRET'), 'HS256');
+
+    //     return $jwt; // Retourne le JWT sans l'envelopper dans une réponse JSON
+    // }
 
     public function store(Request $request)
     {
+        // dd($request->all());
+        // Validation des données
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'birthday' => ['required', 'before:today'],
-            'gender' => [
-                'required',
-                Rule::in(['Homme', 'Femme']),
-            ],
-            'morphology' => ['required', 'array', Rule::in(['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
-
-            'alimentation' => [
-                'required', 'array',
-                Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])
-            ],
-
-            'type_patient' => ['required', 'array', Rule::in(['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
-
-            'digestion' => 'required',
-
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'gender' => ['required', 'string'],
+            'phone' => ['required', 'unique:users,phone'],
         ]);
 
+        $password = $request->password ?? 'admin'; // Assurez-vous de remplacer 'default_password' par un mot de passe sécurisé si nécessaire
+
+        // Création de l'utilisateur
         $user = new User();
-        $user->password = \Hash::make('admin');
+        $user->password = \Hash::make($password);
         $user->email = $request->email;
         $user->name = $request->name;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->gender = $request->gender;
+        $user->appChoice = $request->appChoice ?? 'false';
+        $user->source = $request->source ?? 'Gestion de soins';
 
+        // Gestion de l'image
         if ($request->hasFile('image')) {
-            // We Get the image
             $file = $request->file('image');
-            // We Add String to Image name
             $fileName = \Str::random(15) . '-' . $file->getClientOriginalName();
-            // We Tell him the uploads path
-            $destinationPath = public_path() . '/uploads/';
-            // We move the image to the destination path
+            $destinationPath = public_path('/uploads/');
             $file->move($destinationPath, $fileName);
-            // Add fileName to database
-
             $user->image = $fileName;
-        } else {
-            $user->image = '';
         }
-        $user->role_id = 3;
 
+        // Assignation du rôle
+        $user->role_id = $request->role_id ?? 3;
         $role = Role::findById(3);
-
-        // If the role exists, assign it to the user
         if ($role) {
             $user->assignRole($role);
         } else {
-            return \Redirect::route('patient.all')->with('error', __('sentence.role id does not exist'));
+            return \Redirect::route('patient.all')->with('error', __('sentence.Role id does not exist'));
         }
 
         $user->save();
 
-        $patient = new Patient();
+        // Synchronisation avec Node.js si la case est cochée
+        if ($user->appChoice === 'true') {
+            $response = Http::post('http://localhost:5001/v1/customer', [
+                'email' => $user->email,
+                'password' => $request->password,
+                'role' => 'Particulier',
+                'username' => $user->name,
+                'phone' => $user->phone,
+                'address' => $user->address,
+                'gender' => $user->gender,
+                'source' => $user->source,
+                'createdAt' => $user->created_at->format('Y-m-d\TH:i:s.u\Z'),
+                'updatedAt' => $user->updated_at->format('Y-m-d\TH:i:s.u\Z'),
+            ]);
 
+            if ($response->failed()) {
+                return \Redirect::back()->with('error', __('sentence.User synchronization failed'));
+            }
+        }
+
+        // Création du patient
+        $patient = new Patient();
         $patient->user_id = $user->id;
-        $patient->birthday = $request->birthday;
-        $patient->phone = $request->phone;
-        $patient->gender = $request->gender;
-        $patient->adress = $request->adress;
-        $patient->allergie = $request->allergie;
-        $patient->medication = $request->medication;
-        $patient->hobbie = $request->hobbie;
-        $patient->demande = $request->demande;
-        $patient->type_patient = json_encode($request->type_patient);
-        $patient->morphology = json_encode($request->morphology);
-        $patient->alimentation = json_encode($request->alimentation);
-        $patient->digestion = $request->digestion;
+        $patient->birthday = $request->birthday ?? '00-00-0000';
+        $patient->allergie = $request->allergie ?? 'Aucune';
+        $patient->medication = $request->medication ?? 'Aucune';
+        $patient->hobbie = $request->hobbie ?? 'Aucun';
+        $patient->demande = $request->demande ?? 'Aucune';
+        $patient->type_patient = json_encode($request->type_patient ?? ['Aucun']);
+        $patient->morphology = json_encode($request->morphology ?? ['Aucune']);
+        $patient->alimentation = json_encode($request->alimentation ?? ['Aucune']);
+        $patient->digestion = $request->digestion ?? 'Aucune';
         $patient->save();
 
-        // Générer le token JWT
-        // $token = $this->generateToken($user);
-
-        // $response = Http::withToken($token)->post('http://localhost:5001/v1/customer/', [
-        //     'name' => $user->name,
-        //     'phone' => $request->phone,
-        //     'address' => $request->adress,
-        //     'type_customer' => 'particulier',
-        //     'createdAt' => $user->created_at->format('Y-m-d\TH:i:s.u\Z'),
-        //     'updatedAt' => $user->updated_at->format('Y-m-d\TH:i:s.u\Z'),
-        // ]);
-
-        return \Redirect::route('test.create_by', ['id' => $patient->user_id])->with('success', __('sentence.Patient Created Successfully'));
+        // Redirection selon le rôle de l'utilisateur
+        if (auth()->user()) {
+            return \Redirect::route('test.create_by', ['id' => $patient->user_id])->with('success', __('sentence.Patient Created Successfully'));
+        } else {
+            return \Redirect::route('login')->with('success', __('sentence.User Created Successfully'));
+        }
     }
+
 
     public function edit($id)
     {
@@ -225,7 +231,9 @@ class PatientController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => [
-                'required', 'email', 'max:255',
+                'required',
+                'email',
+                'max:255',
                 Rule::unique('users')->ignore($request->user_id),
             ],
             'birthday' => ['required', 'before:today'],
@@ -238,7 +246,8 @@ class PatientController extends Controller
             'morphology' => ['required', 'array', Rule::in(['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
 
             'alimentation' => [
-                'required', 'array',
+                'required',
+                'array',
                 Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])
             ],
 
@@ -281,7 +290,7 @@ class PatientController extends Controller
                 'birthday' => $request->birthday,
                 'phone' => $request->phone,
                 'gender' => $request->gender,
-                'adress' => $request->adress,
+                'address' => $request->address,
                 'allergie' => $request->allergie,
                 'medication' => $request->medication,
                 'hobbie' => $request->hobbie,
@@ -319,7 +328,7 @@ class PatientController extends Controller
 
         $appointments->load('drugs'); // des rendez-vous
 
-        $appointIds = Appointment::whereHas('rdv__drugs')->where('visited',1)
+        $appointIds = Appointment::whereHas('rdv__drugs')->where('visited', 1)
             ->groupBy('id')
             ->pluck('id');
 
@@ -366,7 +375,7 @@ class PatientController extends Controller
     {
         $term = $request->term;
 
-        $patients = User::where('name', 'LIKE', '%' . $term . '%')->OrderBy('id', 'DESC')->paginate(25);
+        $patients = User::where('name', 'LIKE', '%' . $term . '%')->orWhere('email', 'LIKE', '%' . $term . '%')->OrderBy('id', 'DESC')->paginate(25);
 
         return view('patient.all', ['patients' => $patients]);
     }
