@@ -21,10 +21,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->json('fonction')->nullable();
             $table->string('address');
-            $table->string('phone');
+            $table->string('phone')->unique();
             $table->string('gender');
-            $table->string('source')->nullable(); // Ajoutez cette ligne
-            $table->string('appChoice')->default("false");
+            $table->string('source')->default('Gestion de soins'); // Ajoutez cette ligne
+            $table->string('appChoice')->default('false');
             $table->rememberToken();
             $table->timestamps();
         });

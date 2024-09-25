@@ -65,7 +65,7 @@ class UsersController extends Controller
         $user->phone = $request->phone;
         $user->gender = $request->gender;
         $user->appChoice = $request->appChoice;
-
+        $user->source = 'Gestion de soins';
 
         $role = Role::findById($request->role_id);
         if ($request->hasFile('image')) {

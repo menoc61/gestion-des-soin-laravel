@@ -1486,7 +1486,6 @@ pre code {
 .table {
   width: 100%;
   margin-bottom: 1rem;
-  color: #858796;
 }
 
 .table th,
@@ -1511,12 +1510,12 @@ pre code {
 }
 
 .table-bordered {
-  border: 1px solid #e3e6f0;
+  border: 2px solid #e3e6f0;
 }
 
 .table-bordered th,
 .table-bordered td {
-  border: 1px solid #e3e6f0;
+  border: 2px solid #e3e6f0;
 }
 
 .table-bordered thead th,
@@ -11252,3 +11251,9 @@ body.sidebar-toggled footer.sticky-footer {
 .transpar{
     background: linear-gradient(to bottom, #f1f4f9, #dff1ff);
 }
+.img-fluid1 {
+    max-width: 15%;
+    height: 10%;
+    object-fit: cover   ;
+  }
+

@@ -35,6 +35,11 @@
 
     @yield('header')
 
+     {{-- pour les tables --}}
+    <!-- DataTables CSS -->
+
+   {{-- *************************************************************************************************** --}}
+
 
 </head>
 
@@ -289,10 +294,7 @@
                     </li>
                 @endif --}}
 
-                {{-- @if (Auth::user()->can('create notification') ||
-                        Auth::user()->can('edit notification') ||
-                        Auth::user()->can('view notification') ||
-                        Auth::user()->can('view all notifications'))
+                {{-- @if (Auth::user()->can('create notification') || Auth::user()->can('edit notification') || Auth::user()->can('view notification') || Auth::user()->can('view all notifications'))
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="#" data-toggle="collapse"
                             data-target="#collapseNotifications" aria-expanded="true"
