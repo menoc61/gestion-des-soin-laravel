@@ -30,7 +30,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.New Patient') }}</h6>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{ route('patient.create') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('patient.store') }}" enctype="multipart/form-data">
                         @csrf
                         <center>
                             <div class="form-row">
@@ -63,7 +63,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputAddress">{{ __('sentence.Birthday') }}<font color="red">*</font>
-                                    </label>
+                                </label>
                                 <input type="date" class="form-control" id="Birthday" name="birthday"
                                     autocomplete="off">
                             </div>
@@ -72,7 +72,8 @@
                             <div class="form-group col-md-12">
                                 <label for="inputAddress2">{{ __('sentence.Address') }}<font color="red">*</font>
                                 </label>
-                                <input type="text" class="form-control" id="Address" name="address">
+                                <input type="text" class="form-control" id="Address" name="address"
+                                    placeholder="{{ __('sentence.Address') }}">
                             </div>
                         </div>
                         <div class="form-row">

@@ -232,7 +232,7 @@
                                     <a class="nav-link " id="tests-tab" data-toggle="tab" href="#tests" role="tab"
                                         aria-controls="tests" aria-selected="false">{{ __('sentence.Test') }}</a>
                                 </li>
-                                @if (Auth::user()->role_id != 2)
+                                @if (Auth::user()->role_id == 1)
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" id="psychotest-tab" data-toggle="tab" href="#psychotest"
                                             role="tab" aria-controls="psychotest"
