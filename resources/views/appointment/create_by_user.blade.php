@@ -9,8 +9,8 @@
         <div class="mb-3">
             <button class="btn btn-primary" onclick="history.back()">Retour</button>
         </div>
-        <div class="d-flex justify-content-center">
-            <div class="card col-md-10">
+        <div class="d-flex justify-content-center mb-4">
+            <div class="col-md-12">
                 <div class="card-header py-3">
                     <h2 class="m-0 font-weight-bold text-dark text-center"> {{ __('sentence.Take Appointment') }} Pour
                         {{ $userName }}</h2>
@@ -19,17 +19,14 @@
         </div>
     </div>
 
-    <form method="post" id="myForm" action="{{ route('appointment.store') }}" enctype="multipart/form-data">
-        <div class="row justify-content-center">
-            <div class="col-md-6 my-4">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.New Appointment') }}</h6>
-                    </div>
-                    <div class="card-body">
-
-                        <div class="row ">
-                            <div class="form-group col-md-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-dark mb-4"><b>{{ __('sentence.New Appointment') }}</b></h6>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
                                 <label for="patient_name">{{ __('sentence.Patient') }}</label>
                                 <select class="form-control patient_name multiselect-doctorino" name="patient"
                                     id="patient_name">
@@ -37,10 +34,8 @@
                                         {{ $userName }}
                                     </option>
                                 </select>
-                                {{ csrf_field() }}
                             </div>
-
-                            <div class="form-group col-md-4">
+                            <div class="form-group">
                                 @if (Auth::user()->role_id != 2)
                                     <div class="form-group">
                                         <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
@@ -67,121 +62,73 @@
                                         </select>
                                     </div>
                                 @endif
-
                             </div>
-
-                            <div class="form-group col-md-4">
+                            <div class="form-group">
                                 <label for="rdvdate">{{ __('sentence.Date') }}</label>
-                                <input type="text" class="form-control target agenda" name="rdv_time_date"
-                                    readonly="readonly" id="rdvdate">
+                                <input type="text" class="form-control target" readonly="readonly" id="rdvdate">
                                 <small id="emailHelp" class="form-text text-muted">Select date to view time slots
                                     available</small>
                             </div>
-
-                            <div class="form-group col-md-3">
-                                <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
-                                <input type="time" class="form-control target" name="rdv_time_start">
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
-                                <input type="time" class="form-control target" name="rdv_time_end">
-                            </div>
-
-                            {{-- <div class="form-group col-md-6">
-                                <label for="reason">{{ __('sentence.Reason for visit') }}</label>
-                                <textarea class="form-control" id="reason" name="reason"></textarea>
-                                <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
-                            </div> --}}
-
-                            {{-- <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="send_sms" id="sms">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sms">
                                 <label class="form-check-label" for="sms">
                                     {{ __('sentence.Send SMS') }}
                                 </label>
-                            </div> --}}
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-sm-9">
-                                <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
                             </div>
                         </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 my-4">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
-                    </div>
-                    <div class="card-body">
-                        <fieldset class="drugs_labels">
-                            <div class="repeatable"></div>
-                            <div class="form-group">
-                                <a type="button" class="btn btn-sm btn-primary add text-white" align="center"><i
-                                        class='fa fa-plus'></i> {{ __('sentence.Add Drug') }}</a>
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary mb-4">{{ __('sentence.Agenda praticien') }} <span
-                                id="doctor-name"></span></h6>
-
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover" id="appointments-table">
-
-                                <tr>
-                                    <td align="center">{{ __('sentence.Date') }}</td>
-                                    <td align="center">{{ __('sentence.Time Slot') }}</td>
-                                </tr>
-                                <!-- Appointments will be dynamically inserted here -->
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Show Modal Redirect-->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        {{-- <button type="button" class="close" data-dismiss="modal">&times;</button> --}}
-                    </div>
-                    <div class="modal-body">
-                        <div class="success-message">
-                            Votre opération a été effectuée avec succès !
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="d-flex col-md-12">
-                            @if (Auth::user()->role_id != 3)
-                                <div class="col-md-4">
-                                    <a class="btn btn-primary" href="{{ route('billing.create_by', ['id' => $userId]) }}">
-                                        payer
-                                    </a>
-                                </div>
-                            @endif
-                            <div class="col-md-4">
-                                <a class="btn btn-secondary"
-                                    href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
-                                </a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn btn-secondary"
-                                    href="{{ route('appointment.create_by', ['id' => $userId]) }}"> Nouveau RDV
-                                </a>
+                        <div class="col-md-8 col-sm-12">
+                            <label for="date">{{ __('sentence.Available Times') }}</label>
+                            <hr>
+                            <div class="row mb-2 myorders"></div>
+                            <div class="alert alert-danger text-center" role="alert" id="help-block">
+                                <img src="{{ asset('img/calendar.png') }}"><br>
+                                <b>{{ __('sentence.No date selected') }}</b>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+    <!-- Appointment Modal-->
+    <div class="modal fade" id="RDVModalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('sentence.Are you sure of the date') }}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><b>{{ __('sentence.Patient') }} :</b> <span id="patient_name"></span></p>
+                    <p><b>{{ __('sentence.Date') }} :</b> <label class="badge badge-primary-soft" id="rdv_date"></label>
+                    </p>
+                    <p><b>{{ __('sentence.Time Slot') }} :</b> <label class="badge badge-primary-soft"
+                            id="rdv_time"></span></label></p>
+                    <p><b>{{ __('sentence.Reason for visit') }} :</b> <label class="badge badge-primary-soft"
+                            id="reason_for_visit"></span></label></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button"
+                        data-dismiss="modal">{{ __('sentence.Cancel') }}</button>
+                    <a class="btn btn-primary text-white"
+                        onclick="event.preventDefault();
+                    document.getElementById('rdv-form').submit();">{{ __('sentence.Save') }}</a>
+                    <form id="rdv-form" action="{{ route('appointment.store') }}" method="POST" class="d-none">
+                        <input type="hidden" name="patient" id="patient_input">
+                        <input type="hidden" name="rdv_time_date" id="rdv_date_input">
+                        <input type="hidden" name="rdv_time_start" id="rdv_time_start_input">
+                        <input type="hidden" name="rdv_time_end" id="rdv_time_end_input">
+                        <input type="hidden" name="send_sms" id="send_sms">
+                        <input type="hidden" name="reason" id="reason_for_visit_input">
+                        @csrf
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('header')
@@ -224,6 +171,13 @@
         </section>
     </script>
 
+    <script type="text/javascript">
+        // In your Javascript (external .js resource or <script> tag)
+        $(document).ready(function() {
+            $('.multiselect-doctorino').select2();
+        });
+    </script>
+
     <script>
         $(document).ready(function() {
             $('#DoctorID').change(function() {
@@ -259,62 +213,6 @@
             });
         });
     </script>
-
-    {{-- <script>
-        $(document).ready(function() {
-            // Initialisation du datepicker
-            $(".agenda").datepicker({
-                uiLibrary: "bootstrap4",
-                format: "yyyy-mm-dd",
-                todayHighlight: true,
-                minDate: function() {
-                    var date = new Date();
-                    date.setDate(date.getDate());
-                    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-                }
-            }).on("changeDate", function(e) {
-                var selectedDate = $(this).val();
-                var doctorId = $('#DoctorID').val();
-
-                if (doctorId && selectedDate) {
-                    $.ajax({
-                        url: '/appointments/check-availability/' + doctorId + '/' + selectedDate,
-                        method: 'GET',
-                        success: function(response) {
-                            var startTimes = response.map(function(appointment) {
-                                return appointment.rdv_time_start;
-                            });
-
-                            var endTimes = response.map(function(appointment) {
-                                return appointment.rdv_time_end;
-                            });
-
-                            // Désactiver les options d'heure de début et de fin qui existent déjà
-                            $('input[name="rdv_time_start"]').find('option').each(function() {
-                                if (startTimes.includes($(this).val())) {
-                                    $(this).attr('disabled', true);
-                                } else {
-                                    $(this).attr('disabled', false);
-                                }
-                            });
-
-                            $('input[name="rdv_time_end"]').find('option').each(function() {
-                                if (endTimes.includes($(this).val())) {
-                                    $(this).attr('disabled', true);
-                                } else {
-                                    $(this).attr('disabled', false);
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-
-            // Initialiser Select2
-            $('.multiselect-doctorino').select2();
-            $('.multiselect-search').select2();
-        });
-    </script> --}}
 
     <script>
         $(document).ready(function() {

@@ -38,7 +38,7 @@
                             <h2 class="h3 text-light mb-4">{{ __('sentence.Welcome') }}</h2>
                             <center>
                                 <div class="d-flex w-25 justify-content-center align-items-center">
-                                    <img src="{{ asset('img/sai-i-lama-logo.png') }}" class="img-fluid">
+                                    <img src="{{ asset('img/sai-i-lama-logo.png') }}" class="img-fluid1">
                                 </div>
                             </center>
                         </div>
@@ -51,7 +51,7 @@
                                     <i class="fas fa-user"></i>
                                     <input type="text" class="input w-100 @error('name') is-invalid @enderror"
                                         placeholder="{{ __('sentence.Full Name') }}" required id="Name"
-                                        name="name">
+                                        name="name" value="{{ old('name') }}">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -74,19 +74,18 @@
 
                             <div class="form-group fle">
                                 <p id="password-error" style="color: red;"></p>
-                                <div class="form-group w-100">
+                                <div class="w-100">
                                     <i class="fas fa-lock"></i>
                                     <input id="password" type="password"
                                         class="input w-100 @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="off"
-                                        placeholder="{{ __('sentence.Password') }}">
+                                        required autocomplete="off" placeholder="{{ __('sentence.Password') }} ">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group w-100">
+                                <div class="w-100">
                                     <i class="fas fa-lock"></i>
                                     <input type="password" class="input w-100 @error('password') is-invalid @enderror"
                                         required id="confirm_password" name="password_confirmation" autocomplete="off"
@@ -100,22 +99,22 @@
                             </div>
 
                             <div class="form-group fle">
-                                <div class="form-group w-100">
+                                <div class="w-100">
                                     <i class="fas fa-map-marker-alt"></i>
                                     <input type="text" class="input w-100 @error('address') is-invalid @enderror"
                                         required id="Address" name="address"
-                                        placeholder="{{ __('sentence.Address') }}">
+                                        placeholder="{{ __('sentence.Address') }}" value="{{ old('address') }}">
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group w-100">
+                                <div class="w-100">
                                     <i class="fas fa-phone"></i>
                                     <input type="text" class="input w-100 @error('phone') is-invalid @enderror"
-                                        required id="Phone" name="phone"
-                                        placeholder="{{ __('sentence.Phone') }}">
+                                        required id="Phone" name="phone" placeholder="{{ __('sentence.Phone') }}"
+                                        value="{{ old('phone') }}">
                                     @error('phone')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -125,25 +124,31 @@
                             </div>
 
                             <div class="form-group fle">
-                                <div class="form-group w-100">
+                                <div class="w-100">
                                     <i class="fas fa-venus-mars"></i> <!-- Icône de genre -->
                                     <select class="select w-100" name="gender" id="Gender">
                                         <option value="" disabled selected hidden>
                                             {{ __('sentence.SelectGender') }}
                                         </option>
                                         <!-- Placeholder -->
-                                        <option value="Homme" class="option">{{ __('sentence.Male') }}</option>
-                                        <option value="Femme" class="option">{{ __('sentence.Female') }}</option>
+                                        <option value="Homme" {{ old('gender') == 'Homme' ? 'selected' : '' }}>
+                                            {{ __('sentence.Male') }}</option>
+                                        <option value="Femme" {{ old('gender') == 'Femme' ? 'selected' : '' }}>
+                                            {{ __('sentence.Female') }}</option>
                                     </select>
                                 </div>
                                 <!-- Bouton qui déclenche la modal -->
-                                <div class="form-group w-100">
+                                <div class="w-100">
                                     <button class="btn btn-success w-75" id="submit-btn" type="button">
                                         {{ __('Envoyer') }}
                                     </button>
                                 </div>
                             </div>
                         </form>
+                        <div class="text-center">
+                            <a class="small text-light" href="{{ route('login') }}">
+                                {{ __('sentence.connection patient') }}</a>
+                        </div>
                     </div>
                     <div class="drop drop1"></div>
                     <div class="drop drop2"></div>
@@ -153,13 +158,6 @@
                 </div>
             </div>
         </div>
-        <!-- Pop-up de confirmation -->
-        {{-- <div id="appChoicePopup"
-            style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
-            <p>Souhaitez-vous avoir accès à notre e-shop ?</p>
-            <button id="yes-btn" class="btn btn-primary">Oui</button>
-            <button id="no-btn" class="btn btn-secondary">Non</button>
-        </div> --}}
 
         <!-- Modal Bootstrap -->
         <div class="modal fade" id="appChoicePopup" tabindex="-1" aria-labelledby="appChoicePopupLabel"
