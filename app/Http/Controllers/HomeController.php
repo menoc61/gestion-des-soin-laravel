@@ -37,7 +37,6 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
         // user Authentifié
         $user = Auth::user();
         $doctorId = $user->id;
@@ -52,24 +51,26 @@ class HomeController extends Controller
             $endDate = now()->endOfMonth();  // Fin du mois actuel
         }
 
-        // // Card Home concernant le Praticien
-        // $total_prescriptions_for_pratician = Prescription::whereBetween('created_at', [$startDate, $endDate])->where('doctor_id', $doctorId)->count();
-        // $total_tests_for_pratician = Test::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->count();
-        // $total_amount_for_pratician = Billing::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->sum('total_with_tax');
-        // $agendaDoctors = Appointment::where('doctor_id', $doctorId)->where('visited', 0)->whereMonth('date', date('m'))->get();
-
-        // // Card Home concernant l'Admin
-        // $total_patients = User::where('role_id', '3')->whereBetween('created_at', [$startDate, $endDate])->count();
-        // $total_patients_today = User::where('role_id', '3')->whereBetween('created_at', [$startDate, $endDate])->count();
-        // $total_appointments = Appointment::whereBetween('created_at', [$startDate, $endDate])->count();
-        // $total_appointments_today = Appointment::where('visited', 0)->whereBetween('created_at', [$startDate, $endDate])->get();
-        // $total_prescriptions = Prescription::whereBetween('created_at', [$startDate, $endDate])->count();
-        // $total_payments = Billing::whereBetween('created_at', [$startDate, $endDate])->count();
-
         // // Card Home concernant l'Hote
         $appointmentHote = Appointment::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
         $diagnoseHote = Test::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
         $prescriptionHote = Prescription::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
+
+
+         // Card Home concernant l'Admin
+        // Requête pour obtenir les données entre les dates sélectionnées
+        $total_appointments = Appointment::whereBetween('date', [$startDate, $endDate])->count();
+        $total_patients = User::where('role_id', '3')->whereBetween('created_at', [$startDate, $endDate])->count();
+        $total_prescriptions = Prescription::whereBetween('created_at', [$startDate, $endDate])->count();
+        $total_payments = Billing::whereBetween('created_at', [$startDate, $endDate])->sum('total_with_tax');
+
+        // // Card Home concernant le Praticien
+        $total_prescriptions_for_pratician = Prescription::whereBetween('created_at', [$startDate, $endDate])->where('doctor_id', $doctorId)->count();
+        $total_tests_for_pratician = Test::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->count();
+        $total_amount_for_pratician = Billing::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->sum('total_with_tax');
+        $agendaDoctors = Appointment::where('doctor_id', $doctorId)->where('visited', 0)->whereMonth('date', date('m'))->paginate(3);
+
+        $total_appointments_today = Appointment::where('visited', 0)->wheredate('date', Today())->paginate(3);
 
 
         $appointmentsVisitedId = Appointment::where('visited', 1)->pluck('id');
@@ -82,6 +83,7 @@ class HomeController extends Controller
         $countRDVread = Appointment::where('is_read', 0)->count();
 
         $appointments = Appointment::where('is_read', 0)->orderBy('id', 'desc')->paginate(7);
+
 
         $total_payment_by_day = Billing_item::select('created_at', 'invoice_amount')
             ->get()
@@ -118,20 +120,6 @@ class HomeController extends Controller
         $defaultEndDate = Carbon::now()->endOfMonth()->toDateString();
         $nameday = Carbon::now()->formatLocalized('%A');
 
-        // Card Home concernant l'Admin
-        // Requête pour obtenir les données entre les dates sélectionnées
-        $total_appointments = Appointment::whereBetween('date', [$startDate, $endDate])->count();
-        $total_patients = User::where('role_id', '3')->whereBetween('created_at', [$startDate, $endDate])->count();
-        $total_prescriptions = Prescription::whereBetween('created_at', [$startDate, $endDate])->count();
-        $total_payments = Billing::whereBetween('created_at', [$startDate, $endDate])->sum('total_with_tax');
-
-        // // Card Home concernant le Praticien
-        $total_prescriptions_for_pratician = Prescription::whereBetween('created_at', [$startDate, $endDate])->where('doctor_id', $doctorId)->count();
-        $total_tests_for_pratician = Test::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->count();
-        $total_amount_for_pratician = Billing::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->sum('total_with_tax');
-        $agendaDoctors = Appointment::where('doctor_id', $doctorId)->where('visited', 0)->whereMonth('date', date('m'))->paginate(3);
-
-        $total_appointments_today = Appointment::where('visited', 0)->wheredate('date', Today())->paginate(3);
 
 
         // Vérifie si la requête est AJAX pour retourner les données filtrées

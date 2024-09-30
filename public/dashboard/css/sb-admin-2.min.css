@@ -665,7 +665,7 @@ mark {
 
 .img-fluid1 {
     padding: 0;
-    max-width: 90%;
+    max-width: 80%;
     height: auto;
 }
 
@@ -13061,7 +13061,7 @@ td>a {
     background: transparent;
     border: none;
     padding: 1rem;
-    color: white;
+    color: dark;
     font-size: 15px;
     border-left: 1px solid rgba(255, 255, 255, .3);
     border-top: 1px solid rgba(255, 255, 255, .3);

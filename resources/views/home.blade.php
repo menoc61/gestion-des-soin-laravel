@@ -22,7 +22,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    {{ __('sentence.Amount Generated') }}</div>
+                                    Montant des dépenses</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_amount_for_pratician }} fcfa
                                 </div>
                             </div>
@@ -257,6 +257,18 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <h6 class="m-0 font-weight-bold text-dark p-2">GRAPHE DES MONTANTS GENERES</h6>
+                        </div>
+                    </div>
+                    <div class=""><canvas id="myAreaChart" width="100%"></canvas></div>
                 </div>
             </div>
         </div>
@@ -657,6 +669,14 @@
                 }
             });
         }
+    </script>
+
+    <script type="text/javascript">
+        var _ydata = JSON.parse('{!! json_encode($days) !!}');
+        var _xdata = JSON.parse('{!! json_encode($totalAmounts) !!}');
+        // var visitedCount = {{ $visitedCount }};
+        // var nonVisitedCount = {{ $nonVisitedCount }};
+        // var allAppointment = {{ $allAppointment }}
     </script>
 
     <script>
