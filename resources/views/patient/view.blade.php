@@ -440,7 +440,7 @@
                                                     {{-- <td align="center">Id</td> --}}
                                                     <td align="center"><b>{{ __('sentence.Date') }}</b></td>
                                                     <td align="center"><b>{{ __('sentence.Time Slot') }}</b></td>
-                                                    <td align="center"><b>{{ __('sentence.Praticien') }}</b></td>
+                                                    <td align="center"><b>Soin</b></td>
                                                     <td align="center"><b>{{ __('sentence.Status') }}</b></td>
                                                     {{-- <td class="text-center">{{ __('sentence.Created at') }}</td> --}}
                                                     <td class="text-center"><b>{{ __('sentence.Visited At') }}</b></td>
@@ -459,8 +459,9 @@
                                                                     {{ $appointment->time_start }} -
                                                                     {{ $appointment->time_end }} </label></td>
                                                             <td align="center"><label class="badge badge-primary-soft"><i
-                                                                        class="fa fa-user-injured"></i>
-                                                                    {{ $appointment->Doctor->name }} </label></td>
+                                                                        class="fas fa-fw fa-pills"></i>
+                                                                        {{ $appointment->drugs->isEmpty() ? 'aucun' : $appointment->drugs->pluck('trade_name')->implode(', ') }}
+                                                                </label></td>
                                                             <td class="text-center">
                                                                 @if ($appointment->visited == 0)
                                                                     <label class="badge badge-warning-soft">
@@ -532,8 +533,9 @@
                                                                     {{ $appointment->time_start }} -
                                                                     {{ $appointment->time_end }} </label></td>
                                                             <td align="center"><label class=""><i
-                                                                        class="fa fa-user-injured"></i>
-                                                                    {{ $appointment->Doctor->name }} </label></td>
+                                                                        class="fas fa-fw fa-pills"></i>
+                                                                        {{ $appointment->drugs->isEmpty() ? 'aucun' : $appointment->drugs->pluck('trade_name')->implode(', ') }}
+                                                                </label></td>
                                                             <td class="text-center">
                                                                 @if ($appointment->visited == 0)
                                                                     <label class="badge badge-warning-soft">

@@ -321,5 +321,6 @@ return [
     'Register' => 'Inscrivez-vous ici',
     'Send' => 'Envoyer',
     'SelectGender' => 'Choisissez votre genre',
-    'Confirm Password' => 'Confirmez votre mot de passe'
+    'Confirm Password' => 'Confirmez votre mot de passe',
+    'connection patient'=> 'Vous avez un compte ?     connectez-vous ici !'
 ];
