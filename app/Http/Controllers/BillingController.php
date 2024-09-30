@@ -32,10 +32,6 @@ class BillingController extends Controller
         $user = User::find($id);
         if (!$user) {
         }
-        // $prescriptions = Prescription::where('prescriptions.user_id', $id)->get();
-        // $prescriptions = Prescription::where('user_id', $id)
-        //     ->whereDoesntHave('Items')
-        //     ->get();
 
         $appointIds = Appointment::whereHas('rdv__drugs')->where('visited', 1)
             ->groupBy('id')
@@ -337,5 +333,4 @@ class BillingController extends Controller
 
         return response()->json($payments);
     }
-
 }
