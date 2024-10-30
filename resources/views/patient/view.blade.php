@@ -20,10 +20,10 @@
                                     <div class="text-center">
                                         @empty(!$patient->image)
                                             <img src="{{ asset('uploads/' . $patient->image) }}" alt="profil-img"
-                                                class="rounded-circle img-thumbnail avatar-xl">
+                                                class="rounded-circle img-thumbnail avatar-md">
                                         @else
                                             <img src="{{ asset('img/default-image.jpeg') }}" alt="profil-img"
-                                                class="rounded-circle img-thumbnail avatar-xl">
+                                                class="rounded-circle img-thumbnail avatar-md">
                                         @endempty
                                         <div class="online-circle">
                                             <i class="fa fa-circle text-success"></i>

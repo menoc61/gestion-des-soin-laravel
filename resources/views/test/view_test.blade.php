@@ -34,13 +34,14 @@
                                     <tr>
                                         <th class="text-center">Nom Diagnostic</th>
                                         <th class="text-center">Type Diagnostic</th>
-                                        <th class="text-center">Description Diagnostic</th>
-                                        <th class="text-center">Détail Diagnostic</th>
+                                        <!-- <th class="text-center">Description Diagnostic</th> -->
+                                        <th class="text-center">élements de diagnose</th>
+                                        <th class="text-center">Réponses</th>
                                     </tr>
                                     @forelse ($tests as $test)
                                         <tr>
-                                            <td class="text-center">{{ $test->test_name }}</td>
-                                            <td class="text-center">
+                                            <td class="text-center" rowspan="15">{{ $test->test_name }}</td>
+                                            <td class="text-center" rowspan="15">
                                                 <!-- décoder sous le format json-->
                                                 @php
                                                     $diagnosticType = json_decode($test->diagnostic_type);
@@ -54,30 +55,42 @@
                                                     {{ $diagnosticType }}
                                                 @endif
                                             </td>
-                                            <td class="text-center">{{ $test->comment }}</td>
-                                            <td class="text-center w-50">
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered">
+                                            <!-- <td class="text-center">{{ $test->comment }}</td> -->
+                                            <!-- <td class="text-center"> -->
+                                                <!-- <div class="table-responsive"> -->
+                                                    <!-- <table class="table table-bordered"> -->
                                                         {{-- Diagnostic détail Main --}}
-                                                        <tr class="form-group">
+                                                        <!-- <tr class="form-group"> -->
                                                             @if ($test->Etat_des_ongles_mains != null)
                                                                 <td>
-                                                                    <b>Etats des ongles</b><br><br>
+                                                                    <p>Etats des ongles</p>
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->Etat_des_ongles_mains != null)
+                                                                <td>
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->Etat_des_ongles_mains }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                       </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @if ($test->Etat_generale_des_mains != null)
                                                                 <td>
-                                                                    <b>Etat générale des mains</b><br><br>
+                                                                    <p>Etat générale des mains</p>   
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->Etat_generale_des_mains != null)
+                                                                <td>
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->Etat_generale_des_mains }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                            </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @php
                                                                 $signes_ongles_mains = json_decode(
                                                                     $test->signes_particuliers_ongles_mains,
@@ -85,8 +98,12 @@
                                                             @endphp
                                                             @if ($signes_ongles_mains !== null)
                                                                 <td>
-                                                                    <b>Signes particuliers des ongles
-                                                                    </b><br><br>
+                                                                    <p>Signes particuliers des ongles</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($signes_ongles_mains !== null)
+                                                                <td>
                                                                     @if (is_array($signes_ongles_mains))
                                                                         @foreach ($signes_ongles_mains as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -98,7 +115,8 @@
                                                                     @endif
                                                                 </td>
                                                             @endif
-                                                        </tr>
+                                                            </tr>
+                                                        
                                                         {{-- ************* --}}
                                                         <tr>
                                                             @php
@@ -108,7 +126,12 @@
                                                             @endphp
                                                             @if ($signes_mains != null)
                                                                 <td>
-                                                                    <b>Signes particuliers des mains</b><br><br>
+                                                                    <p>Signes particuliers des mains</p>  
+                                                                </td>
+                                                            @endif
+                                                            @if ($signes_mains != null)
+                                                                <td>
+                                                                   
                                                                     @if (is_array($signes_mains))
                                                                         @foreach ($signes_mains as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -120,19 +143,33 @@
                                                                     @endif
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @if ($test->skinStateInput_main != null)
                                                                 <td>
-                                                                    <b>Etat de la peau</b><br><br>
+                                                                    <p>Etat de la peau</p>
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->skinStateInput_main != null)
+                                                                <td>
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->skinStateInput_main }}
                                                                     </label>
                                                                 </td>
                                                             @endif
                                                             {{-- ************* --}}
+                                                        </tr>
+                                                        <tr>
                                                             @if ($test->vernisInput_main != null)
                                                                 <td>
-                                                                    <b>Vernis</b><br><br>
+                                                                    <p>Vernis</p>
+                                                                   
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->vernisInput_main != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->vernisInput_main }}
                                                                     </label>
@@ -143,29 +180,48 @@
                                                         <tr>
                                                             @if ($test->reliefInput_main != null)
                                                                 <td>
-                                                                    <b>Relief</b><br><br>
+                                                                    <p>Relief</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->reliefInput_main != null)
+                                                                <td>
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->reliefInput_main }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                        </tr>
+                                                        <tr>
                                                             {{-- ************* --}}
                                                             @if ($test->cicatrices_main != null)
                                                                 <td>
-                                                                    <b>Cicatrice</b><br><br>
+                                                                    <p>Cicatrice</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->cicatrices_main != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->cicatrices_main }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @php
                                                                 $soin_List_main = json_decode($test->soinList_main);
                                                             @endphp
                                                             @if ($soin_List_main != null)
                                                                 <td>
-                                                                    <b>Soins preferes
-                                                                    </b><br><br>
+                                                                    <p>Soins preferes</p>
+                                                                   
+                                                                </td>
+                                                            @endif
+                                                            @if ($soin_List_main != null)
+                                                                <td>
                                                                     @if (is_array($soin_List_main))
                                                                         @foreach ($soin_List_main as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -182,25 +238,48 @@
                                                         <tr>
                                                             @if ($test->callosites_main != null)
                                                                 <td>
-                                                                    <b>callosité(s)</b><br><br>
+                                                                    <p>callosité(s)</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->callosites_main != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->callosites_main }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+
+                                                        <tr>
                                                             @if ($test->spInput_main != null)
                                                                 <td>
-                                                                    <b>Signes particuliers</b><br><br>
+                                                                    <p>Signes particuliers</p>
+                                                                   
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->spInput_main != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->spInput_main }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @if ($test->tache_main != null)
                                                                 <td>
-                                                                    <b>Tache(s)</b><br><br>
+                                                                    <p>Tache(s)</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->tache_main != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->tache_main }}
                                                                     </label>
@@ -211,25 +290,46 @@
                                                         <tr>
                                                             @if ($test->cicatrices_main_dorsal != null)
                                                                 <td>
-                                                                    <b>Présence des Cicatrices</b><br><br>
+                                                                    <p>Présence des Cicatrices</p>  
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->cicatrices_main_dorsal != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->cicatrices_main_dorsal }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @if ($test->callosite_main_dorsal != null)
                                                                 <td>
-                                                                    <b>Espaces inter digitale</b><br><br>
+                                                                    <p>Espaces inter digitale</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->callosite_main_dorsal != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->callosite_main_dorsal }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                        </tr>
+                                                        <tr>
                                                             {{-- ************* --}}
                                                             @if ($test->spInput_main_dorsal != null)
                                                                 <td>
-                                                                    <b>Signes particuliers</b><br><br>
+                                                                    <p>Signes particuliers</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->spInput_main_dorsal != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->spInput_main_dorsal }}
                                                                     </label>
@@ -242,12 +342,23 @@
 
                                                         {{-- ************* --}}
                                                         <tr>
+                                                        <td class="text-center" rowspan="21"></td>
+                                                       <td class="text-center" rowspan="21">
+                                                            <!-- décoder sous le format json-->
+                                                        
+                                                       </td>
                                                             @php
                                                                 $sebum_grpe = json_decode($test->sebum_grp);
                                                             @endphp
                                                             @if ($sebum_grpe != null)
                                                                 <td>
-                                                                    <b class="text-center">Sébum</b><br><br>
+                                                                    <p>Sébum</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($sebum_grpe != null)
+                                                                <td>
+                                                                   
                                                                     @if (is_array($sebum_grpe))
                                                                         @foreach ($sebum_grpe as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -259,14 +370,19 @@
                                                                     @endif
                                                                 </td>
                                                             @endif
+                                                        </tr>
+                                                        <tr>
                                                             {{-- ************* --}}
                                                             @php
                                                                 $hydratation_grpe = json_decode($test->hydratation_grp);
                                                             @endphp
                                                             @if ($hydratation_grpe != null)
                                                                 <td>
-                                                                    <b>Hydratation</b><br><br>
-
+                                                                    <p>Hydratation</p>   
+                                                                </td>
+                                                            @endif
+                                                            @if ($hydratation_grpe != null)
+                                                                <td>
                                                                     @if (is_array($hydratation_grpe))
                                                                         @foreach ($hydratation_grpe as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -278,14 +394,19 @@
                                                                     @endif
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @php
                                                                 $relief_grpe = json_decode($test->relief_grp);
                                                             @endphp
                                                             @if ($relief_grpe != null)
                                                                 <td>
-                                                                    <b>Relief</b><br><br>
-
+                                                                    <p>Relief</p>
+                                                                </td>
+                                                            @endif
+                                                            @if ($relief_grpe != null)
+                                                                <td>
                                                                     @if (is_array($relief_grpe))
                                                                         @foreach ($relief_grpe as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -307,7 +428,13 @@
                                                             @endphp
                                                             @if ($signe_peau != null)
                                                                 <td>
-                                                                    <b>Signes Particuliers de la peau</b><br><br>
+                                                                    <p>Signes Particuliers de la peau</p>
+                                                                   
+                                                                </td>
+                                                            @endif
+                                                            @if ($signe_peau != null)
+                                                                <td>
+                                                                    
                                                                     @if (is_array($signe_peau))
                                                                         @foreach ($signe_peau as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -319,7 +446,9 @@
                                                                     @endif
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @php
                                                                 $keratinisation_grpe = json_decode(
                                                                     $test->keratinisation_grp,
@@ -327,7 +456,13 @@
                                                             @endphp
                                                             @if ($keratinisation_grpe != null)
                                                                 <td>
-                                                                    <b>Kératinisation</b><br><br>
+                                                                    <p>Kératinisation</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($keratinisation_grpe != null)
+                                                                <td>
+                                                                    
                                                                     @if (is_array($keratinisation_grpe))
                                                                         @foreach ($keratinisation_grpe as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -339,13 +474,19 @@
                                                                     @endif
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @php
                                                                 $elasticite_grpe = json_decode($test->elasticite_grp);
                                                             @endphp
                                                             @if ($elasticite_grpe != null)
                                                                 <td>
-                                                                    <b>Elasticité</b><br><br>
+                                                                    <p>Elasticité</p>
+                                                                </td>
+                                                            @endif
+                                                            @if ($elasticite_grpe != null)
+                                                                <td>
 
                                                                     @if (is_array($elasticite_grpe))
                                                                         @foreach ($elasticite_grpe as $signe)
@@ -366,7 +507,12 @@
                                                             @endphp
                                                             @if ($follicule_grpe != null)
                                                                 <td>
-                                                                    <b>Follicule</b><br><br>
+                                                                    <p>Follicule</p>
+                                                                </td>
+                                                            @endif
+                                                            @if ($follicule_grpe != null)
+                                                                <td>
+                                            
 
                                                                     @if (is_array($follicule_grpe))
                                                                         @foreach ($follicule_grpe as $signe)
@@ -379,14 +525,20 @@
                                                                     @endif
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @php
                                                                 $sensibilite_grpe = json_decode($test->sensibilite_grp);
                                                             @endphp
                                                             @if ($sensibilite_grpe != null)
                                                                 <td>
-                                                                    <b>Sensibilité</b><br><br>
-
+                                                                    <p>Sensibilité</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($sensibilite_grpe != null)
+                                                                <td>
                                                                     @if (is_array($sensibilite_grpe))
                                                                         @foreach ($sensibilite_grpe as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -398,13 +550,21 @@
                                                                     @endif
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @php
                                                                 $circulation_grpe = json_decode($test->circulation_grp);
                                                             @endphp
                                                             @if ($circulation_grpe != null)
                                                                 <td>
-                                                                    <b>Circulation</b><br><br>
+                                                                    <p>Circulation</p>
+                                                                   
+                                                                </td>
+                                                            @endif
+                                                            @if ($circulation_grpe != null)
+                                                                <td>
+                                                                    
                                                                     @if (is_array($circulation_grpe))
                                                                         @foreach ($circulation_grpe as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -420,8 +580,9 @@
                                                         {{-- ************* --}}
 
                                                         {{-- Diagnostic détail du Pied --}}
-
+                                                        
                                                         <tr>
+                                                       
                                                             @php
                                                                 $signes_pieds = json_decode(
                                                                     $test->signes_particuliers_pieds,
@@ -429,7 +590,14 @@
                                                             @endphp
                                                             @if ($signes_pieds != null)
                                                                 <td>
-                                                                    <b>Signes particuliers des pieds</b><br><br>
+                                                                    <p>Signes particuliers des pieds</p>
+
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($signes_pieds != null)
+                                                                <td>
+                                                                    
 
                                                                     @if (is_array($signes_pieds))
                                                                         @foreach ($signes_pieds as $signe)
@@ -442,28 +610,52 @@
                                                                     @endif
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @if ($test->Etat_generale_des_pieds != null)
                                                                 <td>
-                                                                    <b>Etat genéral de la peau des pieds</b><br><br>
+                                                                    <p>Etat genéral de la peau des pieds</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->Etat_generale_des_pieds != null)
+                                                                <td>
+                                                                   
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->Etat_generale_des_pieds }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @if ($test->taches_pieds != null)
                                                                 <td>
-                                                                    <b>Tâches sur les ongles</b><br><br>
+                                                                    <p>Tâches sur les ongles</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->taches_pieds != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->taches_pieds }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @if ($test->veines_face_int_pieds != null)
                                                                 <td>
-                                                                    <b>Veines visibles de la face interne</b><br><br>
+                                                                    <p>Veines visibles de la face interne</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->veines_face_int_pieds != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->veines_face_int_pieds }}
                                                                     </label>
@@ -477,7 +669,13 @@
                                                             @endphp
                                                             @if ($soinList_pieds != null)
                                                                 <td>
-                                                                    <b>Soins préferés</b><br><br>
+                                                                    <p>Soins préferés</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($soinList_pieds != null)
+                                                                <td>
+                                                                   
                                                                     @if (is_array($soinList_pieds))
                                                                         @foreach ($soinList_pieds as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -489,28 +687,52 @@
                                                                     @endif
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @if ($test->etat_pieds != null)
                                                                 <td>
-                                                                    <b>Etat de la peau</b><br><br>
+                                                                    <p>Etat de la peau</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->etat_pieds != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->etat_pieds }}
                                                                     </label>
                                                                 </td>
                                                             @endif
-                                                            {{-- ************* --}}
+                                                        </tr>
+                                                        {{-- ************* --}}
+                                                        <tr>
                                                             @if ($test->veines_face_ext_pieds != null)
                                                                 <td>
-                                                                    <b>Veines visibles de la face externe</b><br><br>
+                                                                    <p>Veines visibles de la face externe</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->veines_face_ext_pieds != null)
+                                                                <td>
+                                                                   
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->veines_face_ext_pieds }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ******************* --}}
+                                                        <tr>
                                                             @if ($test->Etat_des_ongles_pieds != null)
                                                                 <td>
-                                                                    <b>Etats des ongles du pied</b><br><br>
+                                                                    <p>Etats des ongles du pied</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->Etat_des_ongles_pieds != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->Etat_des_ongles_pieds }}
                                                                     </label>
@@ -521,13 +743,21 @@
                                                         <tr>
                                                             @if ($test->vernisInput_pied != null)
                                                                 <td>
-                                                                    <b>Vernis preférés</b><br><br>
+                                                                    <p>Vernis preférés</p>
+                                                                    
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->vernisInput_pied != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->vernisInput_pied }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @php
                                                                 $signes_ongles_pieds = json_decode(
                                                                     $test->signes_particuliers_ongles_pieds,
@@ -535,8 +765,12 @@
                                                             @endphp
                                                             @if ($signes_ongles_pieds != null)
                                                                 <td>
-                                                                    <b>Signes particuliers des ongles</b><br><br>
-
+                                                                    <p>Signes particuliers des ongles</p>
+                                                                </td>
+                                                            @endif
+                                                            @if ($signes_ongles_pieds != null)
+                                                                <td>
+                                                                    
                                                                     @if (is_array($signes_ongles_pieds))
                                                                         @foreach ($signes_ongles_pieds as $signe)
                                                                             <label class="badge badge-primary-soft">
@@ -548,29 +782,43 @@
                                                                     @endif
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @if ($test->douleur_talon_pieds != null)
                                                                 <td>
-                                                                    <b>Douleurs particulières du talon</b><br><br>
+                                                                    <p>Douleurs particulières du talon</p>
+                                                                   
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->douleur_talon_pieds != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->douleur_talon_pieds }}
                                                                     </label>
                                                                 </td>
                                                             @endif
+                                                        </tr>
                                                             {{-- ************* --}}
+                                                        <tr>
                                                             @if ($test->aureoles_pieds != null)
                                                                 <td>
-                                                                    <b>Présence des auréoles</b><br><br>
+                                                                    <p>Présence des auréoles</p>
+                                                                   
+                                                                </td>
+                                                            @endif
+                                                            @if ($test->aureoles_pieds != null)
+                                                                <td>
+                                                                    
                                                                     <label class="badge badge-primary-soft">
                                                                         {{ $test->aureoles_pieds }}
                                                                     </label>
                                                                 </td>
                                                             @endif
                                                         </tr>
-                                                    </table>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        
+                                                    
                                     @empty
                                         <tr>
                                             <td colspan="3">Aucun Diagnostic disponible.</td>

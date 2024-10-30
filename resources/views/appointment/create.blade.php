@@ -87,7 +87,7 @@
                             <div class="form-group col-md-6">
                                 <label for="reason">{{ __('sentence.Reason for visit') }}</label>
                                 <textarea class="form-control" id="reason" name="reason"></textarea>
-                                <small id="emailHelp" class="form-text text-muted">Entre une drescription</small>
+                                <small id="emailHelp" class="form-text text-muted">Entrez une drescription</small>
                             </div>
 
                             {{-- <div class="form-check">
