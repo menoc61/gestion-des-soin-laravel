@@ -55,6 +55,7 @@ class HomeController extends Controller
         $appointmentHote = Appointment::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
         $diagnoseHote = Test::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
         $prescriptionHote = Prescription::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
+        //$total_amount_for_hote = Rdv_Drug::whereBetween('created_at', [$startDate, $endDate])->whereIn('appointment_id', $appointmentsVisitedId)->sum('montant_drug');
 
 
          // Card Home concernant l'Admin
@@ -79,6 +80,8 @@ class HomeController extends Controller
         $total_payments_month = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->whereMonth('created_at', date('m'))->sum('montant_drug');
         // $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
         $total_payments_year = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->whereYear('created_at', date('Y'))->sum('montant_drug');
+        // Total des depenses de l'hote a revoir
+        $total_amount_for_hote = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->wheredate('created_at', Today())->sum('montant_drug');
         // $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
         $countRDVread = Appointment::where('is_read', 0)->count();
 
@@ -165,6 +168,7 @@ class HomeController extends Controller
             'appointmentHote' => $appointmentHote,
             'diagnoseHote' => $diagnoseHote,
             'prescriptionHote' => $prescriptionHote,
+            'total_amount_for_hote' => $total_amount_for_hote,
 
             'defaultStartDate' => $defaultStartDate,
             'defaultEndDate' => $defaultEndDate,

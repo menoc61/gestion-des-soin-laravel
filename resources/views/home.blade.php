@@ -8,6 +8,7 @@
 
 
     @role('Hôte')
+    @if (Auth::user()->role_id == 3)
         <div class="row top">
 
             <!-- Earnings (Monthly) Card Example -->
@@ -15,15 +16,15 @@
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
                         <div class="col-auto">
-                            <center><i class="fas fa-pills fa-2x text-gray-300"></i></center>
+                            <center><a href="{{ url('patient/view/' . Auth::user()->id) }}"><i class="fas fa-pills fa-2x text-gray-300"></i></a></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Montant des dépenses</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_amount_for_pratician }} fcfa
+                                <a href="{{ url('patient/view/' . Auth::user()->id) }}">Montant des dépenses</a></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_amount_for_hote }} fcfa
                                 </div>
                             </div>
                         </div>
@@ -37,14 +38,16 @@
                 <div class="card border-bottom-warning shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-warning col-md-9">
                         <div class="col-auto">
-                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                            <center><a class="nav-link active" id="appointements-tab" data-toggle="tab"
+                            href="{{ url('patient/view/' . Auth::user()->id) }}" role="tab" aria-controls="appointements"
+                            aria-selected="false"><i class="fa fa-wallet fa-2x text-gray-300"></i></a></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    {{ __('sentence.Total Appointments') }}</div>
+                                <a href="{{ url('patient/view/' . Auth::user()->id) }}">{{ __('sentence.Total Appointments') }}</a> </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $appointmentHote }}</div>
                             </div>
                         </div>
@@ -57,14 +60,14 @@
                 <div class="card border-bottom-info shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-info col-md-9">
                         <div class="col-auto">
-                            <center><i class="fas fa-user-plus fa-2x text-gray-300"></i></center>
+                            <center><a href="{{ url('patient/view/' . Auth::user()->id) }}"><i class="fas fa-user-plus fa-2x text-gray-300"></i></a></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                    {{ __('sentence.Tests Number') }}</div>
+                                <a href="{{ url('patient/view/' . Auth::user()->id) }}">{{ __('sentence.Tests Number') }}</a></div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
                                         <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
@@ -83,14 +86,14 @@
                 <div class="card border-bottom-secondary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-secondary col-md-9">
                         <div class="col-auto">
-                            <center><i class="fas fa-users fa-2x text-gray-300"></i></center>
+                            <center><a href="{{ url('patient/view/' . Auth::user()->id) }}"><i class="fas fa-users fa-2x text-gray-300"></i></a></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
-                                    {{ __('sentence.Prescription Number') }}</div>
+                                <a href="{{ url('patient/view/' . Auth::user()->id) }}">{{ __('sentence.Prescription Number') }}</a></div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $prescriptionHote }}
                                 </div>
                             </div>
@@ -100,6 +103,7 @@
             </div>
 
         </div>
+    @endif
     @endrole
 
 
@@ -177,14 +181,14 @@
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
                         <div class="col-auto">
-                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                            <center><a class="collapse-item" href="{{ route('appointment.all') }}"><i class="fa fa-wallet fa-2x text-gray-300"></i></a></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Rendez-vous</div>
+                                <a class="collapse-item" href="{{ route('appointment.all') }}">Rendez-vous</a></div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" id="total_appointments">
                                     {{ $total_appointments }}
                                 </div>
@@ -197,16 +201,18 @@
             <!-- Earnings (Annual) Card Example -->
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-success shadow h-100 py-2 card-po1">
+                  
                     <div class="card-body shadow-lg card-po bg-success col-md-9">
                         <div class="col-auto">
-                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                            <center><a class="collapse-item" href="{{ route('patient.create') }}"><i class="fa fa-user fa-2x text-gray-300"></i></a></center>
                         </div>
                     </div>
+                  
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    total patient </div>
+                                <a class="collapse-item" href="{{ route('patient.create') }}">total patient</a></div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" id="total_patients">
                                     {{ $total_patients }}
                                 </div>
@@ -221,16 +227,16 @@
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
                         <div class="col-auto">
-                            <center><i class="fas fa-pills fa-2x text-gray-300"></i></center>
+                            <center><a class="collapse-item" href="{{ route('prescription.all') }}"><i class="fas fa-pills fa-2x text-gray-300"></i></a></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Prescription</div>
+                                <a class="collapse-item" href="{{ route('prescription.all') }}">Prescription</a></div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" id="total_prescriptions">
-                                    {{ $total_prescriptions }}
+                                   {{ $total_prescriptions }}
                                 </div>
                             </div>
                         </div>
@@ -243,14 +249,14 @@
                 <div class="card border-bottom-success shadow h-100 py-2 card-po1 ">
                     <div class="card-body shadow-lg card-po bg-success col-md-9  ">
                         <div class="col-auto">
-                            <center><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></center>
+                            <center><a class="collapse-item" href="{{ route('billing.all') }}"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></a></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    {{ __('sentence.Payments this year') }} {{ date('Y') }}</div>
+                                <a class="collapse-item" href="{{ route('billing.all') }}">{{ __('sentence.Payments this year') }} {{ date('Y') }}</a></div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" id="total_payments">
                                     {{ $total_payments }}
                                     {{ App\Setting::get_option('currency') }}</div>
