@@ -215,7 +215,11 @@
                                                 {{ $appointment->time_start }} -
                                                 {{ $appointment->time_end }} </label></td>
                                         <td class="text-center">
-                                            @if ($appointment->visited == 0)
+                                            @if(($appointment->date < Today()) && ($appointment->visited != 1))
+                                                <label class="badge badge-danger-soft">
+                                                    <i class="fas fa-user-times"></i> date depassée-RDV annulé
+                                                </label>
+                                            @elseif ($appointment->visited == 0)
                                                 <label class="badge badge-warning-soft">
                                                     <i class="fas fa-hourglass-start"></i>
                                                     {{ __('sentence.Not Yet Visited') }}
@@ -253,6 +257,7 @@
                                             @endcan
 
                                             @can('edit appointment')
+                                            @if($appointment->date >= Today())
                                                 <a data-rdv_id="{{ $appointment->id }}"
                                                     data-rdv_date="{{ $appointment->date->format('d M Y') }}"
                                                     data-rdv_time_start="{{ $appointment->time_start }}"
@@ -263,6 +268,7 @@
                                                     data-toggle="modal" data-target="#EDITRDVModal">
                                                     <i class="fas fa-check"></i>
                                                 </a>
+                                            @endif
                                             @endcan
                                             @can('delete appointment')
                                                 @if ($appointment->visited != 1)

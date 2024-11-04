@@ -244,13 +244,13 @@
                                 <div class="col-md-3">
                                     <div class="form-group-custom">
                                         <input type="date" id="duration" name="duration[]" class="form-control" placeholder="{{ __('sentence.Duration') }}">
-                                        <small id="startDate" class="form-text text-muted">Definir la period du suivi</small>
+                                        <small id="startDate" class="form-text text-muted">Definir la periode du suivi</small>
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-3">
                                     <div class="form-group-custom">
                                         <input type="date" id="strength" name="strength[]"  class="form-control" placeholder="{{ __('sentence.Duration') }}">
-                                        <small id="startDate" class="form-text text-muted">Select date to view time slots available</small>
+                                        <small id="startDate" class="form-text text-muted">Sélectionnez la date pour afficher les plages horaires disponibles</small>
                                     </div>
                                 </div> --}}
                             </div>
