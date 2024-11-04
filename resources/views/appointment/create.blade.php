@@ -70,8 +70,7 @@
                                 <label for="rdvdate">{{ __('sentence.Date') }}</label>
                                 <input type="text" class="form-control target agenda" name="rdv_time_date"
                                     readonly="readonly" id="rdvdate">
-                                <small id="emailHelp" class="form-text text-muted">Select date to view time slots
-                                    available</small>
+                                <small id="emailHelp" class="form-text text-muted">Sélectionnez la date pour afficher les plages horaires disponibles</small>
                             </div>
 
                             <div class="form-group col-md-3">
