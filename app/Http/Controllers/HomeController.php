@@ -52,11 +52,12 @@ class HomeController extends Controller
         }
 
         // // Card Home concernant l'Hote
-        $appointmentHote = Appointment::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
-        $diagnoseHote = Test::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
-        $prescriptionHote = Prescription::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user->id)->count();
+        $appointmentHote = Appointment::whereYear('created_at', date('Y'))->where('user_id', $user->id)->count();
+        $diagnoseHote = Test::whereYear('created_at', date('Y'))->where('user_id', $user->id)->count();
+        $prescriptionHote = Prescription::whereYear('created_at', date('Y'))->where('user_id', $user->id)->count();
         //$total_amount_for_hote = Rdv_Drug::whereBetween('created_at', [$startDate, $endDate])->whereIn('appointment_id', $appointmentsVisitedId)->sum('montant_drug');
-
+        // Total des depenses de l'hote a revoir
+        $total_amount_for_hote = Billing::whereYear('created_at', date('Y'))->where('user_id', $user->id)->sum('total_with_tax');
 
          // Card Home concernant l'Admin
         // Requête pour obtenir les données entre les dates sélectionnées
@@ -80,8 +81,6 @@ class HomeController extends Controller
         $total_payments_month = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->whereMonth('created_at', date('m'))->sum('montant_drug');
         // $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
         $total_payments_year = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->whereYear('created_at', date('Y'))->sum('montant_drug');
-        // Total des depenses de l'hote a revoir
-        $total_amount_for_hote = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->wheredate('created_at', Today())->sum('montant_drug');
         // $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
         $countRDVread = Appointment::where('is_read', 0)->count();
 
