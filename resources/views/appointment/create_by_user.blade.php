@@ -63,7 +63,7 @@
                                 <small id="emailHelp" class="form-text text-muted">Sélectionnez la date pour afficher les plages horaires disponibles</small>
                             </div>
 
-                            <div class="form-group col-md-3">
+                            <!-- <div class="form-group col-md-3">
                                 <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
                                 <input type="time" class="form-control target" name="rdv_time_start">
                             </div>
@@ -71,8 +71,8 @@
                             <div class="form-group col-md-3">
                                 <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
                                 <input type="time" class="form-control target" name="rdv_time_end">
-                            </div>
-                            {{-- <div class="form-group col-md-3">
+                            </div> -->
+                            <div class="form-group col-md-3">
                                     <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
                                     <select class="form-control target" name="rdv_time_start">
                                         @for ($hour = 6; $hour < 21; $hour++)
@@ -98,7 +98,7 @@
                                              @endfor
                                            @endfor
                                      </select>
-                                </div> --}}
+                                </div> 
 
                             {{-- <div class="form-group col-md-6">
                                 <label for="reason">{{ __('sentence.Reason for visit') }}</label>
@@ -265,6 +265,11 @@
                                 appointmentsTable.append(newRow);
                                 }
                             });
+                            if (!hasAppointments) {
+                               var noData =
+                                  '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
+                               appointmentsTable.append(noData);
+                            }
                         } else {
                             var noData =
                                 '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
