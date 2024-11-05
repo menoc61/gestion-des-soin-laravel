@@ -104,7 +104,7 @@
                                         readonly="readonly" id="rdvdate">
                                 </div>
 
-                                <div class="form-group col-md-4">
+                                <!-- <div class="form-group col-md-4">
                                     <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
                                     <input type="time" class="form-control target" name="rdv_time_start">
                                 </div>
@@ -112,7 +112,34 @@
                                 <div class="form-group col-md-4">
                                     <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
                                     <input type="time" class="form-control target" name="rdv_time_end">
+                                </div> -->
+                                <div class="form-group col-md-3">
+                                    <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
+                                    <select class="form-control target" name="rdv_time_start">
+                                        @for ($hour = 6; $hour < 21; $hour++)
+                                           @for ($minute = 0; $minute < 60; $minute += 30)
+                                              @php
+                                                $time = sprintf('%02d:%02d', $hour, $minute);
+                                              @endphp
+                                             <option value="{{ $time }}">{{ $time }}</option>
+                                           @endfor
+                                        @endfor
+                                    </select>
                                 </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
+                                    <select class="form-control target" name="rdv_time_end">
+                                          @for ($hour = 6; $hour < 21; $hour++)
+                                             @for ($minute = 0; $minute < 60; $minute += 30)
+                                                @php
+                                                  $time = sprintf('%02d:%02d', $hour, $minute);
+                                                @endphp
+                                                <option value="{{ $time }}">{{ $time }}</option>
+                                             @endfor
+                                           @endfor
+                                     </select>
+                                </div> 
 
                                 <div class="form-group col-md-4">
                                     <label for="reason">{{ __('sentence.Code for visit') }}</label>
