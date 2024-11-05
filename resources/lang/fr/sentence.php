@@ -122,6 +122,10 @@ return [
     'SENSIBILITE' => 'Sensibilite:',
     'CIRCULATION' => 'Circulation:',
     'SIGNES PARTICULIERS' => 'Signes particuliers:',
+    //Renitialiser Mot de Passe
+    'Send Password Reset Link' => 'Renitialiser le mot de passe',
+    'E-Mail Address' => 'Adresse e-mail',
+    'Reset Password' => 'Renitialiser le mot de passe',
 
     // diagnostic hand
     'general hand state' => 'Etat générale des mains: ',
