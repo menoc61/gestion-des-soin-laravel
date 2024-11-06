@@ -258,7 +258,7 @@
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 <a class="collapse-item" href="{{ route('billing.all') }}">{{ __('sentence.Payments this year') }} {{ date('Y') }}</a></div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" id="total_payments">
-                                    {{ $total_payments }}
+                                    {{ $total_payments_year }}
                                     {{ App\Setting::get_option('currency') }}</div>
                             </div>
                         </div>
