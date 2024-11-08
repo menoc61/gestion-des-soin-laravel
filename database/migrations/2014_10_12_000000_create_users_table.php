@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->json('fonction')->nullable();
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->string('phone')->unique();
             $table->string('gender');
             $table->string('source')->default('Gestion de soins'); // Ajoutez cette ligne

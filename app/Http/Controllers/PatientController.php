@@ -227,87 +227,88 @@ class PatientController extends Controller
     }
 
     public function store_edit(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($request->user_id),
-            ],
-            'birthday' => ['required', 'before:today'],
+{
+    $validatedData = $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => [
+            'required',
+            'email',
+            'max:255',
+            Rule::unique('users')->ignore($request->user_id),
+        ],
+        'birthday' => ['required', 'before:today'],
 
-            'gender' => [
-                'required',
-                Rule::in(['Homme', 'Femme']),
-            ],
+        'gender' => [
+            'required',
+            Rule::in(['Homme', 'Femme']),
+        ],
 
-            'morphology' => ['required', 'array', Rule::in(['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
+        'morphology' => ['required', 'array', Rule::in(['Aucune', 'Grand(e)', 'Svelte', 'Petit(e)', 'Mince', 'Maigre', 'Rondeur', 'Enveloppé(e)'])],
 
-            'alimentation' => [
-                'required',
-                'array',
-                Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])
-            ],
+        'alimentation' => [
+            'required',
+            'array',
+            Rule::in(['Aucune', 'Viande', 'Poisson', 'Légumes', 'Céréales', 'Tubercules', 'Fruits', 'Alcool', "Pas d'alcool", 'Fumeur', 'Non-fumeur'])
+        ],
 
-            'type_patient' => ['required', 'array', Rule::in(['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
+        'type_patient' => ['required', 'array', Rule::in(['Aucun', 'Elancé(e)', 'Mince', 'Amazone', 'Forte'])],
 
-            'digestion' => 'required',
+        'digestion' => 'required',
 
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5048',
-        ]);
+        'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5048',
+    ]);
 
-        $user = User::find($request->user_id);
+    $user = User::find($request->user_id);
 
-        $user->email = $request->email;
-        $user->name = $request->name;
+    $user->email = $request->email;
+    $user->name = $request->name;
+    $user->phone = $request->phone; // Mettre à jour le téléphone ici, dans l'objet User
+    $user->address = $request->address;
+    $user->gender = $request->gender;
 
-        if ($request->hasFile('image')) {
-            // We Get the image
-            $file = $request->file('image');
-            // We Add String to Image name
-            $fileName = \Str::random(15) . '-' . $file->getClientOriginalName();
-            // We Tell him the uploads path
-            $destinationPath = public_path() . '/uploads/';
-            // We move the image to the destination path
-            $moved = $file->move($destinationPath, $fileName);
-            // Add fileName to database
+    if ($request->hasFile('image')) {
+        // Récupérer l'image
+        $file = $request->file('image');
+        // Générer un nom unique pour l'image
+        $fileName = \Str::random(15) . '-' . $file->getClientOriginalName();
+        // Définir le chemin de destination
+        $destinationPath = public_path() . '/uploads/';
+        // Déplacer l'image vers le chemin de destination
+        $moved = $file->move($destinationPath, $fileName);
 
-            $fullpath = public_path() . '/uploads/' . $user->image;
-
-            if ($moved && !empty($user->image)) {
-                unlink($fullpath);
-            }
-
-            $user->image = $fileName;
+        // Supprimer l'ancienne image si elle existe
+        $fullpath = public_path() . '/uploads/' . $user->image;
+        if ($moved && !empty($user->image)) {
+            unlink($fullpath);
         }
 
-        $user->update();
-
-        $patient = Patient::where('user_id', '=', $request->user_id)
-            ->update([
-                'birthday' => $request->birthday,
-                'phone' => $request->phone,
-                'gender' => $request->gender,
-                'address' => $request->address,
-                'allergie' => $request->allergie,
-                'medication' => $request->medication,
-                'hobbie' => $request->hobbie,
-                'demande' => $request->demande,
-                'type_patient' => json_encode($request->type_patient),
-                'morphology' => json_encode($request->morphology),
-                'alimentation' => json_encode($request->alimentation),
-                'digestion' => $request->digestion,
-            ]);
-
-        return \Redirect::back()->with('success', __('sentence.Patient Updated Successfully'));
+        $user->image = $fileName;
     }
+
+    $user->update();
+
+    // Mettre à jour les données du patient sans 'phone'
+    $patient = Patient::where('user_id', '=', $request->user_id)
+        ->update([
+            'birthday' => $request->birthday,
+            'allergie' => $request->allergie,
+            'medication' => $request->medication,
+            'hobbie' => $request->hobbie,
+            'demande' => $request->demande,
+            'type_patient' => json_encode($request->type_patient),
+            'morphology' => json_encode($request->morphology),
+            'alimentation' => json_encode($request->alimentation),
+            'digestion' => $request->digestion,
+        ]);
+
+    return \Redirect::back()->with('success', __('sentence.Patient Updated Successfully'));
+}
+
 
     public function view($id)
     {
 
-        $patient = User::findOrfail($id);
+        $patient = User::with('patient')->findOrfail($id);
         $prescriptions = Prescription::select('prescriptions.*')
             ->join('prescription_tests', 'prescription_tests.prescription_id', '=', 'prescriptions.id')
             ->join('tests', 'tests.id', '=', 'prescription_tests.test_id')
