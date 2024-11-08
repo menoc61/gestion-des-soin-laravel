@@ -29,7 +29,7 @@ class AppointmentController extends Controller
         $drugs = Drug::all();
 
 
-        return view('appointment.create', ['patients' => $patients, 'praticiens' => $praticiens,'drugs' => $drugs,]);
+        return view('appointment.create', ['patients' => $patients, 'praticiens' => $praticiens, 'drugs' => $drugs,]);
     }
 
     public function create_By_id($id)
@@ -48,6 +48,34 @@ class AppointmentController extends Controller
             'drugs' => $drugs,
         ]);
     }
+
+    public function edit_appointment($id)
+    {
+        // Rechercher le rendez-vous par son identifiant ou retourner une erreur 404 s'il n'existe pas
+        $appointment = Appointment::findOrFail($id);
+
+        // Trouver l'utilisateur lié au rendez-vous
+        $user = User::findOrFail($appointment->user_id);
+
+        // Récupérer l'utilisateur actuellement authentifié
+        $user_auth = Auth::user();
+
+        // Récupérer la liste des médicaments et des praticiens
+        $drugs = Drug::all();
+        $praticiens = User::where('role_id', '!=', 3)->get();
+
+        // Retourner la vue d'édition avec les données actuelles du rendez-vous
+        return view('appointment.edit_appointment', [
+            'userName' => $user->name,
+            'praticiens' => $praticiens,
+            'user_auth' => $user_auth,
+            'userId' => $user->id,
+            'appointment' => $appointment,
+            'drugs' => $drugs,
+        ]);
+    }
+
+
 
 
 
@@ -223,6 +251,43 @@ class AppointmentController extends Controller
         return \Redirect::route('patient.view', ['id' => $appointment->user_id]);
     }
 
+    public function store_edit_appointment(Request $request)
+    {
+        $validatedData = $request->validate([
+            'doctor_id' => ['required', 'exists:users,id'],
+            'patient' => ['required', 'exists:users,id'],
+            'rdv_time_date' => ['required'],
+            'rdv_time_start' => ['required'],
+            'rdv_time_end' => ['required'],
+            'send_sms' => ['boolean'],
+        ]);
+
+        $appointment = Appointment::findOrFail($request->rdv_id);
+        $appointment->user_id = $request->patient;
+        $appointment->doctor_id = $request->doctor_id;
+        $appointment->date = $request->rdv_time_date;
+        $appointment->time_start = $request->rdv_time_start;
+        $appointment->time_end = $request->rdv_time_end;
+        $appointment->reason = $request->reason;
+        $appointment->rapport = $request->rapport;
+        $appointment->save();
+
+        if ($request->send_sms == 1) {
+            $user = User::findOrFail($request->patient);
+            $phone = $user->Patient->phone;
+
+            \Nexmo::message()->send([
+                'to' => $phone,
+                'from' => '213794616181',
+                'text' => 'Your appointment has been updated to ' . $request->rdv_time_date . ' at ' . $request->rdv_time_start . ' at Sai i lama',
+            ]);
+        }
+
+        return redirect()->route('appointment.all')->with('success', 'Appointment updated successfully!');
+    }
+
+
+
     public function all()
     {
         $user = \Auth::user();
@@ -355,11 +420,10 @@ class AppointmentController extends Controller
     {
         // Récupérer les rendez-vous existants pour le praticien et la date donnés
         $appointments = Appointment::where('doctor_id', $doctor_id)
-                                   ->whereDate('rdv_time_date', $date)
-                                   ->get(['rdv_time_start', 'rdv_time_end']);
+            ->whereDate('rdv_time_date', $date)
+            ->get(['rdv_time_start', 'rdv_time_end']);
 
         // Retourner les données sous forme de réponse JSON
         return response()->json($appointments);
     }
-
 }
