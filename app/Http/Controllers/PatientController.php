@@ -236,6 +236,7 @@ class PatientController extends Controller
                 'max:255',
                 Rule::unique('users')->ignore($request->user_id),
             ],
+            
             'birthday' => ['required', 'before:today'],
 
             'gender' => [
