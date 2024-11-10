@@ -104,7 +104,7 @@
                                         readonly="readonly" id="rdvdate">
                                 </div>
 
-                                <div class="form-group col-md-4">
+                                <!-- <div class="form-group col-md-4">
                                     <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
                                     <input type="time" class="form-control target" name="rdv_time_start">
                                 </div>
@@ -112,7 +112,34 @@
                                 <div class="form-group col-md-4">
                                     <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
                                     <input type="time" class="form-control target" name="rdv_time_end">
+                                </div> -->
+                                <div class="form-group col-md-3">
+                                    <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
+                                    <select class="form-control target" name="rdv_time_start">
+                                        @for ($hour = 6; $hour < 21; $hour++)
+                                           @for ($minute = 0; $minute < 60; $minute += 30)
+                                              @php
+                                                $time = sprintf('%02d:%02d', $hour, $minute);
+                                              @endphp
+                                             <option value="{{ $time }}">{{ $time }}</option>
+                                           @endfor
+                                        @endfor
+                                    </select>
                                 </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
+                                    <select class="form-control target" name="rdv_time_end">
+                                          @for ($hour = 6; $hour < 21; $hour++)
+                                             @for ($minute = 0; $minute < 60; $minute += 30)
+                                                @php
+                                                  $time = sprintf('%02d:%02d', $hour, $minute);
+                                                @endphp
+                                                <option value="{{ $time }}">{{ $time }}</option>
+                                             @endfor
+                                           @endfor
+                                     </select>
+                                </div> 
 
                                 <div class="form-group col-md-4">
                                     <label for="reason">{{ __('sentence.Code for visit') }}</label>
@@ -215,7 +242,11 @@
                                                 {{ $appointment->time_start }} -
                                                 {{ $appointment->time_end }} </label></td>
                                         <td class="text-center">
-                                            @if ($appointment->visited == 0)
+                                            @if(($appointment->date < Today()) && ($appointment->visited != 1))
+                                                <label class="badge badge-danger-soft">
+                                                    <i class="fas fa-user-times"></i> date depassée-RDV annulé
+                                                </label>
+                                            @elseif ($appointment->visited == 0)
                                                 <label class="badge badge-warning-soft">
                                                     <i class="fas fa-hourglass-start"></i>
                                                     {{ __('sentence.Not Yet Visited') }}
@@ -253,6 +284,7 @@
                                             @endcan
 
                                             @can('edit appointment')
+                                            @if($appointment->date >= Today())
                                                 <a data-rdv_id="{{ $appointment->id }}"
                                                     data-rdv_date="{{ $appointment->date->format('d M Y') }}"
                                                     data-rdv_time_start="{{ $appointment->time_start }}"
@@ -263,6 +295,7 @@
                                                     data-toggle="modal" data-target="#EDITRDVModal">
                                                     <i class="fas fa-check"></i>
                                                 </a>
+                                            @endif
                                             @endcan
                                             @can('delete appointment')
                                                 @if ($appointment->visited != 1)
@@ -649,6 +682,9 @@
 
                         if (response.length > 0) {
                             response.forEach(function(appointment) {
+                                var appointmentDate = new Date(appointment.date);
+                                var today = new Date();
+                                if (appointmentDate >= today) {
                                 var newRow = '<tr>' +
                                     '<td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i> ' +
                                     appointment.date + '</label></td>' +
@@ -657,7 +693,13 @@
                                     .time_end + '</label></td>' +
                                     '</tr>';
                                 appointmentsTable.append(newRow);
+                                }
                             });
+                            if (!hasAppointments) {
+                               var noData =
+                                  '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
+                               appointmentsTable.append(noData);
+                            }
                         } else {
                             var noData =
                                 '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';

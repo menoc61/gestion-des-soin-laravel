@@ -25,7 +25,7 @@ return [
     'follow' => 'Suivre le Traitement',
     'follow on statistics' => 'Statistique du Suivi',
     'Select Test' => 'Selectionner un Diagnose',
-    'Description' => 'Description',
+    'Description' => 'Diagnostique préliminaire',
     'View Prescription' => 'Voir Traitement',
     'No Drugs' => 'Aucun Soin',
     'No Test Required' => 'Aucun Diagnose Requis',
@@ -122,6 +122,10 @@ return [
     'SENSIBILITE' => 'Sensibilite:',
     'CIRCULATION' => 'Circulation:',
     'SIGNES PARTICULIERS' => 'Signes particuliers:',
+    //Renitialiser Mot de Passe
+    'Send Password Reset Link' => 'Renitialiser le mot de passe',
+    'E-Mail Address' => 'Adresse e-mail',
+    'Reset Password' => 'Renitialiser le mot de passe',
 
     // diagnostic hand
     'general hand state' => 'Etat générale des mains: ',
@@ -283,7 +287,7 @@ return [
     'time use'=>'Utilisé Pour',
     'In Prescription' => 'Traitement(s)',
     'Reason code' => 'Code du rendez-vous',
-    'Visited At' => 'Visite le',
+    'Visited At' => 'Visité le',
     'Today\'s Appointments' => 'Rendez-Vous du Jour',
     'Upcoming Appointments' => 'Rendez-Vous en Attentes',
     'Create New notification' => 'Ajouter une Notification',
