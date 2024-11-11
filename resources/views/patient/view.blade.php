@@ -29,10 +29,12 @@
                                             <i class="fa fa-circle text-success"></i>
                                         </div>
                                         <h4 class="mt-2">{{ $patient->name }}</h4>
+                                        @if (Auth::user()->role_id != 3)
 
                                         <a href="{{ route('patient.SendPassword', ['id' => $patient->id]) }}"
                                             class="btn btn-doctorino btn-sm btn-round px-3">
                                             {{ __('sentence.Send Credentials') }}</a>
+                                        @endif
                                         <a href="{{ url('patient/edit/' . $patient->id) }}"
                                             class="btn btn-danger btn-sm btn-round px-3"> <i class="fa fa-pen"></i></a>
                                         <ul class="list-unstyled list-inline mt-3 text-muted">
