@@ -31,7 +31,7 @@ class TestController extends Controller
         if (!$user) {
             // Gérez le cas où l'utilisateur n'est pas trouvé
         }
-        return view('test.create_by_user', ['userId' => $id, 'userName' => $user->name]);
+        return view('test.create_By_user', ['userId' => $id, 'userName' => $user->name]);
     }
 
     public function create_Psychotherapie_By_Id($id)

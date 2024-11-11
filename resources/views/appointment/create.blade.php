@@ -70,8 +70,7 @@
                                 <label for="rdvdate">{{ __('sentence.Date') }}</label>
                                 <input type="text" class="form-control target agenda" name="rdv_time_date"
                                     readonly="readonly" id="rdvdate">
-                                <small id="emailHelp" class="form-text text-muted">Select date to view time slots
-                                    available</small>
+                                <small id="emailHelp" class="form-text text-muted">Sélectionnez la date pour afficher les plages horaires disponibles</small>
                             </div>
 
                             <div class="form-group col-md-3">
@@ -87,7 +86,9 @@
                             <div class="form-group col-md-6">
                                 <label for="reason">{{ __('sentence.Reason for visit') }}</label>
                                 <textarea class="form-control" id="reason" name="reason"></textarea>
-                                <small id="emailHelp" class="form-text text-muted">Entre une description</small>
+
+                                <small id="emailHelp" class="form-text text-muted">Entrez une drescription</small>
+
                             </div>
 
                             {{-- <div class="form-check">
@@ -232,6 +233,9 @@
 
                         if (response.length > 0) {
                             response.forEach(function(appointment) {
+                                var appointmentDate = new Date(appointment.date);
+                                var today = new Date();
+                                if (appointmentDate >= today) {
                                 var newRow = '<tr>' +
                                     '<td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i> ' +
                                     appointment.date + '</label></td>' +
@@ -242,7 +246,13 @@
                                     .created_at + '</td>' +
                                     '</tr>';
                                 appointmentsTable.append(newRow);
+                                }
                             });
+                            if (!hasappointment) {
+                               var noData =
+                                  '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
+                               appointmentsTable.append(noData);
+                            }
                         } else {
                             var noData =
                                 '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';

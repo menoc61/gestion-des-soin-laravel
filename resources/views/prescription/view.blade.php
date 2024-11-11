@@ -93,7 +93,7 @@
                                     <tr>
                                         <th class="text-center">Nom Diagnostic</th>
                                         <th class="text-center">Type Diagnostic</th>
-                                        <th class="text-center">Description Diagnostic</th>
+                                        <!-- <th class="text-center">Description Diagnostic</th> -->
                                         <th class="text-center">Détail Diagnostic</th>
                                     </tr>
                                     @forelse ($prescription_tests as $tests)
@@ -113,7 +113,7 @@
                                                     {{ $diagnosticType }}
                                                 @endif
                                             </td>
-                                            <td class="text-center">{{ $tests->Test->comment }}</td>
+                                            <!-- <td class="text-center">{{ $tests->Test->comment }}</td> -->
                                             <td class="text-center w-50">
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered">
@@ -706,7 +706,7 @@
                                 <table class="table table-bordered">
                                     <tr class="text-center">
                                         <th><b>Numéro</b></th>
-                                        <th><b>Created_at</b></th>
+                                        <th><b>Crée le</b></th>
                                         <th><b>Observations</b></th>
                                         <th><b>Praticiens</b></th>
                                         <th><b>Soins Appliqués</b></th>
@@ -728,8 +728,7 @@
                             </div>
                         </div>
                     </div>
-
-
+                    
                     @if (!empty(App\Setting::get_option('footer_left')) && !empty(App\Setting::get_option('footer_right')))
                         <!-- ROW : Footer informations -->
                         <div class="row">
@@ -845,7 +844,7 @@
                         <tr>
                             <th class="text-center">Nom Diagnostic</th>
                             <th class="text-center">Type Diagnostic</th>
-                            <th class="text-center">Description Diagnostic</th>
+                            <!-- <th class="text-center">Description Diagnostic</th> -->
                             <th class="text-center">Détail Diagnostic</th>
                         </tr>
                         @forelse ($prescription_tests as $tests)
@@ -865,7 +864,7 @@
                                         {{ $diagnosticType }}
                                     @endif
                                 </td>
-                                <td class="text-center">{{ $tests->Test->comment }}</td>
+                                <!-- <td class="text-center">{{ $tests->Test->comment }}</td> -->
                                 <td class="text-center w-50">
                                     <div class="table-responsive">
                                         <table class="table table-bordered">
@@ -1438,7 +1437,7 @@
                 <table class="table table-bordered">
                     <tr class="text-center">
                         <th><b>Numéro</b></th>
-                        <th><b>Created_at</b></th>
+                        <th><b>Crée le</b></th>
                         <th><b>Observations</b></th>
                         <th><b>Praticiens</b></th>
                         <th><b>Soins Appliqués</b></th>
