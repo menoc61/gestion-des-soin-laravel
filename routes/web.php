@@ -66,6 +66,9 @@ Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email
 Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
 Route::get('/appointments/by-doctor/{doctorId}', 'AppointmentController@getAppointmentsByDoctor');
 
+Route::get('/appointment/edit_appointment/{id}', 'AppointmentController@edit_appointment')->where('id', '[0-9]+')->name('appointment.edit_appointment')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::post('/appointment/edit_appointment', 'AppointmentController@store_edit_appointment')->name('appointment.store_edit_appointment');
+
 
 // Drugs
 Route::get('/drug/create', 'DrugController@create')->name('drug.create')->middleware(['role_or_permission:Admin|create drug']);
