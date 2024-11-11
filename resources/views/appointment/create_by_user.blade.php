@@ -172,18 +172,18 @@
                     </div>
                     <div class="modal-footer">
                         <div class="d-flex col-md-12">
-                            @if (Auth::user()->role_id != 3)
+                            <!-- @if (Auth::user()->role_id != 3)
                                 <div class="col-md-4">
                                     <a class="btn btn-primary" href="{{ route('billing.create_by', ['id' => $userId]) }}">
                                         payer
                                     </a>
                                 </div>
-                            @endif
-                            <div class="col-md-4">
+                            @endif -->
+                            <div class="col-md-6">
                                 <a class="btn btn-secondary" href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
                                 </a>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <a class="btn btn-secondary"
                                     href="{{ route('appointment.create_by', ['id' => $userId]) }}"> Nouveau RDV
                                 </a>
