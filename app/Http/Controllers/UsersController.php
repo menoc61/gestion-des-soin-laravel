@@ -52,7 +52,7 @@ class UsersController extends Controller
                 'Praticien Pied',
                 'Dermatologue',
             ])],
-            'phone' =>['required', 'unique'],
+            'phone' =>['required', 'unique:users,phone'],
         ]);
 
         $user = new User();
@@ -64,7 +64,7 @@ class UsersController extends Controller
         $user->address = $request->address;
         $user->phone = $request->phone;
         $user->gender = $request->gender;
-        $user->appChoice = $request->appChoice;
+        $user->appChoice = $request->appChoice ?? 'false';
         $user->source = 'Gestion de soins';
 
         $role = Role::findById($request->role_id);
@@ -92,12 +92,12 @@ class UsersController extends Controller
         $user->save();
 
 
-        $patient = new Patient();
+        /*$patient = new Patient();
         $patient->user_id = $user->id;
         $patient->phone = $request->phone;
         $patient->gender = $request->gender;
         $patient->birthday = '00-00-0000';
-        $patient->save();
+        $patient->save();*/
 
         return \Redirect::route('user.all')->with('success', __('sentence.User Created Successfully'));
     }

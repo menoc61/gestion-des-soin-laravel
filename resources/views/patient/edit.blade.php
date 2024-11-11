@@ -68,7 +68,7 @@
                             <div class="form-group col-md-6">
                                 <label for="inputAddress2">{{ __('sentence.Phone') }}<font color="red">*</font></label>
                                 <input type="text" class="form-control" id="Phone" name="phone"
-                                    value="{{ $patient->Patient->phone }}">
+                                    value="{{ $patient->Patient->user->phone }}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputAddress">{{ __('sentence.Birthday') }}<font color="red">*</font>
@@ -81,7 +81,7 @@
                             <div class="form-group col-md-12">
                                 <label for="inputAddress2">{{ __('sentence.Address') }}<font color="red">*</font></label>
                                 <input type="text" class="form-control" id="Address" name="address"
-                                    value="{{ $patient->Patient->adress }}">
+                                    value="{{ $patient->Patient->user->address }}">
                             </div>
                         </div>
                         <div class="form-row">
