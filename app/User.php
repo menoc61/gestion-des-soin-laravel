@@ -74,4 +74,5 @@ class User extends Authenticatable implements Auditable
         return $this->hasMany('App\Appointment');
     }
 
+
 }
