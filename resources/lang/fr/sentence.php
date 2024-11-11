@@ -51,6 +51,7 @@ return [
 
     'Appointment' => 'Rendez-vous',
     'New Appointment' => 'Nouveau Rendez-vous',
+    'Change Appointment' => 'Modifier un Rendez-vous',
     'All Appointments' => 'Tous les RDV',
     'Appointment List' => 'Liste des RDV',
     'Are you sure of the date' => 'êtes-vous sûr de la date?',

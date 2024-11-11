@@ -52,7 +52,6 @@
                                 <a href="{{ route('drug.all', ['sort' => 'trade_name', 'order' => 'desc']) }}"><i
                                         class="fas fa-sort-down"></i></a>
                             </th>
-                            <th>{{ __('sentence.Generic Name') }}</th>
                             <th class="text-center">{{ __('sentence.Total Use') }}</th>
                             <th class="text-center">{{ __('sentence.Amount') }}</th>
                             <th class="text-center">{{ __('sentence.Actions') }}</th>
@@ -63,20 +62,7 @@
                             <tr>
                                 <td>{{ $drug->id }}</td>
                                 <td>{{ $drug->trade_name }}</td>
-                                <td>
-                                    @php
-                                        $product = json_decode($drug->generic_name);
-                                    @endphp
-
-                                    @if (is_array($product))
-                                        @foreach ($product as $products)
-                                            <label class="badge badge-primary-soft">{{ $products }}</label>
-                                        @endforeach
-                                    @else
-                                        {{ $product }}
-                                    @endif
-
-                                </td>
+                                
                                 <td align="center">{{ __('sentence.time use') }} :
                                     <label class="badge badge-primary-soft">{{ $drug->Prescription->count() }}</label>
                                     {{ __('sentence.In Prescription') }}

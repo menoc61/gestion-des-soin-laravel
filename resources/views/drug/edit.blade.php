@@ -29,16 +29,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleInputPassword1">{{ __('sentence.Generic Name') }}<font color="red">*
-                                </font></label>
-                            <select name="generic_name[]" multiple id="GenericName" class="form-control">
-                                @foreach ($products as $product)
-                                    <option value="{{ $product['name'] }}">{{ $product['name'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group">
                             <label for="exampleInputPassword1">{{ __('sentence.Note') }}</label>
                             <input type="text" class="form-control" name="note" id="Note"
                                 placeholder="Description...">
