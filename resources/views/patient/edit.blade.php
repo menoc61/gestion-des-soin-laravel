@@ -64,12 +64,15 @@
                                     value="{{ $patient->email }}">
                             </div>
                         </div>
+                        
                         <div class="form-row">
+                        
                             <div class="form-group col-md-6">
                                 <label for="inputAddress2">{{ __('sentence.Phone') }}<font color="red">*</font></label>
                                 <input type="text" class="form-control" id="Phone" name="phone"
                                     value="{{ $patient->Patient->user->phone }}">
                             </div>
+                       
                             <div class="form-group col-md-6">
                                 <label for="inputAddress">{{ __('sentence.Birthday') }}<font color="red">*</font>
                                 </label>
