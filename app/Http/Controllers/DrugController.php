@@ -80,6 +80,7 @@ class DrugController extends Controller
     {
         $validatedData = $request->validate([
             'trade_name' => 'required',
+            'amountDrug' => 'required'
         ]);
 
         $drug = Drug::find($request->drug_id);
