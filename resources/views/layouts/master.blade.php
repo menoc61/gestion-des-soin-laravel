@@ -467,10 +467,10 @@
 
                         @if (Auth::user()->role_id == 1)
                             <div class="col-md-6">
-                                <a href="http://192.168.1.11:3000" class="btn btn-primary" target="_blank"
+                                <a href="#" class="btn btn-primary" target="_blank"
                                     target="_self" rel="noopener"><i class="fa fa-user"></i> <span>Gestion Du
                                         Personnel</span></a>
-                                <a href="http://192.168.1.11:3001" class="btn btn-secondary" target="_blank"
+                                <a href="fichier.html" class="btn btn-secondary" target="_blank"
                                     target="_self" rel="noopener"><i class="fa fa-globe"></i> <span>Gestion De
                                         Stock</span></a>
                             </div>
@@ -503,11 +503,13 @@
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.View Profile') }}
                                     </a> --}}
+                                    @if (Auth::user()->role_id != 3)
                                     <a class="dropdown-item"
                                         href="{{ route('user.edit', ['id' => Auth::user()->id]) }}">
                                         <i class="fas fa-pen fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.Update Profile') }}
                                     </a>
+                                    @endif
                                     @if (Auth::user()->can('manage settings'))
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ route('doctorino_settings.edit') }}">

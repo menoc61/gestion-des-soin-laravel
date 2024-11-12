@@ -172,18 +172,18 @@
                     </div>
                     <div class="modal-footer">
                         <div class="d-flex col-md-12">
-                            @if (Auth::user()->role_id != 3)
+                            <!-- @if (Auth::user()->role_id != 3)
                                 <div class="col-md-4">
                                     <a class="btn btn-primary" href="{{ route('billing.create_by', ['id' => $userId]) }}">
                                         payer
                                     </a>
                                 </div>
-                            @endif
-                            <div class="col-md-4">
+                            @endif -->
+                            <div class="col-md-6">
                                 <a class="btn btn-secondary" href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
                                 </a>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <a class="btn btn-secondary"
                                     href="{{ route('appointment.create_by', ['id' => $userId]) }}"> Nouveau RDV
                                 </a>
@@ -252,7 +252,9 @@
                             response.forEach(function(appointment) {
                                 var appointmentDate = new Date(appointment.date);
                                 var today = new Date();
-                                if (appointmentDate >= today) {
+                                var datePrecedente = new Date(today);
+                                datePrecedente.setDate(today.getDate() - 1);
+                                if (appointmentDate > datePrecedente) {
                                 var newRow = '<tr>' +
                                     '<td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i> ' +
                                     appointment.date + '</label></td>' +
@@ -265,11 +267,7 @@
                                 appointmentsTable.append(newRow);
                                 }
                             });
-                            if (!hasAppointments) {
-                               var noData =
-                                  '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
-                               appointmentsTable.append(noData);
-                            }
+                            
                         } else {
                             var noData =
                                 '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';

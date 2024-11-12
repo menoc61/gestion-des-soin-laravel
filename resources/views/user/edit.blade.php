@@ -86,7 +86,7 @@
                                 </select>
                             </div>
                         </div>
-
+                        
                         <div class="form-group row">
                             <label for="role" class="col-sm-3 col-form-label">{{ __('sentence.Role') }}</label>
                             <div class="col-sm-9">
@@ -102,7 +102,7 @@
                                 </select>
                             </div>
                         </div>
-
+                        
                         <div class="form-group row">
                             <label for="fonction_user" class="col-sm-3 col-form-label">{{ __('sentence.Type of patient') }}
                                 <font color="red">*
