@@ -684,7 +684,9 @@
                             response.forEach(function(appointment) {
                                 var appointmentDate = new Date(appointment.date);
                                 var today = new Date();
-                                if (appointmentDate >= today) {
+                                var datePrecedente = new Date(today);
+                                datePrecedente.setDate(today.getDate() - 1);
+                               if (appointmentDate > datePrecedente) {
                                 var newRow = '<tr>' +
                                     '<td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i> ' +
                                     appointment.date + '</label></td>' +
