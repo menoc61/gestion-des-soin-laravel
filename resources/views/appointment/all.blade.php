@@ -271,7 +271,6 @@
                         id="rdv_time"></label></p>
 
             </div>
-        @endif
     </div>
     <!--EDIT Appointment Modal-->
     <div class="modal fade" id="EDITRDVModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
