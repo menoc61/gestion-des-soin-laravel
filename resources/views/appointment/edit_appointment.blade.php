@@ -38,8 +38,8 @@
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label for="patient_name">{{ __('sentence.Patient') }}</label>
-                            <select name="patient_name" class="form-control multiselect-doctorino patient_name">
+                            <label for="patient">{{ __('sentence.Patient') }}</label>
+                            <select name="patient" class="form-control multiselect-doctorino patient">
                                 <option value="{{ $appointment->user_id }}">{{ $userName }}</option>
                             </select>
                         </div>
@@ -85,26 +85,7 @@
         </div>
     </div>
     <div class="col-md-6 my-4">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
-            </div>
-            <div class="card-body">
-            <fieldset class="drugs_labels">
-                <div class="repeatable">
-                    @foreach($appointment->drugs as $drug) <!-- Assurez-vous que les soins sont chargés -->
-                        <div class="form-group">
-                            <label>{{ __('sentence.Drugs') }}</label>
-                            <input type="text" name="drugs[]" class="form-control" value="{{ $drug->name }}" readonly>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="form-group">
-                    <a type="button" class="btn btn-sm btn-primary add text-white" align="center"><i class='fa fa-plus'></i> {{ __('sentence.Add Drug') }}</a>
-                </div>
-            </fieldset>
-        </div>
-        </div>
+        
         <div class="card">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} <span
@@ -361,11 +342,11 @@
                 <div class="row">
                 <div class="col-md-4 col-sm-12">
                     <div class="form-group">
-                        <label for="patient_name">{{ __('sentence.Patient') }} 
+                        <label for="patient">{{ __('sentence.Patient') }} 
                             @can('add patient') - <a href="{{ route('patient.create') }}" class="text-muted">{{ __('sentence.New Patient') }}</a> 
                             @endcan
                         </label>
-                        <select class="form-control patient_name multiselect-doctorino" id="patient_name" name="patient">
+                        <select class="form-control patient multiselect-doctorino" id="patient" name="patient">
                             <option>{{ __('sentence.Select Patient') }}</option>
                             @foreach ($patients as $patient)
                                 <option value="{{ $patient->id }}">{{ $patient->name }} (ID : {{ $patient->id }})</option>
@@ -422,7 +403,7 @@
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ __('sentence.Cancel') }}</button>
                 <a class="btn btn-primary text-white" onclick="event.preventDefault(); document.getElementById('rdv-form').submit();">{{ __('sentence.Save') }}</a>
-                <form id="rdv-form" action="{{ route('appointment.store') }}" method="POST" class="d-none">
+                <form id="rdv-form" action="{{ route('appointment.store_appointment') }}" method="POST" class="d-none">
                 <input type="hidden" name="patient" id="patient_input">
                 <input type="hidden" name="rdv_date" id="rdv_date_input">
                 <input type="hidden" name="rdv_time_start" id="rdv_time_start_input">
