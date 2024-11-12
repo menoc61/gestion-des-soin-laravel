@@ -256,12 +256,12 @@ class AppointmentController extends Controller
         $validatedData = $request->validate([
             'doctor_id' => ['required', 'exists:users,id'],
             'patient' => ['required', 'exists:users,id'],
-            'rdv_time_date' => ['required'],
+            'rdv_time_date' => ['required', 'date'],
             'rdv_time_start' => ['required'],
             'rdv_time_end' => ['required'],
             'send_sms' => ['boolean'],
         ]);
-
+    
         $appointment = Appointment::findOrFail($request->rdv_id);
         $appointment->user_id = $request->patient;
         $appointment->doctor_id = $request->doctor_id;
@@ -271,20 +271,26 @@ class AppointmentController extends Controller
         $appointment->reason = $request->reason;
         $appointment->rapport = $request->rapport;
         $appointment->save();
-
+    
+        // Gestion des soins/médicaments
+        if ($request->has('drugs')) {
+            $appointment->drugs()->sync($request->drugs);
+        }
+    
+        // Envoi du SMS si nécessaire
         if ($request->send_sms == 1) {
             $user = User::findOrFail($request->patient);
             $phone = $user->Patient->phone;
-
+    
             \Nexmo::message()->send([
                 'to' => $phone,
                 'from' => '213794616181',
                 'text' => 'Your appointment has been updated to ' . $request->rdv_time_date . ' at ' . $request->rdv_time_start . ' at Sai i lama',
             ]);
         }
-
+    
         return redirect()->route('appointment.all')->with('success', 'Appointment updated successfully!');
-    }
+    }    
 
 
 
