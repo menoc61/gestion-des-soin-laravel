@@ -139,6 +139,8 @@ class UsersController extends Controller
         $user->password = \Hash::make($request->password);
         $user->email = $request->email;
         $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->gender = $request->gender;
         $user->role_id = $request->role_id;
         $user->fonction = json_encode($request->fonction);
         $role = Role::findById($request->role_id);
@@ -170,8 +172,6 @@ class UsersController extends Controller
         $patient = Patient::where('user_id', '=', $request->user_id)
             ->update([
                 'birthday' => '00-00-0000',
-                'phone' => $request->phone,
-                'gender' => $request->gender,
             ]);
 
         return \Redirect::route('user.all')->with('success', __('sentence.Utilisateur mis à jour Avec Succès'));

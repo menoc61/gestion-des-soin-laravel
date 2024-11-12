@@ -53,6 +53,20 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                @else
+                                <div class="form-group">
+                                    <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
+                                    <select class="form-control multiselect-search" name="doctor_id_disabled" id="DoctorID" disabled>
+                                        @foreach ($praticiens as $user)
+                                            <option value="{{ $user->id }}" {{ Auth::user()->id == $user->id ? 'selected' : '' }}>
+                                                {{ $user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <!-- Champ caché pour envoyer l'ID du praticien actuellement connecté -->
+                                    <input type="hidden" name="doctor_id" id ="DoctorID" value="{{ Auth::user()->id }}">
+                                </div>
+
                                 @endif
                             </div>
 

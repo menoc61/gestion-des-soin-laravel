@@ -34,9 +34,9 @@
                                 placeholder="Description...">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">{{ __('sentence.Amount') }}</label>
+                            <label for="exampleInputPassword1">{{ __('sentence.Amount') }}<font color="red">*</font></label>
                             <input type="text" class="form-control" name="amountDrug"
-                                placeholder="Montant...">
+                            value="{{ $drug->amountDrug }}">
                         </div>
                         <button type="submit" class="btn btn-success">{{ __('sentence.Save') }}</button>
                     </form>
