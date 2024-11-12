@@ -27,11 +27,11 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Your credentials to ')
-            ->line('Your password has been reset successfully.')
-            ->line('Your new password is: ' . $this->newPassword)
+            ->subject('Vos identifiants pour ')
+            ->line('Votre mot de passe a été réinitialisé avec succès.')
+            ->line('Votre nouveau mot de passe est: ' . $this->newPassword)
             ->action('Log In', route('login'))
-            ->line('If you did not request this password reset, please ignore this email.');
+            ->line('Si vous n\'avez pas demandé cette réinitialisation de mot de passe, veuillez ignorer cet e-mail.');
     }
 
     /**
