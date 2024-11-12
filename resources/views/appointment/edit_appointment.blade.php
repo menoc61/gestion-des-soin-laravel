@@ -194,24 +194,32 @@
                     appointmentsTable.find('tr:gt(0)')
                         .remove(); // Remove existing rows except header
 
-                        if (response.length > 0) {
-                            response.forEach(function(appointment) {
-                                var newRow = '<tr>' +
-                                    '<td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i> ' +
-                                    appointment.date + '</label></td>' +
-                                    '<td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i> ' +
-                                    appointment.time_start + ' - ' + appointment
-                                    .time_end + '</label></td>' +
-                                    '<td class="text-center">' + appointment
-                                    .created_at + '</td>' +
-                                    '</tr>';
-                                appointmentsTable.append(newRow);
-                            });
-                        } else {
-                            var noData =
-                                '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
-                            appointmentsTable.append(noData);
-                        }
+                    if (response.length > 0) {
+                        response.forEach(function(appointment) {
+                            var appointmentDate = new Date(appointment.date);
+                                var today = new Date();
+                                var datePrecedente = new Date(today);
+                                datePrecedente.setDate(today.getDate() - 1);
+                            if (appointmentDate > datePrecedente) {
+                            var newRow = '<tr>' +
+                                '<td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i> ' +
+                                appointment.date + '</label></td>' +
+                                '<td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i> ' +
+                                appointment.time_start + ' - ' + appointment
+                                .time_end + '</label></td>' +
+                                '<td class="text-center">' + appointment
+                                .created_at + '</td>' +
+                                '</tr>';
+                            appointmentsTable.append(newRow);
+                            }
+                        });
+                    } else {
+                        var noData =
+                            '<tr><td colspan="3" align="center"><img src="{{ asset('
+                        img / not - found.svg ') }}" width="200" /><br><br><b class="text-muted">{{ __('
+                        sentence.No appointment available ') }}</b></td></tr>';
+                        appointmentsTable.append(noData);
+                    }
                 }
             });
         });

@@ -41,87 +41,103 @@
                 </div>
             </div>
         </div>
-        @if (Auth::user()->role_id == 3)
-            <div class="row">
-                <div class="col">
-                    @can('create appointment')
-                        <a type="button" class="btn btn-primary btn-sm my-4 float-right"
-                            href="{{ route('appointment.create_by', ['id' => Auth::user()->id]) }}"><i class="fa fa-plus"></i>
-                            {{ __('sentence.New Appointment') }}</a>
-                    @endcan
-                </div>
-            </div>
-            <table class="table">
-                <tr>
-                    <td align="center">Id</td>
-                    <td align="center">{{ __('sentence.Date') }}</td>
-                    <td align="center">{{ __('sentence.Time Slot') }}</td>
-                    <td align="center">{{ __('sentence.Status') }}</td>
-                    <td align="center">{{ __('sentence.Actions') }}</td>
-                </tr>
-                @forelse($Myappointments as  $key => $Myappointment)
-                    <tr>
-                        <td align="center">{{ $key + 1 }} </td>
-                        <td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i>
-                                {{ $Myappointment->date->format('d M Y') }} </label></td>
-                        <td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i>
-                                {{ $Myappointment->time_start }} -
-                                {{ $Myappointment->time_end }} </label></td>
-                        <td class="text-center">
-                            @if ($Myappointment->visited == 0)
-                                <label class="badge badge-warning-soft">
-                                    <i class="fas fa-hourglass-start"></i>
-                                    {{ __('sentence.Not Yet Visited') }}
-                                </label>
-                            @elseif($Myappointment->visited == 1)
-                                <label class="badge badge-success-soft">
-                                    <i class="fas fa-check"></i> {{ __('sentence.Visited') }}
-                                </label>
-                            @else
-                                <label class="badge badge-danger-soft">
-                                    <i class="fas fa-user-times"></i>
-                                    {{ __('sentence.Cancelled') }}
-                                </label>
-                            @endif
-                        </td>
-                        <td align="center">
-                            @can('edit appointment')
-                                @php
-                                    $appointmentDate = \Carbon\Carbon::parse($Myappointment->date);
-                                    $appointmentTimeStart = \Carbon\Carbon::parse($Myappointment->time_start);
-                                    $currentDateTime = now();
-                                    $isFutureDateTime =
-                                        $appointmentDate->isFuture() ||
-                                        ($appointmentDate->isToday() && $appointmentTimeStart->isFuture());
-                                @endphp
 
-                                <a data-rdv_id="{{ $Myappointment->id }}"
-                                    data-rdv_date="{{ $Myappointment->date->format('d M Y') }}"
-                                    data-rdv_time_start="{{ $Myappointment->time_start }}"
-                                    data-rdv_time_end="{{ $Myappointment->time_end }}"
-                                    data-patient_name="{{ $Myappointment->User->name }}"
-                                    class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime ? ' disabled opacity-button' : '' }}"
-                                    data-toggle="modal" data-target="#EDITRDVModal">
-                                    <i class="fas fa-check"></i>
-                                </a>
-                            @endcan
-                            @can('delete appointment')
-                                <a href="{{ url('appointment/delete/' . $Myappointment->id) }}"
-                                    class="btn btn-outline-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
-                            @endcan
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" />
-                            <br><br>
-                            <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
-                        </td>
-                    </tr>
-                @endforelse
-            </table>
-        @else
-            <div class="card-body">
+    </div>
+    @if (Auth::user()->role_id == 3)
+        <div class="row">
+           <div class="col">
+               @can('create appointment')
+                  <a type="button" class="btn btn-primary btn-sm my-4 float-right"
+                    href="{{ route('appointment.create_by', ['id' => Auth::user()->id]) }}"><i class="fa fa-plus"></i>
+                      {{ __('sentence.New Appointment') }}</a>
+               @endcan
+           </div>
+       </div>
+       <table class="table">
+           <tr>
+                <td align="center">Id</td>
+                <td align="center">{{ __('sentence.Date') }}</td>
+                <td align="center">{{ __('sentence.Time Slot') }}</td>
+                <td align="center">{{ __('sentence.Status') }}</td>
+                <td align="center">{{ __('sentence.Actions') }}</td>
+           </tr>
+           @forelse($Myappointments as $key => $Myappointment)
+            <tr>
+               <td align="center">{{ $key + 1 }} </td>
+               <td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i>
+                    {{ $Myappointment->date->format('d M Y') }} </label></td>
+               <td align="center"><label class="badge badge-primary-soft"><i class="fa fa-clock"></i>
+                    {{ $Myappointment->time_start }} -
+                    {{ $Myappointment->time_end }} </label></td>
+               <td class="text-center">
+                   @if(($Myappointment->date < Today()) && ($Myappointment->visited != 1))
+                                <label class="badge badge-danger-soft">
+                                    <i class="fas fa-user-times"></i> date depassée-RDV annulé
+                                </label>
+                   @elseif ($Myappointment->visited == 0)
+                     <label class="badge badge-warning-soft">
+                     <i class="fas fa-hourglass-start"></i>
+                     {{ __('sentence.Not Yet Visited') }}
+                     </label>
+                   @elseif($Myappointment->visited == 1)
+                     <label class="badge badge-success-soft">
+                     <i class="fas fa-check"></i> {{ __('sentence.Visited') }}
+                     </label>
+                   @else
+                      <label class="badge badge-danger-soft">
+                        <i class="fas fa-user-times"></i>
+                        {{ __('sentence.Cancelled') }}
+                      </label>
+                   @endif
+               </td>
+               <td align="center">
+
+                   <a href="{{ route('appointment.edit_by_user', ['id' => $Myappointment->rdv_id]) }}"
+                      class="btn btn-outline-warning btn-circle btn-sm">
+                      <i class="fa fa-pen"></i>
+                   </a>
+                   @can('edit appointment')
+                  
+                     @php
+                       $appointmentDate = \Carbon\Carbon::parse($Myappointment->date);
+                       $appointmentTimeStart = \Carbon\Carbon::parse($Myappointment->time_start);
+                       $currentDateTime = now();
+                       $isFutureDateTime =
+                       $appointmentDate->isFuture() ||
+                       ($appointmentDate->isToday() && $appointmentTimeStart->isFuture());
+                     @endphp
+
+
+
+                     <a data-rdv_id="{{ $Myappointment->id }}"
+                       data-rdv_date="{{ $Myappointment->date->format('d M Y') }}"
+                       data-rdv_time_start="{{ $Myappointment->time_start }}"
+                       data-rdv_time_end="{{ $Myappointment->time_end }}"
+                       data-patient_name="{{ $Myappointment->User->name }}"
+                       class="btn btn-outline-success btn-circle btn-sm{{ $isFutureDateTime ? ' disabled opacity-button' : '' }}"
+                        data-toggle="modal" data-target="#EDITRDVModal">
+                       <i class="fas fa-check"></i>
+                     </a>
+                 
+                  @endcan
+                @can('delete appointment')
+                <a href="{{ url('appointment/delete/' . $Myappointment->id) }}"
+                    class="btn btn-outline-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+                @endcan
+            </td>
+        </tr>
+        @empty
+        <tr>
+            <td colspan="5" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" />
+                <br><br>
+                <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
+            </td>
+        </tr>
+        @endforelse
+    </table>
+    @else
+    <div class="card-body">
+
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -155,7 +171,13 @@
                                         </label>
                                     </td>
                                     <td class="text-center">
-                                        @if ($appointment->visited == 0)
+
+                                        @if(($appointment->date < Today()) && ($appointment->visited != 1))
+                                           <label class="badge badge-danger-soft">
+                                                <i class="fas fa-user-times"></i> date depassée-RDV annulé
+                                           </label>
+                                        @elseif ($appointment->visited == 0)
+
                                             <label class="badge badge-warning-soft">
                                                 <i class="fas fa-hourglass-start"></i> {{ __('sentence.Not Yet Visited') }}
                                             </label>
@@ -179,13 +201,16 @@
                                         @endif
                                     </td>
                                     <td align="center">
-                                        @if ($appointment->visited != 1)
-                                            <a href="{{ route('appointment.edit_appointment', ['id' => $appointment->id]) }}"
-                                                class="btn btn-outline-warning btn-circle btn-sm">
-                                                <i class="fa fa-pen"></i>
-                                            </a>
-                                        @endif
+
+                                       @if (($appointment->visited != 1) && ($appointment->date >= Today()))
+                                          <a href="{{ route('appointment.edit_appointment', ['id' => $appointment->id]) }}"
+                                               class="btn btn-outline-warning btn-circle btn-sm">
+                                               <i class="fa fa-pen"></i>
+                                          </a>
+                                       @endif
                                         @can('edit appointment')
+                                        @if($appointment->date >= Today())
+
                                             <a data-rdv_id="{{ $appointment->id }}"
                                                 data-rdv_date="{{ $appointment->date->format('d M Y') }}"
                                                 data-rdv_time_start="{{ $appointment->time_start }}"
@@ -196,6 +221,9 @@
                                                 data-toggle="modal" data-target="#EDITRDVModal">
                                                 <i class="fas fa-check"></i>
                                             </a>
+
+                                        @endif
+
                                         @endcan
                                         @can('delete appointment')
                                             @if ($appointment->visited != 1)
@@ -217,8 +245,31 @@
                         </tbody>
                     </table>
 
-                    <span class="float-right mt-3">{{ $appointments->links() }}</span>
-                </div>
+                  <span class="float-right mt-3">{{ $appointments->links() }}</span>
+        </div>
+    </div>
+    @endif
+</div>
+<!--EDIT Appointment Modal-->
+<div class="modal fade" id="EDITRDVModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    {{ __('sentence.You are about to modify an appointment') }}
+                </h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><b>{{ __('sentence.Patient') }} :</b> <span id="patient_name"></span></p>
+                <p><b>{{ __('sentence.Date') }} :</b> <label class="badge badge-primary-soft" id="rdv_date"></label>
+                </p>
+                <p><b>{{ __('sentence.Time Slot') }} :</b> <label class="badge badge-primary-soft"
+                        id="rdv_time"></label></p>
+
             </div>
         @endif
     </div>
