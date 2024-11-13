@@ -609,6 +609,12 @@
                                                                     </a>
                                                                 @endif
                                                                 @endcan
+                                                                @if (($appointment->visited != 1) && ($appointment->date >= Today()))
+                                                                      <a href="{{ route('appointment.edit_appointment', ['id' => $appointment->id]) }}"
+                                                                          class="btn btn-outline-warning btn-circle btn-sm">
+                                                                          <i class="fa fa-pen"></i>
+                                                                      </a>
+                                                                @endif
                                                                 @can('delete appointment')
                                                                     @if ($appointment->visited != 1)
                                                                         <a href="{{ url('appointment/delete/' . $appointment->id) }}"

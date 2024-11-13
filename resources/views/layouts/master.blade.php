@@ -503,7 +503,7 @@
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.View Profile') }}
                                     </a> --}}
-                                    @if (Auth::user()->role_id != 3)
+                                    @if (Auth::user()->role_id == 1)
                                     <a class="dropdown-item"
                                         href="{{ route('user.edit', ['id' => Auth::user()->id]) }}">
                                         <i class="fas fa-pen fa-sm fa-fw mr-2 text-gray-400"></i>
