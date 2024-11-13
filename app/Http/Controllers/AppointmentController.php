@@ -289,7 +289,7 @@ class AppointmentController extends Controller
             ]);
         }
     
-        return redirect()->route('appointment.all')->with('success', 'Appointment updated successfully!');
+        return redirect()->route('patient.view', ['id' => $appointment->user_id])->with('success', 'Appointment updated successfully!');
     }    
 
 
