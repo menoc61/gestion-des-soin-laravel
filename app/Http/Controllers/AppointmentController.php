@@ -288,8 +288,9 @@ class AppointmentController extends Controller
                 'text' => 'Your appointment has been updated to ' . $request->rdv_time_date . ' at ' . $request->rdv_time_start . ' at Sai i lama',
             ]);
         }
-    
+
         return redirect()->route('patient.view', ['id' => $appointment->user_id])->with('success', 'Appointment updated successfully!');
+
     }    
 
 
