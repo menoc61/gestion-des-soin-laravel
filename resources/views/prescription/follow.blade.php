@@ -695,7 +695,7 @@
                                     .time_end + '</label></td>' +
                                     '</tr>';
                                 appointmentsTable.append(newRow);
-                                }
+                               }
                             });
                             if (!hasAppointments) {
                                var noData =

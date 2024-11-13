@@ -108,7 +108,7 @@
     </div>
     </div>
     <!--Show Modal Redirect-->
-    {{-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+     {--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -121,24 +121,24 @@
                             <div class="d-flex col-md-12">
                                 <div class="col-md-4">
                                     <a class="btn btn-primary" href="{{ route('billing.create_by', ['id' => $userId]) }}">
-    payer
-    </a>
-    </div>
-    <div class="col-md-4">
-        <a class="btn btn-secondary"
-            href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
-        </a>
-    </div>
-    <div class="col-md-4">
-        <a class="btn btn-secondary"
-            href="{{ route('appointment.create_by', ['id' => $userId]) }}"> Rendez-Vous
-        </a>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div> --}}
+                                                payer
+                                    </a>
+                                     </div>
+                                    <div class="col-md-4">
+                                    <a class="btn btn-secondary"
+                                      href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
+                                   </a>
+                                </div> 
+                               <div class="col-md-12">
+                                  <a class="btn btn-secondary"
+                                        href="{{ route('patient.view', ['id' => $userId]) }}"> Acceuil
+                                  </a>
+                              </div>
+                           </div>
+                       </div>
+                   </div>
+                </div>
+          </div> --}
 </form>
 @endsection
 
@@ -196,6 +196,11 @@
 
                         if (response.length > 0) {
                             response.forEach(function(appointment) {
+                                var appointmentDate = new Date(appointment.date);
+                                var today = new Date();
+                                var datePrecedente = new Date(today);
+                                datePrecedente.setDate(today.getDate() - 1);
+                                if (appointmentDate > datePrecedente) {
                                 var newRow = '<tr>' +
                                     '<td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i> ' +
                                     appointment.date + '</label></td>' +
@@ -206,6 +211,7 @@
                                     .created_at + '</td>' +
                                     '</tr>';
                                 appointmentsTable.append(newRow);
+                                }
                             });
                         } else {
                             var noData =

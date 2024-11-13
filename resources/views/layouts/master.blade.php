@@ -218,9 +218,12 @@
                                         <a class="collapse-item"
                                             href="{{ route('prescription.all') }}">{{ __('sentence.List Prescriptions') }}</a>
                                     @endcan
+
                                     @can('view all invoices')
+                                    @if (Auth::user()->role_id == 1)
                                         <a class="collapse-item"
                                             href="{{ route('billing.all') }}">{{ __('sentence.Payment History') }}</a>
+                                    @endif
                                     @endcan
                                 </div>
                             </div>
@@ -503,7 +506,7 @@
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.View Profile') }}
                                     </a> --}}
-                                    @if (Auth::user()->role_id != 3)
+                                    @if (Auth::user()->role_id == 1)
                                     <a class="dropdown-item"
                                         href="{{ route('user.edit', ['id' => Auth::user()->id]) }}">
                                         <i class="fas fa-pen fa-sm fa-fw mr-2 text-gray-400"></i>

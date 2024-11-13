@@ -468,6 +468,7 @@
                                                         </a>
                                                     @endif
                                                 @endcan
+                                                
                                                 @can('edit appointment')
                                                     <a data-rdv_id="{{ $appointment->id }}"
                                                         data-rdv_date="{{ $appointment->date->format('d M Y') }}"
