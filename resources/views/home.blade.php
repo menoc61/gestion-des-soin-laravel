@@ -642,8 +642,7 @@
 
 @section('footer')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    
-    <script src="/dashboard/vendor/chart.js/Chart.bundle.js"></script>
+    <script src="/soin/public/dashboard/vendor/chart.js/Chart.bundle.js"></script>
 
     <script>
         var startDate = null;

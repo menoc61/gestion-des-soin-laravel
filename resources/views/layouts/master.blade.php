@@ -470,10 +470,11 @@
 
                         @if (Auth::user()->role_id == 1)
                             <div class="col-md-6">
-                                <a href="#" class="btn btn-primary" target="_blank"
+                                <a href="#" class="btn btn-primary"
                                     target="_self" rel="noopener"><i class="fa fa-user"></i> <span>Gestion Du
                                         Personnel</span></a>
-                                <a href="#" class="btn btn-secondary" target="_blank"
+                                <a href="fichier.html" class="btn btn-secondary" 
+
                                     target="_self" rel="noopener"><i class="fa fa-globe"></i> <span>Gestion De
                                         Stock</span></a>
                             </div>
