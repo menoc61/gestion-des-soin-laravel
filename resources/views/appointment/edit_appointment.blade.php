@@ -187,7 +187,7 @@
             $('#DoctorID').change(function() {
                 var doctorId = $(this).val();
                 $.ajax({
-                    url: '/appointments/by-doctor/' + doctorId,
+                    url: '/soin/public/appointments/by-doctor/' + doctorId,
                     method: 'GET',
                     success: function(response) {
                         var appointmentsTable = $('#appointments-table');

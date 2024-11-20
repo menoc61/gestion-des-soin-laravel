@@ -217,7 +217,7 @@
         if (selectedUserId !== '0' && hasAppointment) {
             // Effectuez une requête AJAX pour obtenir les rendez-vous du patient.
             $.ajax({
-                url: 'http://localhost/doctorino/v4.5/public/appointment/get-appointment/' + selectedUserId,
+                url: 'http://localhost/doctorino/v4.5/public/soin/public/appointment/get-appointment/' + selectedUserId,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
