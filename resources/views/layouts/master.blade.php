@@ -394,7 +394,7 @@
                 <div class="text-center d-none d-md-inline">
                     <button class="rounded-circle border-0" id="sidebarToggle"></button>
                 </div>
-                <div class="sidebar-card d-none d-lg-flex">
+                <!-- <div class="sidebar-card d-none d-lg-flex">
                     <img class="sidebar-card-illustration mb-2"
                         src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/img/undraw_rocket.svg"
                         alt="...">
@@ -404,7 +404,7 @@
                     </p>
                     <a class="btn btn-primary btn-sm"
                         href="https://github.com/menoc61/gestion-des-soin-laravel/issues/new">signialer!</a>
-                </div>
+                </div> -->
             </ul>
             <!-- End of Sidebar -->
             <!-- Content Wrapper -->
@@ -473,7 +473,7 @@
                                 <a href="#" class="btn btn-primary" target="_blank"
                                     target="_self" rel="noopener"><i class="fa fa-user"></i> <span>Gestion Du
                                         Personnel</span></a>
-                                <a href="fichier.html" class="btn btn-secondary" target="_blank"
+                                <a href="#" class="btn btn-secondary" target="_blank"
                                     target="_self" rel="noopener"><i class="fa fa-globe"></i> <span>Gestion De
                                         Stock</span></a>
                             </div>
@@ -501,11 +501,11 @@
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="userDropdown">
 
-                                    {{-- <a class="dropdown-item"
+                                    <!-- {{-- <a class="dropdown-item"
                                         href="{{ route('patient.view', ['id' => Auth::user()->id]) }}">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('sentence.View Profile') }}
-                                    </a> --}}
+                                    </a> --}} -->
                                     @if (Auth::user()->role_id == 1)
                                     <a class="dropdown-item"
                                         href="{{ route('user.edit', ['id' => Auth::user()->id]) }}">

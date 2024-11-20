@@ -684,9 +684,8 @@
                             response.forEach(function(appointment) {
                                 var appointmentDate = new Date(appointment.date);
                                 var today = new Date();
-                                var datePrecedente = new Date(today);
-                                datePrecedente.setDate(today.getDate() - 1);
-                               if (appointmentDate > datePrecedente) {
+                                
+                               if (appointmentDate >= today) {
                                 var newRow = '<tr>' +
                                     '<td align="center"><label class="badge badge-primary-soft"><i class="fas fa-calendar"></i> ' +
                                     appointment.date + '</label></td>' +
@@ -697,11 +696,7 @@
                                 appointmentsTable.append(newRow);
                                }
                             });
-                            if (!hasAppointments) {
-                               var noData =
-                                  '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';
-                               appointmentsTable.append(noData);
-                            }
+                            
                         } else {
                             var noData =
                                 '<tr><td colspan="3" align="center"><img src="{{ asset('img/not-found.svg') }}" width="200" /><br><br><b class="text-muted">{{ __('sentence.No appointment available') }}</b></td></tr>';

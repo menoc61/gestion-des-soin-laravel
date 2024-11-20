@@ -85,7 +85,20 @@
         </div>
     </div>
     <div class="col-md-6 my-4">
-        
+               <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Drugs list') }}</h6>
+                    </div>
+                    <div class="card-body">
+                        <fieldset class="drugs_labels">
+                            <div class="repeatable"></div>
+                            <div class="form-group">
+                                <a type="button" class="btn btn-sm btn-primary add text-white" align="center"><i
+                                        class='fa fa-plus'></i> {{ __('sentence.Add Drug') }}</a>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
         <div class="card">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} <span
@@ -108,7 +121,7 @@
     </div>
     </div>
     <!--Show Modal Redirect-->
-     {--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -119,16 +132,7 @@
                         </div>
                         <div class="modal-footer">
                             <div class="d-flex col-md-12">
-                                <div class="col-md-4">
-                                    <a class="btn btn-primary" href="{{ route('billing.create_by', ['id' => $userId]) }}">
-                                                payer
-                                    </a>
-                                     </div>
-                                    <div class="col-md-4">
-                                    <a class="btn btn-secondary"
-                                      href="{{ route('patient.view', ['id' => $userId]) }}">Accueil
-                                   </a>
-                                </div> 
+                               
                                <div class="col-md-12">
                                   <a class="btn btn-secondary"
                                         href="{{ route('patient.view', ['id' => $userId]) }}"> Acceuil
@@ -138,7 +142,7 @@
                        </div>
                    </div>
                 </div>
-          </div> --}
+          </div> 
 </form>
 @endsection
 

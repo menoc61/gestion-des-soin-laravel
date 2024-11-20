@@ -103,7 +103,7 @@ return [
     'Forgot Your Password' => 'Mot de passe oublié ? cliquez ici !',
     'new patient create' => 'Vous êtes nouveau ? cliquez ici et créez votre compte !',
     'Remember Me' => 'Se souvenir de moi',
-    'Welcome' => 'Application de Soins !',
+    'Welcome' => 'Gestion des Soins ',
     'Save' => 'Sauvegarder',
     'Cancel' => 'Annuler',
     'Ready to Leave' => 'Prêt à partir?',
