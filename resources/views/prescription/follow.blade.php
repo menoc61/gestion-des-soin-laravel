@@ -514,7 +514,7 @@
 @section('footer')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="/dashboard/vendor/chart.js/Chart.bundle.js"></script>
+    <script src="/soin/public/dashboard/vendor/chart.js/Chart.bundle.js"></script>
     <script src="{{ asset('assets/demo/chart-doughnut-demo.js') }}"></script>
 
     <script type="text/template" id="drugs_labels">
@@ -673,7 +673,7 @@
             $('#DoctorID').change(function() {
                 var doctorId = $(this).val();
                 $.ajax({
-                    url: '/appointments/by-doctor/' + doctorId,
+                    url: '/soin/public/appointments/by-doctor/' + doctorId,
                     method: 'GET',
                     success: function(response) {
                         var appointmentsTable = $('#appointments-table-modal');

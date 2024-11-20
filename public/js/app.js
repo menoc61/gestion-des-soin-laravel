@@ -65644,7 +65644,7 @@ var baseURL = 'http://localhost/pms/public';
 
   function AddAppointment(date) {
     $.ajax({
-      url: baseURL + '/appointment/checkslots/' + date,
+      url: baseURL + '/soin/public/appointment/checkslots/' + date,
       type: 'GET',
       cache: false,
       success: function success(array) {
