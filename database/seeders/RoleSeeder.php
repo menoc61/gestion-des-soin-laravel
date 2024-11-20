@@ -21,6 +21,34 @@ class RoleSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+        
+        // $permissions = [
+        //     'add patient', 'view patient', 'edit patient', 'view all patients', 'delete patient',
+        //     'create health history', 'delete health history',
+        //     'add medical files', 'delete medical files',
+        //     'create appointment', 'view all appointments', 'delete appointment', 'edit appointment',
+        //     'create prescription', 'view prescription', 'view all prescriptions', 'edit prescription',
+        //     'delete prescription', 'print prescription',
+        //     'create drug', 'edit drug', 'view drug', 'delete drug', 'view all drugs',
+        //     'create diagnostic test','edit diagnostic test', 'view all diagnostic tests', 'delete diagnostic test', 
+        //     'create invoice', 'edit invoice', 'view invoice', 'view all invoices', 'delete invoice', 'print invoice', 
+        //     'manage settings', 'manage roles', 
+        //     'view all notifications', 'create notification', 'edit notification', 'delete notification', 'edit expense', 'delete expense',
+        //     'manage waiting room'
+    
+        // ];
+    
+        // foreach ($permissions as $permissionName) {
+        //     $permission = Permission::where('name', $permissionName)->first();
+    
+        //     // Supprimer la permission si elle existe
+        //     if ($permission) {
+        //         $permission->delete();
+        //     }
+    
+        //     // Recréer la permission
+        //     Permission::firstOrCreate(['name' => $permissionName, 'guard_name' => 'web']);
+        // }
         // create permissions
         Permission::create(['name' => 'add patient']);
         Permission::create(['name' => 'view patient']);
@@ -81,9 +109,10 @@ class RoleSeeder extends Seeder
         $role3 = Role::create(['name' => 'Hôte']);
 
         $role1->givePermissionTo(Permission::all());
-        $role2->givePermissionTo(Permission::all()->except(['delete invoice', 'manage settings', 'manage roles']));
+        $role2->givePermissionTo(Permission::all()->except(['delete patient', 'delete health history', 'delete medical files', 'delete appointment', 'delete prescription', 'delete drug', 'delete diagnostic test', 'delete invoice', 'manage settings', 'manage roles']));
         $role3->syncPermissions(
             'view patient',
+            'edit patient',
             'create appointment',
             'create diagnostic test',
             'view invoice',
@@ -97,7 +126,32 @@ class RoleSeeder extends Seeder
             'view prescription',
             'create health history'
         );
-
+        // $roles = [
+        //     [
+        //         'name' => 'Admin',
+        //         'permissions' => ['add patient', 'view patient', 'edit patient', 'view all patients', 'delete patient', 'create health history', 'delete health history', 'add medical files', 'delete medical files', 'create appointment', 'view all appointments', 'delete appointment', 'edit appointment', 'create prescription', 'view prescription', 'view all prescriptions', 'edit prescription', 'delete prescription', 'print prescription', 'create drug', 'edit drug', 'view drug', 'delete drug', 'view all drugs']
+        //     ],
+        //     [
+        //         'name' => 'Praticien',
+        //         'except' => ['delete patient', 'delete health history', 'delete medical files', 'delete appointment', 'delete prescription', 'delete drug']
+        //     ],
+        //     [
+        //         'name' => 'Hôte',
+        //         'permissions' => ['view patient', 'edit patient', 'create appointment', 'create diagnostic test', 'view invoice', 'print prescription', 'print invoice', 'add medical files', 'view all invoices', 'view all prescriptions', 'view all diagnostic tests', 'view all appointments', 'view prescription', 'create health history']
+        //     ]
+        // ];
+    
+        // foreach ($roles as $roleData) {
+        //     $role = Role::create(['name' => $roleData['name']]);
+            
+        //     if (isset($roleData['permissions'])) {
+        //         $permissions = Permission::whereIn('name', $roleData['permissions'])->get();
+        //         $role->givePermissionTo($permissions);
+        //     } elseif (isset($roleData['except'])) {
+        //         $permissions = Permission::whereNotIn('name', $roleData['except'])->get();
+        //         $role->givePermissionTo($permissions);
+        //     }
+        // }
         $user = User::create([
             'name' => 'ADMIN',
             'email' => 'admin@gmail.com',
@@ -119,5 +173,7 @@ class RoleSeeder extends Seeder
 
         $user->assignRole($role1);
         $user2->assignRole($role2);
+        
+        
     }
 }

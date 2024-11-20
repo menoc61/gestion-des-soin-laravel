@@ -79,6 +79,7 @@
                                     @if (Auth::user()->role_id == 1)
                                     <a href="{{ route('user.edit', ['id' => $user->id]) }}"
                                         class="btn btn-outline-warning btn-circle btn-sm"><i class="fa fa-pen"></i></a>
+                                    
                                     <a href="#" class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal"
                                         data-target="#DeleteModal" data-link="{{ route('user.destroy', ['id' => $user->id]) }}"><i class="fas fa-trash"></i></a>
                                     @endif
