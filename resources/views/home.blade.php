@@ -204,7 +204,7 @@
                   
                     <div class="card-body shadow-lg card-po bg-success col-md-9">
                         <div class="col-auto">
-                            <center><a class="collapse-item" href="{{ route('patient.create') }}"><i class="fa fa-user fa-2x text-gray-300"></i></a></center>
+                            <center><a class="collapse-item" href="{{ route('patient.all') }}"><i class="fa fa-user fa-2x text-gray-300"></i></a></center>
                         </div>
                     </div>
                   
@@ -212,7 +212,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                <a class="collapse-item" href="{{ route('patient.create') }}">total patient</a></div>
+                                <a class="collapse-item" href="{{ route('patient.all') }}">total patient</a></div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" id="total_patients">
                                     {{ $total_patients }}
                                 </div>
@@ -468,6 +468,7 @@
                                                         </a>
                                                     @endif
                                                 @endcan
+                                                
                                                 @can('edit appointment')
                                                     <a data-rdv_id="{{ $appointment->id }}"
                                                         data-rdv_date="{{ $appointment->date->format('d M Y') }}"
@@ -519,11 +520,16 @@
                                 </thead>
                                 <tbody>
                                     @forelse($agendaDoctors as $key => $appointment)
+                                    @php
+                                       $today = now()->format('Y-m-d'); // Obtenir la date d'aujourd'hui au format Y-m-d
+                                    @endphp
+
+                                    @if($appointment->date >= $today)
                                         <tr>
                                             {{-- <td><a href="{{ url('patient/view/' . $appointment->user_id) }}">
                                                     {{ $appointment->User->name }} </a></td> --}}
                                             <td><b>{{ $appointment->User->name }}</b> </td>
-                                            <td class="text-center">
+                                            <td class="text-center">        
                                                 <label class="badge badge-primary-soft text-dark">
                                                     <i class="fas fa-calendar"></i>
                                                     {{ $appointment->date->format('d M Y') }}
@@ -547,6 +553,8 @@
                                                 @endif
                                             </td>
                                         </tr>
+                                   
+                                    @endif
                                     @empty
                                         <tr>
                                             <td colspan="7" align="center"><img src="{{ asset('img/rest.png') }} " />
@@ -572,9 +580,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title text-center" id="viewDetailsModalLabel">Détail du Rendez vous</h5>
-                        {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
-                        </button> --}}
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="table-responsive">

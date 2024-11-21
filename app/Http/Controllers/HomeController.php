@@ -82,6 +82,7 @@ class HomeController extends Controller
         // $total_payments_month = Billing_item::whereMonth('created_at', date('m'))->sum('invoice_amount');
         $total_payments_year = Rdv_Drug::whereIn('appointment_id', $appointmentsVisitedId)->whereYear('created_at', date('Y'))->sum('montant_drug');
         // $total_payments_year = Billing_item::whereYear('created_at', date('Y'))->sum('invoice_amount');
+        
         $countRDVread = Appointment::where('is_read', 0)->count();
 
         $appointments = Appointment::where('is_read', 0)->orderBy('id', 'desc')->paginate(7);

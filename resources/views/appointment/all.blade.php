@@ -71,7 +71,7 @@
                     {{ $Myappointment->time_end }} </label></td>
                <td class="text-center">
                    @if(($Myappointment->date < Today()) && ($Myappointment->visited != 1))
-                                <label class="badge badge-danger-soft">
+                     <label class="badge badge-danger-soft">
                                     <i class="fas fa-user-times"></i> date depassée-RDV annulé
                                 </label>
                    @elseif ($Myappointment->visited == 0)

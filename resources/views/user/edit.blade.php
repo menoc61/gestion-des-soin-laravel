@@ -89,7 +89,9 @@
                         
                         <div class="form-group row">
                             <label for="role" class="col-sm-3 col-form-label">{{ __('sentence.Role') }}</label>
+                            
                             <div class="col-sm-9">
+                            
                                 <select class="form-control" name="role_id" id="roleID">
                                     {{-- <option value="Unknown">{{ __('sentence.Select Role') }}</option>
                                     <option value="admin">{{ __('sentence.Admin') }}</option>
@@ -101,6 +103,7 @@
                                     @endforeach
                                 </select>
                             </div>
+                            
                         </div>
                         
                         <div class="form-group row">

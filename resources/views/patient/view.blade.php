@@ -34,10 +34,11 @@
                                             <a href="{{ route('patient.SendPassword', ['id' => $patient->id]) }}"
                                                class="btn btn-doctorino btn-sm btn-round px-3">
                                                {{ __('sentence.Send Credentials') }}</a>
+                                        @endif
                                         
                                             <a href="{{ url('patient/edit/' . $patient->id) }}"
                                                 class="btn btn-danger btn-sm btn-round px-3"> <i class="fa fa-pen"></i></a>
-                                        @endif
+                                       
                                         <ul class="list-unstyled list-inline mt-3 text-muted">
                                             <li class="list-inline-item font-size-13 me-3">
                                                 <label class="badge badge-success-soft"><strong
@@ -609,6 +610,12 @@
                                                                     </a>
                                                                 @endif
                                                                 @endcan
+                                                                @if (($appointment->visited != 1) && ($appointment->date >= Today()))
+                                                                      <a href="{{ route('appointment.edit_appointment', ['id' => $appointment->id]) }}"
+                                                                          class="btn btn-outline-warning btn-circle btn-sm">
+                                                                          <i class="fa fa-pen"></i>
+                                                                      </a>
+                                                                @endif
                                                                 @can('delete appointment')
                                                                     @if ($appointment->visited != 1)
                                                                         <a href="{{ url('appointment/delete/' . $appointment->id) }}"
