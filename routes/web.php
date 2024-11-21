@@ -45,29 +45,29 @@ Route::post('/history/create', 'HistoryController@store')->name('history.store')
 Route::get('/history/delete/{id}', 'HistoryController@destroy')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|edit patient']);
 
 // Appointments
-Route::get('/soin/public/appointment/create', 'AppointmentController@create')->name('appointment.create')->middleware(['role_or_permission:Admin|create appointment']);
-Route::post('/soin/public/appointment/create', 'AppointmentController@store')->name('appointment.store');
-Route::get('/soin/public/appointment/all', 'AppointmentController@all')->name('appointment.all')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::get('/soin/public/appointment/calendar', 'AppointmentController@calendar')->name('appointment.calendar')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::get('/soin/public/appointment/pending', 'AppointmentController@pending')->name('appointment.pending')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::get('/soin/public/appointment/checkslots/{id}', 'AppointmentController@checkslots');
-Route::get('/soin/public/appointment/delete/{id}', 'AppointmentController@destroy')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|delete appointment']);
-Route::post('/soin/public/appointment/edit', 'AppointmentController@store_edit')->name('appointment.store_edit')->middleware(['role_or_permission:Admin|edit appointment']);
-Route::get('/soin/public/appointment/create_by/{id}', 'AppointmentController@create_By_id')->name('appointment.create_by')->middleware(['role_or_permission:Admin|create appointment']);
-Route::get('/soin/public/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::get('/soin/public/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::get('/soin/public/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
-Route::get('/soin/public/appointment/upcoming', 'AppointmentController@upcoming')->name('appointment.upcoming')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::get('/soin/public/appointment/cancelled', 'AppointmentController@cancelled')->name('appointment.cancelled')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::get('/soin/public/appointment/treated', 'AppointmentController@treated')->name('appointment.treated')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::get('/soin/public/appointment/today', 'AppointmentController@today')->name('appointment.today')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::get('/soin/public/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::get('/soin/public/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::get('/soin/public/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
-Route::get('/soin/public/appointments/by-doctor/{doctorId}', 'AppointmentController@getAppointmentsByDoctor');
+Route::get('/appointment/create', 'AppointmentController@create')->name('appointment.create')->middleware(['role_or_permission:Admin|create appointment']);
+Route::post('/appointment/create', 'AppointmentController@store')->name('appointment.store');
+Route::get('/appointment/all', 'AppointmentController@all')->name('appointment.all')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/calendar', 'AppointmentController@calendar')->name('appointment.calendar')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/pending', 'AppointmentController@pending')->name('appointment.pending')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/checkslots/{id}', 'AppointmentController@checkslots');
+Route::get('/appointment/delete/{id}', 'AppointmentController@destroy')->where('id', '[0-9]+')->middleware(['role_or_permission:Admin|delete appointment']);
+Route::post('/appointment/edit', 'AppointmentController@store_edit')->name('appointment.store_edit')->middleware(['role_or_permission:Admin|edit appointment']);
+Route::get('/appointment/create_by/{id}', 'AppointmentController@create_By_id')->name('appointment.create_by')->middleware(['role_or_permission:Admin|create appointment']);
+Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
+Route::get('/appointment/upcoming', 'AppointmentController@upcoming')->name('appointment.upcoming')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/cancelled', 'AppointmentController@cancelled')->name('appointment.cancelled')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/treated', 'AppointmentController@treated')->name('appointment.treated')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/today', 'AppointmentController@today')->name('appointment.today')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_whatsapp')->name('appointment.notify.whatsapp')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
+Route::get('/appointments/by-doctor/{doctorId}', 'AppointmentController@getAppointmentsByDoctor');
 
-Route::get('/soin/public/appointment/edit_appointment/{id}', 'AppointmentController@edit_appointment')->where('id', '[0-9]+')->name('appointment.edit_appointment')->middleware(['role_or_permission:Admin|view all appointments']);
-Route::post('/soin/public/appointment/edit_appointment', 'AppointmentController@store_edit_appointment')->name('appointment.store_edit_appointment');
+Route::get('/appointment/edit_appointment/{id}', 'AppointmentController@edit_appointment')->where('id', '[0-9]+')->name('appointment.edit_appointment')->middleware(['role_or_permission:Admin|view all appointments']);
+Route::post('/appointment/edit_appointment', 'AppointmentController@store_edit_appointment')->name('appointment.store_edit_appointment');
 
 
 // Drugs
