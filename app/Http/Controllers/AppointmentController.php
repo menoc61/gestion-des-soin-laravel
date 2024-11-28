@@ -336,9 +336,9 @@ class AppointmentController extends Controller
     public function cancelled()
     {
         if (\Auth::user()->role == '3') {
-            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 2)->orderBy('date', 'ASC')->paginate(25);
+            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 0)->orderBy('date', 'ASC')->paginate(25);
         } else {
-            $appointments = Appointment::where('visited', 2)->orderBy('date', 'ASC')->paginate(25);
+            $appointments = Appointment::where('visited', 0)->orderBy('date', 'ASC')->paginate(25);
         }
 
         return view('appointment.all', ['appointments' => $appointments]);

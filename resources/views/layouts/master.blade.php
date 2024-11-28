@@ -58,7 +58,7 @@
                 <hr>
                 <center>
                     <div class="sidebar-brand-text mx-3 d">
-                        <img src="{{ asset('img/sai-i-lama-logo.png') }}" class="img-fluid">
+                        <img src="{{ asset('img/sai-i-lama.png') }}" class="img-fluid">
                     </div>
                 </center>
                 <div class="align-center mt-3">
@@ -470,10 +470,10 @@
 
                         @if (Auth::user()->role_id == 1)
                             <div class="col-md-6">
-                                <a href="#" class="btn btn-primary"
+                                <a href="http://localhost:3000" class="btn btn-primary"
                                     target="_self" rel="noopener"><i class="fa fa-user"></i> <span>Gestion Du
                                         Personnel</span></a>
-                                <a href="fichier.html" class="btn btn-secondary" 
+                                <a href="http://localhost:8000" class="btn btn-secondary" 
 
                                     target="_self" rel="noopener"><i class="fa fa-globe"></i> <span>Gestion De
                                         Stock</span></a>

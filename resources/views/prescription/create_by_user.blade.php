@@ -106,7 +106,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">{{ __('sentence.Description') }}<font color="red">*</font></label>
+                            <label for="inputEmail4">{{ __('sentence.preliminary diagnosis') }}<font color="red">*</font></label>
                             <textarea type="text" class="form-control" name="description"></textarea>
                         </div>
                     </div>

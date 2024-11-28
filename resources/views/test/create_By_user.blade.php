@@ -506,7 +506,7 @@
 
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-9">
+                                        <div class="col-6">
                                             <button type="submit"
                                                 class="btn btn-success">{{ __('sentence.Save') }}</button>
                                         </div>
@@ -691,7 +691,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                        <div class="col-sm-9">
+                                        <div class="col-6">
                                             <button type="submit"
                                                 class="btn btn-success">{{ __('sentence.Save') }}</button>
                                         </div>
