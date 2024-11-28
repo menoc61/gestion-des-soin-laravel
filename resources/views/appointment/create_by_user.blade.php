@@ -89,7 +89,7 @@
                             <div class="form-group col-md-3">
                                     <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
                                     <select class="form-control target" name="rdv_time_start">
-                                        @for ($hour = 6; $hour < 21; $hour++)
+                                        @for ($hour = 9; $hour < 19; $hour++)
                                            @for ($minute = 0; $minute < 60; $minute += 30)
                                               @php
                                                 $time = sprintf('%02d:%02d', $hour, $minute);
@@ -103,7 +103,7 @@
                                 <div class="form-group col-md-3">
                                     <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
                                     <select class="form-control target" name="rdv_time_end">
-                                          @for ($hour = 6; $hour < 21; $hour++)
+                                          @for ($hour = 9; $hour < 22; $hour++)
                                              @for ($minute = 0; $minute < 60; $minute += 30)
                                                 @php
                                                   $time = sprintf('%02d:%02d', $hour, $minute);
@@ -255,7 +255,7 @@
             $('#DoctorID').change(function() {
                 var doctorId = $(this).val();
                 $.ajax({
-                    url: '/soin/public/appointments/by-doctor/' + doctorId,
+                    url: '/appointments/by-doctor/' + doctorId,
                     method: 'GET',
                     success: function(response) {
                         var appointmentsTable = $('#appointments-table');
@@ -311,7 +311,7 @@
 
                 if (doctorId && selectedDate) {
                     $.ajax({
-                        url: '/soin/public/appointments/check-availability/' + doctorId + '/' + selectedDate,
+                        url: '/appointments/check-availability/' + doctorId + '/' + selectedDate,
                         method: 'GET',
                         success: function(response) {
                             var startTimes = response.map(function(appointment) {

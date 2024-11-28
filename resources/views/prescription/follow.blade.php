@@ -116,7 +116,7 @@
                                 <div class="form-group col-md-3">
                                     <label for="rdv_time_start">{{ __('sentence.Hour_start') }}</label>
                                     <select class="form-control target" name="rdv_time_start">
-                                        @for ($hour = 6; $hour < 21; $hour++)
+                                        @for ($hour = 9; $hour < 19; $hour++)
                                            @for ($minute = 0; $minute < 60; $minute += 30)
                                               @php
                                                 $time = sprintf('%02d:%02d', $hour, $minute);
@@ -130,7 +130,7 @@
                                 <div class="form-group col-md-3">
                                     <label for="rdv_time_end">{{ __('sentence.Hour_end') }}</label>
                                     <select class="form-control target" name="rdv_time_end">
-                                          @for ($hour = 6; $hour < 21; $hour++)
+                                          @for ($hour = 9; $hour < 22; $hour++)
                                              @for ($minute = 0; $minute < 60; $minute += 30)
                                                 @php
                                                   $time = sprintf('%02d:%02d', $hour, $minute);
@@ -514,7 +514,7 @@
 @section('footer')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="/soin/public/dashboard/vendor/chart.js/Chart.bundle.js"></script>
+    <script src="/dashboard/vendor/chart.js/Chart.bundle.js"></script>
     <script src="{{ asset('assets/demo/chart-doughnut-demo.js') }}"></script>
 
     <script type="text/template" id="drugs_labels">
@@ -673,7 +673,7 @@
             $('#DoctorID').change(function() {
                 var doctorId = $(this).val();
                 $.ajax({
-                    url: '/soin/public/appointments/by-doctor/' + doctorId,
+                    url: '/appointments/by-doctor/' + doctorId,
                     method: 'GET',
                     success: function(response) {
                         var appointmentsTable = $('#appointments-table-modal');

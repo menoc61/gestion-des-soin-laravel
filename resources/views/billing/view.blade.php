@@ -67,7 +67,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <tr style="background: #2e3f50; color: #fff;">
                                         <td width="10%">ID</td>
-                                        <td width="60%">{{ __('sentence.Item') }}</td>
+                                        <td width="60%">{{ __('sentence.Drug') }}</td>
                                         <td width="30%" align="center">{{ __('sentence.Amount') }}</td>
                                     </tr>
                                     @forelse ($billing_items as $key => $billing_item)
