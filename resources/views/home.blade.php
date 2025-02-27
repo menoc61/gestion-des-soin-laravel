@@ -235,7 +235,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                <a class="collapse-item" href="{{ route('prescription.all') }}">Prescription</a></div>
+                                <a class="collapse-item" href="{{ route('prescription.all') }}">Thérapies</a></div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" id="total_prescriptions">
                                    {{ $total_prescriptions }}
                                 </div>
@@ -289,7 +289,7 @@
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
                         <div class="col-auto">
-                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                            <center><i class="fa fa-calendar fa-2x text-gray-300"></i></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
@@ -311,7 +311,7 @@
                 <div class="card border-bottom-primary shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-primary col-md-9">
                         <div class="col-auto">
-                            <center><i class="fas fa-pills fa-2x text-gray-300"></i></center>
+                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
@@ -333,7 +333,7 @@
                 <div class="card border-bottom-warning shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-warning col-md-9">
                         <div class="col-auto">
-                            <center><i class="fa fa-wallet fa-2x text-gray-300"></i></center>
+                            <center><i class="fa fa-calendar fa-2x text-gray-300"></i></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">

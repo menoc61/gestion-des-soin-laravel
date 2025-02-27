@@ -306,11 +306,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                        <div class="col-6">
-                                            <button type="submit"
-                                                class="btn btn-success btn-block">{{ __('sentence.Save') }}</button>
-                                        </div>
-                                    </div>
+                                          <div class="col-6">
+                                              <button type="submit"
+                                                 class="btn btn-success btn-block">{{ __('sentence.Save') }}</button>
+                                          </div>
+                                       </div>
                                     </div>
                                    
                                 </div>
@@ -506,10 +506,10 @@
 
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-6">
-                                            <button type="submit"
-                                                class="btn btn-success">{{ __('sentence.Save') }}</button>
-                                        </div>
+                                          <div class="col-6">
+                                              <button type="submit"
+                                                 class="btn btn-success btn-block">{{ __('sentence.Save') }}</button>
+                                          </div>
                                     </div>
                                 </div>
                             </div>
@@ -690,12 +690,18 @@
                                                 <textarea type="text" class="form-control" id="sp2" name="spInput_pieds"></textarea>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                        <div class="col-6">
+                                        <!-- <div class="form-group row">
+                                          <div class="col-6">
                                             <button type="submit"
                                                 class="btn btn-success">{{ __('sentence.Save') }}</button>
-                                        </div>
-                                    </div>
+                                         </div>
+                                       </div> -->
+                                       <div class="form-group row">
+                                          <div class="col-6">
+                                              <button type="submit"
+                                                 class="btn btn-success btn-block">{{ __('sentence.Save') }}</button>
+                                          </div>
+                                       </div>
                                     </div>
                                 </div>
                             </div>

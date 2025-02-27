@@ -180,7 +180,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group-custom">
                                             <input type="date" id="duration" name="duration[]" class="form-control" placeholder="{{ __('sentence.Duration') }}">
-                                            <small id="startDate" class="form-text text-muted">Definir la period du suivi</small>
+                                            <small id="startDate" class="form-text text-muted">Definir la periode du suivi</small>
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-3">
@@ -221,7 +221,7 @@
 
                              <div class="col-md-4">
                                  <div class="form-group-custom">
-                                     <input type="text" id="strength" name="description[]"  class="form-control" placeholder="{{ __('sentence.Description') }}">
+                                     <input type="text" id="strength" name="description"  class="form-control" placeholder="{{ __('sentence.Description') }}">
                                  </div>
                              </div>
                              <div class="col-md-3">

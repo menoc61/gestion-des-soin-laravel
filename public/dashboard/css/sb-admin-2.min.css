@@ -15,7 +15,7 @@
     --blue: #4e73df;
     --indigo: #6610f2;
     --purple: #6f42c1;
-    --pink: #e83e8c;
+    --pink: #b029b0;
     --red: #e74a3b;
     --orange: #fd7e14;
     --yellow: #f6c23e;
@@ -91,7 +91,7 @@ html {
 }
 
 .custom-colors {
-    background-color: var(--green);
+    background-color: var(--pink);
 }
 
 .card-po {

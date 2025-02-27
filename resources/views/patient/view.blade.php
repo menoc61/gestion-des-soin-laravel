@@ -984,7 +984,7 @@
                                                                         href="{{ url('billing/view/' . $invoice->id) }}">{{ $invoice->reference }}</a>
                                                                 </td>
                                                                 <td class="text-center"><label
-                                                                        class="badge badge-primary-soft text-dark">{{ $invoice->created_at->format('d M Y h:m:s') }}</label>
+                                                                        class="badge badge-primary-soft text-dark">{{ $invoice->created_at->format('d M Y H:i') }}</label>
                                                                 </td>
                                                                 <td class="text-center"> {{ $invoice->total_with_tax }}
                                                                     {{ App\Setting::get_option('currency') }}

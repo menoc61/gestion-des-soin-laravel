@@ -193,7 +193,7 @@ class PrescriptionController extends Controller
 
                 $add_test->test_id = $request->test_name[$x];
                 $add_test->prescription_id = $prescription->id;
-                $add_test->description = $request->description[$x];
+                $add_test->description = $request->description;
 
                 $add_test->save();
             }
@@ -364,12 +364,12 @@ class PrescriptionController extends Controller
                 if (isset($request->prescription_test_id[$x])) {
                     Prescription_test::where('id', $request->prescription_test_id[$x])
                         ->update([
-                            'description' => $request->description[$x],
+                            'description' => $request->description,
                             'test_id' => $request->test_name[$x],
                         ]);
                 } else {
                     $add_test = new Prescription_test();
-                    $add_test->description = $request->description[$x];
+                    $add_test->description = $request->description;
                     $add_test->prescription_id = $request->prescription_id;
                     $add_test->test_id = $request->test_name[$x];
 
