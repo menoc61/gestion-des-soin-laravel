@@ -16,7 +16,7 @@ return [
 
     'New Prescription' => 'Nouveau Traitement',
     'All Prescriptions' => 'Tous les Traitements',
-    'Create Prescription' => 'Créer un Traitement',
+    'Create Prescription' => 'Créer une Thérapie',
     'Type' => 'statut',
     'Duration' => 'Debut du traitement ',
     'Dose' => 'Dose',
@@ -268,7 +268,7 @@ return [
     'Prescription Number' => 'Traitement Effectué',
     'Tests Number' => 'Diagnose Effectué',
     'Choice Prescription' => 'Choisir le Traitement',
-    'Prescription Name' => 'Nom Traitement',
+    'Prescription Name' => 'Type d\'accompagnement',
     'Amount Generated' => 'Montant Genéré',
     'Prescription dosage' => 'Séance de Travail',
     'set meetings' => 'Créer des rendez-vous à suivre',

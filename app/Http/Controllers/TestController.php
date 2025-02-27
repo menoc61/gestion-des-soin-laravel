@@ -94,7 +94,7 @@ class TestController extends Controller
 
         $test->user_id = $request->patient_id;
         $test->test_name = $request->test_name;
-        $test->comment = $request->comment;
+        $test->comment = strip_tags($request->comment);
         $test->created_by = Auth::user()->id;
         $test->diagnostic_type = json_encode($request->diagnostic_type);
 

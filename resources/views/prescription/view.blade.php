@@ -91,10 +91,10 @@
                                <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
                                     <tr>
-                                        <th class="text-center">Nom Diagnostic</th>
-                                        <th class="text-center">Type Diagnostic</th>
+                                        <th class="text-center">Nom du Diagnostique</th>
+                                        <th class="text-center">Type du Diagnostique</th>
                                         <th class="text-center">{{ __('sentence.preliminary diagnosis') }}</th>
-                                        <th class="text-center">Détail Diagnostic</th>
+                                        <th class="text-center">Détail Diagnostique</th>
                                     </tr>
                                     @forelse ($prescription_tests as $tests)
                                         <tr>
@@ -842,8 +842,8 @@
                     <strong><u>{{ __('sentence.Test to do') }} </u></strong><br><br>
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <th class="text-center">Nom Diagnostic</th>
-                            <th class="text-center">Type Diagnostic</th>
+                            <th class="text-center">Nom Diagnostique</th>
+                            <th class="text-center">Type Diagnostique</th>
                             <!-- <th class="text-center">Description Diagnostic</th> -->
                             <th class="text-center">Détail Diagnostic</th>
                         </tr>

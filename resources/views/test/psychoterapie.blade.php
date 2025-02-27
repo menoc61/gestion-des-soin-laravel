@@ -110,4 +110,13 @@
             descriptionInput.value = selectedOption;
         });
     </script>
+    <script>
+  // Nettoyer le texte avant l'envoi du formulaire
+        const form = document.querySelector('form'); // Remplacez par l'ID ou la classe de votre formulaire
+        const textarea = document.querySelector('#comment');
+
+        form.addEventListener('submit', function (e) {
+                textarea.value = textarea.value.replace(/<\/?[^>]+(>|$)/g, ""); // Supprime les balises HTML
+         });
+   </script>
 @endsection

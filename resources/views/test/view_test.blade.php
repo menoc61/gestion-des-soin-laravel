@@ -31,14 +31,44 @@
                             <strong><u>{{ __('sentence.Test') }} </u></strong><br><br>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
+                                @forelse ($tests as $test)
+                                  @if(is_array(json_decode($test->diagnostic_type, true)) && in_array("PSYCHOTHERAPIE", json_decode($test->diagnostic_type, true)))
                                     <tr>
-                                        <th class="text-center">Nom Diagnostic</th>
-                                        <th class="text-center">Type Diagnostic</th>
+                                        <th class="text-center">Nom du Diagnose</th>
+                                        <th class="text-center">Type du Diagnose</th>
                                         <!-- <th class="text-center">Description Diagnostic</th> -->
-                                        <th class="text-center">élements de diagnose</th>
-                                        <th class="text-center">Réponses</th>
+                                        <!-- <th class="text-center">élements de diagnose</th> -->
+                                        <th class="text-center">Observations :</th>
                                     </tr>
-                                    @forelse ($tests as $test)
+                                    
+                                   
+                                    <tr>
+                                        <td class="text-center" rowspan="15">{{ $test->test_name }}</td>
+                                        <td class="text-center" rowspan="15">
+                                                <!-- décoder sous le format json-->
+                                                @php
+                                                    $diagnosticType = json_decode($test->diagnostic_type);
+                                                @endphp
+
+                                                @if (is_array($diagnosticType))
+                                                    @foreach ($diagnosticType as $diagnostic)
+                                                        {{ $diagnostic }},
+                                                    @endforeach
+                                                @else
+                                                    {{ $diagnosticType }}
+                                                @endif
+                                       </td>
+                                       <!-- <td>Observations :</td> -->
+                                       <td class="text-center">{{ strip_tags($test->comment) }}</td>
+                                   </tr>
+                                   @else
+                                      <tr>
+                                            <th class="text-center">Nom du Diagnose</th>
+                                            <th class="text-center">Type du Diagnose</th>
+                                        <!-- <th class="text-center">Description Diagnostic</th> -->
+                                            <th class="text-center">élements de diagnose</th>
+                                            <th class="text-center">Réponses</th>
+                                      </tr>
                                         <tr>
                                             <td class="text-center" rowspan="15">{{ $test->test_name }}</td>
                                             <td class="text-center" rowspan="15">
@@ -55,6 +85,7 @@
                                                     {{ $diagnosticType }}
                                                 @endif
                                             </td>
+                                            
                                             <!-- <td class="text-center">{{ $test->comment }}</td> -->
                                             <!-- <td class="text-center"> -->
                                                 <!-- <div class="table-responsive"> -->
@@ -817,9 +848,10 @@
                                                                 </td>
                                                             @endif
                                                         </tr>
-                                        
+                                        @endif
                                                     
                                     @empty
+                                        
                                         <tr>
                                             <td colspan="3">Aucun Diagnostic disponible.</td>
                                         </tr>

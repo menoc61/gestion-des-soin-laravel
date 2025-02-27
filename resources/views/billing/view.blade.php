@@ -53,7 +53,7 @@
 
                     <div class="col-12 border-top">
                         <p class="mt-4">
-                            <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y h:m:s') }}<br>
+                            <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y H:i') }}<br>
                             <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->User->name }}
                         </p>
                     </div>
@@ -172,7 +172,7 @@
 
         <div class="col-12 mt-4 ">
             <p class="float-left mt-4">
-                <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y h:m:s') }}<br>
+                <b>{{ __('sentence.Date') }} :</b> {{ $billing->created_at->format('d M Y H:i') }}<br>
                 <b>{{ __('sentence.Patient Name') }} :</b> {{ $billing->User->name }}
             </p>
         </div>

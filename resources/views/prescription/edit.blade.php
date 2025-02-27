@@ -155,7 +155,7 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group-custom">
-                                                <input type="text" id="strength" name="description[]"
+                                                <input type="text" id="strength" name="description"
                                                     class="form-control" placeholder="{{ __('sentence.Description') }}">
                                                 <input type="hidden" name="prescription_test_id[]"
                                                     value="{{ $prescription_test->id }}">
@@ -286,7 +286,7 @@
 
                              <div class="col-md-4">
                                  <div class="form-group-custom">
-                                     <input type="text" id="strength" name="description[]"  class="form-control" placeholder="{{ __('sentence.Description') }}">
+                                     <input type="text" id="strength" name="description"  class="form-control" placeholder="{{ __('sentence.Description') }}">
                                  </div>
                              </div>
                              <div class="col-md-3">
