@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeDescriptionColumnType extends Migration
+class ChangeDesriptionColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class ChangeDescriptionColumnType extends Migration
     {
         Schema::table('prescription_tests', function (Blueprint $table) {
             //
-            $table->string('description')->change();
+            $table->mediumText('description')->change();
         });
     }
 
@@ -28,7 +28,7 @@ class ChangeDescriptionColumnType extends Migration
     {
         Schema::table('prescription_tests', function (Blueprint $table) {
             //
-            $table->mediumText('description')->change();
+            $table->string('description')->change();
         });
     }
 }

@@ -166,6 +166,8 @@ class AppointmentController extends Controller
     {
         $validatedData = $request->validate([
             'doctor_id' => ['required', 'exists:users,id'],
+            //'doctor_id' => ['required', 'array'], // Permettre plusieurs praticiens
+            //'doctor_id.*' => ['exists:users,id'], // Vérifier que chaque ID existe
             'patient' => ['required', 'exists:users,id'],
             'rdv_time_date' => ['required'],
             'rdv_time_start' => ['required'],
@@ -176,6 +178,7 @@ class AppointmentController extends Controller
         $appointment = new Appointment();
         $appointment->user_id = $request->patient;
         $appointment->doctor_id = $request->doctor_id;
+       // $appointment->doctor_id = $doctor_id; // Utilisez l'ID du praticien
         $appointment->date = $request->rdv_time_date;
         $appointment->time_start = $request->rdv_time_start;
         $appointment->time_end = $request->rdv_time_end;
@@ -185,6 +188,8 @@ class AppointmentController extends Controller
         $appointment->rapport = $request->rapport;
         $appointment->prescription_id = $request->prescription_id;
         $appointment->save();
+
+        //$appointment->doctor()->sync($request->doctor_id);
 
         if ($request->send_sms == 1) {
             $user = User::findOrFail($request->patient);
