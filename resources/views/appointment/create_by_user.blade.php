@@ -44,8 +44,7 @@
                                 @if (Auth::user()->role_id != 2)
                                     <div class="form-group">
                                         <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
-                                        <select class="form-control multiselect-search" name="doctor_id" id="DoctorID"
-                                            required>
+                                        <select class="form-control multiselect-search" name="doctor_id" id="DoctorID" required>
                                             <option value="" disabled selected>{{ __('sentence.Select Praticien') }}...
                                             </option>
                                             @foreach ($praticiens as $user)
@@ -63,7 +62,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    <!-- Champ caché pour envoyer l'ID du praticien actuellement connecté -->
+                                    <!-- Champ caché pour envoyer l'ID du praticien actuellement connecté  {{ Auth::user()->id == $user->id ? 'selected' : '' }}-->
                                     <input type="hidden" name="doctor_id" id ="DoctorID" value="{{ Auth::user()->id }}">
                                 </div>
 
