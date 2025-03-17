@@ -189,7 +189,7 @@ class AppointmentController extends Controller
         $appointment->prescription_id = $request->prescription_id;
         $appointment->save();
 
-        //$appointment->doctor()->sync($request->doctor_id);
+        //$doctors->doctors()->sync($request->doctors);
 
         if ($request->send_sms == 1) {
             $user = User::findOrFail($request->patient);
@@ -208,7 +208,6 @@ class AppointmentController extends Controller
             for ($x = 0; $x < $i; ++$x) {
                 if ($request->trade_name[$x] != null) {
                     $add_drug = new Rdv_Drug();
-
                     $add_drug->strength = $request->input('strength.' . $x) ?? null;
                     $add_drug->dose = $request->input('dose.' . $x) ?? null;
                     $add_drug->duration = $request->input('duration.' . $x) ?? null;

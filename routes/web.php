@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ActivityController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -181,5 +181,14 @@ Route::post('/notification/edit', 'NotificationController@store_edit')->name('no
 Route::get('/notification/all', 'NotificationController@all')->name('notification.all')->middleware(['role_or_permission:Admin|view all notification']);
 Route::get('/notification/delete/{id}', 'NotificationController@destroy')->where('id', '[0-9]+')->name('notification.delete')->middleware(['role_or_permission:Admin|delete notification']);
 Route::post('/notification/delete-selected', 'NotificationController@deleteSelected')->name('notification.delete-selected')->middleware(['role_or_permission:Admin|delete notification']);
+
+//report
+//Route::resource('report', ActivityController::class);
+ Route::get('/report/create', 'ActivityController@create')->name('report.create')->middleware(['role_or_permission:Admin|add patient']);
+ Route::post('/report/create', 'ActivityController@store')->name('report.store');
+ Route::get('/report/all', 'ActivityController@all')->name('report.all');
+ Route::post('/report/edit', 'ActivityController@update')->name('report.edit');
+ Route::get('/report/delete/{id}', 'ActivityController@destroy')->where('id', '[0-9]+')->name('report.destroy');
+ Route::get('/report/print/{id}', [ActivityController::class, 'print'])->name('report.print');
 
 

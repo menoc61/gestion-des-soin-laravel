@@ -51,6 +51,21 @@
                                 {{ csrf_field() }}
                             </div>
 
+                            <!-- <div class="form-group col-md-4">
+                                @if (Auth::user()->role_id != 2)
+                                    <div class="form-group">
+                                        <label for="doctors">{{ __('sentence.Praticien') }} </label>
+                                        <select class="form-control" name="doctors[]" id="doctors" multiple>
+                                            <option value="" disabled selected>{{ __('sentence.Select Drug') }}...
+                                            </option>
+                                            @foreach ($praticiens as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+                            </div> -->
+
                             <div class="form-group col-md-4">
                                 @if (Auth::user()->role_id != 2)
                                     <div class="form-group">
@@ -83,13 +98,13 @@
                                 <input type="time" class="form-control target" name="rdv_time_end">
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <!-- <div class="form-group col-md-6">
                                 <label for="reason">{{ __('sentence.Reason for visit') }}</label>
                                 <textarea class="form-control" id="reason" name="reason"></textarea>
 
                                 <small id="emailHelp" class="form-text text-muted">Entrez une drescription</small>
 
-                            </div>
+                            </div> -->
 
                             {{-- <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="send_sms" id="sms">

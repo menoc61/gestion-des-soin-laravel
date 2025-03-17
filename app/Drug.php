@@ -22,4 +22,10 @@ class Drug extends Model implements Auditable
     {
         return $this->hasMany('App\Prescription_drug');
     }
+
+    public function activityReports()
+    {
+    return $this->belongsToMany(ActivityReport::class)->withPivot('amountDrug')->withTimestamps();
+    }
+
 }

@@ -128,12 +128,19 @@
                                 <td class="text-center "><b>Notification Rendez-Vous</b></td>
                             </tr>
                             @forelse ($appointments as $appointment)
+                             @if ($appointment->visited == 0)
                                 <div class="row notify_item d-flex justify-content-center">
                                     <div class="card w-100 ">
                                         <div class="card-body">
                                             <div class="table-responsive">
+                                            <!-- <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeBtn">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div> -->
                                                 <table class="table table-bordered" id="dataTable" width="100%"
                                                     cellspacing="0">
+                                                
                                                     <thead>
                                                         <tr class="text-center">
                                                             <td>Nom</td>
@@ -164,6 +171,7 @@
                                         </div>
                                     </div>
                                 </div>
+                             @endif
                             @empty
                             @endforelse
                         </div>
@@ -739,6 +747,16 @@
             });
         });
     </script>
+
+<!-- <script>
+    $(document).ready(function () {
+        // Lorsque le bouton "close" est cliqué
+        $('#closeBtn').on('click', function () {
+            $('#notifyTable').fadeOut(); // Masquer avec un effet de fondu
+        });
+    });
+</script> -->
+
 
     <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
     <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>

@@ -352,6 +352,35 @@
 
                 {{-- ********************* Fin Section Utilisateurs et rôles de la sidenav ************************** --}}
 
+                {{-- ******************** Debut Section Rapport du praticien apres chaque soin ************************ --}}
+                @if (Auth::user()->role_id != 3)
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+                    <!-- Heading -->
+                    <div class="sidebar-heading">
+                        {{ __('sentence.Report') }}
+                    </div>
+                    <!-- Nav Item - Utilities Collapse Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                            data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
+                            <i class="fas fa-fw fa-users"></i>
+                            <span>{{ __('sentence.Report') }}</span>
+                        </a>
+                        <div id="collapseReport" class="collapse" aria-labelledby="headingUtilities"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item"
+                                    href="{{ route('report.store') }}">{{ __('sentence.Create report') }}</a>
+                                <a class="collapse-item"
+                                    href="{{ route('report.all') }}">{{ __('sentence.All report') }}</a>
+                               
+                            </div>
+                        </div>
+                    </li>
+                @endif
+                {{-- ******************** Fin Section Rapport du praticien apres chaque soin ************************ --}}
+
                 {{-- ********************* Debut Section Paramètres de la sidenav ************************** --}}
 
                 @if (Auth::user()->can('manage settings'))
