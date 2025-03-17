@@ -85,6 +85,8 @@ class HomeController extends Controller
         
         $countRDVread = Appointment::where('is_read', 0)->count();
 
+        //$countRDVrea = Appointment::where('is_read', 0)->count();
+
         $appointments = Appointment::where('is_read', 0)->orderBy('id', 'desc')->paginate(7);
 
 

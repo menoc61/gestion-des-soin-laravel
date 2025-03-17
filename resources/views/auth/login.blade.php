@@ -39,6 +39,12 @@
                                 </div>
                             </center>
                             <hr>
+                            @if(session('error'))
+                                <div class="alert alert-warning">
+                                      {{ session('error') }}
+                                 </div>
+                            @endif
+
 
                         </div>
                         <form method="POST" action="{{ route('login') }}" class="user">
