@@ -59,7 +59,7 @@ class DrugController extends Controller
     {
         $products = $this->products;
         $sortColumn = request()->get('sort');
-        $sortOrder = request()->get('order', 'asc');
+        $sortOrder = request()->get('order', 'desc');
         if (!empty($sortColumn)) {
             $drugs = Drug::orderby($sortColumn, $sortOrder)->paginate(25);
         } else {

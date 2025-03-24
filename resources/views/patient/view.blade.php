@@ -1298,6 +1298,7 @@
                             class="d-none">
                             <input type="hidden" name="rdv_id" id="rdv_id2">
                             <input type="hidden" name="rdv_status" value="2">
+                            <input type="hidden" name="is_read" value="0">
                             @csrf
                         </form>
                     </div>

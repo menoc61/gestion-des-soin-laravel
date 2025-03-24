@@ -176,7 +176,7 @@ class AppointmentController extends Controller
     {
         $validatedData = $request->validate([
             'doctor_id' => ['required', 'exists:users,id'],
-            'praticient_id' => ['required', 'array'], // Accepter plusieurs praticiens
+            'praticient_id' => ['nullable', 'array'], // Accepter plusieurs praticiens
             'praticient_id.*' => ['exists:users,id'], // Vérifier chaque ID
             'patient' => ['required', 'exists:users,id'],
             'rdv_time_date' => ['required'],
@@ -199,7 +199,9 @@ class AppointmentController extends Controller
         
         $appointment->save();
         
-        $appointment->praticients()->sync($request->praticient_id);
+        if ($request->has('praticient_id') && !empty($request->praticient_id)) {
+            $appointment->praticients()->sync($request->praticient_id);
+        }
 
         if ($request->send_sms == 1) {
             $user = User::findOrFail($request->patient);
@@ -269,6 +271,8 @@ class AppointmentController extends Controller
     {
         $validatedData = $request->validate([
             'doctor_id' => ['required', 'exists:users,id'],
+            'praticient_id' => ['nullable', 'array'], // Accepter plusieurs praticiens
+            'praticient_id.*' => ['exists:users,id'], // Vérifier chaque ID
             'patient' => ['required', 'exists:users,id'],
             'rdv_time_date' => ['required', 'date'],
             'rdv_time_start' => ['required'],
@@ -287,9 +291,37 @@ class AppointmentController extends Controller
         $appointment->save();
     
         // Gestion des soins/médicaments
-        if ($request->has('drugs')) {
-            $appointment->drugs()->sync($request->drugs);
+        if ($request->has('praticient_id') && !empty($request->praticient_id)) {
+            $appointment->praticients()->sync($request->praticient_id);
+        } 
+
+        if ($request->has('trade_name')) {
+            // Supprimer les anciens médicaments liés à ce rendez-vous
+            Rdv_Drug::where('appointment_id', $appointment->id)->delete();
+        
+            $i = count($request->trade_name);
+            for ($x = 0; $x < $i; ++$x) {
+                if ($request->trade_name[$x] != null) {
+                    $add_drug = new Rdv_Drug();
+                    $add_drug->strength = $request->input('strength.' . $x) ?? null;
+                    $add_drug->dose = $request->input('dose.' . $x) ?? null;
+                    $add_drug->duration = $request->input('duration.' . $x) ?? null;
+                    $add_drug->drug_advice = $request->input('drug_advice.' . $x) ?? null;
+                    $add_drug->appointment_id = $appointment->id;
+                    $add_drug->drug_id = $request->input('trade_name.' . $x) ?? null;
+        
+                    // Récupérer le montant du médicament
+                    $drug = Drug::find($add_drug->drug_id);
+                    if ($drug) {
+                        $add_drug->montant_drug = $drug->amountDrug;
+                    }
+        
+                    $add_drug->save();
+                }
+            }
         }
+        
+        //dd($appointment->praticients, $appointment->drugs);
     
         // Envoi du SMS si nécessaire
         if ($request->send_sms == 1) {
@@ -328,9 +360,9 @@ class AppointmentController extends Controller
     public function pending()
     {
         if (\Auth::user()->role == '3') {
-            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 0)->orderBy('date', 'ASC')->paginate(25);
+            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 0)->orderBy('date', 'DESC')->paginate(25);
         } else {
-            $appointments = Appointment::where('visited', 0)->where('date', '>=', Carbon::today())->orderBy('date', 'ASC')->paginate(25);
+            $appointments = Appointment::where('visited', 0)->where('date', '>=', Carbon::today())->orderBy('date', 'DESC')->paginate(25);
         }
 
         return view('appointment.all', ['appointments' => $appointments]);
@@ -339,9 +371,9 @@ class AppointmentController extends Controller
     public function treated()
     {
         if (\Auth::user()->role == '3') {
-            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 1)->orderBy('date', 'ASC')->paginate(25);
+            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 1)->orderBy('date', 'DESC')->paginate(25);
         } else {
-            $appointments = Appointment::where('visited', 1)->orderBy('date', 'ASC')->paginate(25);
+            $appointments = Appointment::where('visited', 1)->orderBy('date', 'DESC')->paginate(25);
         }
 
         return view('appointment.all', ['appointments' => $appointments]);
@@ -350,11 +382,12 @@ class AppointmentController extends Controller
     public function cancelled()
     {
         if (\Auth::user()->role == '3') {
-            $appointments = Appointment::where('user_id', Auth()->id())->where('date', '<', Carbon::today())->where('visited', '!=', 1)->orderBy('date', 'ASC')->paginate(25);
+            $appointments = Appointment::where('user_id', Auth()->id())->where('date', '<', Carbon::today())->where('visited', '!=', 1)->orderBy('date', 'DESC')->paginate(25);
         } else {
             $appointments = Appointment::where('date', '<', Carbon::today())
                ->where('visited', '!=', 1)
-               ->orderBy('date', 'ASC')->paginate(25);
+               ->orWhere('visited', 2)
+               ->orderBy('date', 'DESC')->paginate(25);
         }
 
         return view('appointment.all', ['appointments' => $appointments]);

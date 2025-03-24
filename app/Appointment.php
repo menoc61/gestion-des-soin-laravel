@@ -53,5 +53,5 @@ class Appointment extends Model implements Auditable
     // public function billings()
     // {
     //     return $this->belongsToMany(Billing::class, 'billing_items', 'billing_id', 'appointment_id');
-    // }
+    // ->withTimestamps()}
 }
