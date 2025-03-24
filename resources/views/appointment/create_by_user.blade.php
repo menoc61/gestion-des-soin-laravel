@@ -43,7 +43,7 @@
                             <div class="form-group col-md-4">
                                 @if (Auth::user()->role_id != 2)
                                     <div class="form-group">
-                                        <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
+                                        <label for="doctor_name">{{ __('sentence.Praticiens P') }} </label>
                                         <select class="form-control multiselect-search" name="doctor_id" id="DoctorID" required>
                                             <option value="" disabled selected>{{ __('sentence.Select Praticien') }}...
                                             </option>
@@ -54,7 +54,7 @@
                                     </div>
                                 @else
                                 <div class="form-group">
-                                    <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
+                                    <label for="doctor_name">{{ __('sentence.Praticiens P') }} </label>
                                     <select class="form-control multiselect-search" name="doctor_id_disabled" id="DoctorID" disabled>
                                         @foreach ($praticiens as $user)
                                             <option value="{{ $user->id }}" {{ Auth::user()->id == $user->id ? 'selected' : '' }}>
@@ -113,6 +113,23 @@
                                      </select>
                                 </div> 
 
+                                <div class="form-group col-md-6">
+                                       <label>Praticiens secondaires :</label>
+                                       <div id="praticient-container">
+                                           <div class="praticient-group">
+                                               <select name="praticient_id[]" class="form-control praticient-select">
+                                                   <option value="" disabled selected>Selectionnez les praticiens secondaires...</option>
+                                                   @foreach ($other_praticiens as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                   @endforeach
+                                                </select>
+                                                <button type="button" class="btn btn-sm btn-danger remove-praticient">x</button>
+                                            </div>
+                                        </div>
+                                       <button type="button" class="btn btn-sm btn-primary mt-2" id="add-praticient">+</button>
+                               </div>
+
+
                             {{-- <div class="form-group col-md-6">
                                 <label for="reason">{{ __('sentence.Reason for visit') }}</label>
                                 <textarea class="form-control" id="reason" name="reason"></textarea>
@@ -125,6 +142,7 @@
                                     {{ __('sentence.Send SMS') }}
                                 </label>
                             </div> --}}
+
                         </div>
 
                         <div class="form-group row">
@@ -133,6 +151,25 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+                            <!-- -->
+                <div class="card">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} <span
+                                id="doctor-name"></span></h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover" id="agendas-table">
+
+                                <tr>
+                                    <td align="center">{{ __('sentence.Date') }}</td>
+                                    <td align="center">{{ __('sentence.Time Slot') }}</td>
+                                </tr>
+                                <!-- Appointments will be dynamically inserted here -->
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -290,6 +327,120 @@
                 });
             });
         });
+    </script>
+
+<script>
+    $(document).ready(function () {
+        // Gérer l'ajout dynamique de praticiens secondaires
+        $('#add-praticient').click(function () {
+            let newPraticientGroup = `
+                <div class="praticient-group mt-2">
+                    <select name="praticient_id[]" class="form-control praticient-select">
+                        <option value="" disabled selected>Selectionnez les praticiens secondaires...</option>
+                        @foreach ($other_praticiens as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                    <button type="button" class="btn btn-sm btn-danger remove-praticient">x</button>
+                </div>
+            `;
+            $('#praticient-container').append(newPraticientGroup);
+        });
+
+        // Supprimer un praticien secondaire sélectionné
+        $(document).on('click', '.remove-praticient', function () {
+            $(this).closest('.praticient-group').remove();
+        });
+
+        // Charger l'agenda d'un praticien secondaire
+        $(document).on('change', '.praticient-select', function () {
+            var praticientId = $(this).val(); // Récupérer l'ID du praticien sélectionné
+            var praticientName = $(this).find("option:selected").text(); // Récupérer le nom du praticien sélectionné
+
+            if (praticientId) {
+                $.ajax({
+                    url: '/appointments/by-praticient/' + praticientId, // Endpoint pour récupérer l'agenda
+                    method: 'GET',
+                    success: function (response) {
+                        // Mettre à jour le nom du praticien dans l'en-tête
+                        $('#doctor-name').text(' - ' + praticientName);
+
+                        // Réinitialiser le tableau pour afficher uniquement l'agenda du praticien sélectionné
+                        var agendasTable = $('#agendas-table');
+                        agendasTable.find('tr:gt(0)').remove(); // Supprimer les anciennes lignes sauf l'en-tête
+
+                        // Ajouter les rendez-vous reçus dans la réponse
+                        if (response.length > 0) {
+                            response.forEach(function (appointment) {
+                                var appointmentDate = new Date(appointment.date);
+                                var today = new Date();
+                                var datePrecedente = new Date(today);
+                                datePrecedente.setDate(today.getDate() - 1);
+
+                                if (appointmentDate > datePrecedente) {
+                                    var newRow = `
+                                        <tr>
+                                            <td align="center">
+                                                <label class="badge badge-primary-soft">
+                                                    <i class="fas fa-calendar"></i> ${appointment.date}
+                                                </label>
+                                            </td>
+                                            <td align="center">
+                                                <label class="badge badge-primary-soft">
+                                                    <i class="fa fa-clock"></i> ${appointment.time_start} - ${appointment.time_end}
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    `;
+                                    agendasTable.append(newRow);
+                                }
+                            });
+                        } else {
+                            var noData = `
+                                <tr>
+                                    <td colspan="2" align="center">
+                                        <img src="{{ asset('img/not-found.svg') }}" width="200" />
+                                        <br><br>
+                                        <b class="text-muted">{{ __('sentence.No appointment available') }}</b>
+                                    </td>
+                                </tr>
+                            `;
+                            agendasTable.append(noData);
+                        }
+                    },
+                    // error: function () {
+                    //     alert('Erreur lors du chargement de l\'agenda du praticien.');
+                    // }
+                });
+            }
+        });
+    });
+</script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // Ajouter un nouveau praticien
+            document.getElementById('add-praticient').addEventListener('click', function() {
+                let container = document.getElementById('praticient-container');
+                let newGroup = container.firstElementChild.cloneNode(true); // Cloner le premier groupe
+                container.appendChild(newGroup); // Ajouter le groupe cloné
+                newGroup.querySelector('.praticient-select').selectedIndex = 0; // Réinitialiser la sélection
+            });
+
+               // Supprimer un praticien sélectionné
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('remove-praticient')) {
+                    let container = document.getElementById('praticient-container');
+                    if (container.children.length > 1) {
+                        event.target.closest('.praticient-group').remove();
+                    } else {
+                        alert("Vous devez avoir au moins un praticien sélectionné.");
+                    }
+                }
+            });
+        });
+
     </script>
 
     {{-- <script>

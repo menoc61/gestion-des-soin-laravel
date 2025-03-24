@@ -51,7 +51,7 @@
                                 {{ csrf_field() }}
                             </div>
 
-                            <!-- <div class="form-group col-md-4">
+                            <!--<div class="form-group col-md-4">
                                 @if (Auth::user()->role_id != 2)
                                     <div class="form-group">
                                         <label for="doctors">{{ __('sentence.Praticien') }} </label>
@@ -66,10 +66,10 @@
                                 @endif
                             </div> -->
 
-                            <div class="form-group col-md-4">
+                             <div class="form-group col-md-4">
                                 @if (Auth::user()->role_id != 2)
                                     <div class="form-group">
-                                        <label for="doctor_name">{{ __('sentence.Praticien') }} </label>
+                                        <label for="doctor_name">{{ __('sentence.Praticiens P') }} </label>
                                         <select class="form-control " name="doctor_id" id="DoctorID" required>
                                             <option value="" disabled selected>{{ __('sentence.Select Drug') }}...
                                             </option>
@@ -79,7 +79,8 @@
                                         </select>
                                     </div>
                                 @endif
-                            </div>
+                            </div> 
+
 
                             <div class="form-group col-md-4">
                                 <label for="rdvdate">{{ __('sentence.Date') }}</label>
@@ -106,13 +107,41 @@
 
                             </div> -->
 
+                            <div class="form-group col-md-6">
+                                       <label>Praticiens secondaires :</label>
+                                       <div id="praticient-container">
+                                           <div class="praticient-group">
+                                               <select name="praticient_id[]" class="form-control praticient-select">
+                                                   <option value="" disabled selected>Selectionnez les praticiens secondaires...</option>
+                                                   @foreach ($other_praticiens as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                   @endforeach
+                                                </select>
+                                                <button type="button" class="btn btn-sm btn-danger remove-praticient">x</button>
+                                            </div>
+                                        </div>
+                                       <button type="button" class="btn btn-sm btn-primary mt-2" id="add-praticient">+</button>
+                            </div>
+
                             {{-- <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="send_sms" id="sms">
                                 <label class="form-check-label" for="sms">
                                     {{ __('sentence.Send SMS') }}
                                 </label>
                             </div> --}}
+
+                            <div class="form-group col-md-6">
+                            <div class="form-group">
+                                <label for="praticients">Sélectionnez les praticiens :</label>
+                                <select name="praticient_id[]" id="praticients" class="form-control" multiple>
+                                    @foreach($other_praticiens as $user)
+                                       <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                               </select>
+                            </div>
+                            </div>
                         </div>
+
 
                         <div class="form-group row">
                             <div class="col-sm-9">
@@ -233,6 +262,30 @@
         </section>
     </script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // Ajouter un nouveau praticien
+            document.getElementById('add-praticient').addEventListener('click', function() {
+                let container = document.getElementById('praticient-container');
+                let newGroup = container.firstElementChild.cloneNode(true); // Cloner le premier groupe
+                container.appendChild(newGroup); // Ajouter le groupe cloné
+                newGroup.querySelector('.praticient-select').selectedIndex = 0; // Réinitialiser la sélection
+            });
+
+               // Supprimer un praticien sélectionné
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('remove-praticient')) {
+                    let container = document.getElementById('praticient-container');
+                    if (container.children.length > 1) {
+                        event.target.closest('.praticient-group').remove();
+                    } else {
+                        alert("Vous devez avoir au moins un praticien sélectionné.");
+                    }
+                }
+            });
+        });
+
+    </script>
 
     <script>
         $(document).ready(function() {

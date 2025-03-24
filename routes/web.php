@@ -65,6 +65,8 @@ Route::get('/appointment/notify/whatsapp/{id}', 'AppointmentController@notify_wh
 Route::get('/appointment/notify/email/{id}', 'AppointmentController@notify_email')->name('appointment.notify.email')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::get('/appointment/get-appointment/{id}', 'AppointmentController@getAppointments')->name('appointment.getappointments');
 Route::get('/appointments/by-doctor/{doctorId}', 'AppointmentController@getAppointmentsByDoctor');
+Route::get('/appointments/by-praticient/{praticientId}', [AppointmentController::class,'AppointmentController@getAppointmentsByPraticient']);
+
 
 Route::get('/appointment/edit_appointment/{id}', 'AppointmentController@edit_appointment')->where('id', '[0-9]+')->name('appointment.edit_appointment')->middleware(['role_or_permission:Admin|view all appointments']);
 Route::post('/appointment/edit_appointment', 'AppointmentController@store_edit_appointment')->name('appointment.store_edit_appointment');

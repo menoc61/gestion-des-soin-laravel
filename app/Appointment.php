@@ -20,10 +20,15 @@ class Appointment extends Model implements Auditable
     }
     public function Doctor()
     {
-        //return $this->hasOne('App\User', 'id', 'doctor_id');
-        //return $this->belongsToMany(User::class, 'appointment_practitioner', 'appointment_id', 'doctor_id');
-        return $this->belongsToMany(User::class, 'appointment_practitioner', 'appointment_id', 'user_id');
+        return $this->hasOne('App\User', 'id', 'doctor_id');
+        
     }
+
+    public function praticients()
+    {
+        return $this->belongsToMany(User::class, 'praticient_appointment', 'appointment_id', 'praticient_id');   
+    }
+
     public function Prescription()
     {
         return $this->hasOne('App\Prescription', 'id', 'prescription_id');

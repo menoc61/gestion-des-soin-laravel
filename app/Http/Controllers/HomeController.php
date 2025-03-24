@@ -34,12 +34,40 @@ class HomeController extends Controller
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
+     * 
      */
+
+     public function getTotalAmountForPractitioner($practitionerId, $startDate, $endDate)
+   {
+    // Calculer les montants des RDV en tant que praticien principal
+    $primaryAmount = Appointment::where('doctor_id', $practitionerId)
+        ->where('visited', 1) // RDV effectués
+        ->whereBetween('created_at', [$startDate, $endDate])
+        ->withSum('rdv__drugs', 'montant_drug') // Remplacez 'amount' par le champ qui contient le montant des RDV
+        ->get()
+        ->sum('rdv__drugs_sum_montant_drug');
+
+    // Calculer les montants des RDV en tant que praticien secondaire
+    $secondaryAmount = Appointment::whereHas('praticients', function ($query) use ($practitionerId) {
+            $query->where('users.id', $practitionerId);
+        })
+        ->where('visited', 1) // RDV effectués
+        ->whereBetween('created_at', [$startDate, $endDate])
+        ->withSum('rdv__drugs', 'montant_drug')
+        ->get()
+        ->sum('rdv__drugs_sum_montant_drug'); // Remplacez 'amount' par le champ qui contient le montant des RDV
+
+    // Retourner la somme totale des montants
+    return $primaryAmount + $secondaryAmount;
+   }
+
     public function index(Request $request)
     {
         // user Authentifié
         $user = Auth::user();
         $doctorId = $user->id;
+        $praticientId = $user->id;
+        $practitionerId = $user->id;
 
         // Dates sélectionnées par l'utilisateur
         $startDate = $request->input('startDate');
@@ -71,6 +99,13 @@ class HomeController extends Controller
         $total_tests_for_pratician = Test::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->count();
         $total_amount_for_pratician = Billing::whereBetween('created_at', [$startDate, $endDate])->where('created_by', $doctorId)->sum('total_with_tax');
         $agendaDoctors = Appointment::where('doctor_id', $doctorId)->where('visited', 0)->whereMonth('date', date('m'))->paginate(3);
+        $agendaPraticients = Appointment::whereHas('praticients', function ($query) use ($praticientId) {
+            $query->where('users.id', $praticientId);
+        })->where('visited', 0)
+        ->whereMonth('date', date('m'))
+        ->paginate(3);
+        $allAppointments = $agendaDoctors->merge($agendaPraticients);
+        $totalAmountForPractitioner = $this->getTotalAmountForPractitioner($practitionerId, $startDate, $endDate);
 
         $total_appointments_today = Appointment::where('visited', 0)->wheredate('date', Today())->paginate(3);
 
@@ -152,7 +187,9 @@ class HomeController extends Controller
             'total_tests_for_pratician' => $total_tests_for_pratician,
             'total_amount_for_pratician' => $total_amount_for_pratician,
             'agendaDoctors' => $agendaDoctors,
-
+            'agendaPraticients' => $agendaPraticients,
+            'allAppointments' => $allAppointments,
+            'totalAmountForPractitioner' => $totalAmountForPractitioner,
             'total_appointments_today' => $total_appointments_today,
 
             'total_payments_month' => $total_payments_month,
