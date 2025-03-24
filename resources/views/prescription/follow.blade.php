@@ -99,6 +99,22 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
+                                       <label>Praticiens secondaires :</label>
+                                       <div id="praticient-container">
+                                           <div class="praticient-group">
+                                               <select name="praticient_id[]" class="form-control praticient-select">
+                                                   <option value="" disabled selected>Selectionnez les praticiens secondaires...</option>
+                                                   @foreach ($other_praticiens as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                   @endforeach
+                                                </select>
+                                                <button type="button" class="btn btn-sm btn-danger remove-praticient">x</button>
+                                            </div>
+                                        </div>
+                                       <button type="button" class="btn btn-sm btn-primary mt-2" id="add-praticient">+</button>
+                               </div>
+
+                                <div class="form-group col-md-4">
                                     <label for="rdvdate">{{ __('sentence.Date') }}</label>
                                     <input type="text" class="form-control target agenda" name="rdv_time_date"
                                         readonly="readonly" id="rdvdate">
@@ -752,5 +768,30 @@
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
         });
+    </script>
+
+   <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // Ajouter un nouveau praticien
+            document.getElementById('add-praticient').addEventListener('click', function() {
+                let container = document.getElementById('praticient-container');
+                let newGroup = container.firstElementChild.cloneNode(true); // Cloner le premier groupe
+                container.appendChild(newGroup); // Ajouter le groupe cloné
+                newGroup.querySelector('.praticient-select').selectedIndex = 0; // Réinitialiser la sélection
+            });
+
+               // Supprimer un praticien sélectionné
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('remove-praticient')) {
+                    let container = document.getElementById('praticient-container');
+                    if (container.children.length > 1) {
+                        event.target.closest('.praticient-group').remove();
+                    } else {
+                        alert("Vous devez avoir au moins un praticien sélectionné.");
+                    }
+                }
+            });
+        });
+
     </script>
 @endsection

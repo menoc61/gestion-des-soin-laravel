@@ -113,8 +113,8 @@
     @role('Admin|Praticien')
         <div class="row ">
             <div class="col-md-6">
-                <input type="date" onchange="StartDateFilter(this)" value={{ $defaultStartDate }}>
-                <input type="date" onchange="EndDateFilter(this)" value={{ $defaultEndDate }}>
+                <input type="date" onchange="StartDateFilter(this)" value="{{ $defaultStartDate }}">
+                <input type="date" onchange="EndDateFilter(this)" value="{{ $defaultEndDate }}">
             </div>
             <div class="col-md-6">
                 <div class="wrapper">
@@ -157,6 +157,7 @@
                                                                     data-date="{{ $appointment->date->format('d M Y') }}"
                                                                     data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
                                                                     data-doctor="{{ $appointment->Doctor->name }}"
+                                                                    data-praticients="{{ $appointment->praticients->pluck('name')->implode(', ') }}"
                                                                     data-read="{{ $appointment->is_read }}"
                                                                     data-visited="{{ $appointment->visited }}"
                                                                     data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
@@ -327,7 +328,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                     {{ __('sentence.Amount Generated') }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_amount_for_pratician }} fcfa
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalAmountForPractitioner }} fcfa
                                 </div>
                             </div>
                         </div>
@@ -340,8 +341,8 @@
             <div class="col-xl-2 col-md-6 mb-4 taille marge">
                 <div class="card border-bottom-warning shadow h-100 py-2 card-po1">
                     <div class="card-body shadow-lg card-po bg-warning col-md-9">
-                        <div class="col-auto">
-                            <center><i class="fa fa-calendar fa-2x text-gray-300"></i></center>
+                    <div class="col-auto">
+                            <center><a class="collapse-item" href="{{ route('appointment.all') }}"><i class="fa fa-calendar fa-2x text-gray-300"></i></a></center>
                         </div>
                     </div>
                     <div class="card-body card-po1">
@@ -528,7 +529,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($agendaDoctors as $key => $appointment)
+                                    
+                                    @forelse($allAppointments as $key => $appointment)
                                     @php
                                        $today = now()->format('Y-m-d'); // Obtenir la date d'aujourd'hui au format Y-m-d
                                     @endphp
@@ -609,6 +611,10 @@
                                     <td> <label class="badge badge-primary-soft" id="appointmentDoctor"></label></td>
                                 </tr>
                                 <tr>
+                                    <td><b>Autres Praticiens : </b></td>
+                                    <td> <label class="badge badge-primary-soft" id="appointmentPraticient"></label></td>
+                                </tr>
+                                <tr>
                                     <td><b>{{ __('sentence.Date') }} : </b></td>
                                     <td><label class="badge badge-primary-soft" id="appointmentDate"></label></td>
                                 </tr>
@@ -654,23 +660,25 @@
     <script src="/dashboard/vendor/chart.js/Chart.bundle.js"></script>
 
     <script>
-        var startDate = null;
-        var endDate = null;
+        var startDate = "{{ $defaultStartDate }}"; // Valeur initiale par défaut
+        var endDate = "{{ $defaultEndDate }}"; // Valeur initiale par défaut
 
         function StartDateFilter(input) {
-            startDate = input.value;
+            startDate = input.value || startDate; // Met à jour uniquement si une valeur est fournie
             updateData();
         }
 
         function EndDateFilter(input) {
-            endDate = input.value;
+            endDate = input.value || endDate;
             updateData();
         }
 
         function updateData() {
-            if (!startDate || !endDate) {
-                return; // Vérifier que les deux dates sont sélectionnées
-            }
+            // if (!startDate || !endDate) {
+            //     return; // Vérifier que les deux dates sont sélectionnées
+            // }
+
+            console.log("Start Date:", startDate, "End Date:", endDate);
 
             // Requête AJAX pour récupérer les données filtrées
             $.ajax({
@@ -681,6 +689,7 @@
                     endDate: endDate
                 },
                 success: function(response) {
+                    //console.log("Réponse reçue:", response);
                     // Mettre à jour les données de la page avec la réponse reçue
                     $('#total_appointments').text(response.total_appointments);
                     $('#total_patients').text(response.total_patients);
@@ -710,10 +719,11 @@
                 var time = $(this).data('time');
                 var doctor = $(this).data('doctor');
                 var prescription = $(this).data('prescription');
+                var praticients = $(this).data('praticients');
                 var drugs = $(this).data('drugs');
                 var read = $(this).data('read');
                 var visited = $(this).data('visited');
-
+                                        
 
                 $('#appointmentDate').text(date);
                 $('#appointmentTime').text(time);
@@ -721,6 +731,13 @@
                 $('#appointmentID').text(id);
                 $('#appointmentDoctor').text(doctor);
                 $('#appointmentPrescription').text(prescription);
+                $('#appointmentPraticient').empty();
+
+                var praticientArray = praticients.split(', ');
+                praticientArray.forEach(function(praticient) {
+                    var badge = $('<label>').addClass('badge badge-primary-soft').text( praticient);
+                    $('#appointmentPraticient').append(badge).append(' ');
+                });
 
                 // Clear previous drug badges
                 $('#appointmentPrescriptiondrug').empty();

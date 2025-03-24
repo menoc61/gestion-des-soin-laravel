@@ -707,16 +707,20 @@
                                     <tr class="text-center">
                                         <th><b>Numéro</b></th>
                                         <th><b>Crée le</b></th>
-                                        <th><b>Observations</b></th>
+                                        <th><b>Crée pour le</b></th>
+                                        <!-- <th><b>Observations</b></th> -->
                                         <th><b>Praticiens</b></th>
+                                        <th><b>Praticiens Secondaires</b></th>
                                         <th><b>Soins Appliqués</b></th>
                                     </tr>
                                     @forelse ($prescriptionAppointment as $key => $appointment)
                                         <tr class="text-center">
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $appointment->created_at }} </td>
-                                            <td> {{ $appointment->rapport }} </td>
+                                            <td>{{ $appointment->date->format('d M Y') }} De {{ $appointment->time_start }} à {{ $appointment->time_end }}</td>
+                                            <!-- <td> {{ $appointment->rapport }} </td> -->
                                             <td>{{ $appointment->Doctor->name }}</td>
+                                            <td>{{ $appointment->praticients->pluck('name')->implode(', ') }}</td>
                                             <td>{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}</td>
                                         </tr>
                                     @empty
@@ -1438,16 +1442,20 @@
                     <tr class="text-center">
                         <th><b>Numéro</b></th>
                         <th><b>Crée le</b></th>
-                        <th><b>Observations</b></th>
+                        <th><b>Crée pour le</b></th>
+                        <!-- <th><b>Observations</b></th> -->
                         <th><b>Praticiens</b></th>
+                        <th><b>Praticiens Secondaires</b></th>
                         <th><b>Soins Appliqués</b></th>
                     </tr>
                     @forelse ($prescriptionAppointment as $key => $appointment)
                         <tr class="text-center">
                             <td> {{ $key + 1 }} </td>
                             <td> {{ $appointment->created_at }} </td>
-                            <td> {{ $appointment->rapport }} </td>
+                            <td>{{ $appointment->date->format('d M Y') }} De {{ $appointment->time_start }} à {{ $appointment->time_end }}</td>
+                            <!-- <td> {{ $appointment->rapport }} </td> -->
                             <td>{{ $appointment->Doctor->name }}</td>
+                            <td>{{ $appointment->praticients->pluck('name')->implode(', ') }}</td>
                             <td>{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}</td>
                         </tr>
                     @empty

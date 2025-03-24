@@ -71,8 +71,8 @@ class User extends Authenticatable implements Auditable
     }
 
     public function Appointment(){
-        //return $this->hasMany('App\Appointment');
-        return $this->belongsToMany(Appointment::class, 'appointment_practitioner', 'user_id', 'appointment_id');
+        return $this->hasMany('App\Appointment');
+        //return $this->belongsToMany(Appointment::class, 'appointment_practitioner', 'user_id', 'appointment_id');
     }
 
 

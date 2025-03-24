@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AppointmentPractitioner extends Migration
+class PraticientAppointment extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class AppointmentPractitioner extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('appointment_practitioner', function (Blueprint $table) {
+        Schema::create('praticient_appointment', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('appointment_id')->constrained('appointments')->onDelete('cascade');
-            $table->foreignId('doctor_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('appointment_id')->constrained()->onDelete('cascade');
+            $table->foreignId('praticient_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
-        
     }
 
     /**
@@ -30,7 +28,6 @@ class AppointmentPractitioner extends Migration
      */
     public function down()
     {
-        //
-        Schema::dropIfExists('appointment_practitioner');
+        Schema::dropIfExists('praticient_appointment');
     }
 }

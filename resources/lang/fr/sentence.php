@@ -7,6 +7,7 @@ return [
     'Patients' => 'Hôtes',
     'Patient' => 'Hôte',
     'Praticiens' => 'Praticiens',
+    'Praticiens P' => 'Praticien Principal',
     'New Patient' => 'Ajouter un Hôte',
     'All Patients' => 'Tous les Hôtes',
     'Prescriptions' => 'Traitements',

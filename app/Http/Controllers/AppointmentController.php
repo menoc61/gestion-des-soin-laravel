@@ -22,14 +22,16 @@ class AppointmentController extends Controller
         $this->middleware('auth');
     }
 
+
     public function create()
     {
         $patients = User::where('role_id', '3')->get();
         $praticiens = User::where('role_id', '!=', 3)->get();
+        $other_praticients = User::where('role_id', '!=', 3)->get();
         $drugs = Drug::all();
 
 
-        return view('appointment.create', ['patients' => $patients, 'praticiens' => $praticiens, 'drugs' => $drugs,]);
+        return view('appointment.create', ['patients' => $patients, 'praticiens' => $praticiens, 'other_praticiens' => $other_praticiens, 'drugs' => $drugs,]);
     }
 
     public function create_By_id($id)
@@ -39,6 +41,7 @@ class AppointmentController extends Controller
         $drugs = Drug::all();
 
         $praticiens = User::where('role_id', '!=', 3)->get();
+        $other_praticiens = User::where('role_id', '!=', 3)->get();
 
         return view('appointment.create_by_user', [
             'userName' => $user->name,
@@ -46,6 +49,7 @@ class AppointmentController extends Controller
             'user_auth' => $user_auth,
             'userId' => $id,
             'drugs' => $drugs,
+            'other_praticiens' => $other_praticiens,
         ]);
     }
 
@@ -63,11 +67,14 @@ class AppointmentController extends Controller
         // Récupérer la liste des médicaments et des praticiens
         $drugs = Drug::all();
         $praticiens = User::where('role_id', '!=', 3)->get();
+        $other_praticiens = User::where('role_id', '!=', 3)->get();
+
 
         // Retourner la vue d'édition avec les données actuelles du rendez-vous
         return view('appointment.edit_appointment', [
             'userName' => $user->name,
             'praticiens' => $praticiens,
+            'other_praticiens' => $other_praticiens,
             'user_auth' => $user_auth,
             'userId' => $user->id,
             'appointment' => $appointment,
@@ -76,20 +83,19 @@ class AppointmentController extends Controller
     }
 
 
-
-
-
     public function rdv_praticien_By_id($pres_id, $id)
     {
         $user = User::findOrFail($id);
         $prescription = Prescription::findOrFail($pres_id);
         $praticiens = User::where('role_id', '!=', 3)->get();
+        $other_praticiens = User::where('role_id', '!=', 3)->get();
         $user_auth = Auth::user();
 
 
         return view('appointment.rdvPraticien', [
             'userName' => $user->name,
             'praticiens' => $praticiens,
+            'other_praticiens' => $other_praticiens,
             'user_auth' => $user_auth,
             'userId' => $id,
             'prescription' => $prescription
@@ -100,12 +106,16 @@ class AppointmentController extends Controller
     {
         $user = User::findOrFail($id);
         $praticien = User::findOrFail($doc_id);
+        $other_praticiens = Praticient::with('user')->whereHas('appointments', function ($query) use ($doc_id) {
+            $query->where('doctor_id', $doc_id);
+        })->get();
         $user_auth = Auth::user();
         $appointmentsDoc = Appointment::where('doctor_id', $doc_id)->get();
 
         return view('appointment.rdv', [
             'userName' => $user->name,
             'praticienName' => $praticien->name,
+            'other_praticiens' => $other_praticiens,
             'user_auth' => $user_auth,
             'patientId' => $id, // Utilisez $id comme $patientId
             'docId' => $doc_id,
@@ -166,8 +176,8 @@ class AppointmentController extends Controller
     {
         $validatedData = $request->validate([
             'doctor_id' => ['required', 'exists:users,id'],
-            //'doctor_id' => ['required', 'array'], // Permettre plusieurs praticiens
-            //'doctor_id.*' => ['exists:users,id'], // Vérifier que chaque ID existe
+            'praticient_id' => ['required', 'array'], // Accepter plusieurs praticiens
+            'praticient_id.*' => ['exists:users,id'], // Vérifier chaque ID
             'patient' => ['required', 'exists:users,id'],
             'rdv_time_date' => ['required'],
             'rdv_time_start' => ['required'],
@@ -178,7 +188,6 @@ class AppointmentController extends Controller
         $appointment = new Appointment();
         $appointment->user_id = $request->patient;
         $appointment->doctor_id = $request->doctor_id;
-       // $appointment->doctor_id = $doctor_id; // Utilisez l'ID du praticien
         $appointment->date = $request->rdv_time_date;
         $appointment->time_start = $request->rdv_time_start;
         $appointment->time_end = $request->rdv_time_end;
@@ -187,9 +196,10 @@ class AppointmentController extends Controller
         $appointment->reason = $request->reason;
         $appointment->rapport = $request->rapport;
         $appointment->prescription_id = $request->prescription_id;
+        
         $appointment->save();
-
-        //$doctors->doctors()->sync($request->doctors);
+        
+        $appointment->praticients()->sync($request->praticient_id);
 
         if ($request->send_sms == 1) {
             $user = User::findOrFail($request->patient);
@@ -320,7 +330,7 @@ class AppointmentController extends Controller
         if (\Auth::user()->role == '3') {
             $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 0)->orderBy('date', 'ASC')->paginate(25);
         } else {
-            $appointments = Appointment::where('visited', 0)->orderBy('date', 'ASC')->paginate(25);
+            $appointments = Appointment::where('visited', 0)->where('date', '>=', Carbon::today())->orderBy('date', 'ASC')->paginate(25);
         }
 
         return view('appointment.all', ['appointments' => $appointments]);
@@ -340,9 +350,11 @@ class AppointmentController extends Controller
     public function cancelled()
     {
         if (\Auth::user()->role == '3') {
-            $appointments = Appointment::where('user_id', Auth()->id())->where('visited', 0)->orderBy('date', 'ASC')->paginate(25);
+            $appointments = Appointment::where('user_id', Auth()->id())->where('date', '<', Carbon::today())->where('visited', '!=', 1)->orderBy('date', 'ASC')->paginate(25);
         } else {
-            $appointments = Appointment::where('visited', 0)->orderBy('date', 'ASC')->paginate(25);
+            $appointments = Appointment::where('date', '<', Carbon::today())
+               ->where('visited', '!=', 1)
+               ->orderBy('date', 'ASC')->paginate(25);
         }
 
         return view('appointment.all', ['appointments' => $appointments]);
@@ -426,6 +438,26 @@ class AppointmentController extends Controller
 
         return response()->json($userAppointments);
     }
+
+    public function getAppointmentsByPraticient($praticientId)
+    {
+        $appointments = Appointment::whereHas('praticients', function ($query) use ($praticientId) {
+            $query->where('users.id', $praticientId);
+        })
+        ->where('visited', 0)
+        ->get()
+        ->map(function ($appointment) {
+            return [
+                'date' => $appointment->date->format('d M Y'),
+                'time_start' => $appointment->time_start,
+                'time_end' => $appointment->time_end,
+                'created_at' => $appointment->created_at->format('d M Y H:i'),
+            ];
+        });
+
+    return response()->json($appointments);
+    }
+
 
     public function checkAvailability($doctor_id, $date)
     {

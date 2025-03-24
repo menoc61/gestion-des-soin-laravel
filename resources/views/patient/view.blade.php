@@ -501,6 +501,7 @@
                                                                     data-date="{{ $appointment->date->format('d M Y') }}"
                                                                     data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
                                                                     data-doctor="{{ $appointment->Doctor->name }}"
+                                                                    data-praticients = "{{ $appointment->Praticient->pluck('name')->implode(', ') }}"
                                                                     data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
                                                                     data-drugs="{{ $appointment->drugs->pluck('trade_name')->implode(', ') }}">
                                                                     <i class="fas fa-eye"></i>
@@ -551,6 +552,7 @@
                                                             <td align="center"><label class=""><i
                                                                         class="fas fa-fw fa-pills"></i>
                                                                         {{ $appointment->drugs->isEmpty() ? 'aucun' : $appointment->drugs->pluck('trade_name')->implode(', ') }}
+                                                                       
                                                                 </label></td>
                                                             <td class="text-center">
                                                                 @if(($appointment->date < Today()) && ($appointment->visited != 1))
@@ -590,6 +592,7 @@
                                                                     data-date="{{ $appointment->date->format('d M Y') }}"
                                                                     data-time="{{ $appointment->time_start }} - {{ $appointment->time_end }}"
                                                                     data-doctor="{{ $appointment->Doctor->name }}"
+                                                                    data-praticients = "{{ $appointment->praticients->pluck('name')->implode(', ') }}"
                                                                     data-read="{{ $appointment->is_read }}"
                                                                     data-visited="{{ $appointment->visited }}"
                                                                     data-prescription="{{ $appointment->Prescription ? $appointment->Prescription->nom : '' }}"
@@ -1423,6 +1426,10 @@
                                     <td> <label class="badge badge-primary-soft" id="appointmentDoctor"></label></td>
                                 </tr>
                                 <tr>
+                                    <td><b>Praticients secondaires : </b></td>
+                                    <td><span id="appointmentPraticient"></span></td>
+                                </tr>
+                                <tr>
                                     <td><b>{{ __('sentence.Date') }} : </b></td>
                                     <td><label class="badge badge-primary-soft" id="appointmentDate"></label></td>
                                 </tr>
@@ -1518,17 +1525,25 @@
                     var time = $(this).data('time');
                     var doctor = $(this).data('doctor');
                     var prescription = $(this).data('prescription');
+                    var praticients = $(this).data('praticients');
                     var drugs = $(this).data('drugs');
                     var read = $(this).data('read');
                     var visited = $(this).data('visited');
 
 
                     $('#appointmentDate').text(date);
-                    $('#appointmentTime').text(time);
+                    $('#appointmentTime').text(time); 
                     $('#appointmentRead').text(read);
                     $('#appointmentID').text(id);
                     $('#appointmentDoctor').text(doctor);
                     $('#appointmentPrescription').text(prescription);
+                    $('#appointmentPraticient').empty();
+
+                    var praticientArray = praticients.split(', ');
+                    praticientArray.forEach(function(praticient) {
+                        var badge = $('<label>').addClass('badge badge-primary-soft').text( praticient);
+                        $('#appointmentPraticient').append(badge).append(' ');
+                    });
 
                     // Clear previous drug badges
                     $('#appointmentPrescriptiondrug').empty();

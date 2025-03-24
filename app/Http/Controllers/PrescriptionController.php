@@ -75,6 +75,8 @@ class PrescriptionController extends Controller
         $prescription = Prescription::findOrfail($id);
         $doctor = $prescription->doctor_id;
         $praticiens = User::where('role_id', '2')->get();
+        $other_praticiens = User::where('role_id', '!=', 3)->get();
+
         $currentUserAppointments = Appointment::where('user_id', $prescription->user_id)
             ->where('reason', 'like', '%' . $prescription->reference . '%')
             ->where('reason', 'like', '%' . $prescription->id . '%')
@@ -95,6 +97,7 @@ class PrescriptionController extends Controller
             'appointments' => $appointments,
             'doctor' => $doctor,
             'praticiens' => $praticiens,
+            'other_praticiens' => $other_praticiens,
             'drugs' => $drugs,
         ]);
     }
@@ -107,6 +110,8 @@ class PrescriptionController extends Controller
 
         $patient = Prescription::where('user_id', $userId->id)->get();
         $praticiens = Prescription::where('doctor_id', $doctor->id)->get();
+        $other_praticiens = User::where('role_id', '!=', 3)->get();
+
 
         $currentUserAppointments = Appointment::where('user_id', $prescription->user_id)
             ->where('reason', 'like', '%' . $prescription->reference . '%')
@@ -129,6 +134,7 @@ class PrescriptionController extends Controller
             'appointments' => $appointments,
             'doctor' => $doctor,
             'praticiens' => $praticiens,
+            'other_praticiens' => $other_praticiens,
             'userId' => $userId,
         ]);
     }
