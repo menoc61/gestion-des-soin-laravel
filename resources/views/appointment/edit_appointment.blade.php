@@ -61,10 +61,19 @@
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="reason">{{ __('sentence.Reason for visit') }}</label>
-                            <textarea name="reason" id="reason" class="form-control">{{ $appointment->reason }}</textarea>
-                            <small id="emailHelp" class="form-text text-muted">Modifier la description</small>
-
+                                       <label>Praticiens secondaires :</label>
+                                       <div id="praticient-container">
+                                           <div class="praticient-group">
+                                               <select name="praticient_id[]" class="form-control praticient-select">
+                                                   <option value="" disabled selected>Selectionnez les praticiens secondaires...</option>
+                                                   @foreach ($other_praticiens as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                   @endforeach
+                                                </select>
+                                                <button type="button" class="btn btn-sm btn-danger remove-praticient">x</button>
+                                            </div>
+                                        </div>
+                                       <button type="button" class="btn btn-sm btn-primary mt-2" id="add-praticient">+</button>
                         </div>
 
                         {{-- <div class="form-group col-md-4">
@@ -300,6 +309,32 @@
         });
     });
 </script>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // Ajouter un nouveau praticien
+            document.getElementById('add-praticient').addEventListener('click', function() {
+                let container = document.getElementById('praticient-container');
+                let newGroup = container.firstElementChild.cloneNode(true); // Cloner le premier groupe
+                container.appendChild(newGroup); // Ajouter le groupe cloné
+                newGroup.querySelector('.praticient-select').selectedIndex = 0; // Réinitialiser la sélection
+        });
+
+               // Supprimer un praticien sélectionné
+        document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('remove-praticient')) {
+                    let container = document.getElementById('praticient-container');
+                    if (container.children.length > 1) {
+                        event.target.closest('.praticient-group').remove();
+                    } else {
+                        alert("Vous devez avoir au moins un praticien sélectionné.");
+                    }
+                }
+            });
+        });
+
+</script>
+
 
 <script src="{{ asset('dashboard/js/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('assets/demo/swipper.js') }}"></script>

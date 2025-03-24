@@ -154,7 +154,7 @@
                     </div>
                 </div>
                             <!-- -->
-                <div class="card">
+                <!-- <div class="card">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Agenda praticien') }} <span
                                 id="doctor-name"></span></h6>
@@ -167,11 +167,11 @@
                                     <td align="center">{{ __('sentence.Date') }}</td>
                                     <td align="center">{{ __('sentence.Time Slot') }}</td>
                                 </tr>
-                                <!-- Appointments will be dynamically inserted here -->
+                                 Appointments will be dynamically inserted here 
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="col-md-6 my-4">
                 <div class="card shadow mb-4">
