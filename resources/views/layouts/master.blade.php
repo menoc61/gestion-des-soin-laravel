@@ -417,6 +417,34 @@
 
                 {{-- ********************* Debut Section Paramètres de la sidenav ************************** --}}
 
+                {{-- ********************* Debut Section Guide d'utilisation ************************** --}}
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+<!-- Heading -->
+                    <div class="sidebar-heading">
+                       {{ __('sentence.User Guide') }}
+                    </div>
+<!-- Nav Item - Guide d'utilisation -->
+                    <li class="nav-item">
+                       <a class="nav-link" 
+                          href="{{ asset('guide/Guide_' . (Auth::user()->role_id == 1 ? 'admin' : (Auth::user()->role_id == 2 ? 'praticien' : 'client')) . '.pdf') }}" 
+                          target="_blank">
+                            <i class="fas fa-fw fa-book"></i>
+                            <span>
+                               @if (Auth::user()->role_id == 1)
+                                   {{ __('sentence.Admin Guide') }}
+                               @elseif (Auth::user()->role_id == 2)
+                                   {{ __('sentence.Practitioner Guide') }}
+                               @else
+                                    {{ __('sentence.Client Guide') }}
+                               @endif
+                            </span>
+                      </a>
+                    </li>
+
+
+                {{-- ********************* Fin Section Guide d'utilisation************************** --}}
+
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
                 <!-- Sidebar Toggler (Sidebar) -->

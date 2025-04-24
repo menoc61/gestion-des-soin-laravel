@@ -23,6 +23,12 @@ return [
   'No Test Required' => 'No Test Required',
   'No Drugs' => 'No Drugs',
 
+  //user gude
+  'User Guide' => 'User Guide',
+  'Admin Guide' => 'Admin Guide',
+  'Practitioner Guide' => 'Practitioner Guide',
+  'Client Guide' => 'Client Guide',
+
   'Drugs' => 'Drugs',
   'Add Drug' => 'Add Drug',
   'All Drugs' => 'All Drugs',

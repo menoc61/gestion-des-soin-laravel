@@ -84,6 +84,12 @@ return [
     'Confirm Appointment' => 'Confirmer le RDV',
     'Cancel Appointment' => 'Annuler le RDV',
 
+    //guide d'utilisation
+    'User Guide' => 'Guide d\'utilisation',
+    'Admin Guide' => 'Guide de l\'Administrateur',
+    'Practitioner Guide' => 'Guide du Praticien',
+    'Client Guide' => 'Guide de l\'hôte',
+
     'Tests' => 'Diagnoses',
     'Test' => 'Diagnose',
     'Add Test' => 'Ajouter un Diagnose',
